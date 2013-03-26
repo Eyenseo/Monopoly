@@ -7,5 +7,5 @@ package objects.value;
  * Time: 17:12
  * To change this template use File | Settings | File Templates.
  */
-public class Community extends Restrictet {
+public class Community extends Restricted {
 }

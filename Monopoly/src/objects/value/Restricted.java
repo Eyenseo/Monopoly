@@ -7,5 +7,5 @@ package objects.value;
  * Time: 17:08
  * To change this template use File | Settings | File Templates.
  */
-public abstract class Restrictet extends Field {
+public abstract class Restricted extends Field {
 }

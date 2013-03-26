@@ -7,5 +7,5 @@ package objects.value;
  * Time: 17:17
  * To change this template use File | Settings | File Templates.
  */
-public class Tax extends Restrictet {
+public class Tax extends Restricted {
 }

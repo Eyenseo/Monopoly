@@ -7,5 +7,5 @@ package objects.value;
  * Time: 17:13
  * To change this template use File | Settings | File Templates.
  */
-public class Jail extends Restrictet {
+public class Jail extends Restricted {
 }
