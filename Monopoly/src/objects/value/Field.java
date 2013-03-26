@@ -8,5 +8,13 @@ package objects.value;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class Field {
+	private int position;
 
+	void Field(int position) {
+		this.position = position;
+	}
+
+	int getPosition() {
+		return this.position;
+	}
 }

@@ -8,4 +8,13 @@ package objects.value;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class Ownable extends Field {
+	private Player owner;
+
+	Player getOwner() {
+		return this.owner;
+	}
+
+	void setOwner(Player owner) {
+		this.owner = owner;
+	}
 }
