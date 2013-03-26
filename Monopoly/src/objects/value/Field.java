@@ -1,20 +1,35 @@
 package objects.value;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Eyenseo
- * Date: 26.03.13
- * Time: 17:06
- * To change this template use File | Settings | File Templates.
+ * The Field class is the superclass of all filds.
+ *
+ * @author Eyenseo
+ * @version 0.1
  */
-public abstract class Field {
-	private int position;
+abstract class Field {
+	final int    position;
+	final String name;
 
-	void Field(int position) {
+	/**
+	 * @param position The value determines the numeric position of the field.
+	 * @param name     The value determines the name of the field.
+	 */
+	Field(int position, String name) {
 		this.position = position;
+		this.name = name;
 	}
 
+	/**
+	 * @return The return value is the numeric position of the field.
+	 */
 	int getPosition() {
 		return this.position;
+	}
+
+	/**
+	 * @return The return value is the name of the field.
+	 */
+	String getName() {
+		return this.name;
 	}
 }

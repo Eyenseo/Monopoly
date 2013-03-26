@@ -7,5 +7,6 @@ package objects.value;
  * Time: 17:14
  * To change this template use File | Settings | File Templates.
  */
-public class Parking extends Restricted {
+class Parking extends NotPurchasable {
+	// TODO:   Everything
 }

@@ -7,5 +7,6 @@ package objects.value;
  * Time: 17:15
  * To change this template use File | Settings | File Templates.
  */
-public class GoToJail extends Restricted {
+class GoToJail extends NotPurchasable {
+	// TODO:   Everything
 }

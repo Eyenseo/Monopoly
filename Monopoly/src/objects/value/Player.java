@@ -7,6 +7,6 @@ package objects.value;
  * Time: 17:29
  * To change this template use File | Settings | File Templates.
  */
-public class Player {
-
+class Player {
+	// TODO:   Everything
 }

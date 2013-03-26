@@ -7,5 +7,6 @@ package objects.value;
  * Time: 17:12
  * To change this template use File | Settings | File Templates.
  */
-public class Event extends Restricted {
+class Chance extends NotPurchasable {
+	// TODO:   Everything
 }
