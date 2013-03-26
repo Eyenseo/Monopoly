@@ -7,5 +7,5 @@ package objects.value;
  * Time: 17:13
  * To change this template use File | Settings | File Templates.
  */
-public class Start extends Restrictet {
+public class Go extends Restrictet {
 }
