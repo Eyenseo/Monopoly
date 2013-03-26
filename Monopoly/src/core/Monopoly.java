@@ -8,4 +8,7 @@ package core;
  * To change this template use File | Settings | File Templates.
  */
 public class Monopoly {
+
+	public static void main(String[] args) {
+	}
 }
