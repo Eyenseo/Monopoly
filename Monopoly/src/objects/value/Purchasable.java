@@ -1,7 +1,9 @@
 package objects.value;
 
 /**
- * The Purchasable class is the superclass of all fields that are purchasable.
+ * The Purchasable class is the superclass of all fields that are purchasable. <br>
+ * The structure of all Purchasables is a ring list of all Purchasables that belong together e.g. all Stations
+ * in one list, or all Streets that are red.
  *
  * @author Eyenseo
  * @version 0.1
@@ -9,34 +11,28 @@ package objects.value;
 abstract class Purchasable extends Field {
 	final int   price;
 	final int[] income;
-	final int   stage;
+	final int   mortgage;   //Hypothek
 	Player owner;
+	int    stage;
+	private Purchasable next;
 
 	/**
-	 * @param position The value determines the numeric position of the field.
-	 * @param name     The value determines the name of the field.
-	 * @param price    The value determines the price of the field that the player has to pay to buy it.
-	 * @param income   The values of the array determine the income of the street in the different stages.
-	 * @param stage    The value determines the stage the income is at.
-	 */
-	Purchasable(int position, String name, int price, int[] income, int stage) {
-		this(position, name, price, income, stage, null);
-	}
-
-	/**
-	 * @param position The value determines the numeric position of the field.
 	 * @param name     The value determines the name of the field.
 	 * @param price    The value determines the price of the field that the player has to pay to buy it.
 	 * @param income   The values of the array determine the the income of the street in the different stages.
+	 * @param mortgage The value determines the amount of the mortgage of the field.
 	 * @param stage    The value determines the stage the income is at.
-	 * @param owner    The value determines the owner of the field. (Default null)
+	 * @param owner    The value determines the owner of the Purchasable.
 	 */
-	Purchasable(int position, String name, int price, int[] income, int stage, Player owner) {
-		super(position, name);
+	//TODO Simplify the constructor by assigning default values
+	Purchasable(String name, int price, int[] income, int mortgage, int stage, Player owner) {
+		super(name);
 		this.price = price;
 		this.income = income;
+		this.mortgage = mortgage;
 		this.stage = stage;
 		this.owner = owner;
+		this.next = this;   //TODO Check if this points to the Purchasable class or the subclass
 	}
 
 	/**
@@ -49,22 +45,38 @@ abstract class Purchasable extends Field {
 	/**
 	 * @param owner The value determines the owner of the field.
 	 */
-	void setOwner(Player owner) {
+	void buy(Player owner) {
+		/* TODO: Decrease the money of the player and check if all estates have the same owner to set the
+		stage according
+		 */
 		this.owner = owner;
 	}
 
 	/**
-	 * @return The return value is the owner of the field.
+	 * @return The return value that has to be payed to own the field.
 	 */
-	public int getPrice() {
+	int getPrice() {
 		return this.price;
 	}
 
 	/**
-	 * @return The return value is the amount that has to be payed if someone else then the owner is on the field of
-	 *         the field.
+	 * @return The return value is the amount that has to be payed if someone else then the owner is on the
+	 *         Purchasable.
 	 */
-	public int getIncome() {
-		return this.income[this.stage];
+	abstract int getBill(Player player);
+
+	/**
+	 * @param estate The value determines the next estate in the ring list of Purchasables that belong together.
+	 */
+	void addEstate(Purchasable estate) {
+		estate.next = this.next;
+		this.next = estate;
+	}
+
+	/**
+	 * @return The return value is the reference to the next Purchasable.
+	 */
+	private Purchasable getNext() {
+		return this.next;
 	}
 }

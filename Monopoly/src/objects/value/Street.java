@@ -1,16 +1,18 @@
 package objects.value;
 
 /**
- * The Street class holds the information of the street.
+ * The Street class holds the information of the street.        <br>
+ * The structure of all Streets is a ring list of all Streets that belong together e.g. all Streets that are red.
  *
  * @author Eyenseo
  * @version 0.1
  */
 class Street extends Purchasable {
-	final int[] color;
+	final         int[] color;
+	private final int   house;
+	private final int   hotel;
 
 	/**
-	 * @param position The value determines the numeric position of the field.
 	 * @param name     The value determines the name of the field.
 	 * @param price    The value determines the price of the field that the player has to pay to buy it.
 	 * @param income   The values of the array determine the the income of the street in the different stages.
@@ -21,13 +23,37 @@ class Street extends Purchasable {
 	 *                 <li>2 houses</li>
 	 *                 <li>...</li>
 	 *                 </ol>
+	 * @param mortgage The value determines the amount of the mortgage of the field.
 	 * @param stage    The value determines the stage the income is at.
+	 * @param owner    The value determines the owner of the Purchasable.
+	 * @param house    The value determines how much the owner has to pay for a house.
+	 * @param hotel    The value determines how much the owner has to pay for a hotel.
 	 * @param color    The values of the array determine the color of the field.The Array has to be three long,
 	 *                 each of the places represent one color {R,G,B}.
 	 */
-	public Street(int position, String name, int price, int[] income, int stage, int[] color) {
-		super(position, name, price, income, stage);
+	public Street(String name, int price, int[] income, int mortgage, int stage, Player owner, int house, int hotel,
+	              int[] color) {
+		super(name, price, income, mortgage, stage, owner);
+		this.house = house;
+		this.hotel = hotel;
 		this.color = color;
 	}
-	// TODO:   getter and setter
+
+	/**
+	 * @return The return value is the amount that has to be payed if someone else then the owner is on the field of
+	 *         the field.
+	 */
+	@Override
+	int getBill(Player player) {
+		return this.income[this.stage];
+	}
+
+	/**
+	 * This method is for buying houses or hotels and setting the stage accordingly up.
+	 *
+	 * @param player The value determines who it is that wants to buy a house or hotel.
+	 */
+	public void nextStage(Player player) {
+		// TODO : Implement - Check if the player is the owner
+	}
 }
