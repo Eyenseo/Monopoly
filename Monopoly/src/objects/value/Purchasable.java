@@ -1,7 +1,7 @@
 package objects.value;
 
 /**
- * The Purchasable class is the superclass of all fields that are purchasable. <br>
+ * The Purchasable class is the superclass of all Fields that are purchasable. <br>
  * The structure of all Purchasables is a ring list of all Purchasables that belong together e.g. all Stations
  * in one list, or all Streets that are red.
  *
@@ -17,10 +17,10 @@ abstract class Purchasable extends Field {
 	private Purchasable next;
 
 	/**
-	 * @param name     The value determines the name of the field.
-	 * @param price    The value determines the price of the field that the player has to pay to buy it.
+	 * @param name     The value determines the name of the Purchasable.
+	 * @param price    The value determines the price of the Purchasable that the player has to pay to buy it.
 	 * @param income   The values of the array determine the the income of the street in the different stages.
-	 * @param mortgage The value determines the amount of the mortgage of the field.
+	 * @param mortgage The value determines the amount of the mortgage of the Purchasable.
 	 * @param stage    The value determines the stage the income is at.
 	 * @param owner    The value determines the owner of the Purchasable.
 	 */
@@ -36,14 +36,14 @@ abstract class Purchasable extends Field {
 	}
 
 	/**
-	 * @return The return value is the owner of the field.
+	 * @return The return value is the owner of the Purchasable.
 	 */
 	Player getOwner() {
 		return this.owner;
 	}
 
 	/**
-	 * @param owner The value determines the owner of the field.
+	 * @param owner The value determines the owner of the Purchasable.
 	 */
 	void buy(Player owner) {
 		/* TODO: Decrease the money of the player and check if all estates have the same owner to set the
@@ -53,7 +53,7 @@ abstract class Purchasable extends Field {
 	}
 
 	/**
-	 * @return The return value that has to be payed to own the field.
+	 * @return The return value that has to be payed to own the Purchasable.
 	 */
 	int getPrice() {
 		return this.price;
@@ -66,11 +66,12 @@ abstract class Purchasable extends Field {
 	abstract int getBill(Player player);
 
 	/**
-	 * @param estate The value determines the next estate in the ring list of Purchasables that belong together.
+	 * @param purchasable The value determines the next Purchasable in the ring list of Purchasables that belong
+	 *                    together.
 	 */
-	void addEstate(Purchasable estate) {
-		estate.next = this.next;
-		this.next = estate;
+	void addPurchasable(Purchasable purchasable) {
+		purchasable.next = this.next;
+		this.next = purchasable;
 	}
 
 	/**
