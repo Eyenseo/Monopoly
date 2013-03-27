@@ -1,7 +1,7 @@
 package objects.value;
 
 /**
- * The Station class holds the information of the stations.     <br>
+ * The Station class holds the information of the stations.<br>
  * The structure of all Stations is a ring list of all Stations that belong together.
  *
  * @author Eyenseo
