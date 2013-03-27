@@ -1,7 +1,7 @@
 package objects.value;
 
 /**
- * The Street class holds the information of the street.        <br>
+ * The Street class holds the information of the streets.        <br>
  * The structure of all Streets is a ring list of all Streets that belong together e.g. all Streets that are red.
  *
  * @author Eyenseo
@@ -13,9 +13,9 @@ class Street extends Purchasable {
 	private final int   hotel;
 
 	/**
-	 * @param name     The value determines the name of the field.
-	 * @param price    The value determines the price of the field that the player has to pay to buy it.
-	 * @param income   The values of the array determine the the income of the street in the different stages.
+	 * @param name     The value determines the name of the Street.
+	 * @param price    The value determines the price of the Street that the player has to pay to buy it.
+	 * @param income   The values of the array determine the the income of the Street in the different stages.
 	 *                 <ol start="0">
 	 *                 <li>Color not complete</li>
 	 *                 <li>Color complete</li>
@@ -23,12 +23,12 @@ class Street extends Purchasable {
 	 *                 <li>2 houses</li>
 	 *                 <li>...</li>
 	 *                 </ol>
-	 * @param mortgage The value determines the amount of the mortgage of the field.
+	 * @param mortgage The value determines the amount of the mortgage of the Street.
 	 * @param stage    The value determines the stage the income is at.
-	 * @param owner    The value determines the owner of the Purchasable.
+	 * @param owner    The value determines the owner of the Street.
 	 * @param house    The value determines how much the owner has to pay for a house.
 	 * @param hotel    The value determines how much the owner has to pay for a hotel.
-	 * @param color    The values of the array determine the color of the field.The Array has to be three long,
+	 * @param color    The values of the array determine the color of the Street. The Array has to be three long,
 	 *                 each of the places represent one color {R,G,B}.
 	 */
 	public Street(String name, int price, int[] income, int mortgage, int stage, Player owner, int house, int hotel,
@@ -40,8 +40,7 @@ class Street extends Purchasable {
 	}
 
 	/**
-	 * @return The return value is the amount that has to be payed if someone else then the owner is on the field of
-	 *         the field.
+	 * @return The return value is the amount that has to be payed if someone else then the owner is on the Street.
 	 */
 	@Override
 	int getBill(Player player) {
