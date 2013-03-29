@@ -1,48 +1,58 @@
-# Keywords
-#	#	Comment
-# 	#!	Object is finished
-#
-# Objects and Formats
-# 	Street
-#		0
-#		name
-#		color red
-#		color green
-#		color blue
-#		price
-#		income
-#		income
-#		income
-#		income
-#		income
-#		income
-#		upgrade (house/hotel)
-#		mortgage
-#	Station
-#		1
-#		name
-#	Event
-#		2
-#	Community
-#		3
-#	Tax
-#		4
-#		name
-#		amount
-#	Facility
-#		5
-#		name
-#	GO
-#		6
-#	Jail
-#		7
-#	Parking
-#		8
-#	GoToJail
-#		9
-0
-#!
+##	Keywords
+##		##	Comment
+##		#!	Object is finished
+##
+##	Objects and Formats
+##		Street
+##		0
+##		name
+##		color red
+##		color green
+##		color blue
+##		price
+##		income
+##		income
+##		income
+##		income
+##		income
+##		income
+##		upgrade (house/hotel)
+##		mortgage
+##	Station
+##		1
+##		name
+##		price
+##		income
+##		income
+##		income
+##		income
+##		mortgage
+##	Chance
+##		2
+##	Community
+##		3
+##	Tax
+##		4
+##		name
+##		amount
+##	Facility
+##		5
+##		name
+##		price
+##		income
+##		income
+##		mortgage
+##	GO
+##		6
+##	Jail
+##		7
+##	Parking
+##		8
+##	GoToJail
+##		9
 6
+#!
+0
 Badstraße
 128
 51
@@ -75,10 +85,17 @@ Turmstraße
 600
 #!
 4
+Einkommenssteuer
 4000
 #!
 1
 Südbahnhof
+4000
+500
+1000
+2000
+4000
+2000
 #!
 0
 Chausseestraße
@@ -129,6 +146,7 @@ Poststraße
 #!
 7
 #!
+0
 Seestraße
 204
 68
@@ -145,6 +163,10 @@ Seestraße
 #!
 5
 Elektrizitäts-Werk
+3000
+80
+200
+1500
 #!
 0
 Hafenstraße
@@ -178,7 +200,14 @@ Neue Straße
 #!
 1
 Westbahnhof
+4000
+500
+1000
+2000
+4000
+2000
 #!
+0
 Münchner Straße
 255
 128
@@ -195,6 +224,7 @@ Münchner Straße
 #!
 3
 #!
+0
 Wiener Straße
 255
 128
@@ -209,6 +239,7 @@ Wiener Straße
 2000
 1800
 #!
+0
 Berliner Straße
 255
 128
@@ -274,6 +305,12 @@ Opernplatz
 #!
 1
 Nordbahnhof
+4000
+500
+1000
+2000
+4000
+2000
 #!
 0
 Lessingstraße
@@ -307,6 +344,10 @@ Schillerstraße
 #!
 5
 Wasser-Werk
+3000
+80
+200
+1500
 #!
 0
 Goethestraße
@@ -374,6 +415,12 @@ Bahnhofstraße
 #!
 1
 Haptbahnhof
+4000
+500
+1000
+2000
+4000
+2000
 #!
 2
 #!
@@ -403,6 +450,7 @@ Schlossallee
 204
 8000
 1000
+4000
 12000
 28000
 34000
