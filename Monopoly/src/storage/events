@@ -8,3 +8,7 @@
 #  '#!' means an object is finished
 #  'special$' means a transaction that does not involve the bank (player based transactions)
 #  'special' means a special card (komischer kram)
+
+#jailbait
+Du kommst aus dem Gefängnis frei.\nDiese Karte kann später verwendet oder gehandelt werden.
+#!
