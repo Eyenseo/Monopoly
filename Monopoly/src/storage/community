@@ -32,42 +32,52 @@ je Hotel\nan die Bank.
 
 #$
 Bank-Irrtum zu deinen Gunsten.\nZiehe 4000 DM ein.
+4000
 #!
 
 #$
 Die Jahresrente wird fällig.\nZiehe 2000 DM ein.
+2000
 #!
 
 #$
 Einkommensteuer-Rückzahlung\nZiehe 400 DM ein.
+400
 #!
 
 #$
 Du erbst\n2000 DM
+2000
 #!
 
 #$
 Aus Lagerverkäufen erhältst du\n500 DM
+500
 #!
 
 #$
 Du erhältst auf Vorzugs-Aktien 7% Dividende\n900 DM
+900
 #!
 
 #$
 Du hast den 2. Preis in einer Schönheitskonkurrenz gewonnen.\nZiehe 200 DM ein.
+200
 #!
 
 #$
 Du hast in einem Kreuzworträtsel-Wettbewerb gewonnen.\nZiehe 2000 DM ein.
+2000
 #!
 
 #$
 Zahle an das Krankenhaus\n2000 DM
+2000
 #!
 
 #$
 Arzt-Kosten.\nZahle 1000 DM
+-1000
 #!
 
 #$
