@@ -1,0 +1,75 @@
+#  key words
+#  '$' means income or loss
+#  'jailbait' means a jailbait card
+#  'jail' means a card that sends a player directly into jail
+#  'goTo' means a card that sends a player to a specific field with go-income
+#  'goToNoGo' means a card that sends a player to a specific field without go-income
+#  'streetWork' means a card that requires you to spend money on existing houses or hotels
+#  '#!' means an object is finished
+#  'special$' means a transaction that does not involve the bank (player based transactions)
+#  'special' means a special card (komischer kram)
+
+#jailbait
+Du kommst aus dem Gefängnis frei.\nDiese Karte kann später verwendet oder gehandelt werden.
+#!
+
+#goTo
+Rücke vor bis auf Los.
+#!
+
+#jail
+Gehe in das Gefängnis.\nBegib dich direkt dorthin.\nGehe nicht über Los.\nZiehe nicht DM 4000 ein.
+#!
+
+#special$
+Es ist dein Geburtstag.\nZiehe von jedem Spieler DM 1000 ein.
+#!
+
+#streetWork
+Du wirst zu Straßenausbessereungsarbeiten herangezogen.\nZahle für deine Häuser und Hotels\nDM 800 je Haus\nDM 2300
+je Hotel\nan die Bank.
+#!
+
+#$
+Bank-Irrtum zu deinen Gunsten.\nZiehe DM 4000 ein.
+#!
+
+#$
+Die Jahresrente wird fällig.\nZiehe DM 2000 ein.
+#!
+
+#$
+Einkommensteuer-Rückzahlung\nZiehe DM 400 ein.
+#!
+
+#$
+Du erbst\n2000 DM
+#!
+
+#$
+Aus Lagerverkäufen erhältst du\n500 DM
+#!
+
+#$
+Du erhältst auf Vorzugs-Aktien 7% Dividende\n900 DM
+#!
+
+#$
+Du hast den 2. Preis in einer Schönheitskonkurrenz gewonnen.\nZiehe 200 DM ein.
+#!
+
+#$
+Du hast in einem Kreuzworträtsel-Wettbewerb gewonnen.\nZiehe 2000 DM ein.
+#!
+
+#$
+Zahle an das Krankenhaus\n2000 DM
+#!
+
+#$
+Arzt-Kosten.\nZahle 1000 DM
+#!
+
+#$
+Zahle Schulgeld\n 3000 DM
+#!
