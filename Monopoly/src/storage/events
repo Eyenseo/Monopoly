@@ -6,3 +6,5 @@
 #  'goToNoGo' means a card that sends a player to a specific field without go-income
 #  'streetWork' means a card that requires you to spend money on existing houses or hotels
 #  '#!' means an object is finished
+#  'special$' means a transaction that does not involve the bank (player based transactions)
+#  'special' means a special card (komischer kram)
