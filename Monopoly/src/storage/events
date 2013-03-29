@@ -16,6 +16,7 @@ Du kommst aus dem Gefängnis frei.\nDiese Karte kann später verwendet oder geha
 
 #back
 Gehe 3 Felder zurück.
+-3
 #!
 
 #special
@@ -36,14 +37,17 @@ Lasse alle deine Häuser renovieren.\nZahle an die Bank\nfür jedes Haus 500 DM\
 
 #$
 Miete und Anleihezinsen werden fällig.\nDie Bank zahlt dir 3000 DM.
+3000
 #!
 
 #$
 Die Bank zahlt dir eine Dividende von\n1000 DM.
+1000
 #!
 
 #$
 Strafe für zu schnelles Fahren.\n 300 DM an die Bank.
+300
 #!
 
 #goToNoGo
@@ -51,8 +55,8 @@ Gehe zurück zur Badstraße.
 #!
 
 #goTo
-Mache einen Ausflug zum Südbahnhof.\n
-Kommst du über Los, ziehe 4000 DM ein.
+Mache einen Ausflug zum Südbahnhof.\nKommst du über Los, ziehe 4000 DM ein.
+4000
 #!
 
 #jail
@@ -61,16 +65,20 @@ Gehe in das Gefängnis.\n Kein Geld, nix über Los. Fresse halten.
 
 #goTo
 Rücke vor bis zur Schlossallee.
+Schlossallee
 #!
 
 #goTo
 Rücke vor bis zum Opernplatz.
+Opernplatz
 #!
 
 #goTo
 Rücke bis auf Los vor.
+Los
 #!
 
 #goTo
 Rücke bis zur Seestraße vor.
+Seestraße
 #!
