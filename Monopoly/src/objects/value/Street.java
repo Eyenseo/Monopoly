@@ -40,14 +40,6 @@ class Street extends Purchasable {
 	}
 
 	/**
-	 * @return The return value is the amount that has to be payed if someone else then the owner is on the Street.
-	 */
-	@Override
-	int getBill(Player player) {
-		return this.income[this.stage];
-	}
-
-	/**
 	 * This method is for buying houses or hotels and setting the stage accordingly up.
 	 *
 	 * @param player The value determines who it is that wants to buy a house or hotel.

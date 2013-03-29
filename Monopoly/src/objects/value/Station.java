@@ -26,12 +26,4 @@ class Station extends Purchasable {
 	public Station(String name, int price, int[] income, int mortgage, int stage, Player owner) {
 		super(name, price, income, mortgage, stage, owner);
 	}
-
-	/**
-	 * @return The return value is the amount that has to be payed if someone else then the owner is on the Station.
-	 */
-	@Override
-	int getBill(Player player) {
-		return this.income[this.stage];
-	}
 }

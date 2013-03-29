@@ -46,7 +46,7 @@ abstract class Purchasable extends Field {
 	 * @param owner The value determines the owner of the Purchasable.
 	 */
 	void buy(Player owner) {
-		/* TODO: Decrease the money of the player and check if all estates have the same owner to set the
+		/* TODO: Decrease the money of the player and check if all Purchasables have the same owner to set the
 		stage according
 		 */
 		this.owner = owner;
@@ -63,7 +63,9 @@ abstract class Purchasable extends Field {
 	 * @return The return value is the amount that has to be payed if someone else then the owner is on the
 	 *         Purchasable.
 	 */
-	abstract int getBill(Player player);
+	int getBill(Player player) {
+		return this.income[this.stage];
+	}
 
 	/**
 	 * @param purchasable The value determines the next Purchasable in the ring list of Purchasables that belong
