@@ -1,5 +1,7 @@
 package core;
 
+import objects.value.Field;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Eyenseo
@@ -10,5 +12,7 @@ package core;
 public class Monopoly {
 
 	public static void main(String[] args) {
+		Field[] map = new MapCreator().makeMap();
+		System.out.print("Set stop - check the map in debug.");
 	}
 }
