@@ -1,13 +1,14 @@
 # Keywords
-#	# Comment
-# 	#! Object is finished
+#	#	Comment
+# 	#!	Object is finished
 #
 # Objects and Formats
-#	Start
-#		0
 # 	Street
-#		1
+#		0
 #		name
+#		color red
+#		color green
+#		color blue
 #		price
 #		income
 #		income
@@ -17,30 +18,35 @@
 #		income
 #		upgrade (house/hotel)
 #		mortgage
-#	Community
-#		2
-#	Tax
-#		3
-#		name
-#		amount
 #	Station
-#		4
+#		1
 #		name
 #	Event
-#		5
-#	Jail
-#		6
-#	Facility
-#		7
+#		2
+#	Community
+#		3
+#	Tax
+#		4
 #		name
+#		amount
+#	Facility
+#		5
+#		name
+#	GO
+#		6
+#	Jail
+#		7
 #	Parking
 #		8
 #	GoToJail
 #		9
 0
 #!
-1
+6
 Badstraße
+128
+51
+153
 1200
 40
 200
@@ -51,10 +57,13 @@ Badstraße
 1000
 600
 #!
-2
+3
 #!
-1
+0
 Turmstraße
+128
+51
+153
 1200
 80
 400
@@ -65,14 +74,17 @@ Turmstraße
 1000
 600
 #!
-3
+4
 4000
 #!
-4
+1
 Südbahnhof
 #!
-1
+0
 Chausseestraße
+128
+204
+255
 2000
 120
 600
@@ -83,10 +95,13 @@ Chausseestraße
 1000
 1000
 #!
-5
+2
 #!
-1
+0
 Elisenstraße
+128
+204
+255
 2000
 120
 600
@@ -97,8 +112,11 @@ Elisenstraße
 1000
 1000
 #!
-1
+0
 Poststraße
+128
+204
+255
 2400
 160
 800
@@ -109,9 +127,12 @@ Poststraße
 1000
 1200
 #!
-6
+7
 #!
 Seestraße
+204
+68
+204
 2800
 200
 1000
@@ -122,11 +143,14 @@ Seestraße
 2000
 1400
 #!
-7
+5
 Elektrizitäts-Werk
 #!
-1
+0
 Hafenstraße
+204
+68
+204
 2800
 200
 1000
@@ -137,8 +161,11 @@ Hafenstraße
 2000
 1400
 #!
-1
+0
 Neue Straße
+204
+68
+204
 3200
 240
 1200
@@ -149,10 +176,13 @@ Neue Straße
 2000
 1600
 #!
-4
+1
 Westbahnhof
 #!
 Münchner Straße
+255
+128
+0
 3600
 280
 1400
@@ -163,9 +193,12 @@ Münchner Straße
 2000
 1800
 #!
-2
+3
 #!
 Wiener Straße
+255
+128
+0
 3600
 280
 1400
@@ -177,6 +210,9 @@ Wiener Straße
 1800
 #!
 Berliner Straße
+255
+128
+0
 4000
 320
 1600
@@ -189,8 +225,11 @@ Berliner Straße
 #!
 8
 #!
-1
+0
 Theaterstraße
+255
+0
+0
 4400
 360
 1800
@@ -201,10 +240,13 @@ Theaterstraße
 3000
 2200
 #!
-5
+2
 #!
-1
+0
 Museumstraße
+255
+0
+0
 4400
 360
 1800
@@ -215,8 +257,11 @@ Museumstraße
 3000
 2200
 #!
-1
+0
 Opernplatz
+255
+0
+0
 4800
 400
 2000
@@ -227,11 +272,14 @@ Opernplatz
 3000
 2400
 #!
-4
+1
 Nordbahnhof
 #!
-1
+0
 Lessingstraße
+255
+255
+0
 5200
 480
 2200
@@ -242,8 +290,11 @@ Lessingstraße
 3000
 2600
 #!
-1
+0
 Schillerstraße
+255
+255
+0
 5200
 480
 2200
@@ -254,11 +305,14 @@ Schillerstraße
 3000
 2600
 #!
-7
+5
 Wasser-Werk
 #!
-1
+0
 Goethestraße
+255
+255
+0
 5600
 580
 2400
@@ -271,8 +325,11 @@ Goethestraße
 #!
 9
 #!
-1
+0
 Rathausplatz
+51
+128
+51
 6000
 520
 2600
@@ -283,8 +340,11 @@ Rathausplatz
 4000
 3000
 #!
-1
+0
 Hauptstraße
+51
+128
+51
 6000
 520
 2600
@@ -295,10 +355,13 @@ Hauptstraße
 4000
 3000
 #!
-2
+3
 #!
-1
+0
 Bahnhofstraße
+51
+128
+51
 6400
 560
 3000
@@ -309,13 +372,16 @@ Bahnhofstraße
 4000
 3200
 #!
-4
+1
 Haptbahnhof
 #!
-5
+2
 #!
-1
+0
 Parkstraße
+32
+32
+204
 7000
 700
 3500
@@ -326,12 +392,15 @@ Parkstraße
 4000
 3500
 #!
-3
+4
 Zusatzsteuer
 2000
 #!
-1
+0
 Schlossallee
+32
+32
+204
 8000
 1000
 12000
@@ -340,3 +409,4 @@ Schlossallee
 40000
 4000
 4000
+#!
