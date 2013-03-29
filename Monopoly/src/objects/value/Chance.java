@@ -9,4 +9,8 @@ package objects.value;
  */
 class Chance extends NotPurchasable {
 	// TODO:   Everything
+
+	Chance() {
+		super("Ereignis-Feld");
+	}
 }

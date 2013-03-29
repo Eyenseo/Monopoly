@@ -7,10 +7,9 @@ package objects.value;
  * @author Eyenseo
  * @version 0.1
  */
-class Street extends Purchasable {
-	final         int[] color;
-	private final int   house;
-	private final int   hotel;
+public class Street extends Purchasable {
+	final         int[] COLOR;
+	private final int   UPGRADE;
 
 	/**
 	 * @param name     The value determines the name of the Street.
@@ -26,17 +25,15 @@ class Street extends Purchasable {
 	 * @param mortgage The value determines the amount of the mortgage of the Street.
 	 * @param stage    The value determines the stage the income is at.
 	 * @param owner    The value determines the owner of the Street.
-	 * @param house    The value determines how much the owner has to pay for a house.
-	 * @param hotel    The value determines how much the owner has to pay for a hotel.
+	 * @param upgrade  The value determines how much the owner has to pay for a house or hotel.
 	 * @param color    The values of the array determine the color of the Street. The Array has to be three long,
 	 *                 each of the places represent one color {R,G,B}.
 	 */
-	public Street(String name, int price, int[] income, int mortgage, int stage, Player owner, int house, int hotel,
+	public Street(String name, int price, int[] income, int mortgage, int stage, Player owner, int upgrade,
 	              int[] color) {
 		super(name, price, income, mortgage, stage, owner);
-		this.house = house;
-		this.hotel = hotel;
-		this.color = color;
+		this.UPGRADE = upgrade;
+		this.COLOR = color;
 	}
 
 	/**

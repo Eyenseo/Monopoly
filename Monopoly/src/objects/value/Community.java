@@ -9,4 +9,8 @@ package objects.value;
  */
 class Community extends NotPurchasable {
 	// TODO:   Everything
+
+	Community(String name) {
+		super(name);
+	}
 }

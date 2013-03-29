@@ -9,4 +9,8 @@ package objects.value;
  */
 class GoToJail extends NotPurchasable {
 	// TODO:   Everything
+
+	GoToJail() {
+		super("Geh in's Gefängnis");
+	}
 }

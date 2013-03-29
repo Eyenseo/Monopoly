@@ -9,9 +9,9 @@ package objects.value;
  * @version 0.1
  */
 abstract class Purchasable extends Field {
-	final int   price;
-	final int[] income;
-	final int   mortgage;   //Hypothek
+	final int   PRICE;
+	final int[] INCOME;
+	final int   MORTGAGE;   //Hypothek
 	Player owner;
 	int    stage;
 	private Purchasable next;
@@ -27,9 +27,9 @@ abstract class Purchasable extends Field {
 	//TODO Simplify the constructor by assigning default values
 	Purchasable(String name, int price, int[] income, int mortgage, int stage, Player owner) {
 		super(name);
-		this.price = price;
-		this.income = income;
-		this.mortgage = mortgage;
+		this.PRICE = price;
+		this.INCOME = income;
+		this.MORTGAGE = mortgage;
 		this.stage = stage;
 		this.owner = owner;
 		this.next = this;   //TODO Check if this points to the Purchasable class or the subclass
@@ -56,7 +56,7 @@ abstract class Purchasable extends Field {
 	 * @return The return value that has to be payed to own the Purchasable.
 	 */
 	int getPrice() {
-		return this.price;
+		return this.PRICE;
 	}
 
 	/**
@@ -64,7 +64,7 @@ abstract class Purchasable extends Field {
 	 *         Purchasable.
 	 */
 	int getBill(Player player) {
-		return this.income[this.stage];
+		return this.INCOME[this.stage];
 	}
 
 	/**

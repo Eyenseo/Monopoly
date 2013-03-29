@@ -9,4 +9,8 @@ package objects.value;
  */
 class Go extends NotPurchasable {
 	// TODO:   Everything
+
+	Go() {
+		super("Start");
+	}
 }

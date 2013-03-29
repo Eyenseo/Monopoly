@@ -9,4 +9,8 @@ package objects.value;
  */
 class Tax extends NotPurchasable {
 	// TODO:   Everything
+
+	Tax(String name) {
+		super(name);
+	}
 }

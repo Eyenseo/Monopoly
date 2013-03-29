@@ -9,4 +9,8 @@ package objects.value;
  */
 class Parking extends NotPurchasable {
 	// TODO:   Everything
+
+	Parking() {
+		super("Frei Parken");
+	}
 }
