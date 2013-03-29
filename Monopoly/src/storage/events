@@ -43,6 +43,30 @@ Die Bank zahlt dir eine Dividende von\n1000 DM.
 #!
 
 #$
-Strafe für zu schnelles Fahren.\n 300 Dm an die Bank.
+Strafe für zu schnelles Fahren.\n 300 DM an die Bank.
 #!
 
+#goToNoGo
+Gehe zurück zur Badstraße.
+#!
+
+#goTo
+Mache einen Ausflug zum Südbahnhof.\n
+Kommst du über Los, ziehe 4000 DM ein.
+#!
+
+#jail
+Gehe in das Gefängnis.\n Kein Geld, nix über Los. Fresse halten.
+#!
+
+#goTo
+Rücke vor bis zur Schlossallee.
+#!
+
+#goTo
+Rücke vor bis zum Opernplatz.
+#!
+
+#goTo
+Rücke bis auf Los vor.
+#!
