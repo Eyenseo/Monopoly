@@ -1,7 +1,7 @@
 #  '$' means income or loss
 #  'jailbait' means a jailbait card
+#  'jail' means a card that sends a player directly into jail
 #  'goTo' means a card that sends a player to a specific field with go-income
 #  'goToNoGo' means a card that sends a player to a specific field without go-income
+#  'streetWork' means a card that requires you to spend money on existing houses or hotels
 #
-#
-Test
