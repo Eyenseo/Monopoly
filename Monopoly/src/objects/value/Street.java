@@ -44,4 +44,17 @@ public class Street extends Purchasable {
 	public void nextStage(Player player) {
 		// TODO : Implement - Check if the player is the owner
 	}
+
+	/**
+	 * @param street
+	 * @return The return value is true if the two Streets have the same color.
+	 */
+	public boolean isSameColor(Street street) {
+		String[] compare = {"", ""};
+		for(int i = 0; i < this.COLOR.length; i++) {
+			compare[0] += this.COLOR[i];
+			compare[1] += street.COLOR[i];
+		}
+		return compare[0].equals(compare[1]);
+	}
 }

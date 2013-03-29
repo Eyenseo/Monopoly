@@ -7,7 +7,7 @@ package objects.value;
  * @author Eyenseo
  * @version 0.1
  */
-class Station extends Purchasable {
+public class Station extends Purchasable {
 
 	/**
 	 * @param name     The value determines the name of the Station.

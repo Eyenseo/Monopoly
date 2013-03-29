@@ -7,10 +7,10 @@ package objects.value;
  * Time: 17:13
  * To change this template use File | Settings | File Templates.
  */
-class Go extends NotPurchasable {
+public class Go extends NotPurchasable {
 	// TODO:   Everything
 
-	Go() {
+	public Go() {
 		super("Start");
 	}
 }

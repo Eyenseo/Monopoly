@@ -7,7 +7,7 @@ package objects.value;
  * Time: 17:29
  * To change this template use File | Settings | File Templates.
  */
-class Player {
+public class Player {
 	final String NAME;
 	int   money;
 	Field position;

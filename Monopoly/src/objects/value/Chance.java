@@ -7,10 +7,10 @@ package objects.value;
  * Time: 17:12
  * To change this template use File | Settings | File Templates.
  */
-class Chance extends NotPurchasable {
+public class Chance extends NotPurchasable {
 	// TODO:   Everything
 
-	Chance() {
-		super("Ereignis-Feld");
+	public Chance() {
+		super("Ereignisfeld");
 	}
 }

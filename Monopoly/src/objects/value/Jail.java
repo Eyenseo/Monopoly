@@ -7,10 +7,10 @@ package objects.value;
  * Time: 17:13
  * To change this template use File | Settings | File Templates.
  */
-class Jail extends NotPurchasable {
+public class Jail extends NotPurchasable {
 	// TODO:   Everything
 
-	Jail() {
+	public Jail() {
 		super("Gefängnis");
 	}
 }

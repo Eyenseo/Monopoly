@@ -7,10 +7,12 @@ package objects.value;
  * Time: 17:17
  * To change this template use File | Settings | File Templates.
  */
-class Tax extends NotPurchasable {
+public class Tax extends NotPurchasable {
+	int bill;
 	// TODO:   Everything
 
-	Tax(String name) {
+	public Tax(String name, int bill) {
 		super(name);
+		this.bill = bill;
 	}
 }

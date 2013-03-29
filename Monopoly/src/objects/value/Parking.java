@@ -7,10 +7,10 @@ package objects.value;
  * Time: 17:14
  * To change this template use File | Settings | File Templates.
  */
-class Parking extends NotPurchasable {
+public class Parking extends NotPurchasable {
 	// TODO:   Everything
 
-	Parking() {
+	public Parking() {
 		super("Frei Parken");
 	}
 }

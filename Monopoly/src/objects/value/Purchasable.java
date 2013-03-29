@@ -71,7 +71,7 @@ abstract class Purchasable extends Field {
 	 * @param purchasable The value determines the next Purchasable in the ring list of Purchasables that belong
 	 *                    together.
 	 */
-	void addPurchasable(Purchasable purchasable) {
+	public void add(Purchasable purchasable) {
 		purchasable.next = this.next;
 		this.next = purchasable;
 	}

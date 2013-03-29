@@ -7,10 +7,10 @@ package objects.value;
  * Time: 17:12
  * To change this template use File | Settings | File Templates.
  */
-class Community extends NotPurchasable {
+public class Community extends NotPurchasable {
 	// TODO:   Everything
 
-	Community(String name) {
-		super(name);
+	public Community() {
+		super("Gemeinschaftsfeld");
 	}
 }
