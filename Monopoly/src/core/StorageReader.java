@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * The StorageReader is a input class that reads the data files.
+ * The StorageReader is a input class that reads the files in the storage package.
  *
  * @author Eyenseo
  * @version 1
@@ -18,6 +18,7 @@ abstract class StorageReader {
 	 * @param path The value determines which file will be loaded.
 	 */
 	public StorageReader(String path) {
+		//TODO Handle Exception
 		try {
 			this.file = new BufferedReader(new FileReader(path));
 		} catch(FileNotFoundException e) {
@@ -26,12 +27,13 @@ abstract class StorageReader {
 	}
 
 	/**
-	 * @return The return value is the Integer of the next line.
+	 * @return The return value is the next valid line as Int.
+	 *
 	 * @throws IOException
 	 */
 	//TODO check that Methods handle null return at file end
 	int nextInt() throws IOException {
-		//TODO Handle Exeption
+		//TODO Handle Exception
 		String line = file.readLine();
 		while(!isValidString(line)) {
 			line = file.readLine();
@@ -41,27 +43,28 @@ abstract class StorageReader {
 	}
 
 	/**
-	 * The Method checks if the the String is a comment or a line without information.
+	 * The Method checks if the the String is a comment, set end or with information.
 	 *
-	 * @param l The value determines the String to be checked
-	 * @return
+	 * @param line The value determines the String to be checked
+	 *
+	 * @return The return value is true if the String is valid.
 	 */
-	boolean isValidString(String l) {
-		if(l == null) {
+	boolean isValidString(String line) {
+		if(line == null) {
 			return true;
 		}
-		if(l.length() >= 2 && (l.charAt(0) == '#' && l.charAt(1) == '#')) {
+		if(line.length() >= 2 && (line.charAt(0) == '#' && line.charAt(1) == '#')) {
 			return false;
 		}
-		if(l.length() == 1 && (l.charAt(0) == '#' || l.charAt(0) == '!' || l.charAt(0) == ' ' || l.charAt(0) ==
-		                                                                                         '\t')) {
+		if(line.length() == 1 && (line.charAt(0) == '#' || line.charAt(0) == '!')) {
 			return false;
 		}
-		return !l.isEmpty();
+		return !line.isEmpty();
 	}
 
 	/**
-	 * @return The return value is the String of the next line.
+	 * @return The return value is the next valid line as String.
+	 *
 	 * @throws IOException
 	 */
 	//TODO check that Methods handle null return at file end
