@@ -10,20 +10,24 @@ import java.io.IOException;
  * @author Eyenseo
  * @version 1
  */
-public class MapCreator extends StorageReader {
-	private Street streetGroupBuffer = null;
+class MapCreator extends StorageReader {
+	private StreetCircularList   streetGroupBuffer   = null;
+	private StationCircularList  stationGroupBuffer  = null;
+	private FacilityCircularList facilityGroupBuffer = null;
 
 	//TODO constructor with parameter with the Community-Queue and the Chance-Queue for the Community and Chance Fields
-	public MapCreator() {
+	MapCreator() {
 		//TODO Path may be different if run as package.
 		super("./Monopoly/src/storage/map.txt");
 	}
 
 	/**
-	 * @return The return value is the finished map
+	 * @return The return value is the finished map. A Field array with 40 length and different objects of the
+	 *         objects.value package.
 	 */
 	//TODO Exception handling
-	Field[] makeMap() {
+	//TODO Method to create map from save
+	Field[] createMap() {
 		Field[] map = new Field[40];
 		for(int i = 0; i < map.length; i++) {
 			try {
@@ -36,7 +40,8 @@ public class MapCreator extends StorageReader {
 	}
 
 	/**
-	 * @return Returns the next Field of the Map
+	 * @return The return value is the next Field of the map.
+	 *
 	 * @throws IOException
 	 */
 	private Field nextField() throws IOException {
@@ -46,36 +51,38 @@ public class MapCreator extends StorageReader {
 			number = Integer.parseInt(line);
 			switch(number) {
 				case 0:
-					return makeStreet();
+					return createStreet();
 				case 1:
-					return makeStation();
+					return createStation();
 				case 2:
-					return makeChance();
+					return createChance();
 				case 3:
-					return makeCommunity();
+					return createCommunity();
 				case 4:
-					return makeTax();
+					return createTax();
 				case 5:
-					return makeFacility();
+					return createFacility();
 				case 6:
-					return makeGo();
+					return createGo();
 				case 7:
-					return makeJail();
+					return createJail();
 				case 8:
-					return makeParking();
+					return createParking();
 				case 9:
-					return makeGoToJail();
+					return createGoToJail();
 			}
 		}
 		return null;
 	}
 
 	/**
-	 * @return The return value is a Street object based on the data in the storage package.
+	 * This method connects the streets of the same color while creating them.
+	 *
+	 * @return The return value is a StreetCircularList object based on the data in the storage package.
+	 *
 	 * @throws IOException
 	 */
-	private Street makeStreet() throws IOException {
-		Street street;
+	private StreetCircularList createStreet() throws IOException {
 		String name = nextString();
 		int[] color = new int[3];
 		for(int i = 0; i < color.length; i++) {
@@ -89,30 +96,34 @@ public class MapCreator extends StorageReader {
 		int upgrade = nextInt();
 		int mortgage = nextInt();
 		//TODO get owner and stage from a save file
-		street = new Street(name, price, income, mortgage, 0, null, upgrade, color);
+		StreetCircularList street = new StreetCircularList(name, price, income, mortgage, 0, null, upgrade, color);
 		connectStreet(street);
 		return street;
 	}
 
 	/**
-	 * This method checks the last Street was already of it's color, if it is it connects the them,
-	 * if not the Street in the parameter is the 'star' of a new ring list.
+	 * This method checks the last StreetCircularList object was already of it's color, if it is it connects the them,
+	 * if not the StreetCircularList object in the parameter is the 'start' of a new ring list.
 	 *
-	 * @param street The value determines the Street which will check if it belongs to the previous Street.
+	 * @param street The value determines the StreetCircularList object which will check if it belongs to the previous
+	 *               StreetCircularList object.
 	 */
-	void connectStreet(Street street) {
+	void connectStreet(StreetCircularList street) {
 		if(streetGroupBuffer != null && streetGroupBuffer.isSameColor(street)) {
 			streetGroupBuffer.add(street);
-		} else {
+		} else {  // The else block is for performance by letting go of the 'order' from the circular list
 			streetGroupBuffer = street;
 		}
 	}
 
 	/**
-	 * @return The return value is a Station object based on the data in the storage package.
+	 * This method connects the new station with the other if other exist.
+	 *
+	 * @return The return value is a StationCircularList object based on the data in the storage package.
+	 *
 	 * @throws IOException
 	 */
-	private Station makeStation() throws IOException {
+	private StationCircularList createStation() throws IOException {
 		String name = nextString();
 		int price = nextInt();
 		int[] income = new int[4];
@@ -121,77 +132,119 @@ public class MapCreator extends StorageReader {
 		}
 		int mortgage = nextInt();
 		//TODO get owner and stage from a save file
-		return new Station(name, price, income, mortgage, 0, null);
+		StationCircularList station = new StationCircularList(name, price, income, mortgage, 0, null);
+		connectStation(station);
+		return station;
+	}
+
+	/**
+	 * This method connects the station with the next one if there was already one.
+	 *
+	 * @param station The value determines the StationCircularList object that will be added to the other
+	 *                StationCircularList objects.
+	 */
+	private void connectStation(StationCircularList station) {
+		if(stationGroupBuffer != null) {
+			stationGroupBuffer.add(station);
+		} else {// The else block is for performance by letting go of the 'order' from the circular list
+			stationGroupBuffer = station;
+		}
 	}
 
 	/**
 	 * @return The return value is a Chance object based on the data in the storage package.
+	 *
 	 * @throws IOException
 	 */
-	private Chance makeChance() {
+	private Chance createChance() {
 		return new Chance();
 	}
 
 	/**
 	 * @return The return value is a Community object based on the data in the storage package.
+	 *
 	 * @throws IOException
 	 */
-	private Community makeCommunity() {
+	private Community createCommunity() {
 		return new Community();
 	}
 
 	/**
 	 * @return The return value is a Tax object based on the data in the storage package.
+	 *
 	 * @throws IOException
 	 */
-	private Tax makeTax() throws IOException {
+	private Tax createTax() throws IOException {
 		String name = nextString();
 		int bill = nextInt();
 		return new Tax(name, bill);
 	}
 
 	/**
-	 * @return The return value is a Facility object based on the data in the storage package.
+	 * This method connects the new facility with the other if other exist.
+	 *
+	 * @return The return value is a FacilityCircularList object based on the data in the storage package.
+	 *
 	 * @throws IOException
 	 */
-	private Facility makeFacility() throws IOException {
+	private FacilityCircularList createFacility() throws IOException {
 		String name = nextString();
 		int price = nextInt();
 		int[] income = {nextInt(), nextInt()};
 		int mortgage = nextInt();
 		//TODO get owner and stage from a save file
-		return new Facility(name, price, income, mortgage, 0, null);
+		FacilityCircularList facility = new FacilityCircularList(name, price, income, mortgage, 0, null);
+		connectFacility(facility);
+		return facility;
+	}
+
+	/**
+	 * This method connects the facility with the next one if there was already one.
+	 *
+	 * @param facility The value determines the FacilityCircularList object that will be added to the other
+	 *                 FacilityCircularList objects.
+	 */
+	private void connectFacility(FacilityCircularList facility) {
+		if(facilityGroupBuffer != null) {
+			facilityGroupBuffer.add(facility);
+		} else {// The else block is for performance by letting go of the 'order' from the circular list
+			facilityGroupBuffer = facility;
+		}
 	}
 
 	/**
 	 * @return The return value is a Go object based on the data in the storage package.
+	 *
 	 * @throws IOException
 	 */
-	private Go makeGo() {
+	private Go createGo() {
 		return new Go();
 	}
 
 	/**
 	 * @return The return value is a Jail object based on the data in the storage package.
+	 *
 	 * @throws IOException
 	 */
-	private Jail makeJail() {
+	private Jail createJail() {
 		return new Jail();
 	}
 
 	/**
 	 * @return The return value is a Parking object based on the data in the storage package.
+	 *
 	 * @throws IOException
 	 */
-	private Parking makeParking() {
+	private Parking createParking() {
 		return new Parking();
 	}
 
 	/**
 	 * @return The return value is a GoToJail object based on the data in the storage package.
+	 *
 	 * @throws IOException
 	 */
-	private GoToJail makeGoToJail() {
+	private GoToJail createGoToJail() {
 		return new GoToJail();
 	}
 }
