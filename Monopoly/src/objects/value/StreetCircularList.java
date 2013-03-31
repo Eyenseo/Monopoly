@@ -44,7 +44,7 @@ public class StreetCircularList extends PurchasableCircularList {
 	}
 
 	/**
-	 * @param street
+	 * @param street The value determines the street to check against.
 	 *
 	 * @return The return value is true if the two Streets have the same color.
 	 */
