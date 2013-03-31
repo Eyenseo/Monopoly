@@ -152,35 +152,6 @@ class MapCreator extends StorageReader {
 	}
 
 	/**
-	 * @return The return value is a Chance object based on the data in the storage package.
-	 *
-	 * @throws IOException
-	 */
-	private Chance createChance() {
-		return new Chance();
-	}
-
-	/**
-	 * @return The return value is a Community object based on the data in the storage package.
-	 *
-	 * @throws IOException
-	 */
-	private Community createCommunity() {
-		return new Community();
-	}
-
-	/**
-	 * @return The return value is a Tax object based on the data in the storage package.
-	 *
-	 * @throws IOException
-	 */
-	private Tax createTax() throws IOException {
-		String name = nextString();
-		int bill = nextInt();
-		return new Tax(name, bill);
-	}
-
-	/**
 	 * This method connects the new facility with the other if other exist.
 	 *
 	 * @return The return value is a FacilityCircularList object based on the data in the storage package.
@@ -213,9 +184,30 @@ class MapCreator extends StorageReader {
 	}
 
 	/**
+	 * @return The return value is a Chance object based on the data in the storage package.
+	 */
+	private Chance createChance() {
+		return new Chance();
+	}
+
+	/**
+	 * @return The return value is a Community object based on the data in the storage package.
+	 */
+	private Community createCommunity() {
+		return new Community();
+	}
+
+	/**
+	 * @return The return value is a Tax object based on the data in the storage package.
+	 */
+	private Tax createTax() throws IOException {
+		String name = nextString();
+		int bill = nextInt();
+		return new Tax(name, bill);
+	}
+
+	/**
 	 * @return The return value is a Go object based on the data in the storage package.
-	 *
-	 * @throws IOException
 	 */
 	private Go createGo() {
 		return new Go();
@@ -223,8 +215,6 @@ class MapCreator extends StorageReader {
 
 	/**
 	 * @return The return value is a Jail object based on the data in the storage package.
-	 *
-	 * @throws IOException
 	 */
 	private Jail createJail() {
 		return new Jail();
@@ -232,8 +222,6 @@ class MapCreator extends StorageReader {
 
 	/**
 	 * @return The return value is a Parking object based on the data in the storage package.
-	 *
-	 * @throws IOException
 	 */
 	private Parking createParking() {
 		return new Parking();
@@ -241,8 +229,6 @@ class MapCreator extends StorageReader {
 
 	/**
 	 * @return The return value is a GoToJail object based on the data in the storage package.
-	 *
-	 * @throws IOException
 	 */
 	private GoToJail createGoToJail() {
 		return new GoToJail();
