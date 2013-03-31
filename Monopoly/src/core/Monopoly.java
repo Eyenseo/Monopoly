@@ -12,7 +12,7 @@ import objects.value.Field;
 public class Monopoly {
 
 	public static void main(String[] args) {
-		Field[] map = new MapCreator().makeMap();
+		Field[] map = new MapCreator().createMap();
 		System.out.print("Set stop - check the map in debug.");
 	}
 }

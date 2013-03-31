@@ -8,7 +8,7 @@ package objects.value;
  */
 abstract class NotPurchasable extends Field {
 	/**
-	 * @param name The value determines the name of the field.
+	 * @param name The value determines the name of the object.
 	 */
 	NotPurchasable(String name) {
 		super(name);
