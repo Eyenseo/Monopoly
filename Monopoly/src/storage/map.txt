@@ -1,58 +1,46 @@
 ##	Keywords
 ##		##	Comment
 ##		#!	Object is finished
-##
-##	Objects and Formats
-##		Street
-##		0
-##		name
-##		color red
-##		color green
-##		color blue
-##		price
-##		income
-##		income
-##		income
-##		income
-##		income
-##		income
-##		upgrade (house/hotel)
-##		mortgage
-##	Station
-##		1
-##		name
-##		price
-##		income
-##		income
-##		income
-##		income
-##		mortgage
-##	Chance
-##		2
-##	Community
-##		3
-##	Tax
-##		4
-##		name
-##		amount
-##	Facility
-##		5
-##		name
-##		price
-##		income
-##		income
-##		mortgage
-##	GO
-##		6
-##	Jail
-##		7
-##	Parking
-##		8
-##	GoToJail
-##		9
-6
+##		#Street
+##			name
+##			color red
+##			color green
+##			color blue
+##			price
+##			income
+##			income
+##			income
+##			income
+##			income
+##			income
+##			upgrade (house/hotel)
+##			mortgage
+##		#Station
+##			name
+##			price
+##			income
+##			income
+##			income
+##			income
+##			mortgage
+##		#Facility
+##			name
+##			price
+##			income
+##			income
+##			mortgage
+##		#Tax
+##			name
+##			amount
+##		#Chance
+##		#Community
+##		#GO
+##		#Jail
+##		#Parking
+##		#GoToJail
+#Go
 #!
-0
+#Street
 Badstraße
 128
 51
@@ -67,9 +55,9 @@ Badstraße
 1000
 600
 #!
-3
+#Community
 #!
-0
+#Street
 Turmstraße
 128
 51
@@ -84,11 +72,11 @@ Turmstraße
 1000
 600
 #!
-4
+#Tax
 Einkommenssteuer
 4000
 #!
-1
+#Station
 Südbahnhof
 4000
 500
@@ -97,7 +85,7 @@ Südbahnhof
 4000
 2000
 #!
-0
+#Street
 Chausseestraße
 128
 204
@@ -112,9 +100,9 @@ Chausseestraße
 1000
 1000
 #!
-2
+#Chance
 #!
-0
+#Street
 Elisenstraße
 128
 204
@@ -129,7 +117,7 @@ Elisenstraße
 1000
 1000
 #!
-0
+#Street
 Poststraße
 128
 204
@@ -144,9 +132,9 @@ Poststraße
 1000
 1200
 #!
-7
+#Jail
 #!
-0
+#Street
 Seestraße
 204
 68
@@ -161,14 +149,14 @@ Seestraße
 2000
 1400
 #!
-5
+#Facility
 Elektrizitäts-Werk
 3000
 80
 200
 1500
 #!
-0
+#Street
 Hafenstraße
 204
 68
@@ -183,7 +171,7 @@ Hafenstraße
 2000
 1400
 #!
-0
+#Street
 Neue Straße
 204
 68
@@ -198,7 +186,7 @@ Neue Straße
 2000
 1600
 #!
-1
+#Station
 Westbahnhof
 4000
 500
@@ -207,7 +195,7 @@ Westbahnhof
 4000
 2000
 #!
-0
+#Street
 Münchner Straße
 255
 128
@@ -222,9 +210,9 @@ Münchner Straße
 2000
 1800
 #!
-3
+#Community
 #!
-0
+#Street
 Wiener Straße
 255
 128
@@ -239,7 +227,7 @@ Wiener Straße
 2000
 1800
 #!
-0
+#Street
 Berliner Straße
 255
 128
@@ -254,9 +242,9 @@ Berliner Straße
 2000
 2000
 #!
-8
+#Parking
 #!
-0
+#Street
 Theaterstraße
 255
 0
@@ -271,9 +259,9 @@ Theaterstraße
 3000
 2200
 #!
-2
+#Chance
 #!
-0
+#Street
 Museumstraße
 255
 0
@@ -288,7 +276,7 @@ Museumstraße
 3000
 2200
 #!
-0
+#Street
 Opernplatz
 255
 0
@@ -303,7 +291,7 @@ Opernplatz
 3000
 2400
 #!
-1
+#Station
 Nordbahnhof
 4000
 500
@@ -312,7 +300,7 @@ Nordbahnhof
 4000
 2000
 #!
-0
+#Street
 Lessingstraße
 255
 255
@@ -327,7 +315,7 @@ Lessingstraße
 3000
 2600
 #!
-0
+#Street
 Schillerstraße
 255
 255
@@ -342,14 +330,14 @@ Schillerstraße
 3000
 2600
 #!
-5
+#Facility
 Wasser-Werk
 3000
 80
 200
 1500
 #!
-0
+#Street
 Goethestraße
 255
 255
@@ -364,9 +352,9 @@ Goethestraße
 3000
 2800
 #!
-9
+#GoToJail
 #!
-0
+#Street
 Rathausplatz
 51
 128
@@ -381,7 +369,7 @@ Rathausplatz
 4000
 3000
 #!
-0
+#Street
 Hauptstraße
 51
 128
@@ -396,9 +384,9 @@ Hauptstraße
 4000
 3000
 #!
-3
+#Community
 #!
-0
+#Street
 Bahnhofstraße
 51
 128
@@ -413,7 +401,7 @@ Bahnhofstraße
 4000
 3200
 #!
-1
+#Station
 Haptbahnhof
 4000
 500
@@ -422,9 +410,9 @@ Haptbahnhof
 4000
 2000
 #!
-2
+#Chance
 #!
-0
+#Street
 Parkstraße
 32
 32
@@ -439,11 +427,11 @@ Parkstraße
 4000
 3500
 #!
-4
+#Tax
 Zusatzsteuer
 2000
 #!
-0
+#Street
 Schlossallee
 32
 32
