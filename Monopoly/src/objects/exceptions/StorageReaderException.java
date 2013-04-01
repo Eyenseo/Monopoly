@@ -38,8 +38,8 @@ public class StorageReaderException extends Exception {
 	 *         last cause.
 	 */
 	public String getMessageStack() {
-		String message = super.getMessage() + '\n';
-		if(this.getCause() != null && this.getCause() instanceof StorageReaderException) {
+		String message = getMessage() + '\n';
+		if(this.getCause() != null) {
 			message += getCauseMessage();
 		}
 		return message;
@@ -59,7 +59,8 @@ public class StorageReaderException extends Exception {
 	 */
 	private String getCauseMessage(StorageReaderException cause) {
 		String message = null;
-		if(cause.getCause() != null && cause.getCause() instanceof StorageReaderException) {
+		//if(cause.getCause() != null && cause.getCause() instanceof StorageReaderException) {
+		if(cause.getCause() != null) {
 			message = cause.getMessage() + '\n';
 			message += cause.getCauseMessage((StorageReaderException) cause.getCause());
 		} else {

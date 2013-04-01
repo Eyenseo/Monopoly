@@ -1,4 +1,4 @@
-##	Keywords
+##	control words
 ##		##	Comment
 ##		#!	Object is finished
 ##		#Street

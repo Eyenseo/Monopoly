@@ -1,4 +1,4 @@
-##	 	key words
+##	 	control words
 ##	 	##			Comment
 ##		#$			means income or loss
 ##	 	#jailbait	means a jailbait card

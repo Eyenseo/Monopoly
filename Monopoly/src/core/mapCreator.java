@@ -9,6 +9,7 @@ import objects.value.*;
  * @author Eyenseo
  * @version 1
  */
+//TODO read from save file
 class MapCreator extends StorageReader {
 	private StreetCircularList   streetGroupBuffer   = null;
 	private StationCircularList  stationGroupBuffer  = null;
@@ -16,15 +17,14 @@ class MapCreator extends StorageReader {
 
 	//TODO constructor with parameter with the Community-Queue and the Chance-Queue for the Community and Chance Fields
 	MapCreator() {
-		//TODO Path may be different if run as package.
-		super("./Monopoly/src/storage/map.txt");
+		super("map.txt");
 	}
 
 	/**
 	 * @return The return value is the finished map. A Field array with 40 length and different objects of the
 	 *         objects.value package.
 	 *
-	 * @throws MapCreationException The Exception hold in its cause attribute the previous Exception and should be
+	 * @throws MapCreationException The Exception holds in its cause attribute the previous Exception and should be
 	 *                              read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
@@ -45,10 +45,9 @@ class MapCreator extends StorageReader {
 	/**
 	 * @return The return value is the next Field of the map.
 	 *
-	 * @throws StorageReaderException The Exception hold in its cause attribute the previous Exception and should be
+	 * @throws StorageReaderException The Exception holds in its cause attribute the previous Exception and should be
 	 *                                read out with getMessageStack.
 	 */
-	//TODO switch to the new control words
 	private Field nextField() throws StorageReaderException {
 		String line;
 		while((line = nextString()) != null) {
@@ -99,7 +98,7 @@ class MapCreator extends StorageReader {
 	 *
 	 * @return The return value is a StreetCircularList object based on the data in the storage package.
 	 *
-	 * @throws StreetCreationException The Exception hold in its cause attribute the previous Exception and should be
+	 * @throws StreetCreationException The Exception holds in its cause attribute the previous Exception and should be
 	 *                                 read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
@@ -118,7 +117,6 @@ class MapCreator extends StorageReader {
 			}
 			int upgrade = nextInt();
 			int mortgage = nextInt();
-			//TODO get owner and stage from a save file
 			StreetCircularList street = new StreetCircularList(name, price, income, mortgage, 0, null, upgrade, color);
 			connectStreet(street);
 			return street;
@@ -129,7 +127,7 @@ class MapCreator extends StorageReader {
 
 	/**
 	 * This method checks the last StreetCircularList object was already of it's color, if it is it connects the them,
-	 * if not the StreetCircularList object in the parameter is the 'start' of a new ring list.
+	 * if not the StreetCircularList object in the parameter is the 'start' of a new circular list.
 	 *
 	 * @param street The value determines the StreetCircularList object which will check if it belongs to the previous
 	 *               StreetCircularList object.
@@ -147,7 +145,7 @@ class MapCreator extends StorageReader {
 	 *
 	 * @return The return value is a StationCircularList object based on the data in the storage package.
 	 *
-	 * @throws StationCreationException The Exception hold in its cause attribute the previous Exception and should be
+	 * @throws StationCreationException The Exception holds in its cause attribute the previous Exception and should be
 	 *                                  read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
@@ -189,8 +187,8 @@ class MapCreator extends StorageReader {
 	 *
 	 * @return The return value is a FacilityCircularList object based on the data in the storage package.
 	 *
-	 * @throws FacilityCreationException The Exception hold in its cause attribute the previous Exception and should be
-	 *                                   read out with getMessageStack.
+	 * @throws FacilityCreationException The Exception holds in its cause attribute the previous Exception and should
+	 *                                   be read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
 	private FacilityCircularList createFacility() throws FacilityCreationException {
@@ -200,7 +198,6 @@ class MapCreator extends StorageReader {
 			int price = nextInt();
 			int[] income = {nextInt(), nextInt()};
 			int mortgage = nextInt();
-			//TODO get owner and stage from a save file
 			FacilityCircularList facility = new FacilityCircularList(name, price, income, mortgage, 0, null);
 			connectFacility(facility);
 			return facility;

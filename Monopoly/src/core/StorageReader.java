@@ -16,15 +16,16 @@ import java.io.IOException;
  */
 abstract class StorageReader {
 	BufferedReader file;
-	String path = null;
+	String path = "./Monopoly/src/storage/";
 
 	/**
-	 * @param path The value determines which file will be loaded.
+	 * @param file The value determines which file will be loaded.
 	 */
-	public StorageReader(String path) {
+	public StorageReader(String file) {
 		try {
-			this.file = new BufferedReader(new FileReader(path));
-			this.path = path;
+			//TODO Path may be different if run as package.
+			this.file = new BufferedReader(new FileReader(path + file));
+			this.path += file;
 		} catch(FileNotFoundException e) {
 			System.out.println("The requested file (" + path + ") was not found! The Program must be corrupted since" +
 			                   " " +
@@ -34,9 +35,9 @@ abstract class StorageReader {
 	}
 
 	/**
-	 * @return The return value is the next valid line as Int.
+	 * @return The return value is the next valid line as int.
 	 *
-	 * @throws StorageReaderException The Exception hold in its cause attribute the previous Exception and should be
+	 * @throws StorageReaderException The Exception holds in its cause attribute the previous Exception and should be
 	 *                                read out with getMessageStack.
 	 */
 	int nextInt() throws StorageReaderException {
@@ -46,7 +47,7 @@ abstract class StorageReader {
 	/**
 	 * @return The return value is the next valid line as String.
 	 *
-	 * @throws StorageReaderException The Exception hold in its cause attribute the previous Exception and should be
+	 * @throws StorageReaderException The Exception holds in its cause attribute the previous Exception and should be
 	 *                                read out with getMessageStack.
 	 */
 	String nextString() throws StorageReaderException {
