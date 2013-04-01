@@ -1,8 +1,7 @@
 package core;
 
+import objects.exceptions.*;
 import objects.value.*;
-
-import java.io.IOException;
 
 /**
  * The MapCreator class provides the method to create the map out of the data in the storage package.
@@ -24,55 +23,75 @@ class MapCreator extends StorageReader {
 	/**
 	 * @return The return value is the finished map. A Field array with 40 length and different objects of the
 	 *         objects.value package.
+	 *
+	 * @throws MapCreationException The Exception hold in its cause attribute the previous Exception and should be
+	 *                              read out with getMessageStack.
+	 * @see StorageReaderException
 	 */
-	//TODO Exception handling
 	//TODO Method to create map from save
-	Field[] createMap() {
+	Field[] createMap() throws MapCreationException {
 		Field[] map = new Field[40];
-		for(int i = 0; i < map.length; i++) {
-			try {
+		int i = 0;
+		try {
+			for(i = 0; i < map.length; i++) {
 				map[i] = nextField();
-			} catch(IOException e) {
-				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
 			}
+			return map;
+		} catch(StorageReaderException e) {
+			throw new MapCreationException(i, e);
 		}
-		return map;
 	}
 
 	/**
 	 * @return The return value is the next Field of the map.
 	 *
-	 * @throws IOException
+	 * @throws StorageReaderException The Exception hold in its cause attribute the previous Exception and should be
+	 *                                read out with getMessageStack.
 	 */
-	private Field nextField() throws IOException {
+	//TODO switch to the new control words
+	private Field nextField() throws StorageReaderException {
 		String line;
-		int number;
 		while((line = nextString()) != null) {
-			number = Integer.parseInt(line);
-			switch(number) {
-				case 0:
+			if(isControlWord(line)) {
+				if(line.equals("#!")) {
+					continue;
+				}
+				if(line.equals("#Street")) {
 					return createStreet();
-				case 1:
+				}
+				if(line.equals("#Street")) {
+					return createStreet();
+				}
+				if(line.equals("#Station")) {
 					return createStation();
-				case 2:
-					return createChance();
-				case 3:
-					return createCommunity();
-				case 4:
-					return createTax();
-				case 5:
+				}
+				if(line.equals("#Facility")) {
 					return createFacility();
-				case 6:
+				}
+				if(line.equals("#Tax")) {
+					return createTax();
+				}
+				if(line.equals("#Chance")) {
+					return createChance();
+				}
+				if(line.equals("#Community")) {
+					return createCommunity();
+				}
+				if(line.equals("#Go")) {
 					return createGo();
-				case 7:
+				}
+				if(line.equals("#Jail")) {
 					return createJail();
-				case 8:
+				}
+				if(line.equals("#Parking")) {
 					return createParking();
-				case 9:
+				}
+				if(line.equals("#GoToJail")) {
 					return createGoToJail();
+				}
 			}
 		}
-		return null;
+		throw new FieldCreationException();
 	}
 
 	/**
@@ -80,25 +99,32 @@ class MapCreator extends StorageReader {
 	 *
 	 * @return The return value is a StreetCircularList object based on the data in the storage package.
 	 *
-	 * @throws IOException
+	 * @throws StreetCreationException The Exception hold in its cause attribute the previous Exception and should be
+	 *                                 read out with getMessageStack.
+	 * @see StorageReaderException
 	 */
-	private StreetCircularList createStreet() throws IOException {
-		String name = nextString();
-		int[] color = new int[3];
-		for(int i = 0; i < color.length; i++) {
-			color[i] = nextInt();
+	private StreetCircularList createStreet() throws StreetCreationException {
+		String name = null;
+		try {
+			name = nextString();
+			int[] color = new int[3];
+			for(int i = 0; i < color.length; i++) {
+				color[i] = nextInt();
+			}
+			int price = nextInt();
+			int[] income = new int[6];
+			for(int i = 0; i < income.length; i++) {
+				income[i] = nextInt();
+			}
+			int upgrade = nextInt();
+			int mortgage = nextInt();
+			//TODO get owner and stage from a save file
+			StreetCircularList street = new StreetCircularList(name, price, income, mortgage, 0, null, upgrade, color);
+			connectStreet(street);
+			return street;
+		} catch(Exception e) {
+			throw new StreetCreationException(name, e);
 		}
-		int price = nextInt();
-		int[] income = new int[6];
-		for(int i = 0; i < income.length; i++) {
-			income[i] = nextInt();
-		}
-		int upgrade = nextInt();
-		int mortgage = nextInt();
-		//TODO get owner and stage from a save file
-		StreetCircularList street = new StreetCircularList(name, price, income, mortgage, 0, null, upgrade, color);
-		connectStreet(street);
-		return street;
 	}
 
 	/**
@@ -121,20 +147,27 @@ class MapCreator extends StorageReader {
 	 *
 	 * @return The return value is a StationCircularList object based on the data in the storage package.
 	 *
-	 * @throws IOException
+	 * @throws StationCreationException The Exception hold in its cause attribute the previous Exception and should be
+	 *                                  read out with getMessageStack.
+	 * @see StorageReaderException
 	 */
-	private StationCircularList createStation() throws IOException {
-		String name = nextString();
-		int price = nextInt();
-		int[] income = new int[4];
-		for(int i = 0; i < income.length; i++) {
-			income[i] = nextInt();
+	private StationCircularList createStation() throws StationCreationException {
+		String name = null;
+		try {
+			name = nextString();
+			int price = nextInt();
+			int[] income = new int[4];
+			for(int i = 0; i < income.length; i++) {
+				income[i] = nextInt();
+			}
+			int mortgage = nextInt();
+			//TODO get owner and stage from a save file
+			StationCircularList station = new StationCircularList(name, price, income, mortgage, 0, null);
+			connectStation(station);
+			return station;
+		} catch(Exception e) {
+			throw new StationCreationException(name, e);
 		}
-		int mortgage = nextInt();
-		//TODO get owner and stage from a save file
-		StationCircularList station = new StationCircularList(name, price, income, mortgage, 0, null);
-		connectStation(station);
-		return station;
 	}
 
 	/**
@@ -156,17 +189,24 @@ class MapCreator extends StorageReader {
 	 *
 	 * @return The return value is a FacilityCircularList object based on the data in the storage package.
 	 *
-	 * @throws IOException
+	 * @throws FacilityCreationException The Exception hold in its cause attribute the previous Exception and should be
+	 *                                   read out with getMessageStack.
+	 * @see StorageReaderException
 	 */
-	private FacilityCircularList createFacility() throws IOException {
-		String name = nextString();
-		int price = nextInt();
-		int[] income = {nextInt(), nextInt()};
-		int mortgage = nextInt();
-		//TODO get owner and stage from a save file
-		FacilityCircularList facility = new FacilityCircularList(name, price, income, mortgage, 0, null);
-		connectFacility(facility);
-		return facility;
+	private FacilityCircularList createFacility() throws FacilityCreationException {
+		String name = null;
+		try {
+			name = nextString();
+			int price = nextInt();
+			int[] income = {nextInt(), nextInt()};
+			int mortgage = nextInt();
+			//TODO get owner and stage from a save file
+			FacilityCircularList facility = new FacilityCircularList(name, price, income, mortgage, 0, null);
+			connectFacility(facility);
+			return facility;
+		} catch(Exception e) {
+			throw new FacilityCreationException(name, e);
+		}
 	}
 
 	/**
@@ -184,6 +224,24 @@ class MapCreator extends StorageReader {
 	}
 
 	/**
+	 * @return The return value is a Tax object based on the data in the storage package.
+	 *
+	 * @throws TaxCreationException The Exception hold in its cause attribute the previous Exception and should be
+	 *                              read out with getMessageStack.
+	 * @see StorageReaderException
+	 */
+	private Tax createTax() throws TaxCreationException {
+		String name = null;
+		try {
+			name = nextString();
+			int bill = nextInt();
+			return new Tax(name, bill);
+		} catch(Exception e) {
+			throw new TaxCreationException(name, e);
+		}
+	}
+
+	/**
 	 * @return The return value is a Chance object based on the data in the storage package.
 	 */
 	private Chance createChance() {
@@ -195,15 +253,6 @@ class MapCreator extends StorageReader {
 	 */
 	private Community createCommunity() {
 		return new Community();
-	}
-
-	/**
-	 * @return The return value is a Tax object based on the data in the storage package.
-	 */
-	private Tax createTax() throws IOException {
-		String name = nextString();
-		int bill = nextInt();
-		return new Tax(name, bill);
 	}
 
 	/**

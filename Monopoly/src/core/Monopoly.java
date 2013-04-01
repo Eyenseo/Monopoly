@@ -1,5 +1,6 @@
 package core;
 
+import objects.exceptions.MapCreationException;
 import objects.value.Field;
 
 /**
@@ -12,7 +13,12 @@ import objects.value.Field;
 public class Monopoly {
 
 	public static void main(String[] args) {
-		Field[] map = new MapCreator().createMap();
+		Field[] map;
+		try {
+			map = new MapCreator().createMap();
+		} catch(MapCreationException e) {
+			System.out.println(e.getMessageStack());
+		}
 		System.out.print("Set stop - check the map in debug.");
 	}
 }
