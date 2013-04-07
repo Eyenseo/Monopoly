@@ -8,7 +8,7 @@ package objects.value;
  * @version 0.1
  */
 public class StreetCircularList extends PurchasableCircularList {
-	final         int[] COLOR;
+	private final int[] COLOR;
 	private final int   UPGRADE;
 
 	/**
@@ -45,7 +45,6 @@ public class StreetCircularList extends PurchasableCircularList {
 
 	/**
 	 * @param street The value determines the street to check against.
-	 *
 	 * @return The return value is true if the two Streets have the same color.
 	 */
 	public boolean isSameColor(StreetCircularList street) {

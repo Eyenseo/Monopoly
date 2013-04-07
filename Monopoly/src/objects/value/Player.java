@@ -8,11 +8,11 @@ package objects.value;
  * To change this template use File | Settings | File Templates.
  */
 public class Player {
-	final String NAME;
-	int   money;
-	Field position;
+	private final String NAME;
+	private       int    money;
+	private       Field  position;
 
-	Player(String name, int money, Field position) {
+	public Player(String name, int money, Field position) {
 		this.NAME = name;
 		this.money = money;
 		this.position = position;

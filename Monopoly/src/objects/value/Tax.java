@@ -8,7 +8,7 @@ package objects.value;
  * To change this template use File | Settings | File Templates.
  */
 public class Tax extends NotPurchasable {
-	int bill;
+	private final int bill;
 	// TODO:   Everything
 
 	public Tax(String name, int bill) {

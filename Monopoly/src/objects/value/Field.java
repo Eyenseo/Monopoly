@@ -5,7 +5,7 @@ package objects.value;
  * @version 0.1
  */
 public abstract class Field {
-	final String NAME;
+	private final String NAME;
 
 	/**
 	 * @param name The value determines the name of the object.

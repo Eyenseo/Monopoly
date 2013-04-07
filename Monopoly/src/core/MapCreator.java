@@ -129,7 +129,7 @@ class MapCreator extends StorageReader {
 	 * @param street The value determines the StreetCircularList object which will check if it belongs to the previous
 	 *               StreetCircularList object.
 	 */
-	void connectStreet(StreetCircularList street) {
+	private void connectStreet(StreetCircularList street) {
 		if(streetGroupBuffer != null && streetGroupBuffer.isSameColor(street)) {
 			streetGroupBuffer.add(street);
 		} else {  // The else block is for performance by letting go of the 'order' from the circular list

@@ -8,12 +8,12 @@ package objects.value;
  * @version 1
  */
 abstract class PurchasableCircularList extends Field {
-	final int   PRICE;
-	final int[] INCOME;
-	final int   MORTGAGE;   //Hypothek
-	Player owner;
-	int    stage;
-	private PurchasableCircularList next;
+	private final int                     PRICE;
+	private final int[]                   INCOME;
+	private final int                     MORTGAGE;   //Hypothek
+	private       Player                  owner;
+	private       int                     stage;
+	private       PurchasableCircularList next;
 
 	/**
 	 * @param name     The value determines the name of the object.

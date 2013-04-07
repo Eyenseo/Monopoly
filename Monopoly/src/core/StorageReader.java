@@ -15,13 +15,13 @@ import java.io.IOException;
  * @version 1
  */
 abstract class StorageReader {
-	BufferedReader file;
-	String path = "./Monopoly/src/storage/";
+	private BufferedReader file;
+	private String path = "./Monopoly/src/storage/";
 
 	/**
 	 * @param file The value determines which file will be loaded.
 	 */
-	public StorageReader(String file) {
+	StorageReader(String file) {
 		try {
 			//TODO Path may be different if run as package.
 			this.file = new BufferedReader(new FileReader(path + file));
@@ -36,7 +36,6 @@ abstract class StorageReader {
 
 	/**
 	 * @return The return value is the next valid line as int.
-	 *
 	 * @throws StorageReaderException The Exception holds in its cause attribute the previous Exception and should be
 	 *                                read out with getMessageStack.
 	 */
@@ -46,7 +45,6 @@ abstract class StorageReader {
 
 	/**
 	 * @return The return value is the next valid line as String.
-	 *
 	 * @throws StorageReaderException The Exception holds in its cause attribute the previous Exception and should be
 	 *                                read out with getMessageStack.
 	 */
@@ -69,7 +67,6 @@ abstract class StorageReader {
 	 * The Method checks if the the String is a comment.
 	 *
 	 * @param line The value determines the String to be checked
-	 *
 	 * @return The return value is true if the String is a comment.
 	 */
 	boolean isCommentString(String line) {
@@ -83,7 +80,6 @@ abstract class StorageReader {
 	 * The Method checks if the the String is a control word.
 	 *
 	 * @param line The value determines the String to be checked
-	 *
 	 * @return The return value is true if the String is a control word.
 	 */
 	boolean isControlWord(String line) {
