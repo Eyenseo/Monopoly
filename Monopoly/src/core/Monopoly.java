@@ -13,9 +13,8 @@ import objects.value.Field;
 public class Monopoly {
 
 	public static void main(String[] args) {
-		Field[] map =
-				null; // If map is not initialised the value assigned in the try block will be forgotten once the try block is
-				// finished
+		Field[] map = null; /* If map is not initialised the value assigned in the try block will be forgotten once
+		the try-block is finished */
 		try {
 			map = new MapCreator().createMap();
 		} catch(MapCreationException e) {
