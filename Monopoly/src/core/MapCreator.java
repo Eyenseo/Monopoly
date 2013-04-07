@@ -30,14 +30,13 @@ class MapCreator extends StorageReader {
 	//TODO Method to create map from save
 	Field[] createMap() throws MapCreationException {
 		Field[] map = new Field[40];
-		int i = 0;
 		try {
-			for(i = 0; i < map.length; i++) {
+			for(int i = 0; i < map.length; i++) {
 				map[i] = nextField();
 			}
 			return map;
 		} catch(StorageReaderException e) {
-			throw new MapCreationException(i, e);
+			throw new MapCreationException(map, e);
 		}
 	}
 
@@ -47,48 +46,41 @@ class MapCreator extends StorageReader {
 	 *                                read out with getMessageStack.
 	 */
 	private Field nextField() throws StorageReaderException {
-		String line;
-		while((line = nextString()) != null) {
-			if(isControlWord(line)) {
-				if(line.equals("#!")) {
-					continue;
-				}
-				if(line.equals("#Street")) {
-					return createStreet();
-				}
-				if(line.equals("#Street")) {
-					return createStreet();
-				}
-				if(line.equals("#Station")) {
-					return createStation();
-				}
-				if(line.equals("#Facility")) {
-					return createFacility();
-				}
-				if(line.equals("#Tax")) {
-					return createTax();
-				}
-				if(line.equals("#Chance")) {
-					return createChance();
-				}
-				if(line.equals("#Community")) {
-					return createCommunity();
-				}
-				if(line.equals("#Go")) {
-					return createGo();
-				}
-				if(line.equals("#Jail")) {
-					return createJail();
-				}
-				if(line.equals("#Parking")) {
-					return createParking();
-				}
-				if(line.equals("#GoToJail")) {
-					return createGoToJail();
-				}
+		String line = nextString();
+		if(isControlWord(line)) {
+			if(line.equals("#Street")) {
+				return createStreet();
 			}
+			if(line.equals("#Station")) {
+				return createStation();
+			}
+			if(line.equals("#Facility")) {
+				return createFacility();
+			}
+			if(line.equals("#Tax")) {
+				return createTax();
+			}
+			if(line.equals("#Chance")) {
+				return createChance();
+			}
+			if(line.equals("#Community")) {
+				return createCommunity();
+			}
+			if(line.equals("#Go")) {
+				return createGo();
+			}
+			if(line.equals("#Jail")) {
+				return createJail();
+			}
+			if(line.equals("#Parking")) {
+				return createParking();
+			}
+			if(line.equals("#GoToJail")) {
+				return createGoToJail();
+			}
+			throw new FieldCreationException();
 		}
-		throw new FieldCreationException();
+		throw new StartOfBlockException(path);
 	}
 
 	/**
@@ -99,7 +91,7 @@ class MapCreator extends StorageReader {
 	 *                                 read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
-	private StreetCircularList createStreet() throws StreetCreationException {
+	private StreetCircularList createStreet() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
@@ -114,6 +106,9 @@ class MapCreator extends StorageReader {
 			}
 			int upgrade = nextInt();
 			int mortgage = nextInt();
+			if(!isEndOfBlock()) {
+				throw new EndOfBlockException(path);
+			}
 			StreetCircularList street = new StreetCircularList(name, price, income, mortgage, 0, null, upgrade, color);
 			connectStreet(street);
 			return street;
@@ -145,7 +140,7 @@ class MapCreator extends StorageReader {
 	 *                                  read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
-	private StationCircularList createStation() throws StationCreationException {
+	private StationCircularList createStation() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
@@ -155,6 +150,9 @@ class MapCreator extends StorageReader {
 				income[i] = nextInt();
 			}
 			int mortgage = nextInt();
+			if(!isEndOfBlock()) {
+				throw new EndOfBlockException(path);
+			}
 			//TODO get owner and stage from a save file
 			StationCircularList station = new StationCircularList(name, price, income, mortgage, 0, null);
 			connectStation(station);
@@ -186,13 +184,16 @@ class MapCreator extends StorageReader {
 	 *                                   be read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
-	private FacilityCircularList createFacility() throws FacilityCreationException {
+	private FacilityCircularList createFacility() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
 			int price = nextInt();
 			int[] income = {nextInt(), nextInt()};
 			int mortgage = nextInt();
+			if(!isEndOfBlock()) {
+				throw new EndOfBlockException(path);
+			}
 			FacilityCircularList facility = new FacilityCircularList(name, price, income, mortgage, 0, null);
 			connectFacility(facility);
 			return facility;
@@ -221,11 +222,14 @@ class MapCreator extends StorageReader {
 	 *                              read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
-	private Tax createTax() throws TaxCreationException {
+	private Tax createTax() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
 			int bill = nextInt();
+			if(!isEndOfBlock()) {
+				throw new EndOfBlockException(path);
+			}
 			return new Tax(name, bill);
 		} catch(Exception e) {
 			throw new TaxCreationException(name, e);
@@ -235,42 +239,60 @@ class MapCreator extends StorageReader {
 	/**
 	 * @return The return value is a Chance object based on the data in the storage package.
 	 */
-	private Chance createChance() {
+	private Chance createChance() throws StorageReaderException {
+		if(!isEndOfBlock()) {
+			throw new EndOfBlockException(path);
+		}
 		return new Chance();
 	}
 
 	/**
 	 * @return The return value is a Community object based on the data in the storage package.
 	 */
-	private Community createCommunity() {
+	private Community createCommunity() throws StorageReaderException {
+		if(!isEndOfBlock()) {
+			throw new EndOfBlockException(path);
+		}
 		return new Community();
 	}
 
 	/**
 	 * @return The return value is a Go object based on the data in the storage package.
 	 */
-	private Go createGo() {
+	private Go createGo() throws StorageReaderException {
+		if(!isEndOfBlock()) {
+			throw new EndOfBlockException(path);
+		}
 		return new Go();
 	}
 
 	/**
 	 * @return The return value is a Jail object based on the data in the storage package.
 	 */
-	private Jail createJail() {
+	private Jail createJail() throws StorageReaderException {
+		if(!isEndOfBlock()) {
+			throw new EndOfBlockException(path);
+		}
 		return new Jail();
 	}
 
 	/**
 	 * @return The return value is a Parking object based on the data in the storage package.
 	 */
-	private Parking createParking() {
+	private Parking createParking() throws StorageReaderException {
+		if(!isEndOfBlock()) {
+			throw new EndOfBlockException(path);
+		}
 		return new Parking();
 	}
 
 	/**
 	 * @return The return value is a GoToJail object based on the data in the storage package.
 	 */
-	private GoToJail createGoToJail() {
+	private GoToJail createGoToJail() throws StorageReaderException {
+		if(!isEndOfBlock()) {
+			throw new EndOfBlockException(path);
+		}
 		return new GoToJail();
 	}
 }
