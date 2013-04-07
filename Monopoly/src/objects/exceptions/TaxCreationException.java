@@ -12,7 +12,7 @@ public class TaxCreationException extends StorageReaderException {
 	 * @param cause The value determines the previous Exception.
 	 */
 	public TaxCreationException(String name, Throwable cause) {
-		super((name != null) ? "Something was missing while reading the data of Tax: " + name + "\""
+		super((name != null) ? "Something was missing while reading the data of Tax:\n\t" + name
 				      : "There should have been data for a Tax but there wasn't!", cause);
 	}
 }

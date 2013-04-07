@@ -12,7 +12,7 @@ public class StreetCreationException extends StorageReaderException {
 	 * @param cause The value determines the previous Exception.
 	 */
 	public StreetCreationException(String name, Throwable cause) {
-		super((name != null) ? "Something was missing while reading the data of Street: \"" + name + "\""
+		super((name != null) ? "Something was missing while reading the data of Street:\n\t" + name
 				      : "There should have been data for a Street but there wasn't!", cause);
 	}
 }

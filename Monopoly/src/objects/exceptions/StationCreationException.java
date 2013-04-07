@@ -12,7 +12,7 @@ public class StationCreationException extends StorageReaderException {
 	 * @param cause The value determines the previous Exception.
 	 */
 	public StationCreationException(String name, Throwable cause) {
-		super((name != null) ? "Something was missing while reading the data of Station: " + name + "\""
+		super((name != null) ? "Something was missing while reading the data of Station:\n\t" + name
 				      : "There should have been data for a Station but there wasn't!", cause);
 	}
 }

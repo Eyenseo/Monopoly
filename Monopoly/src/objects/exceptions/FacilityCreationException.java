@@ -12,7 +12,7 @@ public class FacilityCreationException extends StorageReaderException {
 	 * @param cause The value determines the previous Exception.
 	 */
 	public FacilityCreationException(String name, Throwable cause) {
-		super((name != null) ? "Something was missing while reading the data of Facility: " + name + "\""
+		super((name != null) ? "Something was missing while reading the data of Facility:\n\t" + name
 				      : "There should have been data for a Facility but there wasn't!", cause);
 	}
 }
