@@ -17,7 +17,7 @@ public abstract class Field {
 	/**
 	 * @return The return value is the name.
 	 */
-	String getName() {
+	public String getName() {
 		return this.NAME;
 	}
 }
