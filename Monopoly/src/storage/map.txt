@@ -6,7 +6,7 @@
 ##			color red
 ##			color green
 ##			color blue
-##			price
+##          price
 ##			income
 ##			income
 ##			income
