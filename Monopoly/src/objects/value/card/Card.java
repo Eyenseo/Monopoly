@@ -8,4 +8,21 @@ package objects.value.card;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class Card {
+	private final String NAME;
+	private final String TEXT;
+
+	Card(String name, String text) {
+		this.NAME = name;
+		this.TEXT = text;
+	}
+
+	abstract void action();
+
+	public String getName() {
+		return this.NAME;
+	}
+
+	public String getText() {
+		return this.TEXT;
+	}
 }
