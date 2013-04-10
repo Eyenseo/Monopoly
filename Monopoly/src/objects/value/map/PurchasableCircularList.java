@@ -1,4 +1,4 @@
-package objects.value;
+package objects.value.map;
 
 /**
  * The structure of PurchasableCircularList and the subclasses is a circular list of all objects that

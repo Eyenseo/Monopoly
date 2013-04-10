@@ -1,16 +1,12 @@
-package objects.value;
+package objects.value.map;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Eyenseo
  * Date: 26.03.13
- * Time: 17:13
+ * Time: 19:29
  * To change this template use File | Settings | File Templates.
  */
-public class Jail extends NotPurchasable {
+public class Bank {
 	// TODO:   Everything
-
-	public Jail() {
-		super("Gefängnis");
-	}
 }

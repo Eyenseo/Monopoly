@@ -1,4 +1,6 @@
-package objects.exceptions;
+package objects.exceptions.map;
+
+import objects.exceptions.StorageReaderException;
 
 /**
  * The TaxCreationException is the Exception for all Exceptions thrown while creating a Tax from storage data.

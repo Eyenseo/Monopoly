@@ -1,4 +1,6 @@
-package objects.exceptions;
+package objects.exceptions.map;
+
+import objects.exceptions.StorageReaderException;
 
 /**
  * The FieldCreationException is the Exception for all Exceptions thrown while creating a Field from storage data.

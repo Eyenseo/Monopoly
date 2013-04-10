@@ -1,7 +1,7 @@
 package core;
 
-import objects.exceptions.MapCreationException;
-import objects.value.Field;
+import objects.exceptions.map.MapCreationException;
+import objects.value.map.Field;
 
 /**
  * Created with IntelliJ IDEA.

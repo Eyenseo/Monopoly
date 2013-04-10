@@ -1,4 +1,4 @@
-package objects.value;
+package objects.value.map;
 
 /**
  * The structure of StreetCircularList is a circular list of all StreetCircularList objects that belong together e.g.

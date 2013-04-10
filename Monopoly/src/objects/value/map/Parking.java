@@ -1,16 +1,16 @@
-package objects.value;
+package objects.value.map;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Eyenseo
  * Date: 26.03.13
- * Time: 17:12
+ * Time: 17:14
  * To change this template use File | Settings | File Templates.
  */
-public class Chance extends NotPurchasable {
+public class Parking extends NotPurchasable {
 	// TODO:   Everything
 
-	public Chance() {
-		super("Ereignisfeld");
+	public Parking() {
+		super("Frei Parken");
 	}
 }

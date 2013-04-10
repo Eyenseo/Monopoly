@@ -1,4 +1,4 @@
-package objects.value;
+package objects.value.map;
 
 /**
  * The NotPurchasable class is the superclass of all fields that are not purchasable.

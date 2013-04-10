@@ -1,4 +1,4 @@
-package objects.value;
+package objects.value.map;
 
 /**
  * The structure of StationCircularList is a circular list of all StationCircularList objects.

@@ -1,4 +1,4 @@
-package objects.value;
+package objects.value.map;
 
 /**
  * Created with IntelliJ IDEA.
