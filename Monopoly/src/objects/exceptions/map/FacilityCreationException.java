@@ -1,4 +1,6 @@
-package objects.exceptions;
+package objects.exceptions.map;
+
+import objects.exceptions.StorageReaderException;
 
 /**
  * The FacilityCreationException is the Exception for all Exceptions thrown while creating a Facility from storage data.

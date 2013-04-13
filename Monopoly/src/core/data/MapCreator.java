@@ -1,7 +1,6 @@
-package core;
+package core.data;
 
 import objects.exceptions.EndOfBlockException;
-import objects.exceptions.FacilityCreationException;
 import objects.exceptions.StartOfBlockException;
 import objects.exceptions.StorageReaderException;
 import objects.exceptions.map.*;
@@ -14,26 +13,26 @@ import objects.value.map.*;
  * @version 1
  */
 //TODO read from save file
-class MapCreator extends StorageReader {
+public class MapCreator extends StorageReader {
 	private StreetCircularList   streetGroupBuffer   = null;
 	private StationCircularList  stationGroupBuffer  = null;
 	private FacilityCircularList facilityGroupBuffer = null;
 
 	//TODO constructor with parameter with the Community-Queue and the Chance-Queue for the Community and Chance Fields
-	MapCreator() {
+	public MapCreator() {
 		super("map.txt");
 	}
 
 	/**
 	 * @return The return value is the finished map. A Field array with 40 length and different objects of the
 	 *         objects.value package.
-	 * @throws objects.exceptions.map.MapCreationException
-	 *          The Exception holds in its cause attribute the previous Exception and should be
-	 *          read out with getMessageStack.
+	 *
+	 * @throws MapCreationException The Exception holds in its cause attribute the previous Exception and should be
+	 *                              read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
 	//TODO Method to create map from save
-	Field[] createMap() throws MapCreationException {
+	public Field[] createMap() throws MapCreationException {
 		Field[] map = new Field[40];
 		try {
 			for(int i = 0; i < map.length; i++) {
@@ -47,6 +46,7 @@ class MapCreator extends StorageReader {
 
 	/**
 	 * @return The return value is the next Field of the map.
+	 *
 	 * @throws StorageReaderException The Exception holds in its cause attribute the previous Exception and should be
 	 *                                read out with getMessageStack.
 	 */
@@ -92,6 +92,7 @@ class MapCreator extends StorageReader {
 	 * This method connects the streets of the same color while creating them.
 	 *
 	 * @return The return value is a StreetCircularList object based on the data in the storage package.
+	 *
 	 * @throws objects.exceptions.map.StreetCreationException
 	 *          The Exception holds in its cause attribute the previous Exception and should be
 	 *          read out with getMessageStack.
@@ -142,6 +143,7 @@ class MapCreator extends StorageReader {
 	 * This method connects the new station with the other if other exist.
 	 *
 	 * @return The return value is a StationCircularList object based on the data in the storage package.
+	 *
 	 * @throws objects.exceptions.map.StationCreationException
 	 *          The Exception holds in its cause attribute the previous Exception and should be
 	 *          read out with getMessageStack.
@@ -187,6 +189,7 @@ class MapCreator extends StorageReader {
 	 * This method connects the new facility with the other if other exist.
 	 *
 	 * @return The return value is a FacilityCircularList object based on the data in the storage package.
+	 *
 	 * @throws FacilityCreationException The Exception holds in its cause attribute the previous Exception and should
 	 *                                   be read out with getMessageStack.
 	 * @see StorageReaderException
@@ -225,6 +228,7 @@ class MapCreator extends StorageReader {
 
 	/**
 	 * @return The return value is a Tax object based on the data in the storage package.
+	 *
 	 * @throws objects.exceptions.map.TaxCreationException
 	 *          The Exception hold in its cause attribute the previous Exception and should be
 	 *          read out with getMessageStack.

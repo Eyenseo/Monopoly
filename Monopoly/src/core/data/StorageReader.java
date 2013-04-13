@@ -1,4 +1,4 @@
-package core;
+package core.data;
 
 import objects.exceptions.EndOfBlockException;
 import objects.exceptions.EndOfFileException;
@@ -77,7 +77,6 @@ abstract class StorageReader {
 	 * The Method checks if the the String is a comment.
 	 *
 	 * @param line The value determines the String to be checked
-	 *
 	 * @return The return value is true if the String is a comment.
 	 */
 	boolean isCommentString(String line) {
@@ -113,7 +112,6 @@ abstract class StorageReader {
 	 * The Method checks if the next line is the end statement of a data block.
 	 *
 	 * @param line The value determines the String to be checked
-	 *
 	 * @return The return value is true if the String represents the end statement of a data block.
 	 */
 	boolean isEndOfBlock(String line) {
@@ -127,7 +125,6 @@ abstract class StorageReader {
 	 * The Method checks if the the String is a control word.
 	 *
 	 * @param line The value determines the String to be checked
-	 *
 	 * @return The return value is true if the String is a control word.
 	 */
 	boolean isControlWord(String line) {
