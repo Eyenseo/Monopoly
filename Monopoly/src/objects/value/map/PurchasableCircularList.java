@@ -1,5 +1,7 @@
 package objects.value.map;
 
+import objects.value.Player;
+
 /**
  * The structure of PurchasableCircularList and the subclasses is a circular list of all objects that
  * belong together e.g. all Stations in one list, or all Streets that are red.

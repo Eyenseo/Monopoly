@@ -1,5 +1,7 @@
 package objects.value.map;
 
+import objects.value.Player;
+
 /**
  * The structure of StreetCircularList is a circular list of all StreetCircularList objects that belong together e.g.
  * all Streets that are red.

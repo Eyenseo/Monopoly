@@ -1,5 +1,7 @@
 package objects.value.map;
 
+import objects.value.Player;
+
 /**
  * The structure of StationCircularList is a circular list of all StationCircularList objects.
  *
