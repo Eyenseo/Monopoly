@@ -1,15 +1,10 @@
 package core;
 
+import core.data.MapCreator;
 import objects.exceptions.map.MapCreationException;
 import objects.value.map.Field;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Eyenseo
- * Date: 26.03.13
- * Time: 16:43
- * To change this template use File | Settings | File Templates.
- */
+//TODO Doc
 public class Monopoly {
 
 	public static void main(String[] args) {
