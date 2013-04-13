@@ -292,7 +292,7 @@ public class MapCreator extends StorageReader {
 		if(!isEndOfBlock()) {
 			throw new EndOfBlockException(path);
 		}
-		return new Parking();
+		return new Parking(0);
 	}
 
 	/**

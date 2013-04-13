@@ -1,16 +1,22 @@
 package objects.value.map;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Eyenseo
- * Date: 26.03.13
- * Time: 17:14
- * To change this template use File | Settings | File Templates.
- */
+//TODO Doc
 public class Parking extends NotPurchasable {
-	// TODO:   Everything
+	private int money;
 
-	public Parking() {
+	//TODO Doc
+	public Parking(int money) {
 		super("Frei Parken");
+		this.money = money;
+	}
+
+	//TODO Doc
+	public int getMoney() {
+		return this.money;
+	}
+
+	//TODO Doc
+	public void setMoney(int money) {
+		this.money = money;
 	}
 }
