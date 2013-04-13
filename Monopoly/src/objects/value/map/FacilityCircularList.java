@@ -30,7 +30,7 @@ public class FacilityCircularList extends PurchasableCircularList {
 	 * @return The return value is the current income.
 	 */
 	@Override
-	int getBill(Player player) {
+	public int getBill(Player player) {
 		// TODO : Implement
 		return 0;
 	}
