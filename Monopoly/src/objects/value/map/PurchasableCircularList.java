@@ -9,7 +9,7 @@ import objects.value.Player;
  * @author Eyenseo
  * @version 1
  */
-abstract class PurchasableCircularList extends Field {
+public abstract class PurchasableCircularList extends Field {
 	private final int                     PRICE;
 	private final int[]                   INCOME;
 	private final int                     MORTGAGE;   //Hypothek
@@ -39,36 +39,52 @@ abstract class PurchasableCircularList extends Field {
 	/**
 	 * @return The return value is the owner.
 	 */
-	Player getOwner() {
+	public Player getOwner() {
 		return this.owner;
 	}
 
 	/**
 	 * @param owner The value determines the owner.
 	 */
-	void buy(Player owner) {
-		/* TODO: Decrease the money of the player and check if all Purchasables have the same owner to set the
-		stage according
-		 */
+	public void setOwner(Player owner) {
 		this.owner = owner;
+		if(sameOwnerCheck(this)) {
+			stage = 1;
+		}
 	}
 
 	/**
 	 * @return The return value is the amount that has to be payed to become the owner.
 	 */
-	int getPrice() {
+	public int getPrice() {
 		return this.PRICE;
+	}
+
+	//TODO Doc
+	public int getMortgage() {
+		return this.MORTGAGE;
+	}
+
+	//TODO Doc
+	public void setStage(int stage) {
+		this.stage = stage;
+	}
+
+	//TODO Doc
+	public int getStage() {
+		return this.stage;
 	}
 
 	/**
 	 * @return The return value is the current income.
 	 */
-	int getBill(Player player) {
+	public int getBill(Player player) {
 		return this.INCOME[this.stage];
 	}
 
 	/**
-	 * @param purchasable The value determines the next object in the circular list of objects that belong together.
+	 * @param purchasable The value determines the next object in the circular list of objects that belong together
+	 *                    .
 	 */
 	public void add(PurchasableCircularList purchasable) {
 		purchasable.next = this.next;
@@ -80,5 +96,16 @@ abstract class PurchasableCircularList extends Field {
 	 */
 	private PurchasableCircularList getNext() {
 		return this.next;
+	}
+
+	//TODO Doc
+	private boolean sameOwnerCheck(PurchasableCircularList start) {
+		if(this.owner.equals(this.next.getOwner())) {
+			if(this.next.getNext().equals(start)) {
+				return true;
+			}
+			return this.next.sameOwnerCheck(start);
+		}
+		return false;
 	}
 }
