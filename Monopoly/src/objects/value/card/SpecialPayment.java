@@ -12,7 +12,7 @@ public class SpecialPayment extends Card {
      * @param text Text of the card
      */
     public SpecialPayment(String name, String text, int dm) {
-        super(name, text, dm);
+        super(name, text);
         this.dm = dm;
     }
 

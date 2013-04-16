@@ -12,7 +12,7 @@ public class GoBack extends Card {
      * @param text Text of the card
      */
     public GoBack(String name, String text, int fields) {
-        super(name, text, fields);
+        super(name, text);
         this.fields = fields;
     }
 
