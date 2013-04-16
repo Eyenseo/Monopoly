@@ -14,5 +14,7 @@ public class StreetWork extends Card {
      */
     public StreetWork(String name, String text, int dmHouse, int dmHotel) {
         super(name, text, dmHouse, dmHotel);
+        this.dmHouse = dmHouse;
+        this.dmHotel = dmHotel;
     }
 }
