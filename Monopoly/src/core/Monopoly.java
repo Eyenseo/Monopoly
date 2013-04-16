@@ -2,7 +2,7 @@ package core;
 
 import core.data.MapCreator;
 import objects.exceptions.map.MapCreationException;
-import objects.value.map.Field;
+import objects.map.Field;
 
 //TODO Doc
 public class Monopoly {

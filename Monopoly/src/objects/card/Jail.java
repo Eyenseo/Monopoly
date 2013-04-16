@@ -1,4 +1,4 @@
-package objects.value.card;
+package objects.card;
 
 /**
  * Jail is the jail card (Gehe ins Gefaengnis Karte).

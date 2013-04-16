@@ -1,12 +1,12 @@
-package objects.value;
+package objects;
 
-import objects.value.map.Field;
-import objects.value.map.PurchasableCircularList;
+import objects.map.Field;
+import objects.map.PurchasableCircularList;
 
 import java.util.HashMap;
 
 //TODO Doc
-public class Player {
+public abstract class Player {
 	private final String  NAME;
 	private       boolean inJail;
 	private       int     money;

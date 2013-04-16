@@ -4,7 +4,7 @@ import objects.exceptions.EndOfBlockException;
 import objects.exceptions.StartOfBlockException;
 import objects.exceptions.StorageReaderException;
 import objects.exceptions.map.*;
-import objects.value.map.*;
+import objects.map.*;
 
 /**
  * The MapCreator class provides the method to create the map out of the data in the storage package.

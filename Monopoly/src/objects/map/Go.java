@@ -1,4 +1,4 @@
-package objects.value.map;
+package objects.map;
 
 //TODO Doc
 public class Go extends NotPurchasable {

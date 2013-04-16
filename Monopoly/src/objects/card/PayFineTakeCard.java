@@ -1,15 +1,15 @@
-package objects.value.card;
+package objects.card;
 
 /**
- * GoTo is the go to card (Ruecke vor bis auf ...).
+ * PayFineTakeCard is special card (pay fine or draw a card).
  * A card is a trigger for a specific event defined in the gameplay mechanics
  */
-public class GoTo extends Card {
+public class PayFineTakeCard extends Card {
 	/**
 	 * @param name Name of the card
 	 * @param text Text of the card
 	 */
-	public GoTo(String name, String text) {
+	public PayFineTakeCard(String name, String text) {
 		super(name, text);
 	}
 }

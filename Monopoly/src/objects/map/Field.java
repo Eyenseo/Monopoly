@@ -1,4 +1,4 @@
-package objects.value.map;
+package objects.map;
 //TODO Doc
 
 /**
@@ -21,4 +21,6 @@ public abstract class Field {
 	public String getName() {
 		return this.NAME;
 	}
+
+	public abstract void action();
 }

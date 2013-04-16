@@ -1,7 +1,7 @@
 package objects.exceptions.map;
 
 import objects.exceptions.StorageReaderException;
-import objects.value.map.Field;
+import objects.map.Field;
 
 /**
  * The MapCreationException is the Exception for all Exceptions thrown while creating a map from storage data.

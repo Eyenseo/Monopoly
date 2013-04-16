@@ -1,6 +1,6 @@
-package objects.value.map;
+package objects.map;
 
-import objects.value.Player;
+import objects.Player;
 
 /**
  * The structure of PurchasableCircularList and the subclasses is a circular list of all objects that
