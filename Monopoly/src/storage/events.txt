@@ -20,11 +20,11 @@ Gehe 3 Felder zurück.
 -3
 #!
 
-#special
+#gotostation
 Rücke vor bis zum nächsten Bahnhof.\nSollte der Bahnhof sich im Besitz eines Spielers befinden, \nerhält er die doppelte Miete, andernfalls kannst du den Bahnhof kaufen.
 #!
 
-#special
+#payfinetakecard
 Zahle eine Strafe von\n200 DM\noder nimm eine Gemeinschaftskarte.
 #!
 
