@@ -5,11 +5,11 @@ package objects.value.card;
  * A card is a trigger for a specific event defined in the gameplay mechanics
  */
 public class StreetWork extends Card {
-	/**
-	 * @param name Name of the card
-	 * @param text Text of the card
-	 */
-	public StreetWork(String name, String text) {
-		super(name, text);
-	}
+    /**
+     * @param name Name of the card
+     * @param text Text of the card
+     */
+    public StreetWork(String name, String text, int dmHouse, int dmHotel) {
+        super(name, text, dmHouse, dmHotel);
+    }
 }

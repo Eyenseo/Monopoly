@@ -9,8 +9,8 @@ public class SpecialPayment extends Card {
      * @param name Name of the card
      * @param text Text of the card
      */
-    public SpecialPayment(String name, String text) {
-        super(name, text);
+    public SpecialPayment(String name, String text, int dm) {
+        super(name, text, dm);
     }
 
 }

@@ -9,8 +9,8 @@ public class GoBack extends Card {
      * @param name Name of the card
      * @param text Text of the card
      */
-    public GoBack(String name, String text) {
-        super(name, text);
+    public GoBack(String name, String text, int fields) {
+        super(name, text, fields);
     }
 
 }
