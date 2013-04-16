@@ -5,6 +5,9 @@ package objects.value.card;
  * A card is a trigger for a specific event defined in the gameplay mechanics
  */
 public class StreetWork extends Card {
+    int dmHouse;
+    int dmHotel;
+
     /**
      * @param name Name of the card
      * @param text Text of the card
