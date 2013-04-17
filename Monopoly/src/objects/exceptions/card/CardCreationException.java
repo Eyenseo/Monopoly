@@ -1,11 +1,10 @@
 package objects.exceptions.card;
 
-/**
- * Created with IntelliJ IDEA.
- * User: eyenseo
- * Date: 10.04.13
- * Time: 12:58
- * To change this template use File | Settings | File Templates.
- */
-public class CardCreationException {
+import objects.exceptions.StorageReaderException;
+
+public class CardCreationException extends StorageReaderException {
+	public CardCreationException(String name, Throwable cause) {
+		super((name != null) ? "Something was missing while reading the data of a card:\n\t" + name
+		                     : "There should have been data for a card but there wasn't!", cause);
+	}
 }
