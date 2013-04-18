@@ -1,10 +1,11 @@
 package core.data;
 
 import objects.exceptions.EndOfBlockException;
-import objects.exceptions.StartOfBlockException;
 import objects.exceptions.StorageReaderException;
 import objects.exceptions.map.*;
 import objects.map.*;
+
+import java.util.Vector;
 
 /**
  * The MapCreator class provides the method to create the map out of the data in the storage package.
@@ -31,17 +32,18 @@ public class MapCreator extends StorageReader {
 	 *                              read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
+	//TODO Doc
 	//TODO Method to create map from save
-	public Field[] createMap() throws MapCreationException {
-		Field[] map = new Field[40];
-		try {
-			for(int i = 0; i < map.length; i++) {
-				map[i] = nextField();
-			}
-			return map;
-		} catch(StorageReaderException e) {
-			throw new MapCreationException(map, e);
+	public Field[] createMap() throws StorageReaderException {
+		Vector<Field> fieldVector = new Vector<Field>();
+		Field[] fieldArray;
+		Field temp;
+		while((temp = nextField()) != null) {
+			fieldVector.add(temp);
 		}
+		fieldArray = new Field[fieldVector.size()];
+		fieldVector.toArray(fieldArray);
+		return fieldArray;
 	}
 
 	/**
@@ -51,8 +53,8 @@ public class MapCreator extends StorageReader {
 	 *                                read out with getMessageStack.
 	 */
 	private Field nextField() throws StorageReaderException {
-		String line = nextString();
-		if(isControlWord(line)) {
+		String line = nextControllWord();
+		if(line != null) {
 			if(line.equals("#Street")) {
 				return createStreet();
 			}
@@ -83,9 +85,9 @@ public class MapCreator extends StorageReader {
 			if(line.equals("#GoToJail")) {
 				return createGoToJail();
 			}
-			throw new FieldCreationException();
+			throw new FieldCreationException(line);
 		}
-		throw new StartOfBlockException(path);
+		return null;
 	}
 
 	/**
