@@ -5,7 +5,6 @@
 ##	 	#jailbait	means a jailbait card
 ##	 	#jail		means a card that sends a player directly into jail
 ##	 	#goTo		means a card that sends a player to a specific field with go-income
-##	 	#goToNoGo	means a card that sends a player to a specific field without go-income
 ##	 	#streetWork means a card that requires you to spend money on existing houses or hotels
 ##	 	#special$ 	means a transaction that does not involve the bank (player based transactions)
 ##	 	#special 	means a special card (komischer kram)
@@ -16,6 +15,8 @@ Du kommst aus dem Gefängnis frei.\nDiese Karte kann später verwendet oder geha
 
 #goTo
 Rücke vor bis auf Los.
+Los
+t
 #!
 
 #jail
@@ -24,11 +25,13 @@ Gehe in das Gefängnis.\nBegib dich direkt dorthin.\nGehe nicht über Los.\nZieh
 
 #special$
 Es ist dein Geburtstag.\nZiehe von jedem Spieler 1000 DM ein.
+1000
 #!
 
 #streetWork
-Du wirst zu Straßenausbessereungsarbeiten herangezogen.\nZahle für deine Häuser und Hotels\n800 DM je Haus\n2300 DM
-je Hotel\nan die Bank.
+Du wirst zu Straßenausbessereungsarbeiten herangezogen.\nZahle für deine Häuser und Hotels\n800 DM je Haus\n2300 DM je Hotel\nan die Bank.
+800
+2300
 #!
 
 #$

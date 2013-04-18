@@ -5,25 +5,35 @@ import objects.exceptions.EndOfBlockException;
 import objects.exceptions.StorageReaderException;
 import objects.exceptions.card.*;
 
-import java.util.List;
 import java.util.Vector;
 
+//TODO Doc
 public class CardCreator extends StorageReader {
-	public CardCreator(String file) {
+	private final String NAME;
+
+	//TODO Doc
+	public CardCreator(String file, String name) {
 		super(file);
+		NAME = name;
 	}
 
-	public Card[] cardArray() throws CardArrayException {
-		List<Card> cards = new Vector<Card>();
-		while(true) { //TODO Placeholder :)
-			cards.add(nextCard());
+	//TODO Doc
+	public Card[] cardArray() throws StorageReaderException {
+		Vector<Card> cardVector = new Vector<Card>();
+		Card[] cardArray;
+		Card temp;
+		while((temp = nextCard()) != null) {
+			cardVector.add(temp);
 		}
-		return (Card[]) cards.toArray();
+		cardArray = new Card[cardVector.size()];
+		cardVector.toArray(cardArray);
+		return cardArray;
 	}
 
+	//TODO Doc
 	private Card nextCard() throws StorageReaderException {
-		String line = nextString();
-		if(isControlWord(line)) {
+		String line = nextControllWord();
+		if(line != null) {
 			if(line.equals("#back")) {
 				return createGoBack();
 			}
@@ -51,143 +61,141 @@ public class CardCreator extends StorageReader {
 			if(line.equals("#streetWork")) {
 				return createStreetWork();
 			}
+			throw new CardCreationException(line);
 		}
+		return null;
 	}
 
+	//TODO Doc
 	private GoBack createGoBack() throws StorageReaderException {
-		String name = null;
+		String text = null;
 		try {
-			name = nextString();
-			String text = nextString();
+			text = nextString();
 			int fields = nextInt();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new GoBack(name, text, fields);
+			return new GoBack(NAME, text, fields);
 		} catch(Exception e) {
-			throw new GoBackCreationException(name, e);
+			throw new GoBackCreationException(NAME, e);
 		}
 	}
 
+	//TODO Doc
 	private GoTo createGoTo() throws StorageReaderException {
-		String name = null;
+		String text = null;
 		try {
-			name = nextString();
-			String text = nextString();
+			text = nextString();
+			String field = nextString();
+			boolean overGo = nextString().equals("t");
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new GoTo(name, text);
+			return new GoTo(NAME, text, field, overGo);
 		} catch(Exception e) {
-			throw new GoToCreationException(name, e);
+			throw new GoToCreationException(NAME, e);
 		}
 	}
 
+	//TODO Doc
 	private GoToStation createGoToStation() throws StorageReaderException {
-		String name = null;
+		String text = null;
 		try {
-			name = nextString();
-			String text = nextString();
-			int fields = nextInt();
+			text = nextString();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new GoToStation(name, text);
+			return new GoToStation(NAME, text);
 		} catch(Exception e) {
-			throw new GoToStationCreationException(name, e);
+			throw new GoToStationCreationException(NAME, e);
 		}
 	}
 
+	//TODO Doc
 	private Jail createJail() throws StorageReaderException {
-		String name = null;
+		String text = null;
 		try {
-			name = nextString();
-			String text = nextString();
-			int fields = nextInt();
+			text = nextString();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new Jail(name, text);
+			return new Jail(NAME, text);
 		} catch(Exception e) {
-			throw new JailCreationException(name, e);
+			throw new JailCreationException(NAME, e);
 		}
 	}
 
+	//TODO Doc
 	private Jailbait createJailbait() throws StorageReaderException {
-		String name = null;
+		String text = null;
 		try {
-			name = nextString();
-			String text = nextString();
-			int fields = nextInt();
+			text = nextString();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new Jailbait(name, text);
+			return new Jailbait(NAME, text);
 		} catch(Exception e) {
-			throw new JailbaitCreationException(name, e);
+			throw new JailbaitCreationException(NAME, e);
 		}
 	}
 
+	//TODO Doc
 	private PayFineTakeCard createPayFineTakeCard() throws StorageReaderException {
-		String name = null;
+		String text = null;
 		try {
-			name = nextString();
-			String text = nextString();
-			int fields = nextInt();
+			text = nextString();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new PayFineTakeCard(name, text);
+			return new PayFineTakeCard(NAME, text);
 		} catch(Exception e) {
-			throw new PayFineTakeCardCreationException(name, e);
+			throw new PayFineTakeCardCreationException(NAME, e);
 		}
 	}
 
+	//TODO Doc
 	private Payment createPayment() throws StorageReaderException {
-		String name = null;
+		String text = null;
 		try {
-			name = nextString();
-			String text = nextString();
+			text = nextString();
 			int dm = nextInt();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new Payment(name, text, dm);
+			return new Payment(NAME, text, dm);
 		} catch(Exception e) {
-			throw new PaymentCreationException(name, e);
+			throw new PaymentCreationException(NAME, e);
 		}
 	}
 
+	//TODO Doc
 	private SpecialPayment createSpecialPayment() throws StorageReaderException {
-		String name = null;
+		String text = null;
 		try {
-			name = nextString();
-			String text = nextString();
+			text = nextString();
 			int dm = nextInt();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new SpecialPayment(name, text, dm);
+			return new SpecialPayment(NAME, text, dm);
 		} catch(Exception e) {
-			throw new SpecialPaymentCreationException(name, e);
+			throw new SpecialPaymentCreationException(NAME, e);
 		}
 	}
 
+	//TODO Doc
 	private StreetWork createStreetWork() throws StorageReaderException {
-		String name = null;
+		String text = null;
 		try {
-			name = nextString();
-			String text = nextString();
+			text = nextString();
 			int dmHouse = nextInt();
 			int dmHotel = nextInt();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new StreetWork(name, text, dmHouse, dmHotel);
+			return new StreetWork(NAME, text, dmHouse, dmHotel);
 		} catch(Exception e) {
-			throw new StreetWorkCreationException(name, e);
+			throw new StreetWorkCreationException(NAME, e);
 		}
 	}
 }
-
-
