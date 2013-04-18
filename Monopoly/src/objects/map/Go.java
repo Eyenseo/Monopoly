@@ -5,6 +5,6 @@ public class Go extends NotPurchasable {
 	// TODO:   Everything
 
 	public Go() {
-		super("Start");
+		super("Los");
 	}
 }
