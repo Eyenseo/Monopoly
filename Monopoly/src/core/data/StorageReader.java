@@ -43,7 +43,12 @@ abstract class StorageReader {
 	 *                                missing.
 	 */
 	int nextInt() throws StorageReaderException {
-		return Integer.parseInt(nextString());
+		String line = nextString();
+		try {
+			return Integer.parseInt(line);
+		} catch(NumberFormatException e) {
+			throw new StorageReaderException("The String was ment to be casted to a Integer:\n\t" + line);
+		}
 	}
 
 	/**
@@ -63,6 +68,22 @@ abstract class StorageReader {
 			}
 			if(line == null) {
 				throw new EndOfFileException(path);
+			}
+			if(isEndOfBlock(line)) {
+				throw new EndOfBlockException(path);
+			}
+			return line;
+		} catch(IOException e) {
+			throw new StorageReaderException(e);
+		}
+	}
+
+	//TODO Doc
+	String nextControllWord() throws StorageReaderException {
+		try {
+			String line = file.readLine();
+			while(line != null && (isCommentString(line) || !isControlWord(line))) {
+				line = file.readLine();
 			}
 			if(isEndOfBlock(line)) {
 				throw new EndOfBlockException(path);
