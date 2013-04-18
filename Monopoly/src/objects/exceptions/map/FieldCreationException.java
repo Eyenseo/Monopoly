@@ -9,7 +9,8 @@ import objects.exceptions.StorageReaderException;
  * @version 1
  */
 public class FieldCreationException extends StorageReaderException {
-	public FieldCreationException() {
-		super("There was an undefined control word");
+	//TODO Doc
+	public FieldCreationException(String word) {
+		super("There was an undefined control word:\n\t" + word);
 	}
 }
