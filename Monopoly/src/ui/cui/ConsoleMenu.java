@@ -8,7 +8,8 @@ import ui.Menu;
 
 //JAVADOC
 public class ConsoleMenu implements Menu {
-	Input in = new Input();
+	private final int   MENUOPTIONS = 12;
+	private       Input in          = new Input();
 
 	//JAVADOC
 	private String getName() {
@@ -38,7 +39,7 @@ public class ConsoleMenu implements Menu {
 	@Override
 	public int nextTurn(Player player, Field field, int turnState) {
 		int userInt;
-		int[] options = getPlayerOptions(player, field, turnState, 11);
+		int[] options = getPlayerOptions(player, field, turnState);
 		String menuOptions = getNextTurnOptions(options);
 		String playerStatus = getPlayerStatus(player, field, turnState == 0);
 		println(playerStatus + "\n\nSie haben nun folgende Optionen:\n" + menuOptions);
@@ -82,7 +83,7 @@ public class ConsoleMenu implements Menu {
 	//JAVADOC
 	private String getNextTurnOptions(int[] options) {
 		String menuOptions = "";
-		for(int i = 0; i < options.length; i++) {
+		for(int i = 0; i < MENUOPTIONS; i++) {
 			if(options[i] != 0) {
 				switch(i) {
 					case 0:
@@ -98,26 +99,29 @@ public class ConsoleMenu implements Menu {
 						menuOptions += "[" + options[i] + "] Hypotek aufnehmen.\n";
 						break;
 					case 4:
-						menuOptions += "[" + options[i] + "] Mit anderen Spielern zu handeln.\n";
+						menuOptions += "[" + options[i] + "] Hypotek abzahlen.\n";
 						break;
 					case 5:
-						menuOptions += "[" + options[i] + "] Zahlen um aus dem Gefängnis frei zu kommen.\n";
+						menuOptions += "[" + options[i] + "] Mit anderen Spielern zu handeln.\n";
 						break;
 					case 6:
-						menuOptions += "[" + options[i] +
-						               "] Gemeinschaftskarte nutzen um aus dem Gefängnis frei zu kommen.\n";
+						menuOptions += "[" + options[i] + "] Zahlen um aus dem Gefängnis frei zu kommen.\n";
 						break;
 					case 7:
 						menuOptions += "[" + options[i] +
-						               "] Ereigniskarte nutzen um aus dem Gefängnis frei zu kommen.\n";
+						               "] Gemeinschaftskarte nutzen um aus dem Gefängnis frei zu kommen.\n";
 						break;
 					case 8:
-						menuOptions += "[" + options[i] + "] Den Zug beenden.\n";
+						menuOptions += "[" + options[i] +
+						               "] Ereigniskarte nutzen um aus dem Gefängnis frei zu kommen.\n";
 						break;
 					case 9:
-						menuOptions += "[" + options[i] + "] Den nächsten Zug beginnen.\n";
+						menuOptions += "[" + options[i] + "] Den Zug beenden.\n";
 						break;
 					case 10:
+						menuOptions += "[" + options[i] + "] Den nächsten Zug beginnen.\n";
+						break;
+					case 11:
 						menuOptions += "[" + options[i] + "] Aufgeben.\n";
 				}
 			}
@@ -127,8 +131,8 @@ public class ConsoleMenu implements Menu {
 
 	//JAVADOC
 	//TODO use maybe a hashmap for better performance see ConsoleMenu.nextTurn()
-	private int[] getPlayerOptions(Player player, Field field, int turnState, int playerOptionsMax) {
-		int[] playerOptions = new int[playerOptionsMax];
+	private int[] getPlayerOptions(Player player, Field field, int turnState) {
+		int[] playerOptions = new int[MENUOPTIONS];
 		int index = 0;
 		if(turnState == 0) {
 			playerOptions[0] = ++index;
@@ -149,26 +153,31 @@ public class ConsoleMenu implements Menu {
 			   !((PurchasableCircularList) field).isInMortgage()) {
 				playerOptions[3] = ++index;
 			}
+			if(((PurchasableCircularList) field).getOwner() == player &&
+			   ((PurchasableCircularList) field).isInMortgage() &&
+			   ((PurchasableCircularList) field).getMortgage() <= player.getMoney()) {
+				playerOptions[4] = ++index;
+			}
 			if(((PurchasableCircularList) field).getOwner() != player &&
 			   ((PurchasableCircularList) field).getOwner() != null) {
-				playerOptions[4] = ++index;
+				playerOptions[5] = ++index;
 			}
 		}
 		if(player.isInJail()) {
-			playerOptions[5] = ++index;
+			playerOptions[6] = ++index;
 			if(player.isJailbaitCommunity()) {
-				playerOptions[6] = ++index;
+				playerOptions[7] = ++index;
 			}
 			if(player.isJailbaitEvent()) {
-				playerOptions[7] = ++index;
+				playerOptions[8] = ++index;
 			}
 		}
 		if(turnState == 1) {
-			playerOptions[8] = ++index;
-		} else if(turnState == 3) {
 			playerOptions[9] = ++index;
+		} else if(turnState == 3) {
+			playerOptions[10] = ++index;
 		}
-		playerOptions[10] = ++index;
+		playerOptions[11] = ++index;
 		return playerOptions;
 	}
 

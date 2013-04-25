@@ -76,6 +76,16 @@ public abstract class PurchasableCircularList extends Field {
 		return this.inMortgage;
 	}
 
+	//JAVADOC
+	public void setInMortgage(boolean inMortgage) {
+		this.inMortgage = inMortgage;
+		if(inMortgage) {
+			owner.addMoney(this.MORTGAGE);
+		} else {
+			owner.pay(this.MORTGAGE);
+		}
+	}
+
 	/**
 	 * @return The return value is the current income.
 	 */

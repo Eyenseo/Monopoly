@@ -42,6 +42,7 @@ public class Map {
 				player.addMoney(4000);
 			}
 			playerPosition.put(player, pos);
+			MAP[pos].action(player);
 		}
 		return doubles;
 	}

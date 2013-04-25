@@ -64,7 +64,6 @@ public class Monopoly {
 			switch(menu.nextTurn(player, field, turnState)) {
 				case 0:
 					doubles = map.movePlayer(player);
-					field.action(player);
 					if(doubles) {
 						turnState = 3;
 					} else {
@@ -78,10 +77,10 @@ public class Monopoly {
 					((StreetCircularList) field).nextStage();
 					break;
 				case 3:
-					System.out.print("To be implemented ...");
+					((PurchasableCircularList) field).setInMortgage(true);
 					break;
 				case 4:
-					System.out.print("To be implemented ...");
+					((PurchasableCircularList) field).setInMortgage(false);
 					break;
 				case 5:
 					System.out.print("To be implemented ...");
@@ -93,10 +92,13 @@ public class Monopoly {
 					System.out.print("To be implemented ...");
 					break;
 				case 8:
+					System.out.print("To be implemented ...");
+					break;
 				case 9:
+				case 10:
 					turnState = 2;
 					break;
-				case 10:
+				case 11:
 					gameOver = true;
 			}
 		}
