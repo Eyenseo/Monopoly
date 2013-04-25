@@ -271,10 +271,15 @@ public class MapCreator extends StorageReader {
 	 * @return The return value is a Go object based on the data in the storage package.
 	 */
 	private Go createGo() throws StorageReaderException {
-		if(!isEndOfBlock()) {
-			throw new EndOfBlockException(path);
+		try {
+			int turnmoney = nextInt();
+			if(!isEndOfBlock()) {
+				throw new EndOfBlockException(path);
+			}
+			return new Go(turnmoney);
+		} catch(Exception e) {
+			throw new GoCreationException(e);
 		}
-		return new Go();
 	}
 
 	/**
