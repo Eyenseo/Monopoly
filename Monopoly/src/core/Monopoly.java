@@ -15,7 +15,7 @@ import java.util.Vector;
 
 //JAVADOC
 public class Monopoly {
-	private final int     STARTMONEY = 10000;
+	private final int     STARTMONEY = 50000;
 	private       boolean gameOver   = false;
 	private Map  map;
 	private Menu menu;

@@ -33,16 +33,6 @@ public class Player {
 	}
 
 	//JAVADOC
-	public int getMoney() {
-		return this.money;
-	}
-
-	//JAVADOC
-	public void setMoney(int money) {
-		this.money = money;
-	}
-
-	//JAVADOC
 	public boolean isInJail() {
 		return this.inJail;
 	}
@@ -60,6 +50,21 @@ public class Player {
 		this.money -= purchasable.getPrice();
 		purchasable.setOwner(this);
 		this.ownedFieldMap.put(purchasable.getName(), purchasable);
+	}
+
+	//JAVADOC
+	public void addMoney(int amount) {
+		this.setMoney(getMoney() + amount);
+	}
+
+	//JAVADOC
+	public int getMoney() {
+		return this.money;
+	}
+
+	//JAVADOC
+	public void setMoney(int money) {
+		this.money = money;
 	}
 
 	//JAVADOC
@@ -84,20 +89,13 @@ public class Player {
 		return jailbaitCommunity;
 	}
 
-	//JAVADOC
-	public void addMoney(int amount) {
-		this.setMoney(getMoney() + amount);
-	}
-
 	@Override
 	public String toString() {
 		return this.NAME;
 	}
 
+	//JAVADOC
 	public void pay(int amount) {
 		this.money -= amount;
 	}
-	//JAVADOC
-	//public abstract void nextTurn(int[] dices);
-	// TODO:   Everything
 }

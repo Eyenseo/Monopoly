@@ -67,6 +67,7 @@ public class StreetCircularList extends PurchasableCircularList {
 		}
 	}
 
+	//JAVADOC
 	public int getUpgrade() {
 		return UPGRADE;
 	}

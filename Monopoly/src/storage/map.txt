@@ -39,6 +39,7 @@
 ##		#Parking
 ##		#GoToJail
 #Go
+4000
 #!
 #Street
 Badstraße
