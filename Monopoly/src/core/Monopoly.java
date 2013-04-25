@@ -10,7 +10,7 @@ import objects.map.Map;
 import objects.map.PurchasableCircularList;
 import objects.map.StreetCircularList;
 import ui.Menu;
-import ui.cui.ConsolMenu;
+import ui.cui.ConsoleMenu;
 
 import java.util.Vector;
 
@@ -114,7 +114,7 @@ public class Monopoly {
 	}
 
 	public static void main(String[] args) {
-		Menu menu = new ConsolMenu();
+		Menu menu = new ConsoleMenu();
 		Monopoly m = new Monopoly(menu);
 		//		for(int i = menu.playerAmount(); i > 0; i--) {
 		//			m.addPlayer(menu.newHuman());

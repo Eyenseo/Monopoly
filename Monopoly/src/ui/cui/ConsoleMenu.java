@@ -7,7 +7,7 @@ import objects.map.StreetCircularList;
 import ui.Menu;
 
 //JAVADOC
-public class ConsolMenu implements Menu {
+public class ConsoleMenu implements Menu {
 	Input in = new Input();
 
 	//JAVADOC
