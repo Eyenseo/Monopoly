@@ -1,6 +1,6 @@
 package objects.map;
 
-//TODO Doc
+//JAVADOC
 public class Jail extends NotPurchasable {
 	// TODO:   Everything
 

@@ -10,30 +10,31 @@ import objects.Player;
  * @version 1
  */
 public abstract class PurchasableCircularList extends Field {
-	private final int                     PRICE;
-	private final int[]                   INCOME;
-	private final int                     MORTGAGE;   //Hypothek
-	private       Player                  owner;
-	private       int                     stage;
-	private       PurchasableCircularList next;
+	protected final int                     PRICE;
+	//TODO The price has to be able to be set by the player [-1 for not for sale and everything above for sale (should lead to a bidding option)].
+	protected final int[]                   INCOME;
+	protected final int                     MORTGAGE;   //Hypothek
+	protected       Player                  owner;
+	protected       int                     stage;
+	protected       PurchasableCircularList next;
+	protected       boolean                 inMortgage;
 
 	/**
 	 * @param name     The value determines the name of the object.
 	 * @param price    The value determines the price that the player has to pay to buy it.
 	 * @param income   The values of the array determine the the income of the street in the different stages.
 	 * @param mortgage The value determines the amount of the mortgage.
-	 * @param stage    The value determines the stage the income is at.
-	 * @param owner    The value determines the owner.
 	 */
 	//TODO Simplify the constructor by assigning default values
-	PurchasableCircularList(String name, int price, int[] income, int mortgage, int stage, Player owner) {
+	PurchasableCircularList(String name, int price, int[] income, int mortgage) {
 		super(name);
 		this.PRICE = price;
 		this.INCOME = income;
 		this.MORTGAGE = mortgage;
-		this.stage = stage;
-		this.owner = owner;
-		this.next = this;   //TODO Check if this points to the PurchasableCircularList class or the subclass
+		this.owner = null;
+		this.stage = 0;
+		this.inMortgage = false;
+		this.next = this;
 	}
 
 	/**
@@ -60,32 +61,32 @@ public abstract class PurchasableCircularList extends Field {
 		return this.PRICE;
 	}
 
-	//TODO Doc
+	//JAVADOC
 	public int getMortgage() {
 		return this.MORTGAGE;
 	}
 
-	//TODO Doc
-	public void setStage(int stage) {
-		this.stage = stage;
-	}
-
-	//TODO Doc
+	//JAVADOC
 	public int getStage() {
 		return this.stage;
+	}
+
+	//JAVADOC
+	public boolean isInMortgage() {
+		return this.inMortgage;
 	}
 
 	/**
 	 * @return The return value is the current income.
 	 */
-	public int getBill(Player player) {
+	public int getBill() {
 		return this.INCOME[this.stage];
 	}
 
 	/**
-	 * @param purchasable The value determines the next object in the circular list of objects that belong together
-	 *                    .
+	 * @param purchasable The value determines the next object in the circular list of objects that belong together.
 	 */
+	//TODO Move to constructor
 	public void add(PurchasableCircularList purchasable) {
 		purchasable.next = this.next;
 		this.next = purchasable;
@@ -98,7 +99,7 @@ public abstract class PurchasableCircularList extends Field {
 		return this.next;
 	}
 
-	//TODO Doc
+	//JAVADOC
 	private boolean sameOwnerCheck(PurchasableCircularList start) {
 		if(this.owner.equals(this.next.getOwner())) {
 			if(this.next.getNext().equals(start)) {
@@ -107,5 +108,11 @@ public abstract class PurchasableCircularList extends Field {
 			return this.next.sameOwnerCheck(start);
 		}
 		return false;
+	}
+
+	//JAVADOC
+	@Override
+	public String toString() {
+		return this.getName() + ((getOwner() != null) ? " (" + getOwner() + ")" : "");
 	}
 }

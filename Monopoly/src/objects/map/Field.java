@@ -1,5 +1,7 @@
 package objects.map;
-//TODO Doc
+//JAVADOC
+
+import objects.Player;
 
 /**
  * @author Eyenseo
@@ -22,5 +24,14 @@ public abstract class Field {
 		return this.NAME;
 	}
 
-	public abstract void action();
+	//JAVADOC
+	@Override
+	public String toString() {
+		return this.NAME;
+	}
+
+	//TODO this has to be replaced in each individual Method and set to abstract
+	public void action(Player player) {
+		System.err.println("This is a placeholder lalala~lalaLA");
+	}
 }

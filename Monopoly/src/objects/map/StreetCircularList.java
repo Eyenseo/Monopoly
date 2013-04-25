@@ -31,9 +31,8 @@ public class StreetCircularList extends PurchasableCircularList {
 	 * @param color    The values of the array determine the color of the StreetCircularList object. The Array has to
 	 *                 be three long, each of the places represent one color {R,G,B}.
 	 */
-	public StreetCircularList(String name, int price, int[] income, int mortgage, int stage, Player owner, int upgrade,
-	                          int[] color) {
-		super(name, price, income, mortgage, stage, owner);
+	public StreetCircularList(String name, int price, int[] income, int mortgage, int upgrade, int[] color) {
+		super(name, price, income, mortgage);
 		this.UPGRADE = upgrade;
 		this.COLOR = color;
 	}
@@ -42,7 +41,8 @@ public class StreetCircularList extends PurchasableCircularList {
 	 * This method is for buying houses or hotels and setting the stage accordingly up.
 	 */
 	public void nextStage() {
-		// TODO : Implement
+		this.stage++;
+		this.owner.pay(UPGRADE);
 	}
 
 	/**
@@ -56,5 +56,18 @@ public class StreetCircularList extends PurchasableCircularList {
 			compare[1] += street.COLOR[i];
 		}
 		return compare[0].equals(compare[1]);
+	}
+
+	//JAVADOC
+	//TODO improve
+	@Override
+	public void action(Player player) {
+		if(owner != null) {
+			player.pay(getBill());
+		}
+	}
+
+	public int getUpgrade() {
+		return UPGRADE;
 	}
 }

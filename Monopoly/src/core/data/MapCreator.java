@@ -32,14 +32,14 @@ public class MapCreator extends StorageReader {
 	 *                              read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
-	//TODO Doc
+	//JAVADOC
 	//TODO Method to create map from save
 	public Field[] createMap() throws StorageReaderException {
 		Vector<Field> fieldVector = new Vector<Field>();
 		Field[] fieldArray;
 		Field temp;
 		while((temp = nextField()) != null) {
-			fieldVector.add(temp);
+			fieldVector.addElement(temp);
 		}
 		fieldArray = new Field[fieldVector.size()];
 		fieldVector.toArray(fieldArray);
@@ -117,7 +117,7 @@ public class MapCreator extends StorageReader {
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			StreetCircularList street = new StreetCircularList(name, price, income, mortgage, 0, null, upgrade, color);
+			StreetCircularList street = new StreetCircularList(name, price, income, mortgage, upgrade, color);
 			connectStreet(street);
 			return street;
 		} catch(Exception e) {
@@ -163,7 +163,7 @@ public class MapCreator extends StorageReader {
 				throw new EndOfBlockException(path);
 			}
 			//TODO get owner and stage from a save file
-			StationCircularList station = new StationCircularList(name, price, income, mortgage, 0, null);
+			StationCircularList station = new StationCircularList(name, price, income, mortgage);
 			connectStation(station);
 			return station;
 		} catch(Exception e) {
@@ -204,7 +204,7 @@ public class MapCreator extends StorageReader {
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			FacilityCircularList facility = new FacilityCircularList(name, price, income, mortgage, 0, null);
+			FacilityCircularList facility = new FacilityCircularList(name, price, income, mortgage);
 			connectFacility(facility);
 			return facility;
 		} catch(Exception e) {

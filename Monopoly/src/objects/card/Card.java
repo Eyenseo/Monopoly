@@ -29,6 +29,5 @@ public abstract class Card {
 	public String getText() {
 		return this.TEXT;
 	}
-
-	public abstract void action();
+	//	public abstract void action();
 }

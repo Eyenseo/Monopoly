@@ -1,7 +1,5 @@
 package objects.map;
 
-import objects.Player;
-
 /**
  * The structure of StationCircularList is a circular list of all StationCircularList objects.
  *
@@ -23,7 +21,7 @@ public class StationCircularList extends PurchasableCircularList {
 	 * @param stage    The value determines the stage the income is at.
 	 * @param owner    The value determines the owner.
 	 */
-	public StationCircularList(String name, int price, int[] income, int mortgage, int stage, Player owner) {
-		super(name, price, income, mortgage, stage, owner);
+	public StationCircularList(String name, int price, int[] income, int mortgage) {
+		super(name, price, income, mortgage);
 	}
 }

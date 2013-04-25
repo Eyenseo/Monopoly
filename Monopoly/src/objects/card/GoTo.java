@@ -8,7 +8,7 @@ public class GoTo extends Card {
 	private final String  FIELD;
 	private final boolean OVERGO;
 
-	//TODO Doc
+	//JAVADOC
 	public GoTo(String name, String text, String field, boolean overGo) {
 		super(name, text);
 		FIELD = field;

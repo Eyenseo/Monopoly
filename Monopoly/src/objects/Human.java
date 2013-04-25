@@ -1,11 +1,9 @@
 package objects;
 
-/**
- * Created with IntelliJ IDEA.
- * User: eyenseo
- * Date: 16.04.13
- * Time: 16:40
- * To change this template use File | Settings | File Templates.
- */
+//JAVADOC
 public class Human extends Player {
+	//JAVADOC
+	public Human(String name, int money) {
+		super(name, money);
+	}
 }

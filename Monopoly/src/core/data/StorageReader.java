@@ -78,7 +78,7 @@ abstract class StorageReader {
 		}
 	}
 
-	//TODO Doc
+	//JAVADOC
 	String nextControllWord() throws StorageReaderException {
 		try {
 			String line = file.readLine();

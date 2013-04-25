@@ -4,65 +4,100 @@ import objects.map.Field;
 import objects.map.PurchasableCircularList;
 
 import java.util.HashMap;
+import java.util.Random;
 
-//TODO Doc
+//JAVADOC
 public abstract class Player {
 	private final String  NAME;
 	private       boolean inJail;
+	private       boolean jailbaitEvent;
+	private       boolean jailbaitCommunity;
 	private       int     money;
-	private       int     position;
-	private HashMap<String, Field> ownedFieldMap = new HashMap<String, Field>();
+	private       int[]   dices;
+	private HashMap<String, Field> ownedFieldMap   = new HashMap<String, Field>();
+	private Random                 randomGenerator = new Random(); //TODO have only one Random Generator for all Player
 
-	//TODO Doc
-	public Player(String name, boolean inJail, int money, int position) {
+	//JAVADOC
+	public Player(String name, int money) {
 		this.NAME = name;
-		this.inJail = inJail;
 		this.money = money;
-		this.position = position;
+		this.inJail = false;
+		this.jailbaitEvent = false;
+		this.jailbaitCommunity = false;
+		dices = new int[2];
 	}
 
-	//TODO Doc
-	public int getPosition() {
-		return this.position;
-	}
-
-	//TODO Doc
+	//JAVADOC
 	public String getName() {
 		return this.NAME;
 	}
 
-	//TODO Doc
+	//JAVADOC
 	public int getMoney() {
 		return this.money;
 	}
 
-	//TODO Doc
-	public void setMoney() {
+	//JAVADOC
+	public void setMoney(int money) {
+		this.money = money;
 	}
 
-	//TODO Doc
+	//JAVADOC
 	public boolean isInJail() {
 		return this.inJail;
 	}
 
-	//TODO Doc
+	//JAVADOC
 	public void setInJail(boolean inJail) {
 		this.inJail = inJail;
 	}
 
-	//TODO Doc
+	//JAVADOC
 	public void buy(PurchasableCircularList purchasable) {
+		if(purchasable.getOwner() != null) {
+			purchasable.getOwner().addMoney(purchasable.getPrice());
+		}
 		this.money -= purchasable.getPrice();
 		purchasable.setOwner(this);
-		ownedFieldMap.put(purchasable.getName(), purchasable);
+		this.ownedFieldMap.put(purchasable.getName(), purchasable);
 	}
 
-	//TODO Doc
-	public void moveBy(int amount) {
-		this.position += amount;
-		if(this.position > 39) {
-			this.position -= 40;
-		}
+	//JAVADOC
+	public int[] throwDice() {
+		dices[0] = randomGenerator.nextInt(6) + 1;
+		dices[1] = randomGenerator.nextInt(6) + 1;
+		return dices;
 	}
+
+	//JAVADOC
+	public int[] getDices() {
+		return this.dices;
+	}
+
+	//JAVADOC
+	public boolean isJailbaitEvent() {
+		return jailbaitEvent;
+	}
+
+	//JAVADOC
+	public boolean isJailbaitCommunity() {
+		return jailbaitCommunity;
+	}
+
+	//JAVADOC
+	public void addMoney(int amount) {
+		this.setMoney(getMoney() + amount);
+	}
+
+	@Override
+	public String toString() {
+		return this.NAME;
+	}
+
+	public void pay(int amount) {
+		this.money -= amount;
+	}
+	//JAVADOC
+	//public abstract void nextTurn(int[] dices);
 	// TODO:   Everything
 }

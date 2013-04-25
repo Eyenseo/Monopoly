@@ -1,21 +1,21 @@
 package objects.map;
 
-//TODO Doc
+//JAVADOC
 public class Parking extends NotPurchasable {
 	private int money;
 
-	//TODO Doc
+	//JAVADOC
 	public Parking(int money) {
 		super("Frei Parken");
 		this.money = money;
 	}
 
-	//TODO Doc
+	//JAVADOC
 	public int getMoney() {
 		return this.money;
 	}
 
-	//TODO Doc
+	//JAVADOC
 	public void setMoney(int money) {
 		this.money = money;
 	}

@@ -1,6 +1,6 @@
 package objects.map;
 
-//TODO Doc
+//JAVADOC
 public class Tax extends NotPurchasable {
 	private final int bill;
 	// TODO:   Everything
