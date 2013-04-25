@@ -8,4 +8,7 @@ package objects;
  * To change this template use File | Settings | File Templates.
  */
 public class Human extends Player {
+	public Human(String name, boolean inJail, int money, int position) {
+		super(name, inJail, money, position);
+	}
 }

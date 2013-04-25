@@ -1,7 +1,7 @@
 package core;
 
 import core.data.MapCreator;
-import objects.exceptions.map.MapCreationException;
+import objects.exceptions.StorageReaderException;
 import objects.map.Field;
 
 //TODO Doc
@@ -12,7 +12,7 @@ public class Monopoly {
 		the try-block is finished */
 		try {
 			map = new MapCreator().createMap();
-		} catch(MapCreationException e) {
+		} catch(StorageReaderException e) {
 			System.out.println(e.getMessageStack());
 		}
 		System.out.print("Set stop - check the map in debug.");

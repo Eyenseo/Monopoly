@@ -21,6 +21,5 @@ public abstract class Field {
 	public String getName() {
 		return this.NAME;
 	}
-
-	public abstract void action();
+	//public abstract void action();
 }
