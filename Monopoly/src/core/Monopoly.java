@@ -5,6 +5,7 @@ import objects.Human;
 import objects.Player;
 import objects.card.CardStack;
 import objects.exceptions.StorageReaderException;
+import objects.map.Field;
 import objects.map.Map;
 import objects.map.PurchasableCircularList;
 import objects.map.StreetCircularList;
@@ -58,11 +59,12 @@ public class Monopoly {
 	private void nextTurn(Player player, int doublesTime) {
 		boolean doubles = false;
 		int turnState = 0; // [0]Start of turn [1]After moving [2]End of Turn [3]Doubles turn
+		Field field = map.getField(player);
 		while(turnState != 2 && !gameOver) {
-			switch(menu.nextTurn(player, map.getField(player), turnState)) {
+			switch(menu.nextTurn(player, field, turnState)) {
 				case 0:
 					doubles = map.movePlayer(player);
-					map.getField(player).action(player);
+					field.action(player);
 					if(doubles) {
 						turnState = 3;
 					} else {
@@ -70,10 +72,10 @@ public class Monopoly {
 					}
 					break;
 				case 1:
-					player.buy((PurchasableCircularList) map.getField(player));
+					player.buy((PurchasableCircularList) field);
 					break;
 				case 2:
-					((StreetCircularList) map.getField(player)).nextStage();
+					((StreetCircularList) field).nextStage();
 					break;
 				case 3:
 					System.out.print("To be implemented ...");
