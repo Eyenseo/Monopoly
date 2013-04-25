@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 //JAVADOC
-public abstract class Player {
+public class Player {
 	private final String  NAME;
 	private       boolean inJail;
 	private       boolean jailbaitEvent;

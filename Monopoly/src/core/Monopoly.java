@@ -1,7 +1,6 @@
 package core;
 
 import core.data.MapCreator;
-import objects.Human;
 import objects.Player;
 import objects.card.CardStack;
 import objects.exceptions.StorageReaderException;
@@ -121,8 +120,8 @@ public class Monopoly {
 		//		for(int i = menu.playerAmount(); i > 0; i--) {
 		//			m.addPlayer(menu.newHuman());
 		//		}
-		m.addPlayer(new Human("Julia", m.STARTMONEY));
-		m.addPlayer(new Human("Markus", m.STARTMONEY));
+		m.addPlayer(new Player("Julia", m.STARTMONEY));
+		m.addPlayer(new Player("Markus", m.STARTMONEY));
 		while(!m.isGameOver()) {
 			m.nextRound();
 		}
