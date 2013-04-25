@@ -1,6 +1,5 @@
 package objects.map;
 
-import objects.Bank;
 import objects.Player;
 
 import java.util.HashMap;
@@ -8,13 +7,11 @@ import java.util.HashMap;
 //JAVADOC
 public class Map {
 	private final Field[] MAP;
-	private final Bank    BANK;
 	private HashMap<Player, Integer> playerPosition = new HashMap<Player, Integer>();
 
 	//JAVADOC
-	public Map(Field[] map, Bank bank) {
+	public Map(Field[] map) {
 		this.MAP = map;
-		this.BANK = bank;
 	}
 
 	//JAVADOC

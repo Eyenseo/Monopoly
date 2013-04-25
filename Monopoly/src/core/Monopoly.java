@@ -1,7 +1,6 @@
 package core;
 
 import core.data.MapCreator;
-import objects.Bank;
 import objects.Human;
 import objects.Player;
 import objects.card.CardStack;
@@ -17,7 +16,6 @@ import java.util.Vector;
 //JAVADOC
 public class Monopoly {
 	private final int     STARTMONEY = 10000;
-	private final Bank    bank       = new Bank();
 	private       boolean gameOver   = false;
 	private Map  map;
 	private Menu menu;
@@ -28,7 +26,7 @@ public class Monopoly {
 		try {
 			CardStack event = new CardStack("events.txt", "Event Karte");
 			CardStack community = new CardStack("community.txt", "Gemeinschafts Karte");
-			this.map = new Map(new MapCreator().createMap(), bank);
+			this.map = new Map(new MapCreator().createMap());
 			this.menu = menu;
 		} catch(StorageReaderException e) {
 			System.err.println(e.getMessageStack());
