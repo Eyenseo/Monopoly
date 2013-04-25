@@ -7,11 +7,18 @@ import java.util.HashMap;
 //JAVADOC
 public class Map {
 	private final Field[] MAP;
+	private       int     jailPosition;
 	private HashMap<Player, Integer> playerPosition = new HashMap<Player, Integer>();
 
 	//JAVADOC
 	public Map(Field[] map) {
 		this.MAP = map;
+		for(int i = 0; i < map.length; i++) {
+			if(map[i] instanceof Jail) {
+				this.jailPosition = i;
+				break;
+			}
+		}
 	}
 
 	//JAVADOC
@@ -42,5 +49,11 @@ public class Map {
 	//JAVADOC
 	public Field getField(Player player) {
 		return MAP[playerPosition.get(player)];
+	}
+
+	//JAVADOC
+	public void putInJail(Player player) {
+		playerPosition.put(player, jailPosition);
+		player.setInJail(true);
 	}
 }

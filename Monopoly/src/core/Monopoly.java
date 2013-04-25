@@ -99,8 +99,8 @@ public class Monopoly {
 			}
 		}
 		if(doublesTime == 3) {
-			//TODO implement
-			System.err.println("GoToJail\nTo implement ...");
+			map.putInJail(player);
+			menu.inJail();
 		} else if(doubles) {
 			nextTurn(player, doublesTime + 1);
 		}

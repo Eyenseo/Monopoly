@@ -29,6 +29,12 @@ public class ConsoleMenu implements Menu {
 	}
 
 	//JAVADOC
+	//TODO probably improve
+	public void inJail() {
+		System.out.print("Sie sind im Gefängnis!");
+	}
+
+	//JAVADOC
 	@Override
 	public int nextTurn(Player player, Field field, int turnState) {
 		int userInt;

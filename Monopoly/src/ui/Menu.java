@@ -7,4 +7,6 @@ import objects.map.Field;
 public interface Menu {
 	//JAVADOC
 	public int nextTurn(Player player, Field field, int turnState);
+
+	public void inJail();
 }
