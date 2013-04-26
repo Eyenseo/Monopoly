@@ -4,7 +4,7 @@ import core.data.MapArrayCreator;
 import objects.Player;
 import objects.card.CardStack;
 import objects.exceptions.StorageReaderException;
-import objects.map.Field;
+import objects.exceptions.map.MapInitialisationException;
 import objects.map.Map;
 import objects.map.PurchasableCircularList;
 import objects.map.StreetCircularList;
@@ -29,14 +29,18 @@ public class Monopoly {
 			this.map = new Map(new MapArrayCreator().createMap());
 			this.menu = menu;
 		} catch(StorageReaderException e) {
+			//TODO catch the exceptions properly
 			System.err.println(e.getMessageStack());
+		} catch(MapInitialisationException e) {
+			//TODO catch the exceptions properly
+			System.err.print(e.getMessage());
 		}
 	}
 
 	//JAVADOC
 	private void addPlayer(Player player) {
 		playerVector.add(player);
-		map.addPlayer(player);
+		map.setPlayerToStart(player);
 	}
 
 	//JAVADOC
@@ -58,11 +62,11 @@ public class Monopoly {
 	private void nextTurn(Player player, int doublesTime) {
 		boolean doubles = false;
 		int turnState = 0; // [0]Start of turn [1]After moving [2]End of Turn [3]Doubles turn
-		Field field = map.getField(player);
 		while(turnState != 2 && !gameOver) {
-			switch(menu.nextTurn(player, field, turnState)) {
+			switch(menu.nextTurn(player, turnState)) {
 				case 0:
 					doubles = map.movePlayer(player);
+					player.getField().action(player);
 					if(doubles) {
 						turnState = 3;
 					} else {
@@ -70,16 +74,16 @@ public class Monopoly {
 					}
 					break;
 				case 1:
-					player.buy((PurchasableCircularList) field);
+					player.buy((PurchasableCircularList) player.getField());
 					break;
 				case 2:
-					((StreetCircularList) field).nextStage();
+					((StreetCircularList) player.getField()).nextStage();
 					break;
 				case 3:
-					((PurchasableCircularList) field).setInMortgage(true);
+					((PurchasableCircularList) player.getField()).setInMortgage(true);
 					break;
 				case 4:
-					((PurchasableCircularList) field).setInMortgage(false);
+					((PurchasableCircularList) player.getField()).setInMortgage(false);
 					break;
 				case 5:
 					System.out.print("To be implemented ...");

@@ -4,12 +4,12 @@ import objects.exceptions.StorageReaderException;
 import objects.map.Field;
 
 /**
- * The MapCreationException is the Exception for all Exceptions thrown while creating a map from storage data.
+ * The MapArrayCreationException is the Exception for all Exceptions thrown while creating a map from storage data.
  *
  * @author Eyenseo
  * @version 1
  */
-public class MapCreationException extends StorageReaderException {
+public class MapArrayCreationException extends StorageReaderException {
 	String message = "";
 
 	/**
@@ -18,7 +18,7 @@ public class MapCreationException extends StorageReaderException {
 	 * @param map   The value determines field array that represents the map.
 	 * @param cause The value determines the previous Exception.
 	 */
-	public MapCreationException(Field[] map, Throwable cause) {
+	public MapArrayCreationException(Field[] map, Throwable cause) {
 		super(cause);
 		for(int i = 0; i < map.length; i++) {
 			if(map[i] == null) {

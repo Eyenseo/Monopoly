@@ -1,60 +1,84 @@
 package objects.map;
 
 import objects.Player;
+import objects.exceptions.map.MapInitialisationException;
 
 import java.util.HashMap;
 
 //JAVADOC
 public class Map {
 	private final Field[] MAP;
-	private       int     jailPosition;
-	private HashMap<Player, Integer> playerPosition = new HashMap<Player, Integer>();
+	private int                      goPosition       = -1;
+	private int                      jailPosition     = -1;
+	private int                      parkingPosition  = -1;
+	private HashMap<String, Integer> fieldNameToIndex = new HashMap<String, Integer>();
 
 	//JAVADOC
-	public Map(Field[] map) {
+	public Map(Field[] map) throws MapInitialisationException {
 		this.MAP = map;
+		GoToJail goToJail = null;
 		for(int i = 0; i < map.length; i++) {
+			this.fieldNameToIndex.put(map[i].toString(), i);
 			if(map[i] instanceof Jail) {
 				this.jailPosition = i;
-				break;
+			} else if(map[i] instanceof Go) {
+				this.goPosition = i;
+			} else if(map[i] instanceof Parking) {
+				this.parkingPosition = i;
+			} else if(map[i] instanceof GoToJail) {
+				goToJail = (GoToJail) map[i];
 			}
+		}
+		if(goPosition == -1) {
+			throw new MapInitialisationException("Go");
+		} else if(jailPosition == -1) {
+			throw new MapInitialisationException("Jail");
+		} else if(parkingPosition == -1) {
+			throw new MapInitialisationException("Parking");
+		} else if(goToJail != null) {
+			goToJail.setJail(map[jailPosition]);
 		}
 	}
 
 	//JAVADOC
-	public void addPlayer(Player player) {
-		this.playerPosition.put(player, 0);
-	}
-
-	//JAVADOC
-	public void addPlayer(Player player, int position) {
-		this.playerPosition.put(player, position);
-	}
-
-	//JAVADOC
 	public boolean movePlayer(Player player) {
-		int[] dices = player.throwDice();
+		return movePlayer(player, player.throwDice(), true);
+	}
+
+	//JAVADOC
+	public boolean movePlayer(Player player, int[] dices, boolean overGo) {
 		boolean doubles = dices[0] == dices[1];
 		if(!player.isInJail() || doubles) {
-			int pos = playerPosition.get(player) + dices[0] + dices[1];
+			int pos = fieldNameToIndex.get(player.getField().toString()) + dices[0] + dices[1];
 			if(pos >= MAP.length) {
 				pos -= MAP.length;
-				player.addMoney(4000);
+				if(overGo) {
+					MAP[goPosition].action(player);
+				}
 			}
-			playerPosition.put(player, pos);
-			MAP[pos].action(player);
+			player.setField(MAP[pos]);
 		}
 		return doubles;
 	}
 
 	//JAVADOC
-	public Field getField(Player player) {
-		return MAP[playerPosition.get(player)];
+	public void putInJail(Player player) {
+		player.setField(MAP[jailPosition]);
+		player.setInJail(true);
 	}
 
 	//JAVADOC
-	public void putInJail(Player player) {
-		playerPosition.put(player, jailPosition);
-		player.setInJail(true);
+	public void setPlayerTo(Player player, String name) {
+		setPlayerTo(player, name, true);
+	}
+
+	//JAVADOC
+	public void setPlayerTo(Player player, String name, boolean overGo) {
+		movePlayer(player, new int[]{0, fieldNameToIndex.get(name) - fieldNameToIndex.get(
+				player.getField().toString())}, overGo);
+	}
+
+	public void setPlayerToStart(Player player) {
+		player.setField(MAP[goPosition]);
 	}
 }

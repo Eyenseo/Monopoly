@@ -37,11 +37,11 @@ public class ConsoleMenu implements Menu {
 
 	//JAVADOC
 	@Override
-	public int nextTurn(Player player, Field field, int turnState) {
+	public int nextTurn(Player player, int turnState) {
 		int userInt;
-		int[] options = getPlayerOptions(player, field, turnState);
+		int[] options = getPlayerOptions(player, turnState);
 		String menuOptions = getNextTurnOptions(options);
-		String playerStatus = getPlayerStatus(player, field, turnState == 0);
+		String playerStatus = getPlayerStatus(player, turnState == 0);
 		println(playerStatus + "\n\nSie haben nun folgende Optionen:\n" + menuOptions);
 		userInt = in.userInt(options, "Bitte wählen Sie eine der Optionen aus:\n" + menuOptions);
 		for(int i = 0; i < options.length; i++) {
@@ -54,8 +54,9 @@ public class ConsoleMenu implements Menu {
 	}
 
 	//JAVADOC
-	private String getPlayerStatus(Player player, Field field, boolean beginOfTurn) {
+	private String getPlayerStatus(Player player, boolean beginOfTurn) {
 		String playerStatus = "";
+		Field field = player.getField();
 		if(beginOfTurn) {
 			playerStatus += player.getName() + " ist am Zug!";
 		} else {
@@ -130,10 +131,11 @@ public class ConsoleMenu implements Menu {
 	}
 
 	//JAVADOC
-	//TODO use maybe a hashmap for better performance see ConsoleMenu.nextTurn()
-	private int[] getPlayerOptions(Player player, Field field, int turnState) {
+	//TODO maybe use a hashmap for better performance see ConsoleMenu.nextTurn()
+	private int[] getPlayerOptions(Player player, int turnState) {
 		int[] playerOptions = new int[MENUOPTIONS];
 		int index = 0;
+		Field field = player.getField();
 		if(turnState == 0) {
 			playerOptions[0] = ++index;
 		}

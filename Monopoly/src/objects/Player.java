@@ -16,6 +16,7 @@ public class Player {
 	private       int[]   dices;
 	private HashMap<String, Field> ownedFieldMap   = new HashMap<String, Field>();
 	private Random                 randomGenerator = new Random(); //TODO have only one Random Generator for all Player
+	private Field field;
 
 	//JAVADOC
 	public Player(String name, int money) {
@@ -97,5 +98,15 @@ public class Player {
 	//JAVADOC
 	public void pay(int amount) {
 		this.money -= amount;
+	}
+
+	//JAVADOC
+	public void setField(Field field) {
+		this.field = field;
+	}
+
+	//JAVADOC
+	public Field getField() {
+		return this.field;
 	}
 }
