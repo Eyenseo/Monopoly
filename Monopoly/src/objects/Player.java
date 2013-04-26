@@ -49,7 +49,7 @@ public class Player {
 			purchasable.getOwner().addMoney(purchasable.getPrice());
 		}
 		this.money -= purchasable.getPrice();
-		purchasable.setOwner(this);
+		//		purchasable.setOwner(this);
 		this.ownedFieldMap.put(purchasable.getName(), purchasable);
 	}
 
@@ -102,7 +102,15 @@ public class Player {
 
 	//JAVADOC
 	public void setField(Field field) {
+		setField(field, false);
+	}
+
+	//JAVADOC
+	public void setField(Field field, boolean doAction) {
 		this.field = field;
+		if(doAction) {
+			field.action(this);
+		}
 	}
 
 	//JAVADOC

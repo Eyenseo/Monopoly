@@ -33,7 +33,7 @@ public class MapArrayCreator extends StorageReader {
 	 * @see StorageReaderException
 	 */
 	//JAVADOC
-	public Field[] createMap() throws StorageReaderException {
+	public Field[] createMapArray() throws StorageReaderException {
 		Vector<Field> fieldVector = new Vector<Field>();
 		Field[] fieldArray;
 		Field temp;
@@ -117,13 +117,12 @@ public class MapArrayCreator extends StorageReader {
 				throw new EndOfBlockException(path);
 			}
 			StreetCircularList street = new StreetCircularList(name, price, income, mortgage, upgrade, color);
-			connectStreet(street);
+			//			connectStreet(street);
 			return street;
 		} catch(Exception e) {
 			throw new StreetCreationException(name, e);
 		}
 	}
-
 	/**
 	 * This method checks the last StreetCircularList object was already of it's color, if it is it connects the them,
 	 * if not the StreetCircularList object in the parameter is the 'start' of a new circular list.
@@ -131,13 +130,13 @@ public class MapArrayCreator extends StorageReader {
 	 * @param street The value determines the StreetCircularList object which will check if it belongs to the previous
 	 *               StreetCircularList object.
 	 */
-	private void connectStreet(StreetCircularList street) {
-		if(streetGroupBuffer != null && streetGroupBuffer.isSameColor(street)) {
-			streetGroupBuffer.add(street);
-		} else {  // The else block is for performance by letting go of the 'order' from the circular list
-			streetGroupBuffer = street;
-		}
-	}
+	//	private void connectStreet(StreetCircularList street) {
+	//		if(streetGroupBuffer != null && streetGroupBuffer.isSameColor(street)) {
+	//			streetGroupBuffer.add(street);
+	//		} else {  // The else block is for performance by letting go of the 'order' from the circular list
+	//			streetGroupBuffer = street;
+	//		}
+	//	}
 
 	/**
 	 * This method connects the new station with the other if other exist.
@@ -163,26 +162,25 @@ public class MapArrayCreator extends StorageReader {
 			}
 			//TODO get owner and stage from a save file
 			StationCircularList station = new StationCircularList(name, price, income, mortgage);
-			connectStation(station);
+			//			connectStation(station);
 			return station;
 		} catch(Exception e) {
 			throw new StationCreationException(name, e);
 		}
 	}
-
 	/**
 	 * This method connects the station with the next one if there was already one.
 	 *
 	 * @param station The value determines the StationCircularList object that will be added to the other
 	 *                StationCircularList objects.
 	 */
-	private void connectStation(StationCircularList station) {
-		if(stationGroupBuffer != null) {
-			stationGroupBuffer.add(station);
-		} else {// The else block is for performance by letting go of the 'order' from the circular list
-			stationGroupBuffer = station;
-		}
-	}
+	//	private void connectStation(StationCircularList station) {
+	//		if(stationGroupBuffer != null) {
+	//			stationGroupBuffer.add(station);
+	//		} else {// The else block is for performance by letting go of the 'order' from the circular list
+	//			stationGroupBuffer = station;
+	//		}
+	//	}
 
 	/**
 	 * This method connects the new facility with the other if other exist.
@@ -204,26 +202,25 @@ public class MapArrayCreator extends StorageReader {
 				throw new EndOfBlockException(path);
 			}
 			FacilityCircularList facility = new FacilityCircularList(name, price, income, mortgage);
-			connectFacility(facility);
+			//			connectFacility(facility);
 			return facility;
 		} catch(Exception e) {
 			throw new FacilityCreationException(name, e);
 		}
 	}
-
 	/**
 	 * This method connects the facility with the next one if there was already one.
 	 *
 	 * @param facility The value determines the FacilityCircularList object that will be added to the other
 	 *                 FacilityCircularList objects.
 	 */
-	private void connectFacility(FacilityCircularList facility) {
-		if(facilityGroupBuffer != null) {
-			facilityGroupBuffer.add(facility);
-		} else {// The else block is for performance by letting go of the 'order' from the circular list
-			facilityGroupBuffer = facility;
-		}
-	}
+	//	private void connectFacility(FacilityCircularList facility) {
+	//		if(facilityGroupBuffer != null) {
+	//			facilityGroupBuffer.add(facility);
+	//		} else {// The else block is for performance by letting go of the 'order' from the circular list
+	//			facilityGroupBuffer = facility;
+	//		}
+	//	}
 
 	/**
 	 * @return The return value is a Tax object based on the data in the storage package.

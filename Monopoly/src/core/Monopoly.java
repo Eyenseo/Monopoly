@@ -4,8 +4,8 @@ import core.data.MapArrayCreator;
 import objects.Player;
 import objects.card.CardStack;
 import objects.exceptions.StorageReaderException;
-import objects.exceptions.map.MapInitialisationException;
-import objects.map.Map;
+import objects.map.Field;
+import objects.map.MapConnector;
 import objects.map.PurchasableCircularList;
 import objects.map.StreetCircularList;
 import ui.Menu;
@@ -17,30 +17,28 @@ import java.util.Vector;
 public class Monopoly {
 	private final int     STARTMONEY = 50000;
 	private       boolean gameOver   = false;
-	private Map  map;
-	private Menu menu;
+	private Field start;
+	private Menu  menu;
 	private Vector<Player> playerVector = new Vector<Player>();
 
 	//JAVADOC
 	Monopoly(Menu menu) {
 		try {
+			Field[] mapArray = new MapArrayCreator().createMapArray();
 			CardStack event = new CardStack("events.txt", "Event Karte");
 			CardStack community = new CardStack("community.txt", "Gemeinschafts Karte");
-			this.map = new Map(new MapArrayCreator().createMap());
+			this.start = new MapConnector().make(mapArray, event, community);
 			this.menu = menu;
 		} catch(StorageReaderException e) {
 			//TODO catch the exceptions properly
 			System.err.println(e.getMessageStack());
-		} catch(MapInitialisationException e) {
-			//TODO catch the exceptions properly
-			System.err.print(e.getMessage());
 		}
 	}
 
 	//JAVADOC
 	private void addPlayer(Player player) {
 		playerVector.add(player);
-		map.setPlayerToStart(player);
+		player.setField(start);
 	}
 
 	//JAVADOC
@@ -106,7 +104,7 @@ public class Monopoly {
 			}
 		}
 		if(doublesTime == 3) {
-			map.putInJail(player);
+			player.setField("Jail");
 			menu.inJail();
 		} else if(doubles) {
 			nextTurn(player, doublesTime + 1);

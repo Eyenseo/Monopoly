@@ -1,37 +1,50 @@
 package objects.map;
-//JAVADOC
 
 import objects.Player;
 
-/**
- * @author Eyenseo
- * @version 0.1
- */
+//JAVADOC
 public abstract class Field {
-	private final String NAME;
+	private String name;
+	private Field  next;
+	private Field  previous;
 
-	/**
-	 * @param name The value determines the name of the object.
-	 */
+	//JAVADOC
 	Field(String name) {
-		this.NAME = name;
+		this.name = name;
+		this.next = this;
+		this.previous = this;
 	}
 
 	/**
 	 * @return The return value is the name.
 	 */
 	public String getName() {
-		return this.NAME;
+		return this.name;
 	}
 
 	//JAVADOC
 	@Override
 	public String toString() {
-		return this.NAME;
+		return this.name;
 	}
 
+	//JAVADOC
 	//TODO this has to be replaced in each individual Method and set to abstract
 	public void action(Player player) {
 		System.err.println("This is a placeholder lalala~lalaLA");
+	}
+
+	//JAVADOC
+	public void add(Field previous) {
+		if(previous.previous.equals(previous)) {
+			previous.next = this;
+			previous.previous = this;
+			this.next = previous;
+		} else {
+			this.next = previous.next;
+			this.next.previous = this;
+			previous.next = this;
+		}
+		this.previous = previous;
 	}
 }
