@@ -13,7 +13,6 @@ import java.util.Vector;
  * @author Eyenseo
  * @version 1
  */
-//TODO read from save file
 public class MapCreator extends StorageReader {
 	private StreetCircularList   streetGroupBuffer   = null;
 	private StationCircularList  stationGroupBuffer  = null;
@@ -33,7 +32,6 @@ public class MapCreator extends StorageReader {
 	 * @see StorageReaderException
 	 */
 	//JAVADOC
-	//TODO Method to create map from save
 	public Field[] createMap() throws StorageReaderException {
 		Vector<Field> fieldVector = new Vector<Field>();
 		Field[] fieldArray;
@@ -251,34 +249,48 @@ public class MapCreator extends StorageReader {
 	 * @return The return value is a Chance object based on the data in the storage package.
 	 */
 	private Chance createChance() throws StorageReaderException {
-		if(!isEndOfBlock()) {
-			throw new EndOfBlockException(path);
+		String name = null;
+		try {
+			name = nextString();
+			if(!isEndOfBlock()) {
+				throw new EndOfBlockException(path);
+			}
+			return new Chance(name);
+		} catch(Exception e) {
+			throw new ChanceCreationException(name, e);
 		}
-		return new Chance();
 	}
 
 	/**
 	 * @return The return value is a Community object based on the data in the storage package.
 	 */
 	private Community createCommunity() throws StorageReaderException {
-		if(!isEndOfBlock()) {
-			throw new EndOfBlockException(path);
+		String name = null;
+		try {
+			name = nextString();
+			if(!isEndOfBlock()) {
+				throw new EndOfBlockException(path);
+			}
+			return new Community(name);
+		} catch(Exception e) {
+			throw new CommunityCreationException(name, e);
 		}
-		return new Community();
 	}
 
 	/**
 	 * @return The return value is a Go object based on the data in the storage package.
 	 */
 	private Go createGo() throws StorageReaderException {
+		String name = null;
 		try {
+			name = nextString();
 			int turnmoney = nextInt();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new Go(turnmoney);
+			return new Go(name, turnmoney);
 		} catch(Exception e) {
-			throw new GoCreationException(e);
+			throw new GoCreationException(name, e);
 		}
 	}
 
@@ -286,29 +298,47 @@ public class MapCreator extends StorageReader {
 	 * @return The return value is a Jail object based on the data in the storage package.
 	 */
 	private Jail createJail() throws StorageReaderException {
-		if(!isEndOfBlock()) {
-			throw new EndOfBlockException(path);
+		String name = null;
+		try {
+			name = nextString();
+			if(!isEndOfBlock()) {
+				throw new EndOfBlockException(path);
+			}
+			return new Jail(name);
+		} catch(Exception e) {
+			throw new JailCreationException(name, e);
 		}
-		return new Jail();
 	}
 
 	/**
 	 * @return The return value is a Parking object based on the data in the storage package.
 	 */
 	private Parking createParking() throws StorageReaderException {
-		if(!isEndOfBlock()) {
-			throw new EndOfBlockException(path);
+		String name = null;
+		try {
+			name = nextString();
+			if(!isEndOfBlock()) {
+				throw new EndOfBlockException(path);
+			}
+			return new Parking(name);
+		} catch(Exception e) {
+			throw new ParkingCreationException(name, e);
 		}
-		return new Parking(0);
 	}
 
 	/**
 	 * @return The return value is a GoToJail object based on the data in the storage package.
 	 */
 	private GoToJail createGoToJail() throws StorageReaderException {
-		if(!isEndOfBlock()) {
-			throw new EndOfBlockException(path);
+		String name = null;
+		try {
+			name = nextString();
+			if(!isEndOfBlock()) {
+				throw new EndOfBlockException(path);
+			}
+			return new GoToJail(name);
+		} catch(Exception e) {
+			throw new GoToJailCreationException(name, e);
 		}
-		return new GoToJail();
 	}
 }

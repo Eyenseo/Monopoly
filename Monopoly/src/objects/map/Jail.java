@@ -1,10 +1,17 @@
 package objects.map;
 
+import objects.exceptions.map.JustOneInstanceException;
+
 //JAVADOC
 public class Jail extends NotPurchasable {
-	// TODO:   Everything
+	private static boolean justOneInstance = false;
 
-	public Jail() {
-		super("Gefängnis");
+	//JAVADOC
+	public Jail(String name) throws JustOneInstanceException {
+		super(name);
+		if(justOneInstance) {
+			throw new JustOneInstanceException(name);
+		}
+		Jail.justOneInstance = true;
 	}
 }

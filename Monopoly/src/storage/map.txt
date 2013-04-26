@@ -33,12 +33,20 @@
 ##			name
 ##			amount
 ##		#Chance
+##			name
 ##		#Community
+##			name
 ##		#GO
+##			name
+##			moneyByTurn
 ##		#Jail
+##			name
 ##		#Parking
+##			name
 ##		#GoToJail
+##			name
 #Go
+Los
 4000
 #!
 #Street
@@ -57,6 +65,7 @@ Badstraße
 600
 #!
 #Community
+Gemeinschaftsfeld
 #!
 #Street
 Turmstraße
@@ -102,6 +111,7 @@ Chausseestraße
 1000
 #!
 #Chance
+Ereignisfeld
 #!
 #Street
 Elisenstraße
@@ -134,6 +144,7 @@ Poststraße
 1200
 #!
 #Jail
+Gefängnis
 #!
 #Street
 Seestraße
@@ -212,6 +223,7 @@ Münchner Straße
 1800
 #!
 #Community
+Gemeinschaftsfeld
 #!
 #Street
 Wiener Straße
@@ -244,6 +256,7 @@ Berliner Straße
 2000
 #!
 #Parking
+Frei Parken
 #!
 #Street
 Theaterstraße
@@ -261,6 +274,7 @@ Theaterstraße
 2200
 #!
 #Chance
+Ereignisfeld
 #!
 #Street
 Museumstraße
@@ -354,6 +368,7 @@ Goethestraße
 2800
 #!
 #GoToJail
+Geh in's Gefängnis
 #!
 #Street
 Rathausplatz
@@ -386,6 +401,7 @@ Hauptstraße
 3000
 #!
 #Community
+Gemeinschaftsfeld
 #!
 #Street
 Bahnhofstraße
@@ -412,6 +428,7 @@ Haptbahnhof
 2000
 #!
 #Chance
+Ereignisfeld
 #!
 #Street
 Parkstraße
