@@ -1,6 +1,6 @@
 package core;
 
-import core.data.MapCreator;
+import core.data.MapArrayCreator;
 import objects.Player;
 import objects.card.CardStack;
 import objects.exceptions.StorageReaderException;
@@ -26,7 +26,7 @@ public class Monopoly {
 		try {
 			CardStack event = new CardStack("events.txt", "Event Karte");
 			CardStack community = new CardStack("community.txt", "Gemeinschafts Karte");
-			this.map = new Map(new MapCreator().createMap());
+			this.map = new Map(new MapArrayCreator().createMap());
 			this.menu = menu;
 		} catch(StorageReaderException e) {
 			System.err.println(e.getMessageStack());

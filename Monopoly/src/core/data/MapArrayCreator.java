@@ -8,18 +8,18 @@ import objects.map.*;
 import java.util.Vector;
 
 /**
- * The MapCreator class provides the method to create the map out of the data in the storage package.
+ * The MapArrayCreator class provides the method to create the map out of the data in the storage package.
  *
  * @author Eyenseo
  * @version 1
  */
-public class MapCreator extends StorageReader {
+public class MapArrayCreator extends StorageReader {
 	private StreetCircularList   streetGroupBuffer   = null;
 	private StationCircularList  stationGroupBuffer  = null;
 	private FacilityCircularList facilityGroupBuffer = null;
 
 	//TODO constructor with parameter with the Community-Queue and the Chance-Queue for the Community and Chance Fields
-	public MapCreator() {
+	public MapArrayCreator() {
 		super("map.txt");
 	}
 
@@ -27,8 +27,9 @@ public class MapCreator extends StorageReader {
 	 * @return The return value is the finished map. A Field array with 40 length and different objects of the
 	 *         objects.value package.
 	 *
-	 * @throws MapCreationException The Exception holds in its cause attribute the previous Exception and should be
-	 *                              read out with getMessageStack.
+	 * @throws objects.exceptions.map.MapArrayCreationException
+	 *          The Exception holds in its cause attribute the previous Exception and should be
+	 *          read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
 	//JAVADOC
