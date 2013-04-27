@@ -1,5 +1,6 @@
 package objects.map.notPurchasable;
 
+import objects.Player;
 import objects.exceptions.data.MoreThanOneDataSetException;
 
 //JAVADOC
@@ -22,7 +23,13 @@ public class Parking extends NotPurchasable {
 	}
 
 	//JAVADOC
-	public void setMoney(int money) {
-		this.money = money;
+	public void addMoney(int money) {
+		this.money += money;
+	}
+
+	@Override
+	public void action(Player player) {
+		player.addMoney(money);
+		money = 0;
 	}
 }
