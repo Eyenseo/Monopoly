@@ -20,8 +20,13 @@ public class CardStack {
 		this.STACK = new CardCreator(file, path).cardArray();
 	}
 
+	//JAVADOC
 	public Card[] toArray() {
 		return STACK;
 	}
-	//TODO everything
+
+	//JAVADOC
+	public Card nextCard() {
+		return STACK[top++];
+	}
 }
