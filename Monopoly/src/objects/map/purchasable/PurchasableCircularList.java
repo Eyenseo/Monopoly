@@ -50,9 +50,7 @@ public abstract class PurchasableCircularList extends Field {
 	 */
 	public void setOwner(Player owner) {
 		this.owner = owner;
-		if(sameOwnerCheck(this)) {
-			stage = 1;
-		}
+		stage = sameOwnerCheck();
 	}
 
 	/**
@@ -90,19 +88,20 @@ public abstract class PurchasableCircularList extends Field {
 	/**
 	 * @return The return value is the current income.
 	 */
-	public int getBill() {
+	public int getBill(Player payer) {
 		return this.INCOME[this.stage];
 	}
 
 	//JAVADOC
-	private boolean sameOwnerCheck(PurchasableCircularList start) {
-		if(this.owner.equals(this.nextGroupElement.getOwner())) {
-			if(this.nextGroupElement.getNextGroupElement().equals(start)) {
-				return true;
+	int sameOwnerCheck() {
+		PurchasableCircularList next = this.nextGroupElement;
+		while(!next.equals(this)) {
+			if(next.getOwner() == null || !next.getOwner().equals(owner)) {
+				return 0;
 			}
-			return this.nextGroupElement.sameOwnerCheck(start);
+			next = next.getNextGroupElement();
 		}
-		return false;
+		return 1;
 	}
 
 	//JAVADOC
@@ -118,5 +117,15 @@ public abstract class PurchasableCircularList extends Field {
 	public void setNextGroupElement(PurchasableCircularList nextGroupElement) {
 		nextGroupElement.nextGroupElement = this.nextGroupElement;
 		this.nextGroupElement = nextGroupElement;
+	}
+
+	//JAVADOC
+	//TODO improve
+	@Override
+	public void action(Player player) {
+		if(owner != null) {
+			player.pay(getBill(player));
+			owner.addMoney(getBill(player));
+		}
 	}
 }

@@ -24,4 +24,18 @@ public class StationCircularList extends PurchasableCircularList {
 	public StationCircularList(String name, int price, int[] income, int mortgage) {
 		super(name, price, income, mortgage);
 	}
+
+	@Override
+		//JAVADOC
+	int sameOwnerCheck() {
+		int index = 0;
+		PurchasableCircularList next = this.nextGroupElement;
+		while(!next.equals(this)) {
+			if(next.getOwner() != null && next.getOwner().equals(owner)) {
+				index++;
+			}
+			next = next.getNextGroupElement();
+		}
+		return index;
+	}
 }

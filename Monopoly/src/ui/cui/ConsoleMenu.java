@@ -69,16 +69,16 @@ public class ConsoleMenu implements Menu {
 			playerStatus += "Würfel 1: " + player.getDices()[0] + "\tWürfel 2: " + player.getDices()[1];
 		}
 		if(field instanceof PurchasableCircularList) {
-			if(((PurchasableCircularList) field).getOwner() != null &&
-			   ((PurchasableCircularList) field).getOwner() != player) {
+			if(((PurchasableCircularList) field).getOwner() != null
+					&& ((PurchasableCircularList) field).getOwner() != player) {
 				playerStatus += "\nOrt:\t" + field.getName() + " (" +
-				                ((PurchasableCircularList) field).getOwner().getName() + ")" + " Miete:\t" +
-				                ((PurchasableCircularList) field).getBill();
+						((PurchasableCircularList) field).getOwner().getName() + ")" + " Miete:\t" +
+						((PurchasableCircularList) field).getBill(player);
 			} else if(((PurchasableCircularList) field).getOwner() != null) {
 				playerStatus += "\nOrt:\t" + field.getName() + " (Sie)";
 			} else {
 				playerStatus += "\nOrt:\t" + field.getName() + " Preis:\t" +
-				                (((PurchasableCircularList) field).getPrice());
+						(((PurchasableCircularList) field).getPrice());
 			}
 		} else {
 			playerStatus += "\nOrt:\t" + field.getName();
@@ -116,11 +116,11 @@ public class ConsoleMenu implements Menu {
 						break;
 					case 7:
 						menuOptions += "[" + options[i] +
-						               "] Gemeinschaftskarte nutzen um aus dem Gefängnis frei zu kommen.\n";
+								"] Gemeinschaftskarte nutzen um aus dem Gefängnis frei zu kommen.\n";
 						break;
 					case 8:
 						menuOptions += "[" + options[i] +
-						               "] Ereigniskarte nutzen um aus dem Gefängnis frei zu kommen.\n";
+								"] Ereigniskarte nutzen um aus dem Gefängnis frei zu kommen.\n";
 						break;
 					case 9:
 						menuOptions += "[" + options[i] + "] Den Zug beenden.\n";
@@ -146,28 +146,28 @@ public class ConsoleMenu implements Menu {
 			playerOptions[0] = ++index;
 		}
 		if(field instanceof PurchasableCircularList) {
-			if(((PurchasableCircularList) field).getOwner() == null &&
-			   ((PurchasableCircularList) field).getPrice() <= player.getMoney()) {
+			if(((PurchasableCircularList) field).getOwner() == null
+					&& ((PurchasableCircularList) field).getPrice() <= player.getMoney()) {
 				playerOptions[1] = ++index;
 			}
 			if(field instanceof StreetCircularList && ((PurchasableCircularList) field).getStage() >= 1 &&
-			   ((PurchasableCircularList) field).getStage() < 5 &&
-			   ((PurchasableCircularList) field).getOwner() == player &&
-			   !((PurchasableCircularList) field).isInMortgage() &&
-			   ((StreetCircularList) field).getUpgrade() <= player.getMoney()) {
+					((PurchasableCircularList) field).getStage() < 5 &&
+					((PurchasableCircularList) field).getOwner() == player &&
+					!((PurchasableCircularList) field).isInMortgage() &&
+					((StreetCircularList) field).getUpgrade() <= player.getMoney()) {
 				playerOptions[2] = ++index;
 			}
-			if(((PurchasableCircularList) field).getOwner() == player &&
-			   !((PurchasableCircularList) field).isInMortgage()) {
+			if(((PurchasableCircularList) field).getOwner() == player && !((PurchasableCircularList) field)
+					.isInMortgage()) {
 				playerOptions[3] = ++index;
 			}
 			if(((PurchasableCircularList) field).getOwner() == player &&
-			   ((PurchasableCircularList) field).isInMortgage() &&
-			   ((PurchasableCircularList) field).getMortgage() <= player.getMoney()) {
+					((PurchasableCircularList) field).isInMortgage() &&
+					((PurchasableCircularList) field).getMortgage() <= player.getMoney()) {
 				playerOptions[4] = ++index;
 			}
-			if(((PurchasableCircularList) field).getOwner() != player &&
-			   ((PurchasableCircularList) field).getOwner() != null) {
+			if(((PurchasableCircularList) field).getOwner() != player
+					&& ((PurchasableCircularList) field).getOwner() != null) {
 				playerOptions[5] = ++index;
 			}
 		}

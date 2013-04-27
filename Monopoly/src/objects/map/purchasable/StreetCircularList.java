@@ -1,7 +1,5 @@
 package objects.map.purchasable;
 
-import objects.Player;
-
 /**
  * The structure of StreetCircularList is a circular list of all StreetCircularList objects that belong together e.g.
  * all Streets that are red.
@@ -25,8 +23,6 @@ public class StreetCircularList extends PurchasableCircularList {
 	 *                 <li>...</li>
 	 *                 </ol>
 	 * @param mortgage The value determines the amount of the mortgage.
-	 * @param stage    The value determines the stage the income is at.
-	 * @param owner    The value determines the owner.
 	 * @param upgrade  The value determines how much the owner has to pay for a house or hotel.
 	 * @param color    The values of the array determine the color of the StreetCircularList object. The Array has to
 	 *                 be three long, each of the places represent one color {R,G,B}.
@@ -56,15 +52,6 @@ public class StreetCircularList extends PurchasableCircularList {
 			compare[1] += street.COLOR[i];
 		}
 		return compare[0].equals(compare[1]);
-	}
-
-	//JAVADOC
-	//TODO improve
-	@Override
-	public void action(Player player) {
-		if(owner != null) {
-			player.pay(getBill());
-		}
 	}
 
 	//JAVADOC
