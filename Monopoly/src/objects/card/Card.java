@@ -1,5 +1,7 @@
 package objects.card;
 
+import objects.Player;
+
 /**
  * Card is the superclass of every card object
  */
@@ -29,5 +31,10 @@ public abstract class Card {
 	public String getText() {
 		return this.TEXT;
 	}
+
 	//	public abstract void action();
+	//TODO this has to be replaced in each individual Method and set to abstract
+	public void action(Player player) {
+		System.err.println("This is a placeholder lalala~lalaLA");
+	}
 }
