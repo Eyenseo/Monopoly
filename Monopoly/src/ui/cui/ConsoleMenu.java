@@ -50,6 +50,12 @@ public class ConsoleMenu implements Menu {
 				break;
 			}
 		}
+		if(userInt == 11) {
+			println("Sind Sie sich sicher, dass Sie aufgeben wollen? j/n");
+			if(in.userChar(new char[]{'j', 'n', '\0'}, "Bitte geben Sie 'j' oder 'n' ein.") == 'n') {
+				return nextTurn(player, turnState);
+			}
+		}
 		return userInt;
 	}
 
