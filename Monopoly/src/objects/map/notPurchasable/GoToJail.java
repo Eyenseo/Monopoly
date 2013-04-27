@@ -1,7 +1,7 @@
 package objects.map.notPurchasable;
 
 import objects.Player;
-import objects.exceptions.core.MoreThanOneInstanceException;
+import objects.exceptions.data.MoreThanOneDataSetException;
 import objects.map.Field;
 
 //JAVADOC
@@ -10,10 +10,10 @@ public class GoToJail extends NotPurchasable {
 	private Field jail;
 
 	//JAVADOC
-	public GoToJail(String name) throws MoreThanOneInstanceException {
+	public GoToJail(String name) throws MoreThanOneDataSetException {
 		super(name);
 		if(justOneInstance) {
-			throw new MoreThanOneInstanceException(name);
+			throw new MoreThanOneDataSetException(name);
 		}
 		GoToJail.justOneInstance = true;
 	}

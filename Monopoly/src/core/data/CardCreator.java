@@ -44,7 +44,7 @@ public class CardCreator extends StorageReader {
 				return createGoToStation();
 			}
 			if(line.equals("#jail")) {
-				return createJail();
+				return createGoInJail();
 			}
 			if(line.equals("#jailbait")) {
 				return createJailbait();
@@ -112,14 +112,14 @@ public class CardCreator extends StorageReader {
 	}
 
 	//JAVADOC
-	private Jail createJail() throws StorageReaderException {
+	private Arrest createGoInJail() throws StorageReaderException {
 		String text = null;
 		try {
 			text = nextString();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new Jail(NAME, text);
+			return new Arrest(NAME, text);
 		} catch(Exception e) {
 			throw new JailCreationException(NAME + ": " + text, e);
 		}

@@ -5,11 +5,21 @@ package objects.card;
  * A card is a trigger for a specific event defined in the gameplay mechanics
  */
 public class PayFineTakeCard extends Card {
+	CardStack community;
+
 	/**
 	 * @param name Name of the card
 	 * @param text Text of the card
 	 */
 	public PayFineTakeCard(String name, String text) {
 		super(name, text);
+	}
+
+	public CardStack getCommunity() {
+		return community;
+	}
+
+	public void setCommunity(CardStack community) {
+		this.community = community;
 	}
 }

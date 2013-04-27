@@ -1,6 +1,7 @@
 package core;
 
-import objects.card.CardStack;
+import objects.card.*;
+import objects.exceptions.core.CardConnectionException;
 import objects.exceptions.core.NoInstanceException;
 import objects.map.Field;
 import objects.map.notPurchasable.*;
@@ -16,10 +17,13 @@ import java.util.Collections;
 public class Connector {
 
 	//JAVADOC
-	public Field connect(Field[] map, CardStack chance, CardStack community) throws NoInstanceException {
+	public Field connect(Field[] map, CardStack chance, CardStack community)
+			throws NoInstanceException, CardConnectionException {
 		makeCircularFieldList(map);
 		connectMatching(arrayToArrayList(map), chance, community);
 		setDiceArray(map);
+		connectCards(chance.toArray(), map, community);
+		connectCards(community.toArray(), map, community);
 		return map[0];
 	}
 
@@ -134,17 +138,42 @@ public class Connector {
 		int index;
 		Field[] diceArray = new Field[12];
 		for(int i = 0; i < map.length; i++) {
-			for(int j = 0; j < diceArray.length; i++) {
+			for(int j = 0; j < diceArray.length; j++) {
 				index = i + 2 + j;
 				if(index >= map.length) {
 					index -= map.length;
 				}
-				diceArray[i] = map[index];
+				diceArray[j] = map[index];
 			}
 			map[i].setDiceArray(diceArray);
 		}
 	}
 
-	private void connectCards() {
+	//JAVADOC
+	private void connectCards(Card[] cardArray, Field[] map, CardStack community) throws CardConnectionException {
+		boolean found;
+		for(Card c : cardArray) {
+			if(c instanceof GoTo) {
+				found = false;
+				String name = ((GoTo) c).getFieldName();
+				for(Field f : map) {
+					if(f.getName().equals(name)) {
+						((GoTo) c).setField(f);
+						found = true;
+					}
+				}
+				if(!found) {
+					throw new CardConnectionException(c);
+				}
+			} else if(c instanceof Arrest) {
+				for(Field f : map) {
+					if(f instanceof Jail) {
+						((Arrest) c).setJail(f);
+					}
+				}
+			} else if(c instanceof PayFineTakeCard) {
+				((PayFineTakeCard) c).setCommunity(community);
+			}
+		}
 	}
 }

@@ -7,7 +7,6 @@
 ##	 	#goTo		means a card that sends a player to a specific field with go-income
 ##	 	#streetWork means a card that requires you to spend money on existing houses or hotels
 ##	 	#special$ 	means a transaction that does not involve the bank (player based transactions)
-##	 	#special 	means a special card (komischer kram)
 
 #jailbait
 Du kommst aus dem Gefängnis frei.\nDiese Karte kann später verwendet oder gehandelt werden.

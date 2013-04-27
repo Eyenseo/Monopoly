@@ -19,5 +19,9 @@ public class CardStack {
 		this.top = 0;
 		this.STACK = new CardCreator(file, path).cardArray();
 	}
+
+	public Card[] toArray() {
+		return STACK;
+	}
 	//TODO everything
 }

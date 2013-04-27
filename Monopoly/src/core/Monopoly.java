@@ -3,6 +3,7 @@ package core;
 import core.data.MapArrayCreator;
 import objects.Player;
 import objects.card.CardStack;
+import objects.exceptions.core.CardConnectionException;
 import objects.exceptions.core.NoInstanceException;
 import objects.exceptions.data.StorageReaderException;
 import objects.map.Field;
@@ -33,7 +34,9 @@ public class Monopoly {
 			//TODO catch the exceptions properly
 			System.err.println(e.getMessageStack());
 		} catch(NoInstanceException e) {
-			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			System.err.println(e.getMessage());
+		} catch(CardConnectionException e) {
+			System.err.println(e.getMessage());
 		}
 	}
 
