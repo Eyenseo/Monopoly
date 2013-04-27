@@ -36,7 +36,7 @@
 ##			name
 ##		#Community
 ##			name
-##		#GO
+##		#Go
 ##			name
 ##			moneyByTurn
 ##		#Jail
@@ -45,6 +45,11 @@
 ##			name
 ##		#GoToJail
 ##			name
+##
+##  Instruction:
+##      #Go	has to be the first data block!
+##      No parameter is optional!
+##
 #Go
 Los
 4000
