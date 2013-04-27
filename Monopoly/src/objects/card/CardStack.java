@@ -1,7 +1,7 @@
 package objects.card;
 
 import core.data.CardCreator;
-import objects.exceptions.StorageReaderException;
+import objects.exceptions.data.StorageReaderException;
 
 /**
  * The CardStock represents the stock of cards and is responsible for the shuffeling of the cards.

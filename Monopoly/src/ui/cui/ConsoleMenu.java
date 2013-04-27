@@ -2,8 +2,8 @@ package ui.cui;
 
 import objects.Player;
 import objects.map.Field;
-import objects.map.PurchasableCircularList;
-import objects.map.StreetCircularList;
+import objects.map.purchasable.PurchasableCircularList;
+import objects.map.purchasable.StreetCircularList;
 import ui.Menu;
 
 //JAVADOC

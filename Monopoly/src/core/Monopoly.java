@@ -3,11 +3,11 @@ package core;
 import core.data.MapArrayCreator;
 import objects.Player;
 import objects.card.CardStack;
-import objects.exceptions.StorageReaderException;
+import objects.exceptions.core.NoInstanceException;
+import objects.exceptions.data.StorageReaderException;
 import objects.map.Field;
-import objects.map.MapConnector;
-import objects.map.PurchasableCircularList;
-import objects.map.StreetCircularList;
+import objects.map.purchasable.PurchasableCircularList;
+import objects.map.purchasable.StreetCircularList;
 import ui.Menu;
 import ui.cui.ConsoleMenu;
 
@@ -27,11 +27,13 @@ public class Monopoly {
 			Field[] mapArray = new MapArrayCreator().createMapArray();
 			CardStack event = new CardStack("events.txt", "Event Karte");
 			CardStack community = new CardStack("community.txt", "Gemeinschafts Karte");
-			this.start = new MapConnector().make(mapArray, event, community);
+			this.start = new Connector().connect(mapArray, event, community);
 			this.menu = menu;
 		} catch(StorageReaderException e) {
 			//TODO catch the exceptions properly
 			System.err.println(e.getMessageStack());
+		} catch(NoInstanceException e) {
+			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
 		}
 	}
 
@@ -63,7 +65,7 @@ public class Monopoly {
 		while(turnState != 2 && !gameOver) {
 			switch(menu.nextTurn(player, turnState)) {
 				case 0:
-					doubles = map.movePlayer(player);
+					//					doubles = map.movePlayer(player);
 					player.getField().action(player);
 					if(doubles) {
 						turnState = 3;
@@ -104,7 +106,7 @@ public class Monopoly {
 			}
 		}
 		if(doublesTime == 3) {
-			player.setField("Jail");
+			//			player.setField("Jail");
 			menu.inJail();
 		} else if(doubles) {
 			nextTurn(player, doublesTime + 1);

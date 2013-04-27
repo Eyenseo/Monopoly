@@ -1,7 +1,7 @@
 package objects;
 
 import objects.map.Field;
-import objects.map.PurchasableCircularList;
+import objects.map.purchasable.PurchasableCircularList;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -102,7 +102,7 @@ public class Player {
 
 	//JAVADOC
 	public void setField(Field field) {
-		setField(field, false);
+		setField(field, true);
 	}
 
 	//JAVADOC

@@ -1,7 +1,11 @@
 package objects.map;
 
 import objects.Player;
-import objects.exceptions.map.MapInitialisationException;
+import objects.exceptions.core.NoInstanceException;
+import objects.map.notPurchasable.Go;
+import objects.map.notPurchasable.GoToJail;
+import objects.map.notPurchasable.Jail;
+import objects.map.notPurchasable.Parking;
 
 import java.util.HashMap;
 
@@ -14,7 +18,7 @@ public class Map {
 	private HashMap<String, Integer> fieldNameToIndex = new HashMap<String, Integer>();
 
 	//JAVADOC
-	public Map(Field[] map) throws MapInitialisationException {
+	public Map(Field[] map) throws NoInstanceException {
 		this.MAP = map;
 		GoToJail goToJail = null;
 		for(int i = 0; i < map.length; i++) {
@@ -30,11 +34,11 @@ public class Map {
 			}
 		}
 		if(goPosition == -1) {
-			throw new MapInitialisationException("Go");
+			throw new NoInstanceException("Go");
 		} else if(jailPosition == -1) {
-			throw new MapInitialisationException("Jail");
+			throw new NoInstanceException("Jail");
 		} else if(parkingPosition == -1) {
-			throw new MapInitialisationException("Parking");
+			throw new NoInstanceException("Parking");
 		} else if(goToJail != null) {
 			goToJail.setJail(map[jailPosition]);
 		}

@@ -4,15 +4,22 @@ import objects.Player;
 
 //JAVADOC
 public abstract class Field {
-	private String name;
-	private Field  next;
-	private Field  previous;
+	private int     fieldNumber;
+	private String  name;
+	private Field   next;
+	private Field   previous;
+	private Field[] diceArray;
 
 	//JAVADOC
-	Field(String name) {
+	public Field(String name) {
 		this.name = name;
 		this.next = this;
 		this.previous = this;
+	}
+
+	//JAVADOC
+	public void setDiceArray(Field[] diceArray) {
+		this.diceArray = diceArray;
 	}
 
 	/**
@@ -35,7 +42,8 @@ public abstract class Field {
 	}
 
 	//JAVADOC
-	public void add(Field previous) {
+	public void add(Field previous, int fieldNumber) {
+		this.fieldNumber = fieldNumber;
 		if(previous.previous.equals(previous)) {
 			previous.next = this;
 			previous.previous = this;

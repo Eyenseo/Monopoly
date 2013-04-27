@@ -1,9 +1,9 @@
 package core.data;
 
 import objects.card.*;
-import objects.exceptions.EndOfBlockException;
-import objects.exceptions.StorageReaderException;
-import objects.exceptions.card.*;
+import objects.exceptions.data.EndOfBlockException;
+import objects.exceptions.data.StorageReaderException;
+import objects.exceptions.data.card.*;
 
 import java.util.Vector;
 

@@ -1,8 +1,8 @@
 package core.data;
 
-import objects.exceptions.EndOfBlockException;
-import objects.exceptions.EndOfFileException;
-import objects.exceptions.StorageReaderException;
+import objects.exceptions.data.EndOfBlockException;
+import objects.exceptions.data.EndOfFileException;
+import objects.exceptions.data.StorageReaderException;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

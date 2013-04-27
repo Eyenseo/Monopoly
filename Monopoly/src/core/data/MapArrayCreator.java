@@ -1,9 +1,13 @@
 package core.data;
 
-import objects.exceptions.EndOfBlockException;
-import objects.exceptions.StorageReaderException;
-import objects.exceptions.map.*;
-import objects.map.*;
+import objects.exceptions.data.EndOfBlockException;
+import objects.exceptions.data.StorageReaderException;
+import objects.exceptions.data.map.*;
+import objects.map.Field;
+import objects.map.notPurchasable.*;
+import objects.map.purchasable.FacilityCircularList;
+import objects.map.purchasable.StationCircularList;
+import objects.map.purchasable.StreetCircularList;
 
 import java.util.Vector;
 
@@ -27,7 +31,7 @@ public class MapArrayCreator extends StorageReader {
 	 * @return The return value is the finished map. A Field array with 40 length and different objects of the
 	 *         objects.value package.
 	 *
-	 * @throws objects.exceptions.map.MapArrayCreationException
+	 * @throws objects.exceptions.data.map.MapArrayCreationException
 	 *          The Exception holds in its cause attribute the previous Exception and should be
 	 *          read out with getMessageStack.
 	 * @see StorageReaderException
@@ -187,8 +191,9 @@ public class MapArrayCreator extends StorageReader {
 	 *
 	 * @return The return value is a FacilityCircularList object based on the data in the storage package.
 	 *
-	 * @throws FacilityCreationException The Exception holds in its cause attribute the previous Exception and should
-	 *                                   be read out with getMessageStack.
+	 * @throws objects.exceptions.data.map.FacilityCreationException
+	 *          The Exception holds in its cause attribute the previous Exception and should
+	 *          be read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
 	private FacilityCircularList createFacility() throws StorageReaderException {
