@@ -68,8 +68,7 @@ public class Monopoly {
 		while(turnState != 2 && !gameOver) {
 			switch(menu.nextTurn(player, turnState)) {
 				case 0:
-					//					doubles = map.movePlayer(player);
-					player.getField().action(player);
+					doubles = player.move();
 					if(doubles) {
 						turnState = 3;
 					} else {
@@ -109,7 +108,7 @@ public class Monopoly {
 			}
 		}
 		if(doublesTime == 3) {
-			//			player.setField("Jail");
+			player.goToJail();
 			menu.inJail();
 		} else if(doubles) {
 			nextTurn(player, doublesTime + 1);

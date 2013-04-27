@@ -1,6 +1,8 @@
 package objects;
 
 import objects.map.Field;
+import objects.map.notPurchasable.Go;
+import objects.map.notPurchasable.Jail;
 import objects.map.purchasable.PurchasableCircularList;
 
 import java.util.HashMap;
@@ -14,9 +16,9 @@ public class Player {
 	private       boolean jailbaitCommunity;
 	private       int     money;
 	private       int[]   dices;
+	private       Field   field;
 	private HashMap<String, Field> ownedFieldMap   = new HashMap<String, Field>();
 	private Random                 randomGenerator = new Random(); //TODO have only one Random Generator for all Player
-	private Field field;
 
 	//JAVADOC
 	public Player(String name, int money) {
@@ -49,13 +51,13 @@ public class Player {
 			purchasable.getOwner().addMoney(purchasable.getPrice());
 		}
 		this.money -= purchasable.getPrice();
-		//		purchasable.setOwner(this);
+		purchasable.setOwner(this);
 		this.ownedFieldMap.put(purchasable.getName(), purchasable);
 	}
 
 	//JAVADOC
 	public void addMoney(int amount) {
-		this.setMoney(getMoney() + amount);
+		this.money += amount;
 	}
 
 	//JAVADOC
@@ -63,16 +65,13 @@ public class Player {
 		return this.money;
 	}
 
-	//JAVADOC
-	public void setMoney(int money) {
-		this.money = money;
+	public void setField(Field field) {
+		this.field = field;
 	}
 
 	//JAVADOC
-	public int[] throwDice() {
-		dices[0] = randomGenerator.nextInt(6) + 1;
-		dices[1] = randomGenerator.nextInt(6) + 1;
-		return dices;
+	public void setMoney(int money) {
+		this.money = money;
 	}
 
 	//JAVADOC
@@ -101,20 +100,59 @@ public class Player {
 	}
 
 	//JAVADOC
-	public void setField(Field field) {
-		setField(field, true);
+	public Field getField() {
+		return this.field;
 	}
 
 	//JAVADOC
-	public void setField(Field field, boolean doAction) {
-		this.field = field;
-		if(doAction) {
-			field.action(this);
+	public boolean move() {
+		throwDice();
+		boolean doubles = dices[0] == dices[1];
+		if(!inJail || !doubles) {
+			move(dices[0] + dices[1], true);
+		}
+		field.action(this);
+		return doubles;
+	}
+
+	//JAVADOC
+	private void move(int by, boolean overGo) {
+		if(field.getDiceNext(by) != null) {
+			field = field.getDiceNext(by);
+		} else {
+			for(int i = 0; i < by; i++) {
+				field = field.getNext();
+				if(overGo && field instanceof Go) {
+					field.action(this);
+				}
+			}
 		}
 	}
 
 	//JAVADOC
-	public Field getField() {
-		return this.field;
+	public int[] throwDice() {
+		dices[0] = randomGenerator.nextInt(6) + 1;
+		dices[1] = randomGenerator.nextInt(6) + 1;
+		return dices;
+	}
+
+	//JAVADOC
+	private boolean moveTo(Field newField) {
+		if(field.getFieldNumber() > newField.getFieldNumber()) {
+			field = newField;
+			return true;
+		} else {
+			field = newField;
+			return false;
+		}
+	}
+
+	//JAVADOC
+	//TODO improve - this shouldn't be done here
+	public void goToJail() {
+		while(!(field instanceof Jail)) {
+			field = field.getNext();
+		}
+		inJail = true;
 	}
 }

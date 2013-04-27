@@ -44,15 +44,16 @@ public abstract class PurchasableCircularList extends Field {
 	public Player getOwner() {
 		return this.owner;
 	}
-	//	/**
-	//	 * @param owner The value determines the owner.
-	//	 */
-	//	public void setOwner(Player owner) {
-	//		this.owner = owner;
-	//		if(sameOwnerCheck(this)) {
-	//			stage = 1;
-	//		}
-	//	}
+
+	/**
+	 * @param owner The value determines the owner.
+	 */
+	public void setOwner(Player owner) {
+		this.owner = owner;
+		if(sameOwnerCheck(this)) {
+			stage = 1;
+		}
+	}
 
 	/**
 	 * @return The return value is the amount that has to be payed to become the owner.
@@ -92,32 +93,17 @@ public abstract class PurchasableCircularList extends Field {
 	public int getBill() {
 		return this.INCOME[this.stage];
 	}
-	//	/**
-	//	 * @param purchasable The value determines the next object in the circular list of objects that belong together.
-	//	 */
-	//	//TODO Move to constructor
-	//	public void add(PurchasableCircularList purchasable) {
-	//		purchasable.next = this.next;
-	//		this.next = purchasable;
-	//	}
-	//
-	//	/**
-	//	 * @return The return value is the reference to the next PurchasableCircularList object.
-	//	 */
-	//	private PurchasableCircularList getNext() {
-	//		return this.next;
-	//	}
-	//
-	//	//JAVADOC
-	//	private boolean sameOwnerCheck(PurchasableCircularList start) {
-	//		if(this.owner.equals(this.next.getOwner())) {
-	//			if(this.next.getNext().equals(start)) {
-	//				return true;
-	//			}
-	//			return this.next.sameOwnerCheck(start);
-	//		}
-	//		return false;
-	//	}
+
+	//JAVADOC
+	private boolean sameOwnerCheck(PurchasableCircularList start) {
+		if(this.owner.equals(this.nextGroupElement.getOwner())) {
+			if(this.nextGroupElement.getNextGroupElement().equals(start)) {
+				return true;
+			}
+			return this.nextGroupElement.sameOwnerCheck(start);
+		}
+		return false;
+	}
 
 	//JAVADOC
 	@Override

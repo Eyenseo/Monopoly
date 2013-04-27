@@ -91,8 +91,9 @@ public class Connector {
 		for(int i = 0; i < fieldArrayList.size(); i++) {
 			next = fieldArrayList.get(i);
 			if(next instanceof StreetCircularList && ((StreetCircularList) next).isSameColor(street)) {
-				((StreetCircularList) next).setNextGroupElement(street);
+				street.setNextGroupElement(((StreetCircularList) next));
 				fieldArrayList.remove(i);
+				i--;
 			}
 		}
 	}
@@ -103,8 +104,9 @@ public class Connector {
 		for(int i = 0; i < fieldArrayList.size(); i++) {
 			next = fieldArrayList.get(i);
 			if(next instanceof StationCircularList) {
-				((StationCircularList) next).setNextGroupElement(station);
+				station.setNextGroupElement(((StationCircularList) next));
 				fieldArrayList.remove(i);
+				i--;
 			}
 		}
 	}
@@ -115,8 +117,9 @@ public class Connector {
 		for(int i = 0; i < fieldArrayList.size(); i++) {
 			next = fieldArrayList.get(i);
 			if(next instanceof FacilityCircularList) {
-				((FacilityCircularList) next).setNextGroupElement(facility);
+				facility.setNextGroupElement(((FacilityCircularList) next));
 				fieldArrayList.remove(i);
+				i--;
 			}
 		}
 	}
@@ -129,6 +132,7 @@ public class Connector {
 			if(next instanceof Jail) {
 				goToJail.setJail(next);
 				fieldArrayList.remove(i);
+				i--;
 			}
 		}
 	}
@@ -136,8 +140,9 @@ public class Connector {
 	//JAVADOC
 	private void setDiceArray(Field[] map) {
 		int index;
-		Field[] diceArray = new Field[12];
+		Field[] diceArray;
 		for(int i = 0; i < map.length; i++) {
+			diceArray = new Field[11];
 			for(int j = 0; j < diceArray.length; j++) {
 				index = i + 2 + j;
 				if(index >= map.length) {
@@ -159,6 +164,7 @@ public class Connector {
 				for(Field f : map) {
 					if(f.getName().equals(name)) {
 						((GoTo) c).setField(f);
+						((GoTo) c).setGo(map[0]);
 						found = true;
 					}
 				}

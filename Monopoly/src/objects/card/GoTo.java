@@ -10,6 +10,7 @@ public class GoTo extends Card {
 	private final String  FIELDNAME;
 	private final boolean OVERGO;
 	private       Field   field;
+	private       Field   go;
 
 	//JAVADOC
 	public GoTo(String name, String text, String field, boolean overGo) {
@@ -26,5 +27,9 @@ public class GoTo extends Card {
 	//JAVADOC
 	public String getFieldName() {
 		return FIELDNAME;
+	}
+
+	public void setGo(Field field) {
+		go = field;
 	}
 }
