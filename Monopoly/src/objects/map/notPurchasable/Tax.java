@@ -18,6 +18,7 @@ public class Tax extends NotPurchasable {
 	}
 
 	@Override
+	//JAVADOC
 	public void action(Player player) {
 		player.pay(bill);
 		parking.addMoney(bill);

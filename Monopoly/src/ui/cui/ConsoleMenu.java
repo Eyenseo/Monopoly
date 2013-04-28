@@ -9,7 +9,7 @@ import ui.Menu;
 //JAVADOC
 public class ConsoleMenu implements Menu {
 	private final int   MENUOPTIONS = 12;
-	private       Input in          = new Input();
+	private final Input in          = new Input();
 
 	//JAVADOC
 	private String getName() {

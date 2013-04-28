@@ -66,6 +66,7 @@ public class MapArrayCreator extends StorageReader {
 	 * @throws StorageReaderException The Exception holds in its cause attribute the previous Exception and should be
 	 *                                read out with getMessageStack.
 	 */
+	//JAVADOC
 	private Field nextField() throws StorageReaderException {
 		String line = nextControllWord();
 		if(line != null) {
@@ -113,6 +114,7 @@ public class MapArrayCreator extends StorageReader {
 	 *                                 read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
+	//JAVADOC
 	private StreetCircularList createStreet() throws StorageReaderException {
 		String name = null;
 		try {
@@ -131,27 +133,11 @@ public class MapArrayCreator extends StorageReader {
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			StreetCircularList street = new StreetCircularList(name, price, income, mortgage, upgrade, color);
-			//			connectStreet(street);
-			return street;
+			return new StreetCircularList(name, price, income, mortgage, upgrade, color);
 		} catch(Exception e) {
 			throw new StreetCreationException(name, e);
 		}
 	}
-	/**
-	 * This method checks the last StreetCircularList object was already of it's color, if it is it connects the them,
-	 * if not the StreetCircularList object in the parameter is the 'go' of a new circular list.
-	 *
-	 * @param street The value determines the StreetCircularList object which will check if it belongs to the previous
-	 *               StreetCircularList object.
-	 */
-	//	private void connectStreet(StreetCircularList street) {
-	//		if(streetGroupBuffer != null && streetGroupBuffer.isSameColor(street)) {
-	//			streetGroupBuffer.add(street);
-	//		} else {  // The else block is for performance by letting go of the 'order' from the circular list
-	//			streetGroupBuffer = street;
-	//		}
-	//	}
 
 	/**
 	 * This method connects the new station with the other if other exist.
@@ -162,6 +148,7 @@ public class MapArrayCreator extends StorageReader {
 	 *                                  read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
+	//JAVADOC
 	private StationCircularList createStation() throws StorageReaderException {
 		String name = null;
 		try {
@@ -176,26 +163,11 @@ public class MapArrayCreator extends StorageReader {
 				throw new EndOfBlockException(path);
 			}
 			//TODO get owner and stage from a save file
-			StationCircularList station = new StationCircularList(name, price, income, mortgage);
-			//			connectStation(station);
-			return station;
+			return new StationCircularList(name, price, income, mortgage);
 		} catch(Exception e) {
 			throw new StationCreationException(name, e);
 		}
 	}
-	/**
-	 * This method connects the station with the next one if there was already one.
-	 *
-	 * @param station The value determines the StationCircularList object that will be added to the other
-	 *                StationCircularList objects.
-	 */
-	//	private void connectStation(StationCircularList station) {
-	//		if(stationGroupBuffer != null) {
-	//			stationGroupBuffer.add(station);
-	//		} else {// The else block is for performance by letting go of the 'order' from the circular list
-	//			stationGroupBuffer = station;
-	//		}
-	//	}
 
 	/**
 	 * This method connects the new facility with the other if other exist.
@@ -207,6 +179,7 @@ public class MapArrayCreator extends StorageReader {
 	 *          be read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
+	//JAVADOC
 	private FacilityCircularList createFacility() throws StorageReaderException {
 		String name = null;
 		try {
@@ -217,26 +190,11 @@ public class MapArrayCreator extends StorageReader {
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			FacilityCircularList facility = new FacilityCircularList(name, price, income, mortgage);
-			//			connectFacility(facility);
-			return facility;
+			return new FacilityCircularList(name, price, income, mortgage);
 		} catch(Exception e) {
 			throw new FacilityCreationException(name, e);
 		}
 	}
-	/**
-	 * This method connects the facility with the next one if there was already one.
-	 *
-	 * @param facility The value determines the FacilityCircularList object that will be added to the other
-	 *                 FacilityCircularList objects.
-	 */
-	//	private void connectFacility(FacilityCircularList facility) {
-	//		if(facilityGroupBuffer != null) {
-	//			facilityGroupBuffer.add(facility);
-	//		} else {// The else block is for performance by letting go of the 'order' from the circular list
-	//			facilityGroupBuffer = facility;
-	//		}
-	//	}
 
 	/**
 	 * @return The return value is a Tax object based on the data in the storage package.
@@ -262,6 +220,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return The return value is a Chance object based on the data in the storage package.
 	 */
+	//JAVADOC
 	private Chance createChance() throws StorageReaderException {
 		String name = null;
 		try {
@@ -278,6 +237,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return The return value is a Community object based on the data in the storage package.
 	 */
+	//JAVADOC
 	private Community createCommunity() throws StorageReaderException {
 		String name = null;
 		try {
@@ -294,6 +254,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return The return value is a Go object based on the data in the storage package.
 	 */
+	//JAVADOC
 	private Go createGo() throws StorageReaderException {
 		String name = null;
 		try {
@@ -311,6 +272,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return The return value is a Jail object based on the data in the storage package.
 	 */
+	//JAVADOC
 	private Jail createJail() throws StorageReaderException {
 		String name = null;
 		try {
@@ -327,6 +289,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return The return value is a Parking object based on the data in the storage package.
 	 */
+	//JAVADOC
 	private Parking createParking() throws StorageReaderException {
 		String name = null;
 		try {
@@ -343,6 +306,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return The return value is a GoToJail object based on the data in the storage package.
 	 */
+	//JAVADOC
 	private GoToJail createGoToJail() throws StorageReaderException {
 		String name = null;
 		try {

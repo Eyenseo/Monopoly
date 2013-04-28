@@ -29,6 +29,7 @@ public class GoTo extends Card {
 		return FIELDNAME;
 	}
 
+	//JAVADOC
 	public void setGo(Field field) {
 		go = field;
 	}

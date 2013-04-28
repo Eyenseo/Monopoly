@@ -16,8 +16,9 @@ public class Player {
 	private       int     money;
 	private       int[]   dices;
 	private       Field   field;
+	private Random                 randomGenerator = new Random();
 	private HashMap<String, Field> ownedFieldMap   = new HashMap<String, Field>();
-	private Random                 randomGenerator = new Random(); //TODO have only one Random Generator for all Player
+	//TODO have only one Random Generator for all Player
 
 	//JAVADOC
 	public Player(String name, int money) {
@@ -64,15 +65,6 @@ public class Player {
 		return this.money;
 	}
 
-	public void setField(Field field) {
-		this.field = field;
-	}
-
-	//JAVADOC
-	public void setMoney(int money) {
-		this.money = money;
-	}
-
 	//JAVADOC
 	public int[] getDices() {
 		return this.dices;
@@ -88,11 +80,6 @@ public class Player {
 		return jailbaitCommunity;
 	}
 
-	@Override
-	public String toString() {
-		return this.NAME;
-	}
-
 	//JAVADOC
 	public void pay(int amount) {
 		this.money -= amount;
@@ -101,6 +88,11 @@ public class Player {
 	//JAVADOC
 	public Field getField() {
 		return this.field;
+	}
+
+	//JAVADOC
+	public void setField(Field field) {
+		this.field = field;
 	}
 
 	//JAVADOC
@@ -133,16 +125,5 @@ public class Player {
 		dices[0] = randomGenerator.nextInt(6) + 1;
 		dices[1] = randomGenerator.nextInt(6) + 1;
 		return dices;
-	}
-
-	//JAVADOC
-	private boolean moveTo(Field newField) {
-		if(field.getFieldNumber() > newField.getFieldNumber()) {
-			field = newField;
-			return true;
-		} else {
-			field = newField;
-			return false;
-		}
 	}
 }

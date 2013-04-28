@@ -88,6 +88,7 @@ public abstract class PurchasableCircularList extends Field {
 	/**
 	 * @return The return value is the current income.
 	 */
+	//JAVADOC
 	public int getBill(Player payer) {
 		return this.INCOME[this.stage];
 	}
@@ -110,10 +111,12 @@ public abstract class PurchasableCircularList extends Field {
 		return this.getName() + ((getOwner() != null) ? " (" + getOwner() + ")" : "");
 	}
 
+	//JAVADOC
 	public PurchasableCircularList getNextGroupElement() {
 		return nextGroupElement;
 	}
 
+	//JAVADOC
 	public void setNextGroupElement(PurchasableCircularList nextGroupElement) {
 		nextGroupElement.nextGroupElement = this.nextGroupElement;
 		this.nextGroupElement = nextGroupElement;

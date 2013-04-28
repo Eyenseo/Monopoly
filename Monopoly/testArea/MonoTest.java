@@ -10,10 +10,12 @@ public class MonoTest {
 	public static void main(String[] args) {
 		Field f = null;
 		try {
-			Field[] mapArray = new MapArrayCreator().createMapArray();
+			MapArrayCreator mac = new MapArrayCreator();
+			Field[] mapArray = mac.getMap();
+			f = mac.getGo();
 			CardStack event = new CardStack("events.txt", "Event Karte");
 			CardStack community = new CardStack("community.txt", "Gemeinschafts Karte");
-			f = new Connector().connect(mapArray, event, community);
+			new Connector().connect(mapArray, event, community);
 		} catch(StorageReaderException e) {
 			System.err.print(e.getMessageStack());
 		} catch(NoInstanceException e) {

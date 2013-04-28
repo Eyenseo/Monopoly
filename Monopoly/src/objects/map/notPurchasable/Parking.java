@@ -28,6 +28,7 @@ public class Parking extends NotPurchasable {
 	}
 
 	@Override
+	//JAVADOC
 	public void action(Player player) {
 		player.addMoney(money);
 		money = 0;

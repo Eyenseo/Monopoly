@@ -15,10 +15,12 @@ public class PayFineTakeCard extends Card {
 		super(name, text);
 	}
 
+	//JAVADOC
 	public CardStack getCommunity() {
 		return community;
 	}
 
+	//JAVADOC
 	public void setCommunity(CardStack community) {
 		this.community = community;
 	}

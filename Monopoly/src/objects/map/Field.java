@@ -30,12 +30,6 @@ public abstract class Field {
 	}
 
 	//JAVADOC
-	@Override
-	public String toString() {
-		return this.name;
-	}
-
-	//JAVADOC
 	public abstract void action(Player player);
 
 	//JAVADOC
@@ -53,14 +47,17 @@ public abstract class Field {
 		this.previous = previous;
 	}
 
+	//JAVADOC
 	public Field getNext() {
 		return next;
 	}
 
+	//JAVADOC
 	public int getFieldNumber() {
 		return fieldNumber;
 	}
 
+	//JAVADOC
 	public Field getDiceNext(int index) {
 		index -= 2;
 		if(fieldNumber < diceArray[index].getFieldNumber() && diceArray[index].getFieldNumber() != 0) {

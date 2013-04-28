@@ -101,10 +101,7 @@ abstract class StorageReader {
 	 * @return The return value is true if the String is a comment.
 	 */
 	boolean isCommentString(String line) {
-		if(line.length() >= 2 && (line.charAt(0) == '#' && line.charAt(1) == '#')) {
-			return true;
-		}
-		return false;
+		return line.length() >= 2 && (line.charAt(0) == '#' && line.charAt(1) == '#');
 	}
 
 	/**
@@ -136,10 +133,7 @@ abstract class StorageReader {
 	 * @return The return value is true if the String represents the end statement of a data block.
 	 */
 	boolean isEndOfBlock(String line) {
-		if(line != null && (line.length() >= 2 && (line.charAt(0) == '#' && line.charAt(1) == '!'))) {
-			return true;
-		}
-		return false;
+		return line != null && (line.length() >= 2 && (line.charAt(0) == '#' && line.charAt(1) == '!'));
 	}
 
 	/**
@@ -149,9 +143,6 @@ abstract class StorageReader {
 	 * @return The return value is true if the String is a control word.
 	 */
 	boolean isControlWord(String line) {
-		if(line != null && (line.length() >= 2 && (line.charAt(0) == '#' && line.charAt(1) != ' '))) {
-			return true;
-		}
-		return false;
+		return line != null && (line.length() >= 2 && (line.charAt(0) == '#' && line.charAt(1) != ' '));
 	}
 }

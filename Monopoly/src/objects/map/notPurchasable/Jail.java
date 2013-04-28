@@ -17,6 +17,7 @@ public class Jail extends NotPurchasable {
 	}
 
 	@Override
+	//JAVADOC
 	public void action(Player player) {
 		//TODO Check if here has something to be done ... ?
 	}

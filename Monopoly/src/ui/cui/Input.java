@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 
 //JAVADOC
 class Input {
-
 	private BufferedReader bReade;
 	private String         input;
 
@@ -24,9 +23,9 @@ class Input {
 				return input;
 			}
 		} catch(Exception e) {
-			System.err.println(
-					"There was an error while reading from the console. The possibility for that was under 0.1% " +
-					"congratulations!\nThe return value will be an empty String...");
+			System.err.println("There was an error while reading from the console. "
+					                   + "The possibility for that was under 0.1% congratulations!\n"
+					                   + "The return value will be an empty String...");
 			return "";
 		}
 	}

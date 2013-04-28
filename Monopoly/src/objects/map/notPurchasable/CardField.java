@@ -18,6 +18,7 @@ public abstract class CardField extends NotPurchasable {
 	}
 
 	@Override
+	//JAVADOC
 	public void action(Player player) {
 		cardStack.nextCard().action(player);
 	}
