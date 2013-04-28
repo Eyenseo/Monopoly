@@ -18,17 +18,20 @@ import java.util.Vector;
 public class Monopoly {
 	private final int     STARTMONEY = 50000;
 	private       boolean gameOver   = false;
-	private Field start;
+	private Field go;
+	private Field jail;
 	private Menu  menu;
 	private Vector<Player> playerVector = new Vector<Player>();
 
 	//JAVADOC
 	Monopoly(Menu menu) {
 		try {
-			Field[] mapArray = new MapArrayCreator().createMapArray();
+			MapArrayCreator mac = new MapArrayCreator();
 			CardStack event = new CardStack("events.txt", "Event Karte");
 			CardStack community = new CardStack("community.txt", "Gemeinschafts Karte");
-			this.start = new Connector().connect(mapArray, event, community);
+			new Connector().connect(mac.getMap(), event, community);
+			this.go = mac.getGo();
+			this.jail = mac.getJail();
 			this.menu = menu;
 		} catch(StorageReaderException e) {
 			//TODO catch the exceptions properly
@@ -43,7 +46,7 @@ public class Monopoly {
 	//JAVADOC
 	private void addPlayer(Player player) {
 		playerVector.add(player);
-		player.setField(start);
+		player.setField(go);
 	}
 
 	//JAVADOC
@@ -108,7 +111,8 @@ public class Monopoly {
 			}
 		}
 		if(doublesTime == 3) {
-			player.goToJail();
+			player.setField(jail);
+			player.setInJail(true);
 			menu.inJail();
 		} else if(doubles) {
 			nextTurn(player, doublesTime + 1);

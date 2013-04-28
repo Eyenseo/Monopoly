@@ -2,7 +2,6 @@ package objects;
 
 import objects.map.Field;
 import objects.map.notPurchasable.Go;
-import objects.map.notPurchasable.Jail;
 import objects.map.purchasable.PurchasableCircularList;
 
 import java.util.HashMap;
@@ -145,14 +144,5 @@ public class Player {
 			field = newField;
 			return false;
 		}
-	}
-
-	//JAVADOC
-	//TODO improve - this shouldn't be done here
-	public void goToJail() {
-		while(!(field instanceof Jail)) {
-			field = field.getNext();
-		}
-		inJail = true;
 	}
 }

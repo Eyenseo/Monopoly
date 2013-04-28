@@ -11,20 +11,31 @@ import objects.map.purchasable.StreetCircularList;
 
 import java.util.Vector;
 
-/**
- * The MapArrayCreator class provides the method to create the map out of the data in the storage package.
- *
- * @author Eyenseo
- * @version 1
- */
+//JAVADOC
 public class MapArrayCreator extends StorageReader {
-	private StreetCircularList   streetGroupBuffer   = null;
-	private StationCircularList  stationGroupBuffer  = null;
-	private FacilityCircularList facilityGroupBuffer = null;
+	private Field[] map;
+	private Field   jail;
+	private Field   go;
 
 	//TODO constructor with parameter with the Community-Queue and the Chance-Queue for the Community and Chance Fields
-	public MapArrayCreator() {
+	public MapArrayCreator() throws StorageReaderException {
 		super("map.txt");
+		map = createMapArray();
+	}
+
+	//JAVADOC
+	public Field[] getMap() {
+		return map;
+	}
+
+	//JAVADOC
+	public Field getJail() {
+		return jail;
+	}
+
+	//JAVADOC
+	public Field getGo() {
+		return go;
 	}
 
 	/**
@@ -37,7 +48,7 @@ public class MapArrayCreator extends StorageReader {
 	 * @see StorageReaderException
 	 */
 	//JAVADOC
-	public Field[] createMapArray() throws StorageReaderException {
+	private Field[] createMapArray() throws StorageReaderException {
 		Vector<Field> fieldVector = new Vector<Field>();
 		Field[] fieldArray;
 		Field temp;
@@ -77,10 +88,10 @@ public class MapArrayCreator extends StorageReader {
 				return createCommunity();
 			}
 			if(line.equals("#Go")) {
-				return createGo();
+				return go = createGo();
 			}
 			if(line.equals("#Jail")) {
-				return createJail();
+				return jail = createJail();
 			}
 			if(line.equals("#Parking")) {
 				return createParking();
@@ -129,7 +140,7 @@ public class MapArrayCreator extends StorageReader {
 	}
 	/**
 	 * This method checks the last StreetCircularList object was already of it's color, if it is it connects the them,
-	 * if not the StreetCircularList object in the parameter is the 'start' of a new circular list.
+	 * if not the StreetCircularList object in the parameter is the 'go' of a new circular list.
 	 *
 	 * @param street The value determines the StreetCircularList object which will check if it belongs to the previous
 	 *               StreetCircularList object.

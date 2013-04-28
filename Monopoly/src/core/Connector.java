@@ -16,14 +16,13 @@ import java.util.Collections;
 //JAVADOC
 public class Connector {
 	//JAVADOC
-	public Field connect(Field[] map, CardStack chance, CardStack community)
+	public void connect(Field[] map, CardStack chance, CardStack community)
 			throws NoInstanceException, CardConnectionException {
 		makeCircularFieldList(map);
 		connectMatching(arrayToArrayList(map), chance, community);
 		setDiceArray(map);
 		connectCards(chance.toArray(), map, community);
 		connectCards(community.toArray(), map, community);
-		return map[0];
 	}
 
 	//JAVADOC
