@@ -1,5 +1,7 @@
 package objects.map.purchasable;
 
+import objects.Player;
+
 /**
  * The structure of FacilityCircularList is a circular list of all FacilityCircularList objects.
  *
@@ -24,11 +26,11 @@ public class FacilityCircularList extends PurchasableCircularList {
 		super(name, price, income, mortgage);
 	}
 
+	@Override
 	/**
 	 * @return The return value is the current income.
 	 */
-	public int getBill() {
-		// TODO Implement - check the unique price calculation
-		return 0;
+	public int getBill(Player player) {
+		return INCOME[stage] * player.getDices()[0] + player.getDices()[1];
 	}
 }
