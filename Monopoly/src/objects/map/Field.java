@@ -36,10 +36,7 @@ public abstract class Field {
 	}
 
 	//JAVADOC
-	//TODO this has to be replaced in each individual Method and set to abstract
-	public void action(Player player) {
-		System.err.println("This is a placeholder lalala~lalaLA");
-	}
+	public abstract void action(Player player);
 
 	//JAVADOC
 	public void add(Field previous, int fieldNumber) {
