@@ -130,8 +130,8 @@ public class ConsoleMenu implements Menu {
 			for(String anOne : one) {
 				print += anOne + " |\n";
 			}
-		} else if(length > 0) {
-			print += details[length - 1];
+		} else if(length == 1) {
+			print += details[0];
 		}
 		return print;
 	}
