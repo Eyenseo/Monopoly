@@ -3,6 +3,8 @@ package objects.map.purchasable;
 import objects.Player;
 import objects.map.Field;
 
+import java.util.ArrayList;
+
 /**
  * The structure of PurchasableCircularList and the subclasses is a circular list of all objects that
  * belong together e.g. all Stations in one list, or all Streets that are red.
@@ -39,21 +41,6 @@ public abstract class PurchasableCircularList extends Field {
 	}
 
 	/**
-	 * @return The return value is the owner.
-	 */
-	public Player getOwner() {
-		return this.owner;
-	}
-
-	/**
-	 * @param owner The value determines the owner.
-	 */
-	public void setOwner(Player owner) {
-		this.owner = owner;
-		stage = sameOwnerCheck();
-	}
-
-	/**
 	 * @return The return value is the amount that has to be payed to become the owner.
 	 */
 	public int getPrice() {
@@ -68,6 +55,11 @@ public abstract class PurchasableCircularList extends Field {
 	//JAVADOC
 	public int getStage() {
 		return this.stage;
+	}
+
+	//JAVADOC
+	public int[] getIncome() {
+		return INCOME;
 	}
 
 	//JAVADOC
@@ -94,21 +86,54 @@ public abstract class PurchasableCircularList extends Field {
 	}
 
 	//JAVADOC
-	int sameOwnerCheck() {
-		PurchasableCircularList next = this.nextGroupElement;
-		while(!next.equals(this)) {
-			if(next.getOwner() == null || !next.getOwner().equals(owner)) {
-				return 0;
-			}
+	public ArrayList<PurchasableCircularList> getGroupMembers() {
+		ArrayList<PurchasableCircularList> members = new ArrayList<PurchasableCircularList>();
+		PurchasableCircularList next = this;
+		do {
+			members.add(next);
 			next = next.getNextGroupElement();
-		}
-		return 1;
+		} while(!next.equals(this));
+		return members;
 	}
 
 	//JAVADOC
 	@Override
 	public String toString() {
 		return this.getName() + ((getOwner() != null) ? " (" + getOwner() + ")" : "");
+	}
+
+	/**
+	 * @return The return value is the owner.
+	 */
+	public Player getOwner() {
+		return this.owner;
+	}
+
+	/**
+	 * @param owner The value determines the owner.
+	 */
+	public void setOwner(Player owner) {
+		this.owner = owner;
+		sameOwnerCheck();
+	}
+
+	//JAVADOC
+	void sameOwnerCheck() {
+		boolean sameOwner = true;
+		PurchasableCircularList next = this.nextGroupElement;
+		while(sameOwner && !next.equals(this)) {
+			if(next.getOwner() == null || !next.getOwner().equals(owner)) {
+				sameOwner = false;
+			}
+			next = next.getNextGroupElement();
+		}
+		if(sameOwner) {
+			next = this;
+			do {
+				next.stage = 1;
+				next = next.getNextGroupElement();
+			} while(sameOwner && !next.equals(this));
+		}
 	}
 
 	//JAVADOC

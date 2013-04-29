@@ -27,7 +27,7 @@ public class StationCircularList extends PurchasableCircularList {
 
 	@Override
 		//JAVADOC
-	int sameOwnerCheck() {
+	void sameOwnerCheck() {
 		int index = 0;
 		PurchasableCircularList next = this.nextGroupElement;
 		while(!next.equals(this)) {
@@ -36,6 +36,10 @@ public class StationCircularList extends PurchasableCircularList {
 			}
 			next = next.getNextGroupElement();
 		}
-		return index;
+		next = this;
+		do {
+			next.stage = index;
+			next = next.getNextGroupElement();
+		} while(!next.equals(this));
 	}
 }
