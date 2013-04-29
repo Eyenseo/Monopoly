@@ -69,7 +69,7 @@ public class Monopoly {
 		boolean doubles = false;
 		int turnState = 0; // [0]Start of turn [1]After moving [2]End of Turn [3]Doubles turn
 		while(turnState != 2 && !gameOver) {
-			switch(menu.nextTurn(player, turnState)) {
+			switch(menu.nextTurn(player, (doublesTime != 0 && turnState == 0), turnState)) {
 				case 0:
 					doubles = player.move();
 					if(doubles) {

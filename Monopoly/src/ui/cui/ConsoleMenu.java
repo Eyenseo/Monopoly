@@ -95,6 +95,9 @@ public class ConsoleMenu implements Menu {
 		}
 		detail += detailLine("Preis: " + property.getPrice());
 		detail += detailLine("Hypotek: " + (property.getMortgage() < 0 ? "-" : "+") + property.getMortgage());
+		if(!(property instanceof StreetCircularList)) {
+			detail += detailLine("");
+		}
 		return detail + "\n---------------------------------------------";
 	}
 
@@ -141,12 +144,15 @@ public class ConsoleMenu implements Menu {
 
 	//JAVADOC
 	@Override
-	public int nextTurn(Player player, int turnState) {
+	public int nextTurn(Player player, boolean doubleTurn, int turnState) {
 		int userInt;
 		int[] options = getPlayerOptions(player, turnState);
 		String menuOptions = getNextTurnOptions(options);
-		String playerStatus = getPlayerStatus(player, turnState == 0);
-		println(playerStatus + "\n\nSie haben nun folgende Optionen:\n" + menuOptions);
+		if(doubleTurn) {
+			println("\nSie haben nun folgende Optionen:\n" + menuOptions);
+		} else {
+			println(getPlayerStatus(player, turnState == 0) + "\n\nSie haben nun folgende Optionen:\n" + menuOptions);
+		}
 		userInt = in.userInt(options, "Bitte wählen Sie eine der Optionen aus:\n" + menuOptions);
 		for(int i = 0; i < options.length; i++) {
 			if(userInt == options[i]) {
@@ -157,7 +163,7 @@ public class ConsoleMenu implements Menu {
 		if(userInt == MENUOPTIONS - 1) {
 			println("Sind Sie sich sicher, dass Sie aufgeben wollen? j/n");
 			if(in.userChar(new char[]{'j', 'n', '\0'}, "Bitte geben Sie 'j' oder 'n' ein.") == 'n') {
-				return nextTurn(player, turnState);
+				return nextTurn(player, doubleTurn, turnState);
 			}
 		}
 		return userInt;

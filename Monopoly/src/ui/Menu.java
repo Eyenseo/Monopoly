@@ -6,7 +6,7 @@ import objects.map.purchasable.PurchasableCircularList;
 //JAVADOC
 public interface Menu {
 	//JAVADOC
-	public int nextTurn(Player player, int turnState);
+	public int nextTurn(Player player, boolean doubleTurn, int turnState);
 
 	//JAVADOC
 	public void inJail();
