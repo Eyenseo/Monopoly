@@ -107,6 +107,9 @@ public class Monopoly {
 					turnState = 2;
 					break;
 				case 11:
+					menu.playerPropertiesDetails(player);
+					break;
+				case 12:
 					gameOver = true;
 			}
 		}

@@ -4,7 +4,7 @@ import objects.map.Field;
 import objects.map.notPurchasable.Go;
 import objects.map.purchasable.PurchasableCircularList;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Random;
 
 //JAVADOC
@@ -16,8 +16,8 @@ public class Player {
 	private       int     money;
 	private       int[]   dices;
 	private       Field   field;
-	private Random                 randomGenerator = new Random();
-	private HashMap<String, Field> ownedFieldMap   = new HashMap<String, Field>();
+	private Random                             randomGenerator = new Random();
+	private ArrayList<PurchasableCircularList> property        = new ArrayList<PurchasableCircularList>();
 	//TODO have only one Random Generator for all Player
 
 	//JAVADOC
@@ -52,7 +52,7 @@ public class Player {
 		}
 		this.money -= purchasable.getPrice();
 		purchasable.setOwner(this);
-		this.ownedFieldMap.put(purchasable.getName(), purchasable);
+		this.property.add(purchasable);
 	}
 
 	//JAVADOC
@@ -125,5 +125,10 @@ public class Player {
 		dices[0] = randomGenerator.nextInt(6) + 1;
 		dices[1] = randomGenerator.nextInt(6) + 1;
 		return dices;
+	}
+
+	//JAVADOC
+	public ArrayList<PurchasableCircularList> getProperties() {
+		return property;
 	}
 }
