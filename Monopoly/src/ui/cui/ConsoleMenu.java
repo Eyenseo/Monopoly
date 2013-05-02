@@ -2,6 +2,7 @@ package ui.cui;
 
 import objects.Player;
 import objects.map.Field;
+import objects.map.notPurchasable.Jail;
 import objects.map.purchasable.FacilityCircularList;
 import objects.map.purchasable.PurchasableCircularList;
 import objects.map.purchasable.StreetCircularList;
@@ -270,7 +271,7 @@ public class ConsoleMenu {
 					menuOptions += "[" + (i + 1) + "] Haeuser kaufen.\n";
 					break;
 				case 30:
-					menuOptions += "[" + (i + 1) + "] Zahlen um aus dem Gefaengnis frei zu kommen.\n";
+					menuOptions += "[" + (i + 1) + "] 1000 zahlen um aus dem Gefaengnis frei zu kommen.\n";
 					break;
 				case 31:
 					menuOptions +=
@@ -379,8 +380,7 @@ public class ConsoleMenu {
 					choice = 1;
 					break;
 				case 30: //Pay to get out of jail
-					//TODO implement
-					System.err.print("To be implemented ...");
+					((Jail) player.getField()).payFine(player);
 					choice = 0;
 					break;
 				case 31: //Use Community jailbait card
