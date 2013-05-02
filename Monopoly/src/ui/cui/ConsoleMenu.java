@@ -5,12 +5,12 @@ import objects.map.Field;
 import objects.map.purchasable.FacilityCircularList;
 import objects.map.purchasable.PurchasableCircularList;
 import objects.map.purchasable.StreetCircularList;
-import ui.Menu;
+
 
 import java.util.ArrayList;
 
 //JAVADOC
-public class ConsoleMenu implements Menu {
+public class ConsoleMenu {
     private final int MENUOPTIONS = 13;
     private final Input in = new Input();
 
@@ -42,7 +42,7 @@ public class ConsoleMenu implements Menu {
     public void playerPropertiesDetails(Player player) {
         String print = propertiesDetails(player, player.getProperties());
         if (print.equals("")) {
-            System.out.println("Ihnen gehört nichts!");
+            System.out.println("Ihnen gehoert nichts!");
         } else {
             System.out.println(print);
         }
@@ -79,16 +79,16 @@ public class ConsoleMenu implements Menu {
         }
         if (!(property instanceof FacilityCircularList)) {
             detail += detailLine(
-                    "Einkommen: " + (property.isInMortgage() ? "Ist gepfändet!" : property.getIncome()[stage]));
+                    "Einkommen: " + (property.isInMortgage() ? "Ist gepfaendet!" : property.getIncome()[stage]));
         } else {
-            detail += detailLine("Einkommen: " + (property.isInMortgage() ? "Ist gepfändet!" :
+            detail += detailLine("Einkommen: " + (property.isInMortgage() ? "Ist gepfaendet!" :
                     property.getIncome()[stage] + " mal die Augenanzahl."));
         }
         if (property instanceof StreetCircularList) {
             if (stage == 0) {
-                detail += detailLine("Häuser: Die Straße ist nicht monopolisiert.");
+                detail += detailLine("Haeuser: Die Straße ist nicht monopolisiert.");
             } else if (stage < 6) {
-                detail += detailLine("Häuser: " + (stage - 1) + "");
+                detail += detailLine("Haeuser: " + (stage - 1) + "");
             } else {
                 detail += detailLine("Hotel: 1.");
             }
@@ -139,7 +139,7 @@ public class ConsoleMenu implements Menu {
     //JAVADOC
     //TODO probably improve
     public void inJail() {
-        System.out.print("Sie sind im Gefängnis!");
+        System.out.print("Sie sind im Gefaengnis!");
     }
 
     //JAVADOC
@@ -153,7 +153,7 @@ public class ConsoleMenu implements Menu {
         } else {
             println(getPlayerStatus(player, turnState == 0) + "\n\nSie haben nun folgende Optionen:\n" + menuOptions);
         }
-        userInt = in.userInt(options, "Bitte wählen Sie eine der Optionen aus:\n" + menuOptions);
+        userInt = in.userInt(options, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions);
         for (int i = 0; i < options.length; i++) {
             if (userInt == options[i]) {
                 userInt = i;
@@ -176,7 +176,7 @@ public class ConsoleMenu implements Menu {
         if (beginOfTurn) {
             playerStatus += player.getName() + " ist am Zug!";
         } else {
-            playerStatus += "Würfel 1: " + player.getDices()[0] + "\tWürfel 2: " + player.getDices()[1];
+            playerStatus += "Wuerfel 1: " + player.getDices()[0] + "\tWuerfel 2: " + player.getDices()[1];
         }
         if (field instanceof PurchasableCircularList) {
             if (((PurchasableCircularList) field).getOwner() != null &&
@@ -204,13 +204,13 @@ public class ConsoleMenu implements Menu {
             if (options[i] != 0) {
                 switch (i) {
                     case 0:
-                        menuOptions += "[" + options[i] + "] Würfeln.\n";
+                        menuOptions += "[" + options[i] + "] Wuerfeln.\n";
                         break;
                     case 1:
                         menuOptions += "[" + options[i] + "] Anwesen kaufen.\n";
                         break;
                     case 2:
-                        menuOptions += "[" + options[i] + "] Häuser kaufen.\n";
+                        menuOptions += "[" + options[i] + "] Haeuser kaufen.\n";
                         break;
                     case 3:
                         menuOptions += "[" + options[i] + "] Hypothek aufnehmen.\n";
@@ -222,21 +222,21 @@ public class ConsoleMenu implements Menu {
                         menuOptions += "[" + options[i] + "] Mit anderen Spielern zu handeln.\n";
                         break;
                     case 6:
-                        menuOptions += "[" + options[i] + "] Zahlen um aus dem Gefängnis frei zu kommen.\n";
+                        menuOptions += "[" + options[i] + "] Zahlen um aus dem Gefaengnis frei zu kommen.\n";
                         break;
                     case 7:
                         menuOptions += "[" + options[i] +
-                                "] Gemeinschaftskarte nutzen um aus dem Gefängnis frei zu kommen.\n";
+                                "] Gemeinschaftskarte nutzen um aus dem Gefaengnis frei zu kommen.\n";
                         break;
                     case 8:
                         menuOptions += "[" + options[i] +
-                                "] Ereigniskarte nutzen um aus dem Gefängnis frei zu kommen.\n";
+                                "] Ereigniskarte nutzen um aus dem Gefaengnis frei zu kommen.\n";
                         break;
                     case 9:
                         menuOptions += "[" + options[i] + "] Den Zug beenden.\n";
                         break;
                     case 10:
-                        menuOptions += "[" + options[i] + "] Den nächsten Zug beginnen.\n";
+                        menuOptions += "[" + options[i] + "] Den naechsten Zug beginnen.\n";
                         break;
                     case 11:
                         menuOptions += "[" + options[i] + "] Ihren Besitztum ansehen.\n";
