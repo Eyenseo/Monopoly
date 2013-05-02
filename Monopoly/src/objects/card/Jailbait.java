@@ -1,7 +1,7 @@
 package objects.card;
 
 /**
- * Jailbait is the jailbait card (Gefängnisfreikarte).
+ * Jailbait is the jailbait card.
  * A card is a trigger for a specific event defined in the gameplay mechanics
  */
 public class Jailbait extends Card {

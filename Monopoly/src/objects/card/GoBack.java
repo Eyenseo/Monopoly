@@ -1,7 +1,7 @@
 package objects.card;
 
 /**
- * GoBack is the back card (Gehe x Felder zurück).
+ * GoBack is the back card.
  * A card is a trigger for a specific event defined in the gameplay mechanics
  */
 public class GoBack extends Card {
