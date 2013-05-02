@@ -8,6 +8,7 @@ import objects.Player;
 public abstract class Card {
 	private final String NAME;
 	private final String TEXT;
+	int index;
 
 	/**
 	 * @param name Name of the card
@@ -36,5 +37,9 @@ public abstract class Card {
 	//TODO this has to be replaced in each individual Method and set to abstract
 	public void action(Player player) {
 		System.err.println("This is a placeholder lalala~lalaLA");
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 }

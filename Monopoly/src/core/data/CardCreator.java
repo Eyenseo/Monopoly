@@ -18,16 +18,13 @@ public class CardCreator extends StorageReader {
 	}
 
 	//JAVADOC
-	public Card[] cardArray() throws StorageReaderException {
+	public Vector<Card> cardArray() throws StorageReaderException {
 		Vector<Card> cardVector = new Vector<Card>();
-		Card[] cardArray;
 		Card temp;
 		while((temp = nextCard()) != null) {
 			cardVector.addElement(temp);
 		}
-		cardArray = new Card[cardVector.size()];
-		cardVector.toArray(cardArray);
-		return cardArray;
+		return cardVector;
 	}
 
 	//JAVADOC

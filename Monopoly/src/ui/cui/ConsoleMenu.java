@@ -274,11 +274,7 @@ public class ConsoleMenu {
 					menuOptions += "[" + (i + 1) + "] 1000 zahlen um aus dem Gefaengnis frei zu kommen.\n";
 					break;
 				case 31:
-					menuOptions +=
-							"[" + (i + 1) + "] Gemeinschaftskarte nutzen um aus dem Gefaengnis frei zu kommen.\n";
-					break;
-				case 32:
-					menuOptions += "[" + (i + 1) + "] Ereigniskarte nutzen um aus dem Gefaengnis frei zu kommen.\n";
+					menuOptions += "[" + (i + 1) + "] Karte nutzen um aus dem Gefaengnis frei zu kommen.\n";
 					break;
 			}
 		}
@@ -296,11 +292,8 @@ public class ConsoleMenu {
 		}
 		if(player.isInJail()) {
 			options.add(30);
-			if(player.isJailbaitCommunity()) {
+			if(player.isJailbait()) {
 				options.add(31);
-			}
-			if(player.isJailbaitEvent()) {
-				options.add(32);
 			}
 		}
 		if(field instanceof PurchasableCircularList) {
@@ -384,13 +377,7 @@ public class ConsoleMenu {
 					choice = 0;
 					break;
 				case 31: //Use Community jailbait card
-					//TODO implement
-					System.err.print("To be implemented ...");
-					choice = 0;
-					break;
-				case 32: //Use Choice jailbait card
-					//TODO implement
-					System.err.print("To be implemented ...");
+					player.useJailbait();
 					choice = 0;
 					break;
 			}

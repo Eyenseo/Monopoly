@@ -21,8 +21,8 @@ public class Connector {
 		makeCircularFieldList(map);
 		connectMatching(arrayToArrayList(map), chance, community);
 		setDiceArray(map);
-		connectCards(chance.toArray(), map, community);
-		connectCards(community.toArray(), map, community);
+		connectCards(chance, map, community);
+		connectCards(community, map, community);
 	}
 
 	//JAVADOC
@@ -141,6 +141,20 @@ public class Connector {
 	}
 
 	//JAVADOC
+	private void connectJail(Jail jail, ArrayList<Field> fieldArrayList, Parking parking) {
+		if(parking == null) {
+			for(Field next : fieldArrayList) {
+				if(next instanceof Parking) {
+					jail.setParking((Parking) next);
+					break;
+				}
+			}
+		} else {
+			jail.setParking(parking);
+		}
+	}
+
+	//JAVADOC
 	private void connectGoToJail(GoToJail goToJail, ArrayList<Field> fieldArrayList, Jail jail) {
 		if(jail == null) {
 			for(Field aFieldArrayList : fieldArrayList) {
@@ -172,9 +186,9 @@ public class Connector {
 	}
 
 	//JAVADOC
-	private void connectCards(Card[] cardArray, Field[] map, CardStack community) throws CardConnectionException {
+	private void connectCards(CardStack current, Field[] map, CardStack community) throws CardConnectionException {
 		boolean found;
-		for(Card c : cardArray) {
+		for(Card c : current.getStack()) {
 			if(c instanceof GoTo) {
 				found = false;
 				String name = ((GoTo) c).getFieldName();
@@ -196,6 +210,8 @@ public class Connector {
 				}
 			} else if(c instanceof PayFineTakeCard) {
 				((PayFineTakeCard) c).setCommunity(community);
+			} else if(c instanceof Jailbait) {
+				((Jailbait) c).setCardStack(current);
 			}
 		}
 	}

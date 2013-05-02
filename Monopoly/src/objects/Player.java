@@ -1,22 +1,23 @@
 package objects;
 
+import objects.card.Jailbait;
 import objects.map.Field;
 import objects.map.notPurchasable.Go;
 import objects.map.purchasable.PurchasableCircularList;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Vector;
 
 //JAVADOC
 public class Player {
 	private final String  NAME;
 	private       boolean inJail;
-	private       boolean jailbaitEvent;
-	private       boolean jailbaitCommunity;
 	private       int     money;
 	private       int[]   dices;
 	private       Field   field;
 	private Random                             randomGenerator = new Random();
+	private Vector<Jailbait>                   jailbait        = new Vector<Jailbait>();
 	private ArrayList<PurchasableCircularList> property        = new ArrayList<PurchasableCircularList>();
 	//TODO have only one Random Generator for all Player
 
@@ -25,8 +26,6 @@ public class Player {
 		this.NAME = name;
 		this.money = money;
 		this.inJail = false;
-		this.jailbaitEvent = false;
-		this.jailbaitCommunity = false;
 		dices = new int[2];
 	}
 
@@ -72,13 +71,8 @@ public class Player {
 	}
 
 	//JAVADOC
-	public boolean isJailbaitEvent() {
-		return jailbaitEvent;
-	}
-
-	//JAVADOC
-	public boolean isJailbaitCommunity() {
-		return jailbaitCommunity;
+	public boolean isJailbait() {
+		return !jailbait.isEmpty();
 	}
 
 	//JAVADOC
@@ -94,6 +88,16 @@ public class Player {
 	//JAVADOC
 	public void setField(Field field) {
 		this.field = field;
+	}
+
+	//JAVADOC
+	public void addJailbait(Jailbait jailbait) {
+		this.jailbait.add(jailbait);
+	}
+
+	public void useJailbait() {
+		jailbait.firstElement().freePlayer(this);
+		jailbait.remove(jailbait.firstElement());
 	}
 
 	//JAVADOC
