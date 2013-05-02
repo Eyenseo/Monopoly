@@ -7,9 +7,6 @@ import objects.exceptions.core.CardConnectionException;
 import objects.exceptions.core.NoInstanceException;
 import objects.exceptions.data.StorageReaderException;
 import objects.map.Field;
-import objects.map.purchasable.PurchasableCircularList;
-import objects.map.purchasable.StreetCircularList;
-import ui.Menu;
 import ui.cui.ConsoleMenu;
 
 import java.util.Vector;
@@ -18,13 +15,13 @@ import java.util.Vector;
 public class Monopoly {
 	private final int     STARTMONEY = 50000;
 	private       boolean gameOver   = false;
-	private Field go;
-	private Field jail;
-	private Menu  menu;
+	private Field       go;
+	private Field       jail;
+	private ConsoleMenu menu;
 	private Vector<Player> playerVector = new Vector<Player>();
 
 	//JAVADOC
-	Monopoly(Menu menu) {
+	Monopoly(ConsoleMenu menu) {
 		try {
 			MapArrayCreator mac = new MapArrayCreator();
 			CardStack event = new CardStack("events.txt", "Event Karte");
@@ -66,58 +63,16 @@ public class Monopoly {
 
 	//JAVADOC
 	private void nextTurn(Player player, int doublesTime) {
-		boolean doubles = false;
-		int turnState = 0; // [0]Start of turn [1]After moving [2]End of Turn [3]Doubles turn
+		int turnState = 0; // [0]Start of turn [1]After moving [2]End of Turn [3]Doubles turn [4] gameOver
 		while(turnState != 2 && !gameOver) {
-			switch(menu.nextTurn(player, (doublesTime != 0 && turnState == 0), turnState)) {
-				case 0:
-					doubles = player.move();
-					if(doubles) {
-						turnState = 3;
-					} else {
-						turnState = 1;
-					}
-					break;
-				case 1:
-					player.buy((PurchasableCircularList) player.getField());
-					break;
-				case 2:
-					((StreetCircularList) player.getField()).nextStage();
-					break;
-				case 3:
-					((PurchasableCircularList) player.getField()).setInMortgage(true);
-					break;
-				case 4:
-					((PurchasableCircularList) player.getField()).setInMortgage(false);
-					break;
-				case 5:
-					System.out.print("To be implemented ...");
-					break;
-				case 6:
-					System.out.print("To be implemented ...");
-					break;
-				case 7:
-					System.out.print("To be implemented ...");
-					break;
-				case 8:
-					System.out.print("To be implemented ...");
-					break;
-				case 9:
-				case 10:
-					turnState = 2;
-					break;
-				case 11:
-					menu.playerPropertiesDetails(player);
-					break;
-				case 12:
-					gameOver = true;
-			}
+			turnState = menu.mainMenu(player, playerVector, turnState);
+			gameOver = turnState == 4;
 		}
 		if(doublesTime == 3) {
 			player.setField(jail);
 			player.setInJail(true);
 			menu.inJail();
-		} else if(doubles) {
+		} else if(turnState == 3) {
 			nextTurn(player, doublesTime + 1);
 		}
 	}
@@ -128,7 +83,7 @@ public class Monopoly {
 	}
 
 	public static void main(String[] args) {
-		Menu menu = new ConsoleMenu();
+		ConsoleMenu menu = new ConsoleMenu();
 		Monopoly m = new Monopoly(menu);
 		//		for(int i = menu.playerAmount(); i > 0; i--) {
 		//			m.addPlayer(menu.newHuman());
