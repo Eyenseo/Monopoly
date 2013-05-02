@@ -1,7 +1,7 @@
 package objects.card;
 
 /**
- * GoToStation is a special_movement card (Rücke vor bis zum nächsten Bahnhof).
+ * GoToStation is a special_movement card.
  * A card is a trigger for a specific event defined in the gameplay mechanics
  */
 public class GoToStation extends Card {
