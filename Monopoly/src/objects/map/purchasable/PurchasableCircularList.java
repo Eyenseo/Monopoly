@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @version 1
  */
 public abstract class PurchasableCircularList extends Field {
-	protected final int                     PRICE;
+	protected       int                     price;
 	//TODO The price has to be able to be set by the player [-1 for not for sale and everything above for sale (should lead to a bidding option)].
 	protected final int[]                   INCOME;
 	protected final int                     MORTGAGE;   //Hypothek
@@ -31,7 +31,7 @@ public abstract class PurchasableCircularList extends Field {
 	//TODO Simplify the constructor by assigning default values
 	PurchasableCircularList(String name, int price, int[] income, int mortgage) {
 		super(name);
-		this.PRICE = price;
+		this.price = price;
 		this.INCOME = income;
 		this.MORTGAGE = mortgage;
 		this.owner = null;
@@ -44,7 +44,7 @@ public abstract class PurchasableCircularList extends Field {
 	 * @return The return value is the amount that has to be payed to become the owner.
 	 */
 	public int getPrice() {
-		return this.PRICE;
+		return this.price;
 	}
 
 	//JAVADOC
@@ -67,6 +67,40 @@ public abstract class PurchasableCircularList extends Field {
 		return this.inMortgage;
 	}
 
+	/**
+	 * @return The return value is the current income.
+	 */
+	//JAVADOC
+	public int getBill(Player payer) {
+		return this.INCOME[this.stage];
+	}
+
+	/**
+	 * @return The return value is the owner.
+	 */
+	public Player getOwner() {
+		return this.owner;
+	}
+
+	//JAVADOC
+	public PurchasableCircularList getNextGroupElement() {
+		return nextGroupElement;
+	}
+
+	//JAVADOC
+	public void setNextGroupElement(PurchasableCircularList nextGroupElement) {
+		nextGroupElement.nextGroupElement = this.nextGroupElement;
+		this.nextGroupElement = nextGroupElement;
+	}
+
+	/**
+	 * @param owner The value determines the owner.
+	 */
+	public void setOwner(Player owner) {
+		this.owner = owner;
+		sameOwnerCheck();
+	}
+
 	//JAVADOC
 	public void setInMortgage(boolean inMortgage) {
 		this.inMortgage = inMortgage;
@@ -77,12 +111,8 @@ public abstract class PurchasableCircularList extends Field {
 		}
 	}
 
-	/**
-	 * @return The return value is the current income.
-	 */
-	//JAVADOC
-	public int getBill(Player payer) {
-		return this.INCOME[this.stage];
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	//JAVADOC
@@ -102,21 +132,6 @@ public abstract class PurchasableCircularList extends Field {
 		return this.getName() + ((getOwner() != null) ? " (" + getOwner() + ")" : "");
 	}
 
-	/**
-	 * @return The return value is the owner.
-	 */
-	public Player getOwner() {
-		return this.owner;
-	}
-
-	/**
-	 * @param owner The value determines the owner.
-	 */
-	public void setOwner(Player owner) {
-		this.owner = owner;
-		sameOwnerCheck();
-	}
-
 	//JAVADOC
 	void sameOwnerCheck() {
 		boolean sameOwner = true;
@@ -134,17 +149,6 @@ public abstract class PurchasableCircularList extends Field {
 				next = next.getNextGroupElement();
 			} while(sameOwner && !next.equals(this));
 		}
-	}
-
-	//JAVADOC
-	public PurchasableCircularList getNextGroupElement() {
-		return nextGroupElement;
-	}
-
-	//JAVADOC
-	public void setNextGroupElement(PurchasableCircularList nextGroupElement) {
-		nextGroupElement.nextGroupElement = this.nextGroupElement;
-		this.nextGroupElement = nextGroupElement;
 	}
 
 	//JAVADOC

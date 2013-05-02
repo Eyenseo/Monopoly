@@ -50,9 +50,10 @@ public class Player {
 		if(purchasable.getOwner() != null) {
 			purchasable.getOwner().addMoney(purchasable.getPrice());
 		}
-		this.money -= purchasable.getPrice();
 		purchasable.setOwner(this);
+		this.money -= purchasable.getPrice();
 		this.property.add(purchasable);
+		purchasable.setPrice(-1);
 	}
 
 	//JAVADOC
