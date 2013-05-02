@@ -53,42 +53,17 @@ public class ConsoleMenu {
 	}
 
 	//JAVADOC
+	private String propertiesDetails(Player player, ArrayList<PurchasableCircularList> properties) {
+		return propertiesDetails(player, properties, 0);
+	}
+
+	//JAVADOC
 	private String propertiesDetails(Player player, ArrayList<PurchasableCircularList> properties, int index) {
 		String[] details = new String[properties.size()];
 		for(int i = 0; i < details.length; i++) {
 			details[i] = propertyDetail(player, properties.get(i), index);
 		}
 		return joinDetailLines(details);
-	}
-
-	//JAVADOC
-	private String propertiesDetails(Player player, ArrayList<PurchasableCircularList> properties) {
-		return propertiesDetails(player, properties, 0);
-	}
-
-	//JAVADOC
-	private String joinDetailLines(String[] details) {
-		String print = "";
-		String[] one;
-		String[] two;
-		int length = details.length;
-		int lengthEven = ((length % 2 == 0) ? length : length - 1);
-		for(int i = 0, k = 1; k < lengthEven; i = i + 2, k = k + 2) {
-			one = details[i].split("\n");
-			two = details[k].split("\n");
-			for(int j = 0; j < one.length; j++) {
-				print += one[j] + " | " + two[j] + "\n";
-			}
-		}
-		if(length > 1 && length % 2 != 0) {
-			one = details[length - 1].split("\n");
-			for(String anOne : one) {
-				print += anOne + " |\n";
-			}
-		} else if(length == 1) {
-			print += details[0];
-		}
-		return print;
 	}
 
 	//JAVADOC
@@ -138,11 +113,6 @@ public class ConsoleMenu {
 	}
 
 	//JAVADOC
-	private String propertyDetail(Player player, PurchasableCircularList property) {
-		return propertyDetail(player, property, 0);
-	}
-
-	//JAVADOC
 	private String detailLine(String line) {
 		String box = "\n|";
 		box += line;
@@ -150,6 +120,36 @@ public class ConsoleMenu {
 			box += " ";
 		}
 		return box + "|";
+	}
+
+	//JAVADOC
+	private String joinDetailLines(String[] details) {
+		String print = "";
+		String[] one;
+		String[] two;
+		int length = details.length;
+		int lengthEven = ((length % 2 == 0) ? length : length - 1);
+		for(int i = 0, k = 1; k < lengthEven; i = i + 2, k = k + 2) {
+			one = details[i].split("\n");
+			two = details[k].split("\n");
+			for(int j = 0; j < one.length; j++) {
+				print += one[j] + " | " + two[j] + "\n";
+			}
+		}
+		if(length > 1 && length % 2 != 0) {
+			one = details[length - 1].split("\n");
+			for(String anOne : one) {
+				print += anOne + " |\n";
+			}
+		} else if(length == 1) {
+			print += details[0];
+		}
+		return print;
+	}
+
+	//JAVADOC
+	private String propertyDetail(Player player, PurchasableCircularList property) {
+		return propertyDetail(player, property, 0);
 	}
 
 	//JAVADOC
