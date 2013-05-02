@@ -1,7 +1,7 @@
 package objects.map.purchasable;
 
 import objects.Player;
-import objects.map.Field;
+import objects.map.FieldCircularList;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Eyenseo
  * @version 1
  */
-public abstract class PurchasableCircularList extends Field {
+public abstract class PurchasableCircularList extends FieldCircularList {
 	protected final int[]                   INCOME;
 	protected final int                     MORTGAGE;   //Hypothek
 	protected       boolean                 inMortgage;

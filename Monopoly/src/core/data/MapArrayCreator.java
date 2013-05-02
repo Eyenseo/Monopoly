@@ -3,19 +3,19 @@ package core.data;
 import objects.exceptions.data.EndOfBlockException;
 import objects.exceptions.data.StorageReaderException;
 import objects.exceptions.data.map.*;
-import objects.map.Field;
+import objects.map.FieldCircularList;
 import objects.map.notPurchasable.*;
-import objects.map.purchasable.FacilityCircularList;
-import objects.map.purchasable.StationCircularList;
-import objects.map.purchasable.StreetCircularList;
+import objects.map.purchasable.Facility;
+import objects.map.purchasable.Station;
+import objects.map.purchasable.Street;
 
 import java.util.Vector;
 
 //JAVADOC
 public class MapArrayCreator extends StorageReader {
-	private Field[] map;
-	private Field   jail;
-	private Field   go;
+	private FieldCircularList[] map;
+	private FieldCircularList   jail;
+	private FieldCircularList   go;
 
 	//TODO constructor with parameter with the Community-Queue and the Chance-Queue for the Community and Chance Fields
 	public MapArrayCreator() throws StorageReaderException {
@@ -24,22 +24,22 @@ public class MapArrayCreator extends StorageReader {
 	}
 
 	//JAVADOC
-	public Field[] getMap() {
+	public FieldCircularList[] getMap() {
 		return map;
 	}
 
 	//JAVADOC
-	public Field getJail() {
+	public FieldCircularList getJail() {
 		return jail;
 	}
 
 	//JAVADOC
-	public Field getGo() {
+	public FieldCircularList getGo() {
 		return go;
 	}
 
 	/**
-	 * @return The return value is the finished map. A Field array with 40 length and different objects of the
+	 * @return The return value is the finished map. A FieldCircularList array with 40 length and different objects of the
 	 *         objects.value package.
 	 *
 	 * @throws objects.exceptions.data.map.MapArrayCreationException
@@ -48,26 +48,26 @@ public class MapArrayCreator extends StorageReader {
 	 * @see StorageReaderException
 	 */
 	//JAVADOC
-	private Field[] createMapArray() throws StorageReaderException {
-		Vector<Field> fieldVector = new Vector<Field>();
-		Field[] fieldArray;
-		Field temp;
+	private FieldCircularList[] createMapArray() throws StorageReaderException {
+		Vector<FieldCircularList> fieldVector = new Vector<FieldCircularList>();
+		FieldCircularList[] fieldArray;
+		FieldCircularList temp;
 		while((temp = nextField()) != null) {
 			fieldVector.addElement(temp);
 		}
-		fieldArray = new Field[fieldVector.size()];
+		fieldArray = new FieldCircularList[fieldVector.size()];
 		fieldVector.toArray(fieldArray);
 		return fieldArray;
 	}
 
 	/**
-	 * @return The return value is the next Field of the map.
+	 * @return The return value is the next FieldCircularList of the map.
 	 *
 	 * @throws StorageReaderException The Exception holds in its cause attribute the previous Exception and should be
 	 *                                read out with getMessageStack.
 	 */
 	//JAVADOC
-	private Field nextField() throws StorageReaderException {
+	private FieldCircularList nextField() throws StorageReaderException {
 		String line = nextControllWord();
 		if(line != null) {
 			if(line.equals("#Street")) {
@@ -108,14 +108,14 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * This method connects the streets of the same color while creating them.
 	 *
-	 * @return The return value is a StreetCircularList object based on the data in the storage package.
+	 * @return The return value is a Street object based on the data in the storage package.
 	 *
 	 * @throws StreetCreationException The Exception holds in its cause attribute the previous Exception and should be
 	 *                                 read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
 	//JAVADOC
-	private StreetCircularList createStreet() throws StorageReaderException {
+	private Street createStreet() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
@@ -133,7 +133,7 @@ public class MapArrayCreator extends StorageReader {
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new StreetCircularList(name, price, income, mortgage, upgrade, color);
+			return new Street(name, price, income, mortgage, upgrade, color);
 		} catch(Exception e) {
 			throw new StreetCreationException(name, e);
 		}
@@ -142,14 +142,14 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * This method connects the new station with the other if other exist.
 	 *
-	 * @return The return value is a StationCircularList object based on the data in the storage package.
+	 * @return The return value is a Station object based on the data in the storage package.
 	 *
 	 * @throws StationCreationException The Exception holds in its cause attribute the previous Exception and should be
 	 *                                  read out with getMessageStack.
 	 * @see StorageReaderException
 	 */
 	//JAVADOC
-	private StationCircularList createStation() throws StorageReaderException {
+	private Station createStation() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
@@ -163,7 +163,7 @@ public class MapArrayCreator extends StorageReader {
 				throw new EndOfBlockException(path);
 			}
 			//TODO get owner and stage from a save file
-			return new StationCircularList(name, price, income, mortgage);
+			return new Station(name, price, income, mortgage);
 		} catch(Exception e) {
 			throw new StationCreationException(name, e);
 		}
@@ -172,7 +172,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * This method connects the new facility with the other if other exist.
 	 *
-	 * @return The return value is a FacilityCircularList object based on the data in the storage package.
+	 * @return The return value is a Facility object based on the data in the storage package.
 	 *
 	 * @throws objects.exceptions.data.map.FacilityCreationException
 	 *          The Exception holds in its cause attribute the previous Exception and should
@@ -180,7 +180,7 @@ public class MapArrayCreator extends StorageReader {
 	 * @see StorageReaderException
 	 */
 	//JAVADOC
-	private FacilityCircularList createFacility() throws StorageReaderException {
+	private Facility createFacility() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
@@ -190,7 +190,7 @@ public class MapArrayCreator extends StorageReader {
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new FacilityCircularList(name, price, income, mortgage);
+			return new Facility(name, price, income, mortgage);
 		} catch(Exception e) {
 			throw new FacilityCreationException(name, e);
 		}

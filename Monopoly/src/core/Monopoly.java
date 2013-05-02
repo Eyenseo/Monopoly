@@ -6,7 +6,7 @@ import objects.card.CardStack;
 import objects.exceptions.core.CardConnectionException;
 import objects.exceptions.core.NoInstanceException;
 import objects.exceptions.data.StorageReaderException;
-import objects.map.Field;
+import objects.map.FieldCircularList;
 import ui.cui.ConsoleMenu;
 
 import java.util.Vector;
@@ -15,9 +15,9 @@ import java.util.Vector;
 public class Monopoly {
 	private final int     STARTMONEY = 50000;
 	private       boolean gameOver   = false;
-	private Field       go;
-	private Field       jail;
-	private ConsoleMenu menu;
+	private FieldCircularList go;
+	private FieldCircularList jail;
+	private ConsoleMenu       menu;
 	private Vector<Player> playerVector = new Vector<Player>();
 
 	//JAVADOC

@@ -3,12 +3,12 @@ package objects.map.purchasable;
 import objects.Player;
 
 /**
- * The structure of FacilityCircularList is a circular list of all FacilityCircularList objects.
+ * The structure of Facility is a circular list of all Facility objects.
  *
  * @author Eyenseo
  * @version 0.1
  */
-public class FacilityCircularList extends PurchasableCircularList {
+public class Facility extends PurchasableCircularList {
 
 	/**
 	 * @param name     The value determines the name of the object.
@@ -22,7 +22,7 @@ public class FacilityCircularList extends PurchasableCircularList {
 	 * @param stage    The value determines the stage the income is at.
 	 * @param owner    The value determines the owner.
 	 */
-	public FacilityCircularList(String name, int price, int[] income, int mortgage) {
+	public Facility(String name, int price, int[] income, int mortgage) {
 		super(name, price, income, mortgage);
 	}
 

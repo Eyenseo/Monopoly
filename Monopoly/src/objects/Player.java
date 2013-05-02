@@ -1,7 +1,7 @@
 package objects;
 
 import objects.card.Jailbait;
-import objects.map.Field;
+import objects.map.FieldCircularList;
 import objects.map.notPurchasable.Go;
 import objects.map.purchasable.PurchasableCircularList;
 
@@ -11,11 +11,11 @@ import java.util.Vector;
 
 //JAVADOC
 public class Player {
-	private final String  NAME;
-	private       boolean inJail;
-	private       int     money;
-	private       int[]   dices;
-	private       Field   field;
+	private final String            NAME;
+	private       boolean           inJail;
+	private       int               money;
+	private       int[]             dices;
+	private       FieldCircularList field;
 	private Random                             randomGenerator = new Random();
 	private Vector<Jailbait>                   jailbait        = new Vector<Jailbait>();
 	private ArrayList<PurchasableCircularList> property        = new ArrayList<PurchasableCircularList>();
@@ -80,12 +80,12 @@ public class Player {
 	}
 
 	//JAVADOC
-	public Field getField() {
+	public FieldCircularList getField() {
 		return this.field;
 	}
 
 	//JAVADOC
-	public void setField(Field field) {
+	public void setField(FieldCircularList field) {
 		this.field = field;
 	}
 

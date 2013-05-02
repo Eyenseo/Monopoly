@@ -1,11 +1,11 @@
 package ui.cui;
 
 import objects.Player;
-import objects.map.Field;
+import objects.map.FieldCircularList;
 import objects.map.notPurchasable.Jail;
-import objects.map.purchasable.FacilityCircularList;
+import objects.map.purchasable.Facility;
 import objects.map.purchasable.PurchasableCircularList;
-import objects.map.purchasable.StreetCircularList;
+import objects.map.purchasable.Street;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -113,14 +113,14 @@ public class ConsoleMenu {
 		} else {
 			detail += detailLine("Besitzer: -");
 		}
-		if(!(property instanceof FacilityCircularList)) {
+		if(!(property instanceof Facility)) {
 			detail += detailLine(
 					"Einkommen: " + (property.isInMortgage() ? "Ist gepfaendet!" : property.getIncome()[stage]));
 		} else {
 			detail += detailLine("Einkommen: " + (property.isInMortgage() ? "Ist gepfaendet!" :
 					property.getIncome()[stage] + " mal die Augenanzahl."));
 		}
-		if(property instanceof StreetCircularList) {
+		if(property instanceof Street) {
 			if(stage == 0) {
 				detail += detailLine("Haeuser: Die Strasse ist nicht monopolisiert.");
 			} else if(stage < 6) {
@@ -131,7 +131,7 @@ public class ConsoleMenu {
 		}
 		detail += detailLine("Preis: " + (property.getPrice() == -1 ? "-" : property.getPrice()));
 		detail += detailLine("Hypotek: " + (property.getMortgage() < 0 ? "-" : "+") + property.getMortgage());
-		if(!(property instanceof StreetCircularList)) {
+		if(!(property instanceof Street)) {
 			detail += detailLine("");
 		}
 		return detail + "\n---------------------------------------------";
@@ -161,7 +161,7 @@ public class ConsoleMenu {
 	//JAVADOC
 	private String getTurnDetails(Player player, boolean beginOfTurn) {
 		String turnDetails = "";
-		Field field = player.getField();
+		FieldCircularList field = player.getField();
 		if(beginOfTurn) {
 			turnDetails += player.getName() + " ist am Zug!";
 		} else {
@@ -228,7 +228,7 @@ public class ConsoleMenu {
 
 	//JAVADOC
 	private int[] buildOrganisationMenu(Player player) {
-		Field field = player.getField();
+		FieldCircularList field = player.getField();
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		options.add(0);
 		options.add(2);
@@ -284,7 +284,7 @@ public class ConsoleMenu {
 
 	//JAVADOC
 	private int[] buildActionMenu(Player player, int turnState) {
-		Field field = player.getField();
+		FieldCircularList field = player.getField();
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		options.add(1);
 		if(turnState == 0) {
@@ -356,7 +356,7 @@ public class ConsoleMenu {
 					choice = 0;
 					break;
 				case 21: //Buy upgrade (House/Hotel)
-					((StreetCircularList) player.getField()).nextStage();
+					((Street) player.getField()).nextStage();
 					choice = 0;
 					break;
 				case 22: //Get Mortgage

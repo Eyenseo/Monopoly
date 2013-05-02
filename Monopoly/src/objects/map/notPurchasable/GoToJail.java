@@ -2,12 +2,12 @@ package objects.map.notPurchasable;
 
 import objects.Player;
 import objects.exceptions.data.MoreThanOneDataSetException;
-import objects.map.Field;
+import objects.map.FieldCircularList;
 
 //JAVADOC
 public class GoToJail extends NotPurchasable {
 	private static boolean justOneInstance = false;
-	private Field jail;
+	private FieldCircularList jail;
 
 	//JAVADOC
 	public GoToJail(String name) throws MoreThanOneDataSetException {
@@ -19,7 +19,7 @@ public class GoToJail extends NotPurchasable {
 	}
 
 	//JAVADOC
-	public void setJail(Field field) {
+	public void setJail(FieldCircularList field) {
 		this.jail = field;
 	}
 

@@ -3,22 +3,22 @@ package objects.map;
 import objects.Player;
 
 //JAVADOC
-public abstract class Field {
-	private int     fieldNumber;
-	private String  name;
-	private Field   next;
-	private Field   previous;
-	private Field[] diceArray;
+public abstract class FieldCircularList {
+	private int                 fieldNumber;
+	private String              name;
+	private FieldCircularList   next;
+	private FieldCircularList   previous;
+	private FieldCircularList[] diceArray;
 
 	//JAVADOC
-	public Field(String name) {
+	public FieldCircularList(String name) {
 		this.name = name;
 		this.next = this;
 		this.previous = this;
 	}
 
 	//JAVADOC
-	public void setDiceArray(Field[] diceArray) {
+	public void setDiceArray(FieldCircularList[] diceArray) {
 		this.diceArray = diceArray;
 	}
 
@@ -33,7 +33,7 @@ public abstract class Field {
 	public abstract void action(Player player);
 
 	//JAVADOC
-	public void add(Field previous, int fieldNumber) {
+	public void add(FieldCircularList previous, int fieldNumber) {
 		this.fieldNumber = fieldNumber;
 		if(previous.previous.equals(previous)) {
 			previous.next = this;
@@ -48,7 +48,7 @@ public abstract class Field {
 	}
 
 	//JAVADOC
-	public Field getNext() {
+	public FieldCircularList getNext() {
 		return next;
 	}
 
@@ -58,7 +58,7 @@ public abstract class Field {
 	}
 
 	//JAVADOC
-	public Field getDiceNext(int index) {
+	public FieldCircularList getDiceNext(int index) {
 		index -= 2;
 		if(fieldNumber < diceArray[index].getFieldNumber() && diceArray[index].getFieldNumber() != 0) {
 			return diceArray[index];

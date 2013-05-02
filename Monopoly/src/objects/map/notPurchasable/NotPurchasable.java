@@ -1,6 +1,6 @@
 package objects.map.notPurchasable;
 
-import objects.map.Field;
+import objects.map.FieldCircularList;
 
 /**
  * The NotPurchasable class is the superclass of all fields that are not purchasable.
@@ -8,7 +8,7 @@ import objects.map.Field;
  * @author Eyenseo
  * @version 0.1
  */
-abstract class NotPurchasable extends Field {
+abstract class NotPurchasable extends FieldCircularList {
 	/**
 	 * @param name The value determines the name of the object.
 	 */

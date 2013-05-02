@@ -3,7 +3,7 @@ package objects.exceptions.data.map;
 import objects.exceptions.data.StorageReaderException;
 
 /**
- * The FieldCreationException is the Exception for all Exceptions thrown while creating a Field from storage data.
+ * The FieldCreationException is the Exception for all Exceptions thrown while creating a FieldCircularList from storage data.
  *
  * @author Eyenseo
  * @version 1

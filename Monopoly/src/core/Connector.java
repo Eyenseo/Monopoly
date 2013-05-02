@@ -3,12 +3,12 @@ package core;
 import objects.card.*;
 import objects.exceptions.core.CardConnectionException;
 import objects.exceptions.core.NoInstanceException;
-import objects.map.Field;
+import objects.map.FieldCircularList;
 import objects.map.notPurchasable.*;
-import objects.map.purchasable.FacilityCircularList;
+import objects.map.purchasable.Facility;
 import objects.map.purchasable.PurchasableCircularList;
-import objects.map.purchasable.StationCircularList;
-import objects.map.purchasable.StreetCircularList;
+import objects.map.purchasable.Station;
+import objects.map.purchasable.Street;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +16,7 @@ import java.util.Collections;
 //JAVADOC
 public class Connector {
 	//JAVADOC
-	public void connect(Field[] map, CardStack chance, CardStack community)
+	public void connect(FieldCircularList[] map, CardStack chance, CardStack community)
 			throws NoInstanceException, CardConnectionException {
 		makeCircularFieldList(map);
 		connectMatching(arrayToArrayList(map), chance, community);
@@ -26,10 +26,10 @@ public class Connector {
 	}
 
 	//JAVADOC
-	private void makeCircularFieldList(Field[] map) throws NoInstanceException {
+	private void makeCircularFieldList(FieldCircularList[] map) throws NoInstanceException {
 		boolean jailField = false;
 		boolean parkingField = false;
-		Field prev = map[0];
+		FieldCircularList prev = map[0];
 		if(prev instanceof Go) {
 			for(int i = 1; i < map.length; i++) {
 				map[i].add(prev, i);
@@ -51,15 +51,15 @@ public class Connector {
 	}
 
 	//JAVADOC
-	private ArrayList<Field> arrayToArrayList(Field[] map) {
-		ArrayList<Field> fieldArrayList = new ArrayList<Field>();
+	private ArrayList<FieldCircularList> arrayToArrayList(FieldCircularList[] map) {
+		ArrayList<FieldCircularList> fieldArrayList = new ArrayList<FieldCircularList>();
 		Collections.addAll(fieldArrayList, map);
 		return fieldArrayList;
 	}
 
 	//JAVADOC
-	private void connectMatching(ArrayList<Field> fieldArrayList, CardStack chance, CardStack community) {
-		Field a;
+	private void connectMatching(ArrayList<FieldCircularList> fieldArrayList, CardStack chance, CardStack community) {
+		FieldCircularList a;
 		Parking parking = null;
 		Jail jail = null;
 		while(!fieldArrayList.isEmpty()) {
@@ -71,12 +71,12 @@ public class Connector {
 			}
 			fieldArrayList.remove(0);
 			if(a instanceof PurchasableCircularList) {
-				if(a instanceof StreetCircularList) {
-					makeCircularStreetList((StreetCircularList) a, fieldArrayList);
-				} else if(a instanceof StationCircularList) {
-					makeCircularStationList((StationCircularList) a, fieldArrayList);
-				} else if(a instanceof FacilityCircularList) {
-					makeCircularFacilityList((FacilityCircularList) a, fieldArrayList);
+				if(a instanceof Street) {
+					makeCircularStreetList((Street) a, fieldArrayList);
+				} else if(a instanceof Station) {
+					makeCircularStationList((Station) a, fieldArrayList);
+				} else if(a instanceof Facility) {
+					makeCircularFacilityList((Facility) a, fieldArrayList);
 				}
 			} else if(a instanceof CardField) {
 				if(a instanceof Chance) {
@@ -93,11 +93,10 @@ public class Connector {
 	}
 
 	//JAVADOC
-	private void makeCircularStreetList(StreetCircularList street, ArrayList<Field> fieldArrayList) {
+	private void makeCircularStreetList(Street street, ArrayList<FieldCircularList> fieldArrayList) {
 		for(int i = 0; i < fieldArrayList.size(); i++) {
-			if(fieldArrayList.get(i) instanceof StreetCircularList &&
-			   ((StreetCircularList) fieldArrayList.get(i)).isSameColor(street)) {
-				street.setNextGroupElement(((StreetCircularList) fieldArrayList.get(i)));
+			if(fieldArrayList.get(i) instanceof Street && ((Street) fieldArrayList.get(i)).isSameColor(street)) {
+				street.setNextGroupElement(((Street) fieldArrayList.get(i)));
 				fieldArrayList.remove(i);
 				i--;
 			}
@@ -105,10 +104,10 @@ public class Connector {
 	}
 
 	//JAVADOC
-	private void makeCircularStationList(StationCircularList station, ArrayList<Field> fieldArrayList) {
+	private void makeCircularStationList(Station station, ArrayList<FieldCircularList> fieldArrayList) {
 		for(int i = 0; i < fieldArrayList.size(); i++) {
-			if(fieldArrayList.get(i) instanceof StationCircularList) {
-				station.setNextGroupElement(((StationCircularList) fieldArrayList.get(i)));
+			if(fieldArrayList.get(i) instanceof Station) {
+				station.setNextGroupElement(((Station) fieldArrayList.get(i)));
 				fieldArrayList.remove(i);
 				i--;
 			}
@@ -116,10 +115,10 @@ public class Connector {
 	}
 
 	//JAVADOC
-	private void makeCircularFacilityList(FacilityCircularList facility, ArrayList<Field> fieldArrayList) {
+	private void makeCircularFacilityList(Facility facility, ArrayList<FieldCircularList> fieldArrayList) {
 		for(int i = 0; i < fieldArrayList.size(); i++) {
-			if(fieldArrayList.get(i) instanceof FacilityCircularList) {
-				facility.setNextGroupElement(((FacilityCircularList) fieldArrayList.get(i)));
+			if(fieldArrayList.get(i) instanceof Facility) {
+				facility.setNextGroupElement(((Facility) fieldArrayList.get(i)));
 				fieldArrayList.remove(i);
 				i--;
 			}
@@ -127,9 +126,9 @@ public class Connector {
 	}
 
 	//JAVADOC
-	private void connectTax(Tax tax, ArrayList<Field> fieldArrayList, Parking parking) {
+	private void connectTax(Tax tax, ArrayList<FieldCircularList> fieldArrayList, Parking parking) {
 		if(parking == null) {
-			for(Field next : fieldArrayList) {
+			for(FieldCircularList next : fieldArrayList) {
 				if(next instanceof Parking) {
 					tax.setParking((Parking) next);
 					break;
@@ -141,9 +140,9 @@ public class Connector {
 	}
 
 	//JAVADOC
-	private void connectJail(Jail jail, ArrayList<Field> fieldArrayList, Parking parking) {
+	private void connectJail(Jail jail, ArrayList<FieldCircularList> fieldArrayList, Parking parking) {
 		if(parking == null) {
-			for(Field next : fieldArrayList) {
+			for(FieldCircularList next : fieldArrayList) {
 				if(next instanceof Parking) {
 					jail.setParking((Parking) next);
 					break;
@@ -155,9 +154,9 @@ public class Connector {
 	}
 
 	//JAVADOC
-	private void connectGoToJail(GoToJail goToJail, ArrayList<Field> fieldArrayList, Jail jail) {
+	private void connectGoToJail(GoToJail goToJail, ArrayList<FieldCircularList> fieldArrayList, Jail jail) {
 		if(jail == null) {
-			for(Field aFieldArrayList : fieldArrayList) {
+			for(FieldCircularList aFieldArrayList : fieldArrayList) {
 				if(aFieldArrayList instanceof Jail) {
 					goToJail.setJail(aFieldArrayList);
 					break;
@@ -169,11 +168,11 @@ public class Connector {
 	}
 
 	//JAVADOC
-	private void setDiceArray(Field[] map) {
+	private void setDiceArray(FieldCircularList[] map) {
 		int index;
-		Field[] diceArray;
+		FieldCircularList[] diceArray;
 		for(int i = 0; i < map.length; i++) {
-			diceArray = new Field[11];
+			diceArray = new FieldCircularList[11];
 			for(int j = 0; j < diceArray.length; j++) {
 				index = i + 2 + j;
 				if(index >= map.length) {
@@ -186,13 +185,14 @@ public class Connector {
 	}
 
 	//JAVADOC
-	private void connectCards(CardStack current, Field[] map, CardStack community) throws CardConnectionException {
+	private void connectCards(CardStack current, FieldCircularList[] map, CardStack community)
+			throws CardConnectionException {
 		boolean found;
 		for(Card c : current.getStack()) {
 			if(c instanceof GoTo) {
 				found = false;
 				String name = ((GoTo) c).getFieldName();
-				for(Field f : map) {
+				for(FieldCircularList f : map) {
 					if(f.getName().equals(name)) {
 						((GoTo) c).setField(f);
 						((GoTo) c).setGo(map[0]);
@@ -203,7 +203,7 @@ public class Connector {
 					throw new CardConnectionException(c);
 				}
 			} else if(c instanceof Arrest) {
-				for(Field f : map) {
+				for(FieldCircularList f : map) {
 					if(f instanceof Jail) {
 						((Arrest) c).setJail(f);
 					}

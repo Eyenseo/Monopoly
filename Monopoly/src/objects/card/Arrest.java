@@ -1,13 +1,13 @@
 package objects.card;
 
-import objects.map.Field;
+import objects.map.FieldCircularList;
 
 /**
  * Arrest is the jail card (Gehe ins Gefaengnis Karte).
  * A card is a trigger for a specific event defined in the gameplay mechanics
  */
 public class Arrest extends Card {
-	Field jail;
+	FieldCircularList jail;
 
 	/**
 	 * @param name Name of the card
@@ -18,7 +18,7 @@ public class Arrest extends Card {
 	}
 
 	//JAVADOC
-	public void setJail(Field jail) {
+	public void setJail(FieldCircularList jail) {
 		this.jail = jail;
 	}
 }

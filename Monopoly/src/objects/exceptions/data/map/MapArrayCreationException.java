@@ -1,7 +1,7 @@
 package objects.exceptions.data.map;
 
 import objects.exceptions.data.StorageReaderException;
-import objects.map.Field;
+import objects.map.FieldCircularList;
 
 /**
  * The MapArrayCreationException is the Exception for all Exceptions thrown while creating a map from storage data.
@@ -18,11 +18,11 @@ public class MapArrayCreationException extends StorageReaderException {
 	 * @param map   The value determines field array that represents the map.
 	 * @param cause The value determines the previous Exception.
 	 */
-	public MapArrayCreationException(Field[] map, Throwable cause) {
+	public MapArrayCreationException(FieldCircularList[] map, Throwable cause) {
 		super(cause);
 		for(int i = 0; i < map.length; i++) {
 			if(map[i] == null) {
-				message += "There was an problem while creating Field " + i + ".\n";
+				message += "There was an problem while creating FieldCircularList " + i + ".\n";
 				if(i > 1) {
 					if(i > 2) {
 						message += "\t" + (i - 2) + " - " + map[i - 2].getName() + "\n";
