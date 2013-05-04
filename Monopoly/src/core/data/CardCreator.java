@@ -12,7 +12,7 @@ public class CardCreator extends StorageReader {
 	private final String NAME;
 
 	//JAVADOC
-	public CardCreator(String file, String name) {
+	public CardCreator(String file, String name) throws StorageReaderException {
 		super(file);
 		NAME = name;
 	}

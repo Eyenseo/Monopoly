@@ -22,14 +22,13 @@ abstract class StorageReader {
 	/**
 	 * @param file The value determines which file will be loaded.
 	 */
-	StorageReader(String file) {
+	StorageReader(String file) throws StorageReaderException {
 		try {
 			//TODO Path may be different if run as package.
 			this.file = new BufferedReader(new FileReader(path + file));
 			this.path += file;
 		} catch(FileNotFoundException e) {
-			System.out.println("The requested file was not found:\n\t" + path);
-			e.printStackTrace();
+			throw new StorageReaderException("The requested file was not found:\n\t" + path, e);
 		}
 	}
 
