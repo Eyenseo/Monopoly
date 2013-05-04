@@ -40,6 +40,16 @@ public class ConsoleMenu {
 	}
 
 	//JAVADOC
+	private int[] integerToInt(ArrayList<Integer> integers) {
+		int[] re = new int[integers.size()];
+		Iterator<Integer> iterator = integers.iterator();
+		for(int i = 0; i < re.length; i++) {
+			re[i] = iterator.next();
+		}
+		return re;
+	}
+
+	//JAVADOC
 	public void playerPropertiesDetails(Player player) {
 		System.out.println("Sie haben " + player.getMoney() + " Geld.");
 		playerPropertiesDetails(player, 0);
@@ -190,145 +200,6 @@ public class ConsoleMenu {
 	}
 
 	//JAVADOC
-	private int showOrganisationMenu(int[] options) {
-		int choice;
-		String menuOptions = "";
-		for(int i = 0; i < options.length; i++) {
-			switch(options[i]) {
-				case 0:
-					menuOptions += "[" + (i + 1) + "] Zum Aktionsmenue wechseln.\n";
-					break;
-				case 2:
-					menuOptions += "[" + (i + 1) + "] Ihren Besitz ansehen.\n";
-					break;
-				case 3:
-					menuOptions += "[" + (i + 1) + "] Mit Spielern handeln.\n";
-					break;
-				case 22:
-					menuOptions += "[" + (i + 1) + "] Hypotek aufnehmen.\n";
-					break;
-				case 23:
-					menuOptions += "[" + (i + 1) + "] Hypotek abzahlen.\n";
-					break;
-				case 13:
-					menuOptions += "[" + (i + 1) + "] Aufgeben.\n";
-					break;
-			}
-		}
-		println(menuOptions);
-		choice = in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1;
-		if(options[choice] == 13) {
-			println("Sind Sie sich sicher, dass Sie aufgeben wollen? j/n");
-			if(in.userChar(new char[]{'j', 'n', '\0'}, "Bitte geben Sie 'j' oder 'n' ein.") == 'n') {
-				return showOrganisationMenu(options);
-			}
-		}
-		return options[choice];
-	}
-
-	//JAVADOC
-	private int[] buildOrganisationMenu(Player player) {
-		ArrayList<Integer> options = new ArrayList<Integer>();
-		options.add(0);
-		options.add(2);
-		for(PurchasableCircularList property : player.getProperties()) {
-			if(!property.isInMortgage()) {
-				options.add(22);
-				break;
-			}
-		}
-		for(PurchasableCircularList property : player.getProperties()) {
-			if(property.isInMortgage()) {
-				options.add(23);
-				break;
-			}
-		}
-		options.add(3);
-		options.add(13);
-		return integerToInt(options);
-	}
-
-	//JAVADOC
-	private int[] buildMortageMenu(Player player, boolean take) {
-		ArrayList<Integer> options = new ArrayList<Integer>();
-		ArrayList<PurchasableCircularList> property = player.getProperties();
-		for(int i = 0; i < property.size(); i++) {
-			if(take) {
-				if(!property.get(i).isInMortgage()) {
-					options.add(i);
-				}
-			} else {
-				if(property.get(i).isInMortgage() && player.getMoney() >= property.get(i).getMortgage()) {
-					options.add(i);
-				}
-			}
-		}
-		options.add(-1);
-		return integerToInt(options);
-	}
-
-	//JAVADOC
-	private PurchasableCircularList showMortageMenu(Player player, int[] options, boolean take) {
-		int choice;
-		String menuOptions;
-		String[] menuArray = new String[options.length - 1];
-		ArrayList<PurchasableCircularList> property = player.getProperties();
-		if(take) {
-			System.out.println("Hypotek aufnehmen:");
-		} else {
-			System.out.println("Hypotek abbezahlen:");
-		}
-		for(int i = 0; i < menuArray.length; i++) {
-			if(options[i] != -1) {
-				menuArray[i] = propertyDetail(null, property.get(options[i]), i + 1);
-			}
-		}
-		menuOptions = joinDetailLines(menuArray);
-		menuOptions += "[" + options.length + "] Zurueck.\n";
-		println(menuOptions);
-		choice = in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1;
-		if(choice == options.length - 1) {
-			return null;
-		}
-		return property.get(options[choice]);
-	}
-
-	//JAVADOC
-	private int showActionMenu(int[] options) {
-		String menuOptions = "";
-		for(int i = 0; i < options.length; i++) {
-			switch(options[i]) {
-				case 1:
-					menuOptions += "[" + (i + 1) + "] Zum Verwaltungsmenue wechseln.\n";
-					break;
-				case 10:
-					menuOptions += "[" + (i + 1) + "] Wuerfeln.\n";
-					break;
-				case 11:
-					menuOptions += "[" + (i + 1) + "] Den Zug beenden.\n";
-					break;
-				case 12:
-					menuOptions += "[" + (i + 1) + "] Den naechsten Zug beginnen.\n";
-					break;
-				case 20:
-					menuOptions += "[" + (i + 1) + "] Anwesen kaufen.\n";
-					break;
-				case 21:
-					menuOptions += "[" + (i + 1) + "] Haeuser kaufen.\n";
-					break;
-				case 30:
-					menuOptions += "[" + (i + 1) + "] 1000 zahlen um aus dem Gefaengnis frei zu kommen.\n";
-					break;
-				case 31:
-					menuOptions += "[" + (i + 1) + "] Karte nutzen um aus dem Gefaengnis frei zu kommen.\n";
-					break;
-			}
-		}
-		println(menuOptions);
-		return options[in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1];
-	}
-
-	//JAVADOC
 	private int[] buildActionMenu(Player player, int turnState) {
 		FieldCircularList field = player.getField();
 		ArrayList<Integer> options = new ArrayList<Integer>();
@@ -363,91 +234,151 @@ public class ConsoleMenu {
 	}
 
 	//JAVADOC
-	public int mainMenu(Player player, Vector<Player> playerVector, int turnState) {
-		boolean end = false;
-		int choice = 0;
-		PurchasableCircularList property;
-		System.out.println(getTurnDetails(player, turnState == 0));
-		while(!end) {
-			switch(choice) {
-				case 0: //ShowActionMenu
-					getTurnDetails(player, turnState == 0);
-					choice = showActionMenu(buildActionMenu(player, turnState));
+	private int showActionMenu(Player player, int turnState) {
+		int[] options = buildActionMenu(player, turnState);
+		String menuOptions = "";
+		for(int i = 0; i < options.length; i++) {
+			switch(options[i]) {
+				case 1:
+					menuOptions += "[" + (i + 1) + "] Zum Verwaltungsmenue wechseln.\n";
 					break;
-				case 1: //ShowOrganisationMenu
-					getTurnDetails(player, turnState == 0);
-					choice = showOrganisationMenu(buildOrganisationMenu(player));
+				case 10:
+					menuOptions += "[" + (i + 1) + "] Wuerfeln.\n";
 					break;
-				case 2: //ViewProperty
-					playerPropertiesDetails(player);
-					choice = 1;
+				case 11:
+					menuOptions += "[" + (i + 1) + "] Den Zug beenden.\n";
 					break;
-				case 3: //Trade with other player
-					tradeMenu(player, playerVector);
-					choice = 1;
+				case 12:
+					menuOptions += "[" + (i + 1) + "] Den naechsten Zug beginnen.\n";
 					break;
-				case 12: //Throw dice after doubles
-				case 10: //Throw dice
-					turnState = player.move() ? 3 : 1;
-					end = true;
+				case 20:
+					menuOptions += "[" + (i + 1) + "] Anwesen kaufen.\n";
 					break;
-				case 11: //End turn
-					turnState = 2;
-					end = true;
+				case 21:
+					menuOptions += "[" + (i + 1) + "] Haeuser kaufen.\n";
 					break;
-				case 13: //Give up
-					turnState = 4;
-					end = true;
+				case 30:
+					menuOptions += "[" + (i + 1) + "] 1000 zahlen um aus dem Gefaengnis frei zu kommen.\n";
 					break;
-				case 20: //Buy
-					player.buy((PurchasableCircularList) player.getField());
-					System.out.println(propertyDetail(player, (PurchasableCircularList) player.getField()));
-					choice = 0;
-					break;
-				case 21: //Buy upgrade (House/Hotel)
-					((Street) player.getField()).nextStage();
-					choice = 0;
-					break;
-				case 22: //Get Mortgage
-					property = showMortageMenu(player, buildMortageMenu(player, true), true);
-					if(property != null) {
-						property.setInMortgage(true);
-					}
-					choice = 1;
-					break;
-				case 23: //Pay Mortgage
-					property = showMortageMenu(player, buildMortageMenu(player, false), false);
-					if(property != null) {
-						property.setInMortgage(false);
-					}
-					choice = 1;
-					break;
-				case 30: //Pay to get out of jail
-					((Jail) player.getField()).payFine(player);
-					choice = 0;
-					break;
-				case 31: //Use Community jailbait card
-					player.useJailbait();
-					choice = 0;
+				case 31:
+					menuOptions += "[" + (i + 1) + "] Karte nutzen um aus dem Gefaengnis frei zu kommen.\n";
 					break;
 			}
 		}
-		return turnState;
+		println(menuOptions);
+		return options[in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1];
 	}
 
 	//JAVADOC
-	private int[] integerToInt(ArrayList<Integer> integers) {
-		int[] re = new int[integers.size()];
-		Iterator<Integer> iterator = integers.iterator();
-		for(int i = 0; i < re.length; i++) {
-			re[i] = iterator.next();
+	private int[] buildOrganisationMenu(Player player) {
+		ArrayList<Integer> options = new ArrayList<Integer>();
+		options.add(0);
+		options.add(2);
+		for(PurchasableCircularList property : player.getProperties()) {
+			if(!property.isInMortgage()) {
+				options.add(22);
+				break;
+			}
 		}
-		return re;
+		for(PurchasableCircularList property : player.getProperties()) {
+			if(property.isInMortgage()) {
+				options.add(23);
+				break;
+			}
+		}
+		options.add(3);
+		options.add(13);
+		return integerToInt(options);
+	}
+
+	//JAVADOC
+	private int showOrganisationMenu(Player player) {
+		int choice;
+		int[] options = buildOrganisationMenu(player);
+		String menuOptions = "";
+		for(int i = 0; i < options.length; i++) {
+			switch(options[i]) {
+				case 0:
+					menuOptions += "[" + (i + 1) + "] Zum Aktionsmenue wechseln.\n";
+					break;
+				case 2:
+					menuOptions += "[" + (i + 1) + "] Ihren Besitz ansehen.\n";
+					break;
+				case 3:
+					menuOptions += "[" + (i + 1) + "] Mit Spielern handeln.\n";
+					break;
+				case 22:
+					menuOptions += "[" + (i + 1) + "] Hypotek aufnehmen.\n";
+					break;
+				case 23:
+					menuOptions += "[" + (i + 1) + "] Hypotek abzahlen.\n";
+					break;
+				case 13:
+					menuOptions += "[" + (i + 1) + "] Aufgeben.\n";
+					break;
+			}
+		}
+		println(menuOptions);
+		choice = in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1;
+		if(options[choice] == 13) {
+			println("Sind Sie sich sicher, dass Sie aufgeben wollen? j/n");
+			if(in.userChar(new char[]{'j', 'n', '\0'}, "Bitte geben Sie 'j' oder 'n' ein.") == 'n') {
+				return showOrganisationMenu(player);
+			}
+		}
+		return options[choice];
+	}
+
+	//JAVADOC
+	private int[] buildMortageMenu(Player player, boolean take) {
+		ArrayList<Integer> options = new ArrayList<Integer>();
+		ArrayList<PurchasableCircularList> property = player.getProperties();
+		for(int i = 0; i < property.size(); i++) {
+			if(take) {
+				if(!property.get(i).isInMortgage()) {
+					options.add(i);
+				}
+			} else {
+				if(property.get(i).isInMortgage() && player.getMoney() >= property.get(i).getMortgage()) {
+					options.add(i);
+				}
+			}
+		}
+		options.add(-1);
+		return integerToInt(options);
+	}
+
+	//JAVADOC
+	private PurchasableCircularList showMortageMenu(Player player, boolean take) {
+		int choice;
+		int[] options = buildMortageMenu(player, take);
+		String menuOptions;
+		String[] menuArray = new String[options.length - 1];
+		ArrayList<PurchasableCircularList> property = player.getProperties();
+		if(take) {
+			System.out.println("Hypotek aufnehmen:");
+		} else {
+			System.out.println("Hypotek abbezahlen:");
+		}
+		for(int i = 0; i < menuArray.length; i++) {
+			if(options[i] != -1) {
+				menuArray[i] = propertyDetail(null, property.get(options[i]), i + 1);
+			}
+		}
+		menuOptions = joinDetailLines(menuArray);
+		menuOptions += "[" + options.length + "] Zurueck.\n";
+		println(menuOptions);
+		choice = in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1;
+		if(choice == options.length - 1) {
+			return null;
+		}
+		return property.get(options[choice]);
 	}
 
 	//JAVADOC
 	private Player showPlayer(Player currentPlayer, Vector<Player> playerVector) {
 		int index = 0;
+		int choice;
 		int[] options = new int[playerVector.size() - 1];
 		String menuOptions = "";
 		for(int i = 0; i < playerVector.size(); i++) {
@@ -457,13 +388,107 @@ public class ConsoleMenu {
 			}
 		}
 		println(menuOptions);
-		return playerVector
-				.get(options[in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) -
-				             1]);
+		choice = in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1;
+		return playerVector.get(options[choice]);
 	}
 
 	//JAVADOC
-	private int showHaggleMenu(int[] options) {
+	private void showTrade(TradeManager tm, Player buyer, Player seller) {
+		String temp = "";
+		String show = buyer.getName() + " bekommt:\n";
+		for(int i = 0; i < tm.getProperty(seller).size(); i++) {
+			if(tm.getProperty(seller).get(i) != null) {
+				temp += propertyDetail(null, tm.getProperty(seller).get(i));
+			}
+		}
+		if(temp.equals("")) {
+			show += "-\n";
+		} else {
+			show += temp;
+		}
+		temp = "";
+		show += "" + tm.getMoney(seller) + " Geld.\n";
+		show += seller.getName() + " bekommt:\n";
+		for(int i = 0; i < tm.getProperty(buyer).size(); i++) {
+			if(tm.getProperty(seller).get(i) != null) {
+				temp += propertyDetail(null, tm.getProperty(buyer).get(i));
+			}
+		}
+		if(temp.equals("")) {
+			show += "-\n";
+		} else {
+			show += temp;
+		}
+		show += "" + tm.getMoney(buyer) + " Geld.";
+		System.out.println(show);
+	}
+
+	//JAVADOC
+	private int[] buildSelectProperty(TradeManager tm, Player player, boolean remove) {
+		ArrayList<Integer> options = new ArrayList<Integer>();
+		ArrayList<PurchasableCircularList> property = player.getProperties();
+		for(int i = 0; i < property.size(); i++) {
+			if(remove) {
+				if(tm.isInTrade(property.get(i))) {
+					options.add(i);
+				}
+			} else {
+				if(!tm.isInTrade(property.get(i))) {
+					options.add(i);
+				}
+			}
+		}
+		options.add(-1);
+		return integerToInt(options);
+	}
+
+	//JAVADOC
+	private PurchasableCircularList showSelectProperty(TradeManager tm, Player player, boolean remove) {
+		int choice;
+		int[] options = buildSelectProperty(tm, player, remove);
+		String[] menuArray = new String[options.length - 1];
+		String menuOptions;
+		ArrayList<PurchasableCircularList> property = player.getProperties();
+		for(int i = 0; i < menuArray.length; i++) {
+			if(options[i] != -1) {
+				menuArray[i] = propertyDetail(null, property.get(options[i]), i + 1);
+			}
+		}
+		menuOptions = joinDetailLines(menuArray);
+		menuOptions += "[" + options.length + "] Zurueck.\n";
+		println(menuOptions);
+		choice = in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1;
+		if(choice == options.length - 1) {
+			return null;
+		}
+		return property.get(options[choice]);
+	}
+
+	//JAVADOC
+	private int[] buildHaggleMenu(boolean seller, boolean confirm) {
+		ArrayList<Integer> options = new ArrayList<Integer>();
+		options.add(1);
+		options.add(9);
+		if(confirm) {
+			options.add(8);
+			options.add(4);
+		} else {
+			options.add(2);
+			options.add(7);
+			if(seller) {
+				options.add(3);
+				options.add(4);
+			} else {
+				options.add(5);
+			}
+		}
+		options.add(6);
+		return integerToInt(options);
+	}
+
+	//JAVADOC
+	private int showHaggleMenu(boolean seller, boolean confirm) {
+		int[] options = buildHaggleMenu(seller, confirm);
 		String menuOptions = "";
 		for(int i = 0; i < options.length; i++) {
 			switch(options[i]) {
@@ -500,38 +525,15 @@ public class ConsoleMenu {
 	}
 
 	//JAVADOC
-	private int[] buildHaggleMenu(boolean seller, boolean confirm) {
-		ArrayList<Integer> options = new ArrayList<Integer>();
-		options.add(1);
-		options.add(9);
-		if(confirm) {
-			options.add(8);
-			options.add(4);
-		} else {
-			options.add(2);
-			options.add(7);
-			if(seller) {
-				options.add(3);
-				options.add(4);
-			} else {
-				options.add(5);
-			}
-		}
-		options.add(6);
-		return integerToInt(options);
-	}
-
-	//JAVADOC
 	//TODO Improver parameter
-	private int executeHaggleMenu(TradeManager tm, Player currentPlayer, Player counterPlayer, int choice,
-	                              int tradeState) {
+	private int haggleMenu(TradeManager tm, Player currentPlayer, Player counterPlayer, int choice, int tradeState) {
 		PurchasableCircularList property;
 		switch(choice) {
 			case 1:
 				showTrade(tm, counterPlayer, currentPlayer);
 				break;
 			case 2:
-				property = showSelectProperty(buildSelectProperty(tm, currentPlayer, false), currentPlayer);
+				property = showSelectProperty(tm, currentPlayer, false);
 				if(currentPlayer != null) {
 					tm.addTrade(currentPlayer, property);
 				}
@@ -555,7 +557,7 @@ public class ConsoleMenu {
 				tradeState = 0;
 				break;
 			case 7:
-				property = showSelectProperty(buildSelectProperty(tm, currentPlayer, true), currentPlayer);
+				property = showSelectProperty(tm, currentPlayer, true);
 				if(currentPlayer != null) {
 					tm.removeTrade(currentPlayer, property);
 				}
@@ -571,77 +573,6 @@ public class ConsoleMenu {
 	}
 
 	//JAVADOC
-	private int[] buildSelectProperty(TradeManager tm, Player player, boolean remove) {
-		ArrayList<Integer> options = new ArrayList<Integer>();
-		ArrayList<PurchasableCircularList> property = player.getProperties();
-		for(int i = 0; i < property.size(); i++) {
-			if(remove) {
-				if(tm.isInTrade(property.get(i))) {
-					options.add(i);
-				}
-			} else {
-				if(!tm.isInTrade(property.get(i))) {
-					options.add(i);
-				}
-			}
-		}
-		options.add(-1);
-		return integerToInt(options);
-	}
-
-	//JAVADOC
-	private PurchasableCircularList showSelectProperty(int[] options, Player player) {
-		int choice;
-		String[] menuArray = new String[options.length - 1];
-		String menuOptions;
-		ArrayList<PurchasableCircularList> property = player.getProperties();
-		for(int i = 0; i < menuArray.length; i++) {
-			if(options[i] != -1) {
-				menuArray[i] = propertyDetail(null, property.get(options[i]), i + 1);
-			}
-		}
-		menuOptions = joinDetailLines(menuArray);
-		menuOptions += "[" + options.length + "] Zurueck.\n";
-		println(menuOptions);
-		choice = in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1;
-		if(choice == options.length - 1) {
-			return null;
-		}
-		return property.get(options[choice]);
-	}
-
-	//JAVADOC
-	private void showTrade(TradeManager tm, Player buyer, Player seller) {
-		String temp = "";
-		String show = buyer.getName() + " bekommt:\n";
-		for(int i = 0; i < tm.getProperty(seller).size(); i++) {
-			if(tm.getProperty(seller).get(i) != null) {
-				temp += propertyDetail(null, tm.getProperty(seller).get(i));
-			}
-		}
-		if(temp.equals("")) {
-			show += "-\n";
-		} else {
-			show += temp;
-		}
-		temp = "";
-		show += "" + tm.getMoney(seller) + " Geld.\n";
-		show += seller.getName() + " bekommt:\n";
-		for(int i = 0; i < tm.getProperty(buyer).size(); i++) {
-			if(tm.getProperty(seller).get(i) != null) {
-				temp += propertyDetail(null, tm.getProperty(buyer).get(i));
-			}
-		}
-		if(temp.equals("")) {
-			show += "-\n";
-		} else {
-			show += temp;
-		}
-		show += "" + tm.getMoney(buyer) + " Geld.";
-		System.out.println(show);
-	}
-
-	//JAVADOC
 	public void tradeMenu(Player buyer, Vector<Player> players) {
 		int tradeState = 1;
 		Player seller = showPlayer(buyer, players);
@@ -649,21 +580,18 @@ public class ConsoleMenu {
 		while(tradeState != 0) {
 			System.out.println(buyer.getName() + " waehlen Sie:");
 			while(tradeState != 0 && tradeState == 1) {
-				tradeState =
-						executeHaggleMenu(tm, seller, buyer, showHaggleMenu(buildHaggleMenu(false, false)), tradeState);
+				tradeState = haggleMenu(tm, seller, buyer, showHaggleMenu(false, false), tradeState);
 			}
 			if(tradeState != 0) {
 				System.out.println(seller.getName() + " waehlen Sie:");
 			}
 			while(tradeState != 0 && tradeState == 2) {
-				tradeState =
-						executeHaggleMenu(tm, buyer, seller, showHaggleMenu(buildHaggleMenu(true, false)), tradeState);
+				tradeState = haggleMenu(tm, buyer, seller, showHaggleMenu(true, false), tradeState);
 			}
 			if(tradeState == 5) {
 				System.out.println(buyer.getName() + " waehlen Sie:");
 				while(tradeState != 0 && tradeState == 5) {
-					tradeState = executeHaggleMenu(tm, seller, buyer, showHaggleMenu(buildHaggleMenu(true, true)),
-					                               tradeState);
+					tradeState = haggleMenu(tm, seller, buyer, showHaggleMenu(true, true), tradeState);
 				}
 			}
 			if(tradeState == 3) {
@@ -675,5 +603,78 @@ public class ConsoleMenu {
 				}
 			}
 		}
+	}
+
+	//JAVADOC
+	public int mainMenu(Player player, Vector<Player> playerVector, int turnState) {
+		boolean end = false;
+		int choice = 0;
+		PurchasableCircularList property;
+		System.out.println(getTurnDetails(player, turnState == 0));
+		while(!end) {
+			switch(choice) {
+				case 0: //ShowActionMenu
+					getTurnDetails(player, turnState == 0);
+					choice = showActionMenu(player, turnState);
+					break;
+				case 1: //ShowOrganisationMenu
+					getTurnDetails(player, turnState == 0);
+					choice = showOrganisationMenu(player);
+					break;
+				case 2: //ViewProperty
+					playerPropertiesDetails(player);
+					choice = 1;
+					break;
+				case 3: //Trade with other player
+					tradeMenu(player, playerVector);
+					choice = 1;
+					break;
+				case 12: //Throw dice after doubles
+				case 10: //Throw dice
+					turnState = player.move() ? 3 : 1;
+					end = true;
+					break;
+				case 11: //End turn
+					turnState = 2;
+					end = true;
+					break;
+				case 13: //Give up
+					turnState = 4;
+					end = true;
+					break;
+				case 20: //Buy
+					player.buy((PurchasableCircularList) player.getField());
+					System.out.println(propertyDetail(player, (PurchasableCircularList) player.getField()));
+					choice = 0;
+					break;
+				case 21: //Buy upgrade (House/Hotel)
+					((Street) player.getField()).nextStage();
+					choice = 0;
+					break;
+				case 22: //Get Mortgage
+					property = showMortageMenu(player, true);
+					if(property != null) {
+						property.setInMortgage(true);
+					}
+					choice = 1;
+					break;
+				case 23: //Pay Mortgage
+					property = showMortageMenu(player, false);
+					if(property != null) {
+						property.setInMortgage(false);
+					}
+					choice = 1;
+					break;
+				case 30: //Pay to get out of jail
+					((Jail) player.getField()).payFine(player);
+					choice = 0;
+					break;
+				case 31: //Use Community jailbait card
+					player.useJailbait();
+					choice = 0;
+					break;
+			}
+		}
+		return turnState;
 	}
 }
