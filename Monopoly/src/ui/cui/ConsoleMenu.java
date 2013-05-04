@@ -50,24 +50,8 @@ public class ConsoleMenu {
 	}
 
 	//JAVADOC
-	public void playerPropertiesDetails(Player player) {
-		System.out.println("Sie haben " + player.getMoney() + " Geld.");
-		playerPropertiesDetails(player, 0);
-	}
-
-	//JAVADOC
-	public void playerPropertiesDetails(Player player, int index) {
-		String print = propertiesDetails(player, player.getProperties(), index);
-		if(print.equals("")) {
-			System.out.println("---");
-		} else {
-			System.out.println(print);
-		}
-	}
-
-	//JAVADOC
-	public void groupDetails(PurchasableCircularList property) {
-		System.out.println(propertiesDetails(null, property.getGroupMembers(), 0));
+	public void groupDetails(Player player, PurchasableCircularList property) {
+		System.out.println(propertiesDetails(player, property.getGroupMembers(), 0));
 	}
 
 	//JAVADOC
@@ -75,6 +59,9 @@ public class ConsoleMenu {
 		String[] details = new String[properties.size()];
 		for(int i = 0; i < details.length; i++) {
 			details[i] = propertyDetail(player, properties.get(i), index);
+			if(index != 0) {
+				index++;
+			}
 		}
 		return joinDetailLines(details);
 	}
@@ -197,6 +184,21 @@ public class ConsoleMenu {
 		}
 		turnDetails += "\nGeld:\t" + player.getMoney();
 		return turnDetails;
+	}
+
+	//JAVADOC
+	public void playerPropertiesMenu(Player player) {
+		int choice;
+		ArrayList<PurchasableCircularList> property = player.getProperties();
+		String menuOptions = "Sie haben " + player.getMoney() + " Geld.\n";
+		menuOptions += "Waehlen Sie ein Grundstuek um die anderen Grundstueke der Gruppe zu sehen.\n";
+		menuOptions += propertiesDetails(player, property, 1);
+		menuOptions += "[" + (property.size() + 1) + "] Zurueck \n";
+		println(menuOptions);
+		choice = in.userInt(1, property.size() + 1, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1;
+		if(choice != property.size()) {
+			groupDetails(player, property.get(choice));
+		}
 	}
 
 	//JAVADOC
@@ -393,12 +395,12 @@ public class ConsoleMenu {
 	}
 
 	//JAVADOC
-	private void showTrade(TradeManager tm, Player buyer, Player seller) {
+	private void showTrade(TradeManager tm, Player currentPlayer, Player counterPlayer) {
 		String temp = "";
-		String show = buyer.getName() + " bekommt:\n";
-		for(int i = 0; i < tm.getProperty(seller).size(); i++) {
-			if(tm.getProperty(seller).get(i) != null) {
-				temp += propertyDetail(null, tm.getProperty(seller).get(i));
+		String show = "Sie bekommen:\n";
+		for(int i = 0; i < tm.getProperty(counterPlayer).size(); i++) {
+			if(tm.getProperty(counterPlayer).get(i) != null) {
+				temp += propertyDetail(null, tm.getProperty(counterPlayer).get(i));
 			}
 		}
 		if(temp.equals("")) {
@@ -407,11 +409,11 @@ public class ConsoleMenu {
 			show += temp;
 		}
 		temp = "";
-		show += "" + tm.getMoney(seller) + " Geld.\n";
-		show += seller.getName() + " bekommt:\n";
-		for(int i = 0; i < tm.getProperty(buyer).size(); i++) {
-			if(tm.getProperty(seller).get(i) != null) {
-				temp += propertyDetail(null, tm.getProperty(buyer).get(i));
+		show += "" + tm.getMoney(counterPlayer) + " Geld.\n";
+		show += counterPlayer.getName() + " bekommt:\n";
+		for(int i = 0; i < tm.getProperty(currentPlayer).size(); i++) {
+			if(tm.getProperty(currentPlayer).get(i) != null) {
+				temp += propertyDetail(null, tm.getProperty(currentPlayer).get(i));
 			}
 		}
 		if(temp.equals("")) {
@@ -419,7 +421,7 @@ public class ConsoleMenu {
 		} else {
 			show += temp;
 		}
-		show += "" + tm.getMoney(buyer) + " Geld.";
+		show += "" + tm.getMoney(currentPlayer) + " Geld.";
 		System.out.println(show);
 	}
 
@@ -505,7 +507,7 @@ public class ConsoleMenu {
 					menuOptions += "[" + (i + 1) + "] Handel abschließen.\n";
 					break;
 				case 5:
-					menuOptions += "[" + (i + 1) + "] Handel vorschlagen.\n";
+					menuOptions += "[" + (i + 1) + "] Handel erbitten.\n";
 					break;
 				case 6:
 					menuOptions += "[" + (i + 1) + "] Handel abbrechen.\n";
@@ -566,7 +568,7 @@ public class ConsoleMenu {
 				tradeState = 1;
 				break;
 			case 9:
-				playerPropertiesDetails(counterPlayer);
+				playerPropertiesMenu(counterPlayer);
 				break;
 		}
 		return tradeState;
@@ -622,7 +624,7 @@ public class ConsoleMenu {
 					choice = showOrganisationMenu(player);
 					break;
 				case 2: //ViewProperty
-					playerPropertiesDetails(player);
+					playerPropertiesMenu(player);
 					choice = 1;
 					break;
 				case 3: //Trade with other player
