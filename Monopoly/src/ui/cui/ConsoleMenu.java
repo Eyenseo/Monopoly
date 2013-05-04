@@ -366,11 +366,6 @@ public class ConsoleMenu {
 					((PurchasableCircularList) player.getField()).setInMortgage(false);
 					choice = 1;
 					break;
-				case 24: //Set price of property
-					//TODO implement
-					System.err.print("To be implemented ...");
-					choice = 1;
-					break;
 				case 30: //Pay to get out of jail
 					((Jail) player.getField()).payFine(player);
 					choice = 0;
