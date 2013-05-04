@@ -46,12 +46,23 @@ public class Player {
 
 	//JAVADOC
 	public void buy(PurchasableCircularList purchasable) {
-		if(purchasable.getOwner() != null) {
-			purchasable.getOwner().addMoney(purchasable.getPrice());
-		}
 		this.money -= purchasable.getPrice();
 		purchasable.setOwner(this);
+	}
+
+	//JAVADOC
+	public void setOwnship(PurchasableCircularList purchasable) {
+		purchasable.setOwner(this);
+	}
+
+	//JAVADOC
+	public void addProperty(PurchasableCircularList purchasable) {
 		this.property.add(purchasable);
+	}
+
+	//JAVADOC
+	public void removeProperty(PurchasableCircularList purchasable) {
+		this.property.remove(purchasable);
 	}
 
 	//JAVADOC

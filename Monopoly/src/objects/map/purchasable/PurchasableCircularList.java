@@ -58,6 +58,11 @@ public abstract class PurchasableCircularList extends FieldCircularList {
 	}
 
 	//JAVADOC
+	public int getMaxStage() {
+		return INCOME.length - 1;
+	}
+
+	//JAVADOC
 	public int[] getIncome() {
 		return INCOME;
 	}
@@ -113,7 +118,11 @@ public abstract class PurchasableCircularList extends FieldCircularList {
 	 * @param owner The value determines the owner.
 	 */
 	public void setOwner(Player owner) {
+		if(this.owner != null) {
+			this.owner.removeProperty(this);
+		}
 		this.owner = owner;
+		owner.addProperty(this);
 		sameOwnerCheck();
 	}
 
