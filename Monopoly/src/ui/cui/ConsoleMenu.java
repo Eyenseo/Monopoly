@@ -108,7 +108,7 @@ public class ConsoleMenu {
 			}
 		}
 		detail += detailLine("Preis: " + (property.getPrice() == -1 ? "-" : property.getPrice()));
-		detail += detailLine("Hypotek: " + (property.getMortgage() < 0 ? "-" : "+") + property.getMortgage());
+		detail += detailLine("Hypotek: " + (property.isInMortgage() ? "-" : "+") + property.getMortgage());
 		if(!(property instanceof Street)) {
 			detail += detailLine("");
 		}
@@ -228,20 +228,69 @@ public class ConsoleMenu {
 
 	//JAVADOC
 	private int[] buildOrganisationMenu(Player player) {
-		FieldCircularList field = player.getField();
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		options.add(0);
 		options.add(2);
-		if(field instanceof PurchasableCircularList) {
-			if(!((PurchasableCircularList) field).isInMortgage()) {
+		for(PurchasableCircularList property : player.getProperties()) {
+			if(!property.isInMortgage()) {
 				options.add(22);
-			} else if(((PurchasableCircularList) field).getMortgage() <= player.getMoney()) {
+				break;
+			}
+		}
+		for(PurchasableCircularList property : player.getProperties()) {
+			if(property.isInMortgage()) {
 				options.add(23);
+				break;
 			}
 		}
 		options.add(3);
 		options.add(13);
 		return integerToInt(options);
+	}
+
+	//JAVADOC
+	private int[] buildMortageMenu(Player player, boolean take) {
+		ArrayList<Integer> options = new ArrayList<Integer>();
+		ArrayList<PurchasableCircularList> property = player.getProperties();
+		for(int i = 0; i < property.size(); i++) {
+			if(take) {
+				if(!property.get(i).isInMortgage()) {
+					options.add(i);
+				}
+			} else {
+				if(property.get(i).isInMortgage() && player.getMoney() >= property.get(i).getMortgage()) {
+					options.add(i);
+				}
+			}
+		}
+		options.add(-1);
+		return integerToInt(options);
+	}
+
+	//JAVADOC
+	private PurchasableCircularList showMortageMenu(Player player, int[] options, boolean take) {
+		int choice;
+		String menuOptions;
+		String[] menuArray = new String[options.length - 1];
+		ArrayList<PurchasableCircularList> property = player.getProperties();
+		if(take) {
+			System.out.println("Hypotek aufnehmen:");
+		} else {
+			System.out.println("Hypotek abbezahlen:");
+		}
+		for(int i = 0; i < menuArray.length; i++) {
+			if(options[i] != -1) {
+				menuArray[i] = propertyDetail(null, property.get(options[i]), i + 1);
+			}
+		}
+		menuOptions = joinDetailLines(menuArray);
+		menuOptions += "[" + options.length + "] Zurueck.\n";
+		println(menuOptions);
+		choice = in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1;
+		if(choice == options.length - 1) {
+			return null;
+		}
+		return property.get(options[choice]);
 	}
 
 	//JAVADOC
@@ -317,6 +366,7 @@ public class ConsoleMenu {
 	public int mainMenu(Player player, Vector<Player> playerVector, int turnState) {
 		boolean end = false;
 		int choice = 0;
+		PurchasableCircularList property;
 		System.out.println(getTurnDetails(player, turnState == 0));
 		while(!end) {
 			switch(choice) {
@@ -359,11 +409,17 @@ public class ConsoleMenu {
 					choice = 0;
 					break;
 				case 22: //Get Mortgage
-					((PurchasableCircularList) player.getField()).setInMortgage(true);
+					property = showMortageMenu(player, buildMortageMenu(player, true), true);
+					if(property != null) {
+						property.setInMortgage(true);
+					}
 					choice = 1;
 					break;
 				case 23: //Pay Mortgage
-					((PurchasableCircularList) player.getField()).setInMortgage(false);
+					property = showMortageMenu(player, buildMortageMenu(player, false), false);
+					if(property != null) {
+						property.setInMortgage(false);
+					}
 					choice = 1;
 					break;
 				case 30: //Pay to get out of jail
