@@ -160,7 +160,7 @@ public abstract class PurchasableCircularList extends FieldCircularList {
 	//TODO improve
 	@Override
 	public void action(Player player) {
-		if(owner != null) {
+		if(owner != null && !inMortgage) {
 			player.pay(getBill(player));
 			owner.addMoney(getBill(player));
 		}
