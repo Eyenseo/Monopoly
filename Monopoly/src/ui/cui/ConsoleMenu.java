@@ -155,7 +155,7 @@ public class ConsoleMenu {
 	//JAVADOC
 	//TODO probably improve
 	public void inJail() {
-		System.out.print("Sie sind im Gefaengnis!");
+		System.out.println("Sie sind im Gefaengnis!");
 	}
 
 	//JAVADOC
@@ -251,7 +251,7 @@ public class ConsoleMenu {
 					menuOptions += "[" + (i + 1) + "] Den Zug beenden.\n";
 					break;
 				case 12:
-					menuOptions += "[" + (i + 1) + "] Den naechsten Zug beginnen.\n";
+					menuOptions += "[" + (i + 1) + "] Erneut wuerfeln.\n";
 					break;
 				case 20:
 					menuOptions += "[" + (i + 1) + "] Anwesen kaufen.\n";
@@ -612,15 +612,14 @@ public class ConsoleMenu {
 		boolean end = false;
 		int choice = 0;
 		PurchasableCircularList property;
-		System.out.println(getTurnDetails(player, turnState == 0));
 		while(!end) {
 			switch(choice) {
 				case 0: //ShowActionMenu
-					getTurnDetails(player, turnState == 0);
+					System.out.println(getTurnDetails(player, turnState == 0));
 					choice = showActionMenu(player, turnState);
 					break;
 				case 1: //ShowOrganisationMenu
-					getTurnDetails(player, turnState == 0);
+					System.out.println(getTurnDetails(player, turnState == 0));
 					choice = showOrganisationMenu(player);
 					break;
 				case 2: //ViewProperty

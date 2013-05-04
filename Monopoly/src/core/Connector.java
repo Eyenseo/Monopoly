@@ -88,6 +88,8 @@ public class Connector {
 				connectTax((Tax) a, fieldArrayList, parking);
 			} else if(a instanceof GoToJail) {
 				connectGoToJail((GoToJail) a, fieldArrayList, jail);
+			} else if(a instanceof Jail) {
+				connectJail((Jail) a, fieldArrayList, parking);
 			}
 		}
 	}

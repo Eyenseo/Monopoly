@@ -31,6 +31,6 @@ public class Facility extends PurchasableCircularList {
 	 * @return The return value is the current income.
 	 */
 	public int getBill(Player player) {
-		return INCOME[stage] * player.getDices()[0] + player.getDices()[1];
+		return INCOME[stage] * (player.getDices()[0] + player.getDices()[1]);
 	}
 }

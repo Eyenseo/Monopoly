@@ -66,14 +66,15 @@ public class Monopoly {
 		int turnState = 0; // [0]Start of turn [1]After moving [2]End of Turn [3]Doubles turn [4] gameOver
 		while(turnState != 2 && !gameOver) {
 			turnState = menu.mainMenu(player, playerVector, turnState);
+			if(doublesTime == 3) {
+				player.setField(jail);
+				player.setInJail(true);
+				menu.inJail();
+				turnState = 2;
+			} else if(turnState == 3) {
+				doublesTime++;
+			}
 			gameOver = turnState == 4;
-		}
-		if(doublesTime == 3) {
-			player.setField(jail);
-			player.setInJail(true);
-			menu.inJail();
-		} else if(turnState == 3) {
-			nextTurn(player, doublesTime + 1);
 		}
 	}
 
