@@ -1,6 +1,8 @@
 package objects.card;
 //JAVADOC
 
+import objects.Player;
+
 /**
  * GoBack is the back card.
  *
@@ -16,5 +18,9 @@ public class GoBack extends Card {
 	public GoBack(String name, String text, int fields) {
 		super(name, text);
 		this.fields = fields;
+	}
+
+	public void action(Player player) {
+		player.move(fields, false);
 	}
 }
