@@ -174,7 +174,7 @@ public class Player {
 	 * @param by     The value determines the amount the Player shall go.
 	 * @param overGo The value determines if the Player will get the bonus of Go if he passed it.
 	 */
-	private void move(int by, boolean overGo) {
+	public void move(int by, boolean overGo) {
 		if(by > 0) {
 			if(field.getDiceNext(by) != null) {
 				field = field.getDiceNext(by);
