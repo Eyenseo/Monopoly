@@ -29,6 +29,7 @@ public class ConsoleMenu implements Menu {
 	 *
 	 * @return The return value is the the name of a Player.
 	 */
+	@Override
 	public String getName() {
 		String name;
 		println("Wie heissen Sie?");
@@ -45,6 +46,7 @@ public class ConsoleMenu implements Menu {
 	 *
 	 * @return The return value is the number of player that want to play the game.
 	 */
+	@Override
 	public int playerAmount() {
 		println("Wie viele Spieler werden spielnen?");
 		return in.readInt();
@@ -78,7 +80,7 @@ public class ConsoleMenu implements Menu {
 	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList objects.
 	 * @param property The value determines the PurchasableCircularList object of the group to be shown.
 	 */
-	public void groupDetails(Player player, PurchasableCircularList property) {
+	private void groupDetails(Player player, PurchasableCircularList property) {
 		System.out.println(propertiesDetails(player, property.getGroupMembers(), 0));
 	}
 
@@ -246,7 +248,7 @@ public class ConsoleMenu implements Menu {
 	 *
 	 * @param player The value determines the player who is currently at turn.
 	 */
-	public void playerPropertiesMenu(Player player) {
+	private void playerPropertiesMenu(Player player) {
 		int choice;
 		ArrayList<PurchasableCircularList> property = player.getProperties();
 		String menuOptions = "Sie haben " + player.getMoney() + " Geld.\n";
@@ -707,7 +709,7 @@ public class ConsoleMenu implements Menu {
 	 * @param buyer        The value determines the player who is the one to buy something.
 	 * @param playerVector The value determines the all playerVector
 	 */
-	public void tradeMenu(Player buyer, Vector<Player> playerVector) {
+	private void tradeMenu(Player buyer, Vector<Player> playerVector) {
 		int tradeState = 1;
 		Player seller = showPlayer(buyer, playerVector);
 		TradeManager tm = new TradeManager(buyer, seller);

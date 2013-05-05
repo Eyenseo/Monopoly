@@ -15,4 +15,10 @@ public interface Menu {
 
 	//JAVADOC
 	public int mainMenu(Player player, Vector<Player> playerVector, int turnState);
+
+	//JAVADOC
+	public int playerAmount();
+
+	//JAVADOC
+	public String getName();
 }
