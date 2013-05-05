@@ -1,5 +1,6 @@
 package objects.card;
 
+import objects.Player;
 import objects.map.FieldCircularList;
 //JAVADOC
 
@@ -45,5 +46,14 @@ public class GoTo extends Card {
 	 */
 	public void setGo(FieldCircularList field) {
 		go = field;
+	}
+
+	@Override
+	public void action(Player player) {
+		if(OVERGO && field.getFieldNumber() < player.getField().getFieldNumber()) {
+			go.action(player);
+		}
+		player.setField(field);
+		player.getField().action(player);
 	}
 }

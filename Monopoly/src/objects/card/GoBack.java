@@ -5,8 +5,6 @@ import objects.Player;
 
 /**
  * GoBack is the back card.
- *
- * @version 1
  */
 public class GoBack extends Card {
 	private int fields;
@@ -20,7 +18,9 @@ public class GoBack extends Card {
 		this.fields = fields;
 	}
 
+	@Override
 	public void action(Player player) {
 		player.move(fields, false);
+		player.getField().action(player);
 	}
 }
