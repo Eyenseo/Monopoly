@@ -67,6 +67,13 @@ public abstract class FieldCircularList {
 	}
 
 	/**
+	 * @return The return value is the previous FieldCircularList object in the circular list.
+	 */
+	public FieldCircularList getPrevious() {
+		return previous;
+	}
+
+	/**
 	 * @return The return value is the field number.
 	 */
 	public int getFieldNumber() {
