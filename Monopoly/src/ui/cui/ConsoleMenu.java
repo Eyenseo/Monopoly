@@ -1,6 +1,5 @@
 package ui.cui;
 
-import core.TradeManager;
 import objects.Player;
 import objects.card.Card;
 import objects.card.PayFineTakeCard;
@@ -10,6 +9,7 @@ import objects.map.purchasable.Facility;
 import objects.map.purchasable.PurchasableCircularList;
 import objects.map.purchasable.Street;
 import ui.Menu;
+import ui.TradeManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;
