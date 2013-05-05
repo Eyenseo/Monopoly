@@ -1,13 +1,15 @@
 package objects.card;
+//JAVADOC
 
 /**
  * GoToStation is a special_movement card.
- * A card is a trigger for a specific event defined in the gameplay mechanics
+ *
+ * @version 1
  */
 public class GoToStation extends Card {
 	/**
-	 * @param name Name of the card
-	 * @param text Text of the card
+	 * @param name The value determines the name of the Card.
+	 * @param text The value determines the text of the Card.
 	 */
 	public GoToStation(String name, String text) {
 		super(name, text);

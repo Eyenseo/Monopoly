@@ -12,7 +12,6 @@ import ui.cui.ConsoleMenu;
 
 import java.util.Vector;
 
-//JAVADOC
 public class MonoTest {
 	private final int     STARTMONEY = 50000;
 	private       boolean gameOver   = false;
@@ -22,7 +21,6 @@ public class MonoTest {
 	private Vector<Player> playerVector = new Vector<Player>();
 	private CardStack c;
 
-	//JAVADOC
 	MonoTest(ConsoleMenu menu) {
 		try {
 			MapArrayCreator mac = new MapArrayCreator();
@@ -43,13 +41,11 @@ public class MonoTest {
 		}
 	}
 
-	//JAVADOC
 	private void addPlayer(Player player) {
 		playerVector.add(player);
 		player.setField(go);
 	}
 
-	//JAVADOC
 	private void nextRound() {
 		for(Player player : playerVector) {
 			nextTurn(player);
@@ -59,12 +55,10 @@ public class MonoTest {
 		}
 	}
 
-	//JAVADOC
 	private void nextTurn(Player player) {
 		nextTurn(player, 0);
 	}
 
-	//JAVADOC
 	private void nextTurn(Player player, int doublesTime) {
 		int turnState = 0; // [0]Start of turn [1]After moving [2]End of Turn [3]Doubles turn [4] gameOver
 		while(turnState != 2 && !gameOver) {
@@ -80,7 +74,6 @@ public class MonoTest {
 		}
 	}
 
-	//JAVADOC
 	public boolean isGameOver() {
 		return gameOver;
 	}

@@ -53,9 +53,4 @@ public class Street extends PurchasableCircularList {
 		}
 		return compare[0].equals(compare[1]);
 	}
-
-	//JAVADOC
-	public int getUpgrade() {
-		return UPGRADE;
-	}
 }

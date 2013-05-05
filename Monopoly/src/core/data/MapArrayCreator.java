@@ -1,5 +1,6 @@
 package core.data;
 
+import objects.exceptions.data.ControlWordNotFoundException;
 import objects.exceptions.data.EndOfBlockException;
 import objects.exceptions.data.StorageReaderException;
 import objects.exceptions.data.map.*;
@@ -11,43 +12,52 @@ import objects.map.purchasable.Street;
 
 import java.util.Vector;
 
-//JAVADOC
+/**
+ * The MapArrayCreator creates FieldCircularList objects based on the data in the map.txt file located in the storage package.
+ *
+ * @author Eyenseo
+ * @version 1
+ * @see FieldCircularList
+ */
 public class MapArrayCreator extends StorageReader {
 	private FieldCircularList[] map;
 	private FieldCircularList   jail;
 	private FieldCircularList   go;
 
-	//TODO constructor with parameter with the Community-Queue and the Chance-Queue for the Community and Chance Fields
+	/**
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
 	public MapArrayCreator() throws StorageReaderException {
 		super("map.txt");
 		map = createMapArray();
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is an Array containing FieldCircularList objects.
+	 */
 	public FieldCircularList[] getMap() {
 		return map;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is a Jail object.
+	 */
 	public FieldCircularList getJail() {
 		return jail;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is a Go object.
+	 */
 	public FieldCircularList getGo() {
 		return go;
 	}
 
 	/**
-	 * @return The return value is the finished map. A FieldCircularList array with 40 length and different objects of the
-	 *         objects.value package.
+	 * @return The return value is an Array containing FieldCircularList objects.
 	 *
-	 * @throws objects.exceptions.data.map.MapArrayCreationException
-	 *          The Exception holds in its cause attribute the previous Exception and should be
-	 *          read out with getMessageStack.
-	 * @see StorageReaderException
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
-	//JAVADOC
 	private FieldCircularList[] createMapArray() throws StorageReaderException {
 		Vector<FieldCircularList> fieldVector = new Vector<FieldCircularList>();
 		FieldCircularList[] fieldArray;
@@ -61,14 +71,12 @@ public class MapArrayCreator extends StorageReader {
 	}
 
 	/**
-	 * @return The return value is the next FieldCircularList of the map.
+	 * @return The return value is the next FieldCircularList, if the end of the file is reached it returns null.
 	 *
-	 * @throws StorageReaderException The Exception holds in its cause attribute the previous Exception and should be
-	 *                                read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
-	//JAVADOC
 	private FieldCircularList nextField() throws StorageReaderException {
-		String line = nextControllWord();
+		String line = nextControlWord();
 		if(line != null) {
 			if(line.equals("#Street")) {
 				return createStreet();
@@ -100,21 +108,16 @@ public class MapArrayCreator extends StorageReader {
 			if(line.equals("#GoToJail")) {
 				return createGoToJail();
 			}
-			throw new FieldCreationException(line);
+			throw new ControlWordNotFoundException(line);
 		}
 		return null;
 	}
 
 	/**
-	 * This method connects the streets of the same color while creating them.
+	 * @return the return value is a Street Object based on the data in the file.
 	 *
-	 * @return The return value is a Street object based on the data in the storage package.
-	 *
-	 * @throws StreetCreationException The Exception holds in its cause attribute the previous Exception and should be
-	 *                                 read out with getMessageStack.
-	 * @see StorageReaderException
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
-	//JAVADOC
 	private Street createStreet() throws StorageReaderException {
 		String name = null;
 		try {
@@ -140,15 +143,10 @@ public class MapArrayCreator extends StorageReader {
 	}
 
 	/**
-	 * This method connects the new station with the other if other exist.
+	 * @return the return value is a Station Object based on the data in the file.
 	 *
-	 * @return The return value is a Station object based on the data in the storage package.
-	 *
-	 * @throws StationCreationException The Exception holds in its cause attribute the previous Exception and should be
-	 *                                  read out with getMessageStack.
-	 * @see StorageReaderException
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
-	//JAVADOC
 	private Station createStation() throws StorageReaderException {
 		String name = null;
 		try {
@@ -162,7 +160,6 @@ public class MapArrayCreator extends StorageReader {
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			//TODO get owner and stage from a save file
 			return new Station(name, price, income, mortgage);
 		} catch(Exception e) {
 			throw new StationCreationException(name, e);
@@ -170,16 +167,10 @@ public class MapArrayCreator extends StorageReader {
 	}
 
 	/**
-	 * This method connects the new facility with the other if other exist.
+	 * @return the return value is a Facility Object based on the data in the file.
 	 *
-	 * @return The return value is a Facility object based on the data in the storage package.
-	 *
-	 * @throws objects.exceptions.data.map.FacilityCreationException
-	 *          The Exception holds in its cause attribute the previous Exception and should
-	 *          be read out with getMessageStack.
-	 * @see StorageReaderException
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
-	//JAVADOC
 	private Facility createFacility() throws StorageReaderException {
 		String name = null;
 		try {
@@ -197,11 +188,9 @@ public class MapArrayCreator extends StorageReader {
 	}
 
 	/**
-	 * @return The return value is a Tax object based on the data in the storage package.
+	 * @return the return value is a Tax Object based on the data in the file.
 	 *
-	 * @throws TaxCreationException The Exception hold in its cause attribute the previous Exception and should be
-	 *                              read out with getMessageStack.
-	 * @see StorageReaderException
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
 	private Tax createTax() throws StorageReaderException {
 		String name = null;
@@ -218,9 +207,10 @@ public class MapArrayCreator extends StorageReader {
 	}
 
 	/**
-	 * @return The return value is a Chance object based on the data in the storage package.
+	 * @return the return value is a Chance Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
-	//JAVADOC
 	private Chance createChance() throws StorageReaderException {
 		String name = null;
 		try {
@@ -235,9 +225,10 @@ public class MapArrayCreator extends StorageReader {
 	}
 
 	/**
-	 * @return The return value is a Community object based on the data in the storage package.
+	 * @return the return value is a Community Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
-	//JAVADOC
 	private Community createCommunity() throws StorageReaderException {
 		String name = null;
 		try {
@@ -252,27 +243,29 @@ public class MapArrayCreator extends StorageReader {
 	}
 
 	/**
-	 * @return The return value is a Go object based on the data in the storage package.
+	 * @return the return value is a Go Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
-	//JAVADOC
 	private Go createGo() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
-			int turnmoney = nextInt();
+			int turnMoney = nextInt();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new Go(name, turnmoney);
+			return new Go(name, turnMoney);
 		} catch(Exception e) {
 			throw new GoCreationException(name, e);
 		}
 	}
 
 	/**
-	 * @return The return value is a Jail object based on the data in the storage package.
+	 * @return the return value is a Jail Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
-	//JAVADOC
 	private Jail createJail() throws StorageReaderException {
 		String name = null;
 		try {
@@ -287,9 +280,10 @@ public class MapArrayCreator extends StorageReader {
 	}
 
 	/**
-	 * @return The return value is a Parking object based on the data in the storage package.
+	 * @return the return value is a Parking Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
-	//JAVADOC
 	private Parking createParking() throws StorageReaderException {
 		String name = null;
 		try {
@@ -304,9 +298,10 @@ public class MapArrayCreator extends StorageReader {
 	}
 
 	/**
-	 * @return The return value is a GoToJail object based on the data in the storage package.
+	 * @return the return value is a GoToJail Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
-	//JAVADOC
 	private GoToJail createGoToJail() throws StorageReaderException {
 		String name = null;
 		try {

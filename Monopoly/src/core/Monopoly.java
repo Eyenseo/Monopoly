@@ -11,7 +11,12 @@ import ui.cui.ConsoleMenu;
 
 import java.util.Vector;
 
-//JAVADOC
+/**
+ * Monopoly is the main Class. It initialises the game and hold pieces of the mechanic.
+ *
+ * @author Eyenseo
+ * @version 1
+ */
 public class Monopoly {
 	private final int     STARTMONEY = 50000;
 	private       boolean gameOver   = false;
@@ -20,7 +25,7 @@ public class Monopoly {
 	private ConsoleMenu       menu;
 	private Vector<Player> playerVector = new Vector<Player>();
 
-	//JAVADOC
+	//TODO make a Menu Interface
 	Monopoly(ConsoleMenu menu) {
 		try {
 			MapArrayCreator mac = new MapArrayCreator();
@@ -40,13 +45,17 @@ public class Monopoly {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @param player The value determines the Player object to be added to the game.
+	 */
 	private void addPlayer(Player player) {
 		playerVector.add(player);
 		player.setField(go);
 	}
 
-	//JAVADOC
+	/**
+	 * The method executes the next round of the game.
+	 */
 	private void nextRound() {
 		for(Player player : playerVector) {
 			nextTurn(player);
@@ -56,12 +65,21 @@ public class Monopoly {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method executes the next turn of the game for the player.
+	 *
+	 * @param player The value determines the Player object of the turn.
+	 */
 	private void nextTurn(Player player) {
 		nextTurn(player, 0);
 	}
 
-	//JAVADOC
+	/**
+	 * The method executes the next turn of the game for the player.
+	 *
+	 * @param player      The value determines the Player object of the turn.
+	 * @param doublesTime The value determines the times doubles where thrown by the player.
+	 */
 	private void nextTurn(Player player, int doublesTime) {
 		int turnState = 0; // [0]Start of turn [1]After moving [2]End of Turn [3]Doubles turn [4] gameOver
 		while(turnState != 2 && !gameOver) {
@@ -78,7 +96,9 @@ public class Monopoly {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is true if the game is over and false if it's not.
+	 */
 	public boolean isGameOver() {
 		return gameOver;
 	}
@@ -86,11 +106,11 @@ public class Monopoly {
 	public static void main(String[] args) {
 		ConsoleMenu menu = new ConsoleMenu();
 		Monopoly m = new Monopoly(menu);
-		//		for(int i = menu.playerAmount(); i > 0; i--) {
-		//			m.addPlayer(menu.newHuman());
-		//		}
-		m.addPlayer(new Player("Julia", m.STARTMONEY));
-		m.addPlayer(new Player("Markus", m.STARTMONEY));
+		for(int i = menu.playerAmount(); i > 0; i--) {
+			m.addPlayer(new Player(menu.getName(), m.STARTMONEY));
+		}
+		//		m.addPlayer(new Player("Julia", m.STARTMONEY));
+		//		m.addPlayer(new Player("Markus", m.STARTMONEY));
 		while(!m.isGameOver()) {
 			m.nextRound();
 		}

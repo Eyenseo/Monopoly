@@ -13,9 +13,20 @@ import objects.map.purchasable.Street;
 import java.util.ArrayList;
 import java.util.Collections;
 
-//JAVADOC
+/**
+ * The Connector class connects the FieldCircularList objects and the CardStack objects.
+ *
+ * @author Eyenseo
+ * @version 1
+ */
 public class Connector {
-	//JAVADOC
+	/**
+	 * @param map       The value determines the Array of FieldCircularList objects that shall be connected.
+	 * @param chance    The value determines the CardStack which has the Card objects from the chance file.
+	 * @param community The value determines the CardStack which has the Card objects from the community file.
+	 * @throws NoInstanceException     The Exception is thrown if either no Jail, Parking, Go object exists.
+	 * @throws CardConnectionException The Exception is thrown if the Street for the GoTo Card is not found.
+	 */
 	public void connect(FieldCircularList[] map, CardStack chance, CardStack community)
 			throws NoInstanceException, CardConnectionException {
 		makeCircularFieldList(map);
@@ -25,7 +36,12 @@ public class Connector {
 		connectCards(community, map, community);
 	}
 
-	//JAVADOC
+	/**
+	 * The method connects the FieldCircularList objects with each other.
+	 *
+	 * @param map The value determines the Array of FieldCircularList objects that shall be connected.
+	 * @throws NoInstanceException The Exception is thrown if either no Jail, Parking, Go object exists.
+	 */
 	private void makeCircularFieldList(FieldCircularList[] map) throws NoInstanceException {
 		boolean jailField = false;
 		boolean parkingField = false;
@@ -50,14 +66,33 @@ public class Connector {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @param map The value determines the Array of FieldCircularList objects that shall be connected.
+	 * @return The return value is a ArrayList with all elements of the map parameter.
+	 */
 	private ArrayList<FieldCircularList> arrayToArrayList(FieldCircularList[] map) {
 		ArrayList<FieldCircularList> fieldArrayList = new ArrayList<FieldCircularList>();
 		Collections.addAll(fieldArrayList, map);
 		return fieldArrayList;
 	}
 
-	//JAVADOC
+	/**
+	 * The method connects the
+	 * <ul>
+	 * <li>Street objects of one color</li>
+	 * <li>Station objects</li>
+	 * <li>Facility objects</li>
+	 * <li>Chance objects with the chance CardStack</li>
+	 * <li>Community objects with the community CardStack</li>
+	 * <li>Tax objects with Parking object</li>
+	 * <li>GoToJail objects with Jail object</li>
+	 * <li>Jail object with Parking object</li>
+	 * </ul>
+	 *
+	 * @param fieldArrayList The value determines the ArrayList of FieldCircularList objects that shall be connected.
+	 * @param chance         The value determines the CardStack which has the Card objects from the chance file.
+	 * @param community      The value determines the CardStack which has the Card objects from the community file.
+	 */
 	private void connectMatching(ArrayList<FieldCircularList> fieldArrayList, CardStack chance, CardStack community) {
 		FieldCircularList a;
 		Parking parking = null;
@@ -94,7 +129,12 @@ public class Connector {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method connects all Street objects of the same color.
+	 *
+	 * @param street         The value determines the Street object to check against and connect with.
+	 * @param fieldArrayList The value determines the FieldCircularList objects to check.
+	 */
 	private void makeCircularStreetList(Street street, ArrayList<FieldCircularList> fieldArrayList) {
 		for(int i = 0; i < fieldArrayList.size(); i++) {
 			if(fieldArrayList.get(i) instanceof Street && ((Street) fieldArrayList.get(i)).isSameColor(street)) {
@@ -105,7 +145,12 @@ public class Connector {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method connects all Station objects.
+	 *
+	 * @param station        The value determines the Station object to check against and connect with.
+	 * @param fieldArrayList The value determines the FieldCircularList objects to check.
+	 */
 	private void makeCircularStationList(Station station, ArrayList<FieldCircularList> fieldArrayList) {
 		for(int i = 0; i < fieldArrayList.size(); i++) {
 			if(fieldArrayList.get(i) instanceof Station) {
@@ -116,7 +161,12 @@ public class Connector {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method connects all Facility objects.
+	 *
+	 * @param facility       The value determines the Facility object to check against and connect with.
+	 * @param fieldArrayList The value determines the FieldCircularList objects to check.
+	 */
 	private void makeCircularFacilityList(Facility facility, ArrayList<FieldCircularList> fieldArrayList) {
 		for(int i = 0; i < fieldArrayList.size(); i++) {
 			if(fieldArrayList.get(i) instanceof Facility) {
@@ -127,7 +177,12 @@ public class Connector {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method connects Tax objects with the Parking object.
+	 *
+	 * @param tax            The value determines the Tax object to check against and connect.
+	 * @param fieldArrayList The value determines the FieldCircularList objects to check.
+	 */
 	private void connectTax(Tax tax, ArrayList<FieldCircularList> fieldArrayList, Parking parking) {
 		if(parking == null) {
 			for(FieldCircularList next : fieldArrayList) {
@@ -141,7 +196,12 @@ public class Connector {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method connects Jail objects with the Parking object.
+	 *
+	 * @param jail           The value determines the Jail object to check against and connect.
+	 * @param fieldArrayList The value determines the FieldCircularList objects to check.
+	 */
 	private void connectJail(Jail jail, ArrayList<FieldCircularList> fieldArrayList, Parking parking) {
 		if(parking == null) {
 			for(FieldCircularList next : fieldArrayList) {
@@ -155,7 +215,12 @@ public class Connector {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method connects GoToJail objects with the Jail object.
+	 *
+	 * @param goToJail       The value determines the GoToJail object to check against and connect.
+	 * @param fieldArrayList The value determines the FieldCircularList objects to check.
+	 */
 	private void connectGoToJail(GoToJail goToJail, ArrayList<FieldCircularList> fieldArrayList, Jail jail) {
 		if(jail == null) {
 			for(FieldCircularList aFieldArrayList : fieldArrayList) {
@@ -169,7 +234,11 @@ public class Connector {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method sets the diceArray for the FieldCircularList objects. The array is for the next second to twelves FieldCircularList object after this.
+	 *
+	 * @param map The value determines the FieldCircularList objects set the array for.
+	 */
 	private void setDiceArray(FieldCircularList[] map) {
 		int index;
 		FieldCircularList[] diceArray;
@@ -186,7 +255,12 @@ public class Connector {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @param current   The value determines the current CardStack.
+	 * @param map       The value determines the FieldCircularList objects to check.
+	 * @param community The value determines the community CardStack.
+	 * @throws CardConnectionException The Exception is thrown if the Street for the GoTo Card is not found.
+	 */
 	private void connectCards(CardStack current, FieldCircularList[] map, CardStack community)
 			throws CardConnectionException {
 		boolean found;

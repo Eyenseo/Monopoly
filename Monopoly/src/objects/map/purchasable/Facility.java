@@ -6,7 +6,7 @@ import objects.Player;
  * The structure of Facility is a circular list of all Facility objects.
  *
  * @author Eyenseo
- * @version 0.1
+ * @version 1
  */
 public class Facility extends PurchasableCircularList {
 
@@ -19,8 +19,6 @@ public class Facility extends PurchasableCircularList {
 	 *                 <li>Water Work <b>and</b> Electric Company</li>
 	 *                 </ol>
 	 * @param mortgage The value determines the amount of the mortgage.
-	 * @param stage    The value determines the stage the income is at.
-	 * @param owner    The value determines the owner.
 	 */
 	public Facility(String name, int price, int[] income, int mortgage) {
 		super(name, price, income, mortgage);

@@ -9,7 +9,12 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
-//JAVADOC
+/**
+ * The Player class represents the player.
+ *
+ * @author Eyenseo
+ * @version 1
+ */
 public class Player {
 	private final String            NAME;
 	private       boolean           inJail;
@@ -21,7 +26,10 @@ public class Player {
 	private ArrayList<PurchasableCircularList> property        = new ArrayList<PurchasableCircularList>();
 	//TODO have only one Random Generator for all Player
 
-	//JAVADOC
+	/**
+	 * @param name  The value determines the name of the Player.
+	 * @param money The value determines the amount of money the Player has.
+	 */
 	public Player(String name, int money) {
 		this.NAME = name;
 		this.money = money;
@@ -29,88 +37,127 @@ public class Player {
 		dices = new int[2];
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the name of the Player.
+	 */
 	public String getName() {
 		return this.NAME;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is true if the player is in jail else false.
+	 */
 	public boolean isInJail() {
 		return this.inJail;
 	}
 
-	//JAVADOC
+	/**
+	 * @param inJail The value determines the state of the player (true) in Jail.
+	 */
 	public void setInJail(boolean inJail) {
 		this.inJail = inJail;
 	}
 
-	//JAVADOC
+	/**
+	 * The method removes the money for the PurchasableCircularList object and stets the owner of it.
+	 *
+	 * @param purchasable The value determines the PurchasableCircularList object, that is being brought.
+	 */
 	public void buy(PurchasableCircularList purchasable) {
 		this.money -= purchasable.getPrice();
 		purchasable.setOwner(this);
 	}
 
-	//JAVADOC
+	/**
+	 * @param purchasable The value determines the PurchasableCircularList object that will be owned by this Player.
+	 */
 	public void setOwnship(PurchasableCircularList purchasable) {
 		purchasable.setOwner(this);
 	}
 
-	//JAVADOC
+	/**
+	 * @param purchasable The value determines the PurchasableCircularList object the property that will be added to the player.
+	 */
 	public void addProperty(PurchasableCircularList purchasable) {
 		this.property.add(purchasable);
 	}
 
-	//JAVADOC
+	/**
+	 * @param purchasable The value determines the PurchasableCircularList object the property that will be removed to the player.
+	 */
 	public void removeProperty(PurchasableCircularList purchasable) {
 		this.property.remove(purchasable);
 	}
 
-	//JAVADOC
+	/**
+	 * @param amount The value determines the
+	 */
 	public void addMoney(int amount) {
 		this.money += amount;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the money amount the Player has.
+	 */
 	public int getMoney() {
 		return this.money;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the array with the last dices.
+	 */
 	public int[] getDices() {
 		return this.dices;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is true if the player has a Jailbait Card.
+	 */
 	public boolean isJailbait() {
 		return !jailbait.isEmpty();
 	}
 
-	//JAVADOC
+	/**
+	 * @param amount The value determines the money to be removed from the player.
+	 */
 	public void pay(int amount) {
 		this.money -= amount;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the FieldCircularList object the player is standing on.
+	 */
 	public FieldCircularList getField() {
 		return this.field;
 	}
 
-	//JAVADOC
+	/**
+	 * @param field The value determines the new FieldCircularList object the player is standing on.
+	 */
 	public void setField(FieldCircularList field) {
 		this.field = field;
 	}
 
-	//JAVADOC
+	/**
+	 * @param jailbait The value determines a Jailbait car to be added to the Player.
+	 */
 	public void addJailbait(Jailbait jailbait) {
 		this.jailbait.add(jailbait);
 	}
 
+	/**
+	 * The method removes a jailbait Card from the Player and adds it back to its CardStack and sets teh player free.
+	 */
 	public void useJailbait() {
 		jailbait.firstElement().freePlayer(this);
 		jailbait.remove(jailbait.firstElement());
 	}
 
-	//JAVADOC
+	/**
+	 * The method moves the Player to the new Field.
+	 *
+	 * @return The return value is true is the Player got doubles.
+	 */
 	public boolean move() {
 		throwDice();
 		boolean doubles = dices[0] == dices[1];
@@ -121,7 +168,12 @@ public class Player {
 		return doubles;
 	}
 
-	//JAVADOC
+	/**
+	 * The method moves the Player to the new Field.
+	 *
+	 * @param by     The value determines the amount the Player shall go.
+	 * @param overGo The value determines if the Player will get the bonus of Go if he passed it.
+	 */
 	private void move(int by, boolean overGo) {
 		if(field.getDiceNext(by) != null) {
 			field = field.getDiceNext(by);
@@ -135,14 +187,18 @@ public class Player {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is a array with two random numbers between 1 and 6.
+	 */
 	public int[] throwDice() {
 		dices[0] = randomGenerator.nextInt(6) + 1;
 		dices[1] = randomGenerator.nextInt(6) + 1;
 		return dices;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is a ArrayList of the properties from the player.
+	 */
 	public ArrayList<PurchasableCircularList> getProperties() {
 		return property;
 	}

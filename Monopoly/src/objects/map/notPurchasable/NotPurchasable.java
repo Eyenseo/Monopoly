@@ -6,7 +6,7 @@ import objects.map.FieldCircularList;
  * The NotPurchasable class is the superclass of all fields that are not purchasable.
  *
  * @author Eyenseo
- * @version 0.1
+ * @version 1
  */
 abstract class NotPurchasable extends FieldCircularList {
 	/**

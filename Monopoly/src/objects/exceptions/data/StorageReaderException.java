@@ -58,7 +58,6 @@ public class StorageReaderException extends Exception {
 	 */
 	private String getCauseMessage(StorageReaderException cause) {
 		String message = null;
-		//if(cause.getCause() != null && cause.getCause() instanceof StorageReaderException) {
 		if(cause.getCause() != null) {
 			message = cause.getMessage() + '\n';
 			message += cause.getCauseMessage((StorageReaderException) cause.getCause());

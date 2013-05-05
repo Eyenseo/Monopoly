@@ -13,7 +13,7 @@ public class MapArrayCreationException extends StorageReaderException {
 	String message = "";
 
 	/**
-	 * The message will hold the last two Fileds that were created successfully if possible.
+	 * The message will hold the last two FieldCircularList object names that were created successfully if possible.
 	 *
 	 * @param map   The value determines field array that represents the map.
 	 * @param cause The value determines the previous Exception.

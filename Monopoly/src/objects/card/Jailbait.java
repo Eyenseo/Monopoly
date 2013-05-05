@@ -1,33 +1,40 @@
 package objects.card;
 
 import objects.Player;
+//JAVADOC
 
 /**
  * Jailbait is the jailbait card.
- * A card is a trigger for a specific event defined in the gameplay mechanics
+ *
+ * @version 0.1
  */
 public class Jailbait extends Card {
 	private CardStack cardStack;
 
 	/**
-	 * @param name Name of the card
-	 * @param text Text of the card
+	 * @param name The value determines the name of the Card.
+	 * @param text The value determines the text of the Card.
 	 */
 	public Jailbait(String name, String text) {
 		super(name, text);
 	}
 
-	//JAVADOC
+	/**
+	 * @param cardStack The value determines the CardStack of this Card.
+	 */
 	public void setCardStack(CardStack cardStack) {
 		this.cardStack = cardStack;
 	}
 
-	//JAVADOC
+	/**
+	 * @param player The value determines the Player object which is to be freed from Jail.
+	 */
 	public void freePlayer(Player player) {
 		cardStack.addCard(this, index);
 		player.setInJail(false);
 	}
 
+	//JAVADOC
 	@Override
 	public void action(Player player) {
 		player.addJailbait(this);

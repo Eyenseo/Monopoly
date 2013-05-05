@@ -21,10 +21,11 @@ abstract class StorageReader {
 
 	/**
 	 * @param file The value determines which file will be loaded.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
 	StorageReader(String file) throws StorageReaderException {
 		try {
-			//TODO Path may be different if run as package.
+			//TODO Path is different if run as package.
 			this.file = new BufferedReader(new FileReader(path + file));
 			this.path += file;
 		} catch(FileNotFoundException e) {
@@ -35,11 +36,7 @@ abstract class StorageReader {
 	/**
 	 * @return The return value is the next valid line as int.
 	 *
-	 * @throws StorageReaderException The Exception holds in its cause attribute the previous Exception and should be
-	 *                                read out with getMessageStack.
-	 * @throws EndOfFileException     The Exception holds the path to the file ended unexpected.
-	 * @throws EndOfBlockException    The Exception holds the path to the file were the end of block statement was
-	 *                                missing.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
 	int nextInt() throws StorageReaderException {
 		String line = nextString();
@@ -53,11 +50,7 @@ abstract class StorageReader {
 	/**
 	 * @return The return value is the next valid line as String.
 	 *
-	 * @throws StorageReaderException The Exception holds in its cause attribute the previous Exception and should be
-	 *                                read out with getMessageStack.
-	 * @throws EndOfFileException     The Exception holds the path to the file ended unexpected.
-	 * @throws EndOfBlockException    The Exception holds the path to the file were the end of block statement was
-	 *                                missing.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
 	String nextString() throws StorageReaderException {
 		try {
@@ -77,8 +70,12 @@ abstract class StorageReader {
 		}
 	}
 
-	//JAVADOC
-	String nextControllWord() throws StorageReaderException {
+	/**
+	 * @return The return value is the next valid control word as String.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
+	String nextControlWord() throws StorageReaderException {
 		try {
 			String line = file.readLine();
 			while(line != null && (isCommentString(line) || !isControlWord(line))) {
@@ -94,8 +91,6 @@ abstract class StorageReader {
 	}
 
 	/**
-	 * The Method checks if the the String is a comment.
-	 *
 	 * @param line The value determines the String to be checked
 	 * @return The return value is true if the String is a comment.
 	 */
@@ -104,11 +99,9 @@ abstract class StorageReader {
 	}
 
 	/**
-	 * @return The return value is the next valid line as String.
+	 * @return The return value is true if the next line is the end of a data block.
 	 *
-	 * @throws StorageReaderException The Exception holds in its cause attribute the previous Exception and should be
-	 *                                read out with getMessageStack.
-	 * @throws EndOfFileException     The Exception holds the path to the file ended unexpected.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
 	boolean isEndOfBlock() throws StorageReaderException {
 		try {
@@ -126,18 +119,14 @@ abstract class StorageReader {
 	}
 
 	/**
-	 * The Method checks if the next line is the end statement of a data block.
-	 *
 	 * @param line The value determines the String to be checked
-	 * @return The return value is true if the String represents the end statement of a data block.
+	 * @return The return value is true if the next line is the end of a data block.
 	 */
 	boolean isEndOfBlock(String line) {
 		return line != null && (line.length() >= 2 && (line.charAt(0) == '#' && line.charAt(1) == '!'));
 	}
 
 	/**
-	 * The Method checks if the the String is a control word.
-	 *
 	 * @param line The value determines the String to be checked
 	 * @return The return value is true if the String is a control word.
 	 */

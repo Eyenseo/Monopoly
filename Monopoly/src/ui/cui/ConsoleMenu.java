@@ -12,12 +12,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 
-//JAVADOC
+/**
+ * The ConsoleMenu class provides all interaction with the Human over the console.
+ *
+ * @author Eyenseo
+ * @version 1
+ */
 public class ConsoleMenu {
 	private final Input in = new Input();
 
-	//JAVADOC
-	private String getName() {
+	/**
+	 * The method asks the human for a name of a Player.
+	 *
+	 * @return The return value is the the name of a Player.
+	 */
+	public String getName() {
 		String name;
 		println("Wie heissen Sie?");
 		name = in.readString();
@@ -28,18 +37,29 @@ public class ConsoleMenu {
 		return name;
 	}
 
-	//JAVADOC
+	/**
+	 * The method asks the human how many player will play the game.
+	 *
+	 * @return The return value is the number of player that want to play the game.
+	 */
 	public int playerAmount() {
 		println("Wie viele Spieler werden spielnen?");
 		return in.readInt();
 	}
 
-	//JAVADOC
+	/**
+	 * The method prints the String in a way that the Human will input something.
+	 *
+	 * @param text The value determines the text to be printed on the screen.
+	 */
 	private void println(String text) {
 		System.out.print("\n" + text + "\n> ");
 	}
 
-	//JAVADOC
+	/**
+	 * @param integers The value determines an ArrayList that will be converted to an Array.
+	 * @return The return value is the converted ArrayList.
+	 */
 	private int[] integerToInt(ArrayList<Integer> integers) {
 		int[] re = new int[integers.size()];
 		Iterator<Integer> iterator = integers.iterator();
@@ -49,16 +69,26 @@ public class ConsoleMenu {
 		return re;
 	}
 
-	//JAVADOC
+	/**
+	 * The method prints the Details of the group members without index.
+	 *
+	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList objects.
+	 * @param property The value determines the PurchasableCircularList object of the group to be shown.
+	 */
 	public void groupDetails(Player player, PurchasableCircularList property) {
 		System.out.println(propertiesDetails(player, property.getGroupMembers(), 0));
 	}
 
-	//JAVADOC
-	private String propertiesDetails(Player player, ArrayList<PurchasableCircularList> properties, int index) {
-		String[] details = new String[properties.size()];
+	/**
+	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList objects.
+	 * @param property The value determines the PurchasableCircularList object of the group to be shown.
+	 * @param index    The value determines the start index to be shown.
+	 * @return The return value is a, in two column arranged String of the propertyDetail method.
+	 */
+	private String propertiesDetails(Player player, ArrayList<PurchasableCircularList> property, int index) {
+		String[] details = new String[property.size()];
 		for(int i = 0; i < details.length; i++) {
-			details[i] = propertyDetail(player, properties.get(i), index);
+			details[i] = propertyDetail(player, property.get(i), index);
 			if(index != 0) {
 				index++;
 			}
@@ -66,7 +96,12 @@ public class ConsoleMenu {
 		return joinDetailLines(details);
 	}
 
-	//JAVADOC
+	/**
+	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList objects.
+	 * @param property The value determines the PurchasableCircularList object of the group to be shown.
+	 * @param index    The value determines the start index to be shown.
+	 * @return The return value is a box with all information about a PurchasableCircularList object.
+	 */
 	private String propertyDetail(Player player, PurchasableCircularList property, int index) {
 		int stage = property.getStage();
 		String detail = "-----------------------------------------------";
@@ -112,7 +147,10 @@ public class ConsoleMenu {
 		return detail + "\n-----------------------------------------------\n";
 	}
 
-	//JAVADOC
+	/**
+	 * @param line The value determines the String that will be encased by '\n|' and '|'.
+	 * @return The return value is the encased string
+	 */
 	private String detailLine(String line) {
 		String box = "\n|";
 		box += line;
@@ -122,7 +160,10 @@ public class ConsoleMenu {
 		return box + "|";
 	}
 
-	//JAVADOC
+	/**
+	 * @param details The value determines the String of the propertyDetail method to be rearranged.
+	 * @return The return value is the, to two columns rearranged String.
+	 */
 	private String joinDetailLines(String[] details) {
 		String print = "";
 		String[] one;
@@ -147,18 +188,28 @@ public class ConsoleMenu {
 		return print;
 	}
 
-	//JAVADOC
+	/**
+	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList objects.
+	 * @param property The value determines the PurchasableCircularList object of the group to be shown.
+	 * @return The return value is a box with all information about a PurchasableCircularList object.
+	 */
 	private String propertyDetail(Player player, PurchasableCircularList property) {
 		return propertyDetail(player, property, 0);
 	}
 
-	//JAVADOC
+	/**
+	 * Prints "Sie sind im Gefaengnis!"
+	 */
 	//TODO probably improve
 	public void inJail() {
 		System.out.println("Sie sind im Gefaengnis!");
 	}
 
-	//JAVADOC
+	/**
+	 * @param player      The value determines the player of whom the information shall be shown.
+	 * @param beginOfTurn The value determines if it is the begin of the turn.
+	 * @return The return value is a String with all information about the turn.
+	 */
 	private String getTurnDetails(Player player, boolean beginOfTurn) {
 		String turnDetails = "";
 		FieldCircularList field = player.getField();
@@ -186,7 +237,11 @@ public class ConsoleMenu {
 		return turnDetails;
 	}
 
-	//JAVADOC
+	/**
+	 * The method prints the Menu for the Player properties.
+	 *
+	 * @param player The value determines the player who is currently at turn.
+	 */
 	public void playerPropertiesMenu(Player player) {
 		int choice;
 		ArrayList<PurchasableCircularList> property = player.getProperties();
@@ -201,7 +256,11 @@ public class ConsoleMenu {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @param player    The value determines the player who is currently at turn.
+	 * @param turnState The value determines the turn state.
+	 * @return The return value is a Array - the index is the Menu point that the human has to enter, the value is the method number to be started.
+	 */
 	private int[] buildActionMenu(Player player, int turnState) {
 		FieldCircularList field = player.getField();
 		ArrayList<Integer> options = new ArrayList<Integer>();
@@ -235,7 +294,13 @@ public class ConsoleMenu {
 		return integerToInt(options);
 	}
 
-	//JAVADOC
+	/**
+	 * The method asks what the player wants to do.
+	 *
+	 * @param player    The value determines the player who is currently at turn.
+	 * @param turnState The value determines the turn state.
+	 * @return The return value is the number of which method shall be executed.
+	 */
 	private int showActionMenu(Player player, int turnState) {
 		int[] options = buildActionMenu(player, turnState);
 		String menuOptions = "";
@@ -271,7 +336,10 @@ public class ConsoleMenu {
 		return options[in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1];
 	}
 
-	//JAVADOC
+	/**
+	 * @param player The value determines the player who is currently at turn.
+	 * @return The return value is a Array - the index is the Menu point that the human has to enter, the value is the method number to be started.
+	 */
 	private int[] buildOrganisationMenu(Player player) {
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		options.add(0);
@@ -293,7 +361,12 @@ public class ConsoleMenu {
 		return integerToInt(options);
 	}
 
-	//JAVADOC
+	/**
+	 * The method asks what the player wants to do.
+	 *
+	 * @param player The value determines the player who is currently at turn.
+	 * @return The return value is the number of which method shall be executed.
+	 */
 	private int showOrganisationMenu(Player player) {
 		int choice;
 		int[] options = buildOrganisationMenu(player);
@@ -331,7 +404,11 @@ public class ConsoleMenu {
 		return options[choice];
 	}
 
-	//JAVADOC
+	/**
+	 * @param player The value determines the player who is currently at turn.
+	 * @param take   The value determines if it's a menu to take mortgage or to remove mortgage.
+	 * @return The return value is the number of which method shall be executed.
+	 */
 	private int[] buildMortageMenu(Player player, boolean take) {
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		ArrayList<PurchasableCircularList> property = player.getProperties();
@@ -350,7 +427,13 @@ public class ConsoleMenu {
 		return integerToInt(options);
 	}
 
-	//JAVADOC
+	/**
+	 * The method asks the human which PurchasableCircularList that shall be added or removed from mortgage
+	 *
+	 * @param player The value determines the player who is currently at turn.
+	 * @param take   The value determines if it's a menu to take mortgage or to remove mortgage.
+	 * @return The return value is the PurchasableCircularList that will be added or removed from mortgage.
+	 */
 	private PurchasableCircularList showMortageMenu(Player player, boolean take) {
 		int choice;
 		int[] options = buildMortageMenu(player, take);
@@ -377,7 +460,13 @@ public class ConsoleMenu {
 		return property.get(options[choice]);
 	}
 
-	//JAVADOC
+	/**
+	 * The method asks the human to select a Player to trade with.
+	 *
+	 * @param currentPlayer The value determines the player who is currently at turn.
+	 * @param playerVector  The value determines a Vector of all player.
+	 * @return The return value is the selected Player object.
+	 */
 	private Player showPlayer(Player currentPlayer, Vector<Player> playerVector) {
 		int index = 0;
 		int choice;
@@ -394,7 +483,13 @@ public class ConsoleMenu {
 		return playerVector.get(options[choice]);
 	}
 
-	//JAVADOC
+	/**
+	 * The method shows the Human what the trade looks like.
+	 *
+	 * @param tm            The value determines the used TradeManager.
+	 * @param currentPlayer The value determines the player who is currently at turn.
+	 * @param counterPlayer The value determines the player who is not currently at turn.
+	 */
 	private void showTrade(TradeManager tm, Player currentPlayer, Player counterPlayer) {
 		String temp = "";
 		String show = "Sie bekommen:\n";
@@ -425,7 +520,12 @@ public class ConsoleMenu {
 		System.out.println(show);
 	}
 
-	//JAVADOC
+	/**
+	 * @param tm     The value determines the used TradeManager.
+	 * @param player The value determines the player who is currently at turn.
+	 * @param remove The value determines if the player wants to remove or add a PurchasableCircularList object.
+	 * @return The return value is the number of which method shall be executed.
+	 */
 	private int[] buildSelectProperty(TradeManager tm, Player player, boolean remove) {
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		ArrayList<PurchasableCircularList> property = player.getProperties();
@@ -444,7 +544,14 @@ public class ConsoleMenu {
 		return integerToInt(options);
 	}
 
-	//JAVADOC
+	/**
+	 * The method asks what the player wants to do.
+	 *
+	 * @param tm     The value determines the used TradeManager.
+	 * @param player The value determines the player who is currently at turn.
+	 * @param remove The value determines if the player wants to remove or add a PurchasableCircularList object.
+	 * @return The return value is the selected PurchasableCircularList object or null.
+	 */
 	private PurchasableCircularList showSelectProperty(TradeManager tm, Player player, boolean remove) {
 		int choice;
 		int[] options = buildSelectProperty(tm, player, remove);
@@ -466,7 +573,11 @@ public class ConsoleMenu {
 		return property.get(options[choice]);
 	}
 
-	//JAVADOC
+	/**
+	 * @param seller  The value determines if the menu is for the seller
+	 * @param confirm The value determines if the menu is only to confirm the trade.
+	 * @return The return value is the number of which method shall be executed.
+	 */
 	private int[] buildHaggleMenu(boolean seller, boolean confirm) {
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		options.add(1);
@@ -488,7 +599,13 @@ public class ConsoleMenu {
 		return integerToInt(options);
 	}
 
-	//JAVADOC
+	/**
+	 * The method asks what the player wants to do.
+	 *
+	 * @param seller  The value determines if the menu is for the seller
+	 * @param confirm The value determines if the menu is only to confirm the trade.
+	 * @return The return value is the number of which method shall be executed.
+	 */
 	private int showHaggleMenu(boolean seller, boolean confirm) {
 		int[] options = buildHaggleMenu(seller, confirm);
 		String menuOptions = "";
@@ -504,7 +621,7 @@ public class ConsoleMenu {
 					menuOptions += "[" + (i + 1) + "] Setze Preis vom Handel.\n";
 					break;
 				case 4:
-					menuOptions += "[" + (i + 1) + "] Handel abschließen.\n";
+					menuOptions += "[" + (i + 1) + "] Handel abschliessen.\n";
 					break;
 				case 5:
 					menuOptions += "[" + (i + 1) + "] Handel erbitten.\n";
@@ -526,8 +643,14 @@ public class ConsoleMenu {
 		return options[in.userInt(1, options.length, "Bitte waehlen Sie eine der Optionen aus:\n" + menuOptions) - 1];
 	}
 
-	//JAVADOC
-	//TODO Improver parameter
+	/**
+	 * @param tm            The value determines the used TradeManager.
+	 * @param currentPlayer The value determines the player who is currently at turn.
+	 * @param counterPlayer The value determines the player who is not currently at turn.
+	 * @param choice        The value determines the choice the player made.
+	 * @param tradeState    The value determines the trade state.
+	 * @return The return value is the updated trade state.
+	 */
 	private int haggleMenu(TradeManager tm, Player currentPlayer, Player counterPlayer, int choice, int tradeState) {
 		PurchasableCircularList property;
 		switch(choice) {
@@ -574,10 +697,15 @@ public class ConsoleMenu {
 		return tradeState;
 	}
 
-	//JAVADOC
-	public void tradeMenu(Player buyer, Vector<Player> players) {
+	/**
+	 * The method starts the trade.
+	 *
+	 * @param buyer        The value determines the player who is the one to buy something.
+	 * @param playerVector The value determines the all playerVector
+	 */
+	public void tradeMenu(Player buyer, Vector<Player> playerVector) {
 		int tradeState = 1;
-		Player seller = showPlayer(buyer, players);
+		Player seller = showPlayer(buyer, playerVector);
 		TradeManager tm = new TradeManager(buyer, seller);
 		while(tradeState != 0) {
 			System.out.println(buyer.getName() + " waehlen Sie:");
@@ -607,7 +735,12 @@ public class ConsoleMenu {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @param player       The value determines the player who is currently at active.
+	 * @param playerVector The value determines the all playerVector
+	 * @param turnState    The value determines the current turn state.
+	 * @return The return value is updated turn state.
+	 */
 	public int mainMenu(Player player, Vector<Player> playerVector, int turnState) {
 		boolean end = false;
 		int choice = 0;

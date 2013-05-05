@@ -1,8 +1,10 @@
 package objects.card;
+//JAVADOC
 
 /**
  * PayFineTakeCard is special card (pay fine or draw a card).
- * A card is a trigger for a specific event defined in the gameplay mechanics
+ *
+ * @version 1
  */
 public class PayFineTakeCard extends Card {
 	CardStack community;
@@ -15,12 +17,16 @@ public class PayFineTakeCard extends Card {
 		super(name, text);
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the community CardStack.
+	 */
 	public CardStack getCommunity() {
 		return community;
 	}
 
-	//JAVADOC
+	/**
+	 * @param community The value determines the community Card Stack.
+	 */
 	public void setCommunity(CardStack community) {
 		this.community = community;
 	}

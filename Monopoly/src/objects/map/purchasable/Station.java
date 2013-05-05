@@ -18,16 +18,15 @@ public class Station extends PurchasableCircularList {
 	 *                 <li>4 Stations</li>
 	 *                 </ol>
 	 * @param mortgage The value determines the amount of the mortgage.
-	 * @param stage    The value determines the stage the income is at.
-	 * @param owner    The value determines the owner.
 	 */
 	public Station(String name, int price, int[] income, int mortgage) {
 		super(name, price, income, mortgage);
 	}
 
-	@Override
-		//JAVADOC
-	void sameOwnerCheck() {
+	/**
+	 * This method checks if all group members are owned by the same owner. If they are the stage is increased.
+	 */
+	@Override void sameOwnerCheck() {
 		int index = 0;
 		PurchasableCircularList next = this.nextGroupElement;
 		while(!next.equals(this)) {

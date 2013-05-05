@@ -3,7 +3,12 @@ package ui.cui;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-//JAVADOC
+/**
+ * The Input class is responsible for the interaction with the Human.
+ *
+ * @author Eyenseo
+ * @version 1
+ */
 public class Input {
 	private BufferedReader bReader;
 	private String         input;
@@ -12,7 +17,9 @@ public class Input {
 		bReader = new BufferedReader(new InputStreamReader(System.in));
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the next line from the console.
+	 */
 	String readString() {
 		try {
 			input = bReader.readLine();
@@ -30,7 +37,9 @@ public class Input {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the next char from the console.
+	 */
 	char readChar() {
 		input = readString();
 		if(input.length() == 1) {
@@ -43,7 +52,9 @@ public class Input {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the next int from the console.
+	 */
 	int readInt() {
 		try {
 			input = readString();
@@ -54,7 +65,11 @@ public class Input {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @param input   The value determines the char that will e checked.
+	 * @param options The value determines the chars to check against.
+	 * @return The return value is true if the input exists in options.
+	 */
 	boolean isCorrectChar(char input, char[] options) {
 		for(char o : options) {
 			if(o == input) {
@@ -64,7 +79,12 @@ public class Input {
 		return false;
 	}
 
-	//JAVADOC
+	/**
+	 * @param yes         The value determines which char will be true.
+	 * @param no          The value determines which char will be false.
+	 * @param errorString The value determines the text to be presented if the user types a bad char.
+	 * @return The return value is true if the Human enters the yes char.
+	 */
 	boolean userBoolean(char yes, char no, String errorString) {
 		char input = readChar();
 		while(!isCorrectChar(input, new char[]{yes, no})) {
@@ -75,7 +95,11 @@ public class Input {
 		return (input == yes);
 	}
 
-	//JAVADOC
+	/**
+	 * @param options     The value determines the chars to check against.
+	 * @param errorString The value determines the text to be presented if the user types a bad char.
+	 * @return The return value is a selected char out of options.
+	 */
 	char userChar(char[] options, String errorString) {
 		char input = readChar();
 		while(!isCorrectChar(input, options)) {
@@ -86,7 +110,12 @@ public class Input {
 		return input;
 	}
 
-	//JAVADOC
+	/**
+	 * @param start       The value determines the start of the numbers that are allowed.
+	 * @param end         The value determines the end of the numbers that are allowed.
+	 * @param errorString The value determines the text to be presented if the user types a bad char.
+	 * @return The return value is a selected int out of options.
+	 */
 	int userInt(int start, int end, String errorString) {
 		int input = readInt();
 		if(input < start || input > end) {
@@ -97,7 +126,11 @@ public class Input {
 		return input;
 	}
 
-	//JAVADOC
+	/**
+	 * @param options     The value determines the ints to check against.
+	 * @param errorString The value determines the text to be presented if the user types a bad char.
+	 * @return The return value is a selected int out of options.
+	 */
 	int userInt(int[] options, String errorString) {
 		int input = readInt();
 		while(!isCorrectInt(input, options)) {
@@ -108,7 +141,11 @@ public class Input {
 		return input;
 	}
 
-	//JAVADOC
+	/**
+	 * @param input   The value determines the char that will e checked.
+	 * @param options The value determines the ints to check against.
+	 * @return The return value is tur if the int was in the array.
+	 */
 	boolean isCorrectInt(int input, int[] options) {
 		for(int o : options) {
 			if(o == input) {

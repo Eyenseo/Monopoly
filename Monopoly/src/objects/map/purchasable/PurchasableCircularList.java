@@ -28,7 +28,6 @@ public abstract class PurchasableCircularList extends FieldCircularList {
 	 * @param income   The values of the array determine the the income of the street in the different stages.
 	 * @param mortgage The value determines the amount of the mortgage.
 	 */
-	//TODO Simplify the constructor by assigning default values
 	PurchasableCircularList(String name, int price, int[] income, int mortgage) {
 		super(name);
 		this.PRICE = price;
@@ -47,32 +46,46 @@ public abstract class PurchasableCircularList extends FieldCircularList {
 		return this.PRICE;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the mortgage value.
+	 */
 	public int getMortgage() {
 		return this.MORTGAGE;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the stage.
+	 */
 	public int getStage() {
 		return this.stage;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the last index of the income Array.
+	 */
 	public int getMaxStage() {
 		return INCOME.length - 1;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the income Array.
+	 */
 	public int[] getIncome() {
 		return INCOME;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is true if the PurchasableCircularList is in mortgage.
+	 */
 	public boolean isInMortgage() {
 		return this.inMortgage;
 	}
 
-	//JAVADOC
+	/**
+	 * The method removes or adds the mortgage amount to the owner.
+	 *
+	 * @param inMortgage The value determines the mortgage stage.
+	 */
 	public void setInMortgage(boolean inMortgage) {
 		this.inMortgage = inMortgage;
 		if(inMortgage) {
@@ -83,14 +96,16 @@ public abstract class PurchasableCircularList extends FieldCircularList {
 	}
 
 	/**
+	 * @param player The value determines the the player who has to pay the bill (can be null).
 	 * @return The return value is the current income.
 	 */
-	//JAVADOC
-	public int getBill(Player payer) {
+	public int getBill(Player player) {
 		return this.INCOME[this.stage];
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is an ArrayList of the group members of the PurchasableCircularList object.
+	 */
 	public ArrayList<PurchasableCircularList> getGroupMembers() {
 		ArrayList<PurchasableCircularList> members = new ArrayList<PurchasableCircularList>();
 		PurchasableCircularList next = this;
@@ -101,7 +116,6 @@ public abstract class PurchasableCircularList extends FieldCircularList {
 		return members;
 	}
 
-	//JAVADOC
 	@Override
 	public String toString() {
 		return this.getName() + ((getOwner() != null) ? " (" + getOwner() + ")" : "");
@@ -115,6 +129,8 @@ public abstract class PurchasableCircularList extends FieldCircularList {
 	}
 
 	/**
+	 * The method adds this object to the new owner and removes it from the old one.
+	 *
 	 * @param owner The value determines the owner.
 	 */
 	public void setOwner(Player owner) {
@@ -126,7 +142,9 @@ public abstract class PurchasableCircularList extends FieldCircularList {
 		sameOwnerCheck();
 	}
 
-	//JAVADOC
+	/**
+	 * This method checks if all group members are owned by the same owner. If they are the stage is increased to 1.
+	 */
 	void sameOwnerCheck() {
 		boolean sameOwner = true;
 		PurchasableCircularList next = this.nextGroupElement;
@@ -145,12 +163,16 @@ public abstract class PurchasableCircularList extends FieldCircularList {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the next group member.
+	 */
 	public PurchasableCircularList getNextGroupElement() {
 		return nextGroupElement;
 	}
 
-	//JAVADOC
+	/**
+	 * @param nextGroupElement The value determines the next group member.
+	 */
 	public void setNextGroupElement(PurchasableCircularList nextGroupElement) {
 		nextGroupElement.nextGroupElement = this.nextGroupElement;
 		this.nextGroupElement = nextGroupElement;

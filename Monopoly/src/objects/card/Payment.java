@@ -1,15 +1,17 @@
 package objects.card;
+//JAVADOC
 
 /**
  * Payment is a transaction card (gain or loss).
- * A card is a trigger for a specific event defined in the gameplay mechanics
+ *
+ * @version 1
  */
 public class Payment extends Card {
 	private int dm;
 
 	/**
-	 * @param name Name of the card
-	 * @param text Text of the card
+	 * @param name The value determines the name of the Card.
+	 * @param text The value determines the text of the Card.
 	 */
 	public Payment(String name, String text, int dm) {
 		super(name, text);
