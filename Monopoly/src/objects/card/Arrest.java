@@ -1,5 +1,6 @@
 package objects.card;
 
+import objects.Player;
 import objects.map.FieldCircularList;
 //JAVADOC
 
@@ -24,5 +25,13 @@ public class Arrest extends Card {
 	 */
 	public void setJail(FieldCircularList jail) {
 		this.jail = jail;
+	}
+
+	//JavaDoc
+	@Override
+	public void action(Player player) {
+		menu.showCardText(this);
+		player.setInJail(true);
+		player.setField(jail);
 	}
 }

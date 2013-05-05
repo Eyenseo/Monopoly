@@ -7,6 +7,7 @@ import objects.exceptions.core.CardConnectionException;
 import objects.exceptions.core.NoInstanceException;
 import objects.exceptions.data.StorageReaderException;
 import objects.map.FieldCircularList;
+import ui.Menu;
 import ui.cui.ConsoleMenu;
 
 import java.util.Vector;
@@ -22,16 +23,16 @@ public class Monopoly {
 	private       boolean gameOver   = false;
 	private FieldCircularList go;
 	private FieldCircularList jail;
-	private ConsoleMenu       menu;
+	private Menu              menu;
 	private Vector<Player> playerVector = new Vector<Player>();
 
 	//TODO make a Menu Interface
-	Monopoly(ConsoleMenu menu) {
+	Monopoly(Menu menu) {
 		try {
 			MapArrayCreator mac = new MapArrayCreator();
 			CardStack event = new CardStack("events.txt", "Event Karte");
 			CardStack community = new CardStack("community.txt", "Gemeinschafts Karte");
-			new Connector().connect(mac.getMap(), event, community);
+			new Connector().connect(mac.getMap(), event, community, playerVector, menu);
 			this.go = mac.getGo();
 			this.jail = mac.getJail();
 			this.menu = menu;
@@ -87,7 +88,7 @@ public class Monopoly {
 			if(doublesTime == 3) {
 				player.setField(jail);
 				player.setInJail(true);
-				menu.inJail();
+				menu.showInJail();
 				turnState = 2;
 			} else if(turnState == 3) {
 				doublesTime++;
@@ -104,13 +105,13 @@ public class Monopoly {
 	}
 
 	public static void main(String[] args) {
-		ConsoleMenu menu = new ConsoleMenu();
+		Menu menu = new ConsoleMenu();
 		Monopoly m = new Monopoly(menu);
-		for(int i = menu.playerAmount(); i > 0; i--) {
-			m.addPlayer(new Player(menu.getName(), m.STARTMONEY));
-		}
-		//		m.addPlayer(new Player("Julia", m.STARTMONEY));
-		//		m.addPlayer(new Player("Markus", m.STARTMONEY));
+		//		for(int i = menu.playerAmount(); i > 0; i--) {
+		//			m.addPlayer(new Player(menu.getName(), m.STARTMONEY));
+		//		}
+		m.addPlayer(new Player("Julia", m.STARTMONEY));
+		m.addPlayer(new Player("Markus", m.STARTMONEY));
 		while(!m.isGameOver()) {
 			m.nextRound();
 		}

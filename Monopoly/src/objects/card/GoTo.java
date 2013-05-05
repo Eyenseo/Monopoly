@@ -50,6 +50,7 @@ public class GoTo extends Card {
 
 	@Override
 	public void action(Player player) {
+		menu.showCardText(this);
 		if(OVERGO && field.getFieldNumber() < player.getField().getFieldNumber()) {
 			go.action(player);
 		}

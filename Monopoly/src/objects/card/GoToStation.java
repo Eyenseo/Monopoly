@@ -1,6 +1,10 @@
 package objects.card;
 //JAVADOC
 
+import objects.Player;
+import objects.map.FieldCircularList;
+import objects.map.purchasable.Station;
+
 /**
  * GoToStation is a special_movement card.
  *
@@ -13,5 +17,17 @@ public class GoToStation extends Card {
 	 */
 	public GoToStation(String name, String text) {
 		super(name, text);
+	}
+
+	//JAVADOC
+	@Override
+	public void action(Player player) {
+		menu.showCardText(this);
+		FieldCircularList field = player.getField();
+		while(!(field instanceof Station)) {
+			field = field.getNext();
+		}
+		player.setField(field);
+		field.action(player);
 	}
 }

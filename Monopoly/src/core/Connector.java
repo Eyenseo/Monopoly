@@ -1,5 +1,6 @@
 package core;
 
+import objects.Player;
 import objects.card.*;
 import objects.exceptions.core.CardConnectionException;
 import objects.exceptions.core.NoInstanceException;
@@ -9,9 +10,11 @@ import objects.map.purchasable.Facility;
 import objects.map.purchasable.PurchasableCircularList;
 import objects.map.purchasable.Station;
 import objects.map.purchasable.Street;
+import ui.Menu;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Vector;
 
 /**
  * The Connector class connects the FieldCircularList objects and the CardStack objects.
@@ -21,19 +24,21 @@ import java.util.Collections;
  */
 public class Connector {
 	/**
-	 * @param map       The value determines the Array of FieldCircularList objects that shall be connected.
-	 * @param chance    The value determines the CardStack which has the Card objects from the chance file.
-	 * @param community The value determines the CardStack which has the Card objects from the community file.
+	 * @param map          The value determines the Array of FieldCircularList objects that shall be connected.
+	 * @param chance       The value determines the CardStack which has the Card objects from the chance file.
+	 * @param community    The value determines the CardStack which has the Card objects from the community file.
+	 * @param playerVector The value determines the Vector where all Player objects are stored.
+	 * @param menu         The value determines the Menu that will be used.
 	 * @throws NoInstanceException     The Exception is thrown if either no Jail, Parking, Go object exists.
 	 * @throws CardConnectionException The Exception is thrown if the Street for the GoTo Card is not found.
 	 */
-	public void connect(FieldCircularList[] map, CardStack chance, CardStack community)
-			throws NoInstanceException, CardConnectionException {
+	public void connect(FieldCircularList[] map, CardStack chance, CardStack community, Vector<Player> playerVector,
+	                    Menu menu) throws NoInstanceException, CardConnectionException {
 		makeCircularFieldList(map);
 		connectMatching(arrayToArrayList(map), chance, community);
 		setDiceArray(map);
-		connectCards(chance, map, community);
-		connectCards(community, map, community);
+		connectCards(chance, map, community, playerVector, menu);
+		connectCards(community, map, community, playerVector, menu);
 	}
 
 	/**
@@ -256,13 +261,16 @@ public class Connector {
 	}
 
 	/**
-	 * @param current   The value determines the current CardStack.
-	 * @param map       The value determines the FieldCircularList objects to check.
-	 * @param community The value determines the community CardStack.
+	 * @param current      The value determines the current CardStack.
+	 * @param map          The value determines the FieldCircularList objects to check.
+	 * @param community    The value determines the community CardStack.
+	 * @param playerVector The value determines the Vector where all Player objects are stored.
+	 * @param menu         The value determines what Menu will be used
 	 * @throws CardConnectionException The Exception is thrown if the Street for the GoTo Card is not found.
 	 */
-	private void connectCards(CardStack current, FieldCircularList[] map, CardStack community)
-			throws CardConnectionException {
+	//JAVADOC improve
+	private void connectCards(CardStack current, FieldCircularList[] map, CardStack community,
+	                          Vector<Player> playerVector, Menu menu) throws CardConnectionException {
 		boolean found;
 		for(Card c : current.getStack()) {
 			if(c instanceof GoTo) {
@@ -286,9 +294,29 @@ public class Connector {
 				}
 			} else if(c instanceof PayFineTakeCard) {
 				((PayFineTakeCard) c).setCommunity(community);
+				for(FieldCircularList f : map) {
+					if(f instanceof Parking) {
+						((PayFineTakeCard) c).setParking((Parking) f);
+					}
+				}
 			} else if(c instanceof Jailbait) {
 				((Jailbait) c).setCardStack(current);
+			} else if(c instanceof Payment) {
+				for(FieldCircularList f : map) {
+					if(f instanceof Parking) {
+						((Payment) c).setParking((Parking) f);
+					}
+				}
+			} else if(c instanceof StreetWork) {
+				for(FieldCircularList f : map) {
+					if(f instanceof Parking) {
+						((StreetWork) c).setParking((Parking) f);
+					}
+				}
+			} else if(c instanceof SpecialPayment) {
+				((SpecialPayment) c).setPlayerVector(playerVector);
 			}
+			c.setMenu(menu);
 		}
 	}
 }

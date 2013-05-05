@@ -184,10 +184,11 @@ public class CardCreator extends StorageReader {
 		String text = null;
 		try {
 			text = nextString();
+			int dm = nextInt();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new PayFineTakeCard(NAME, text);
+			return new PayFineTakeCard(NAME, text, dm);
 		} catch(Exception e) {
 			throw new PayFineTakeCardCreationException(NAME + ": " + text, e);
 		}

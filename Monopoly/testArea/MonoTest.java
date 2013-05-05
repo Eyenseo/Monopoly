@@ -27,7 +27,7 @@ public class MonoTest {
 			CardStack event = new CardStack("events.txt", "Event Karte");
 			c = event;
 			CardStack community = new CardStack("community.txt", "Gemeinschafts Karte");
-			new Connector().connect(mac.getMap(), event, community);
+			new Connector().connect(mac.getMap(), event, community, playerVector, menu);
 			this.go = mac.getGo();
 			this.jail = mac.getJail();
 			this.menu = menu;
@@ -68,7 +68,7 @@ public class MonoTest {
 		if(doublesTime == 3) {
 			player.setField(jail);
 			player.setInJail(true);
-			menu.inJail();
+			menu.showInJail();
 		} else if(turnState == 3) {
 			nextTurn(player, doublesTime + 1);
 		}

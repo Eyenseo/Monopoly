@@ -2,11 +2,14 @@ package ui.cui;
 
 import core.TradeManager;
 import objects.Player;
+import objects.card.Card;
+import objects.card.PayFineTakeCard;
 import objects.map.FieldCircularList;
 import objects.map.notPurchasable.Jail;
 import objects.map.purchasable.Facility;
 import objects.map.purchasable.PurchasableCircularList;
 import objects.map.purchasable.Street;
+import ui.Menu;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,7 +21,7 @@ import java.util.Vector;
  * @author Eyenseo
  * @version 1
  */
-public class ConsoleMenu {
+public class ConsoleMenu implements Menu {
 	private final Input in = new Input();
 
 	/**
@@ -201,7 +204,8 @@ public class ConsoleMenu {
 	 * Prints "Sie sind im Gefaengnis!"
 	 */
 	//TODO probably improve
-	public void inJail() {
+	@Override
+	public void showInJail() {
 		System.out.println("Sie sind im Gefaengnis!");
 	}
 
@@ -741,6 +745,7 @@ public class ConsoleMenu {
 	 * @param turnState    The value determines the current turn state.
 	 * @return The return value is updated turn state.
 	 */
+	@Override
 	public int mainMenu(Player player, Vector<Player> playerVector, int turnState) {
 		boolean end = false;
 		int choice = 0;
@@ -810,5 +815,16 @@ public class ConsoleMenu {
 			}
 		}
 		return turnState;
+	}
+
+	//JAVADOC
+	@Override
+	public boolean showCardText(Card card) {
+		System.out.println("\n" + card.getText() + "\n");
+		if(card instanceof PayFineTakeCard) {
+			println(((PayFineTakeCard) card).getOption());
+			return in.userBoolean('j', 'n', ((PayFineTakeCard) card).getOption());
+		}
+		return true;
 	}
 }

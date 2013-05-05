@@ -1,7 +1,8 @@
 package objects.card;
+//JAVADOC
 
 import objects.Player;
-//JAVADOC
+import ui.Menu;
 
 /**
  * Card is the superclass of every card object.
@@ -9,7 +10,8 @@ import objects.Player;
 public abstract class Card {
 	private final String NAME;
 	private final String TEXT;
-	int index;
+	int  index;
+	Menu menu;
 
 	/**
 	 * @param name The value determines the name of the Card.
@@ -34,11 +36,8 @@ public abstract class Card {
 		return this.TEXT;
 	}
 
-	//	public abstract void action();
-	//TODO this has to be replaced in each individual Method and set to abstract
-	public void action(Player player) {
-		System.err.println("This is a placeholder lalala~lalaLA");
-	}
+	//JAVADOC
+	public abstract void action(Player player);
 
 	/**
 	 * @param index The value determines the index of the Card in the CardStack
@@ -46,5 +45,12 @@ public abstract class Card {
 	 */
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	/**
+	 * @param menu The value determines what menu will be used.
+	 */
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
 }

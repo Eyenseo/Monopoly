@@ -37,6 +37,7 @@ public class Jailbait extends Card {
 	//JAVADOC
 	@Override
 	public void action(Player player) {
+		menu.showCardText(this);
 		player.addJailbait(this);
 		cardStack.removeCard(index);
 	}

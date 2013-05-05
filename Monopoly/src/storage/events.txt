@@ -25,6 +25,7 @@ Rücke vor bis zum nächsten Bahnhof.\nSollte der Bahnhof sich im Besitz eines S
 
 #payfinetakecard
 Zahle eine Strafe von\n200 DM\noder nimm eine Gemeinschaftskarte.
+200
 #!
 
 #special$

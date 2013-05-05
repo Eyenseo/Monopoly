@@ -1,6 +1,10 @@
 package objects.card;
 //JAVADOC
 
+import objects.Player;
+
+import java.util.Vector;
+
 /**
  * SpecialPayment is a special transaction card (player based transactions).
  *
@@ -8,6 +12,7 @@ package objects.card;
  */
 public class SpecialPayment extends Card {
 	private int dm;
+	Vector<Player> playerVector;
 
 	/**
 	 * @param name The value determines the name of the Card.
@@ -16,5 +21,19 @@ public class SpecialPayment extends Card {
 	public SpecialPayment(String name, String text, int dm) {
 		super(name, text);
 		this.dm = dm;
+	}
+
+	//JavaDoc
+	@Override
+	public void action(Player player) {
+		menu.showCardText(this);
+		for(Player p : playerVector) {
+			player.pay(dm);
+			p.addMoney(dm);
+		}
+	}
+
+	public void setPlayerVector(Vector<Player> playerVector) {
+		this.playerVector = playerVector;
 	}
 }

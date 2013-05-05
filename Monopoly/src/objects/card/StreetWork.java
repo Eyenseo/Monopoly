@@ -1,6 +1,12 @@
 package objects.card;
 //JAVADOC
 
+import objects.Player;
+import objects.map.notPurchasable.Parking;
+import objects.map.purchasable.PurchasableCircularList;
+
+import java.util.ArrayList;
+
 /**
  * StreetWork is the street work card (Strassen arbeiten).
  *
@@ -9,6 +15,7 @@ package objects.card;
 public class StreetWork extends Card {
 	private int dmHouse;
 	private int dmHotel;
+	Parking parking;
 
 	/**
 	 * @param name    The value determines the name of the Card.
@@ -20,5 +27,29 @@ public class StreetWork extends Card {
 		super(name, text);
 		this.dmHouse = dmHouse;
 		this.dmHotel = dmHotel;
+	}
+
+	/**
+	 * @param parking The value determines parking.
+	 */
+	public void setParking(Parking parking) {
+		this.parking = parking;
+	}
+
+	//javadoc
+	@Override
+	public void action(Player player) {
+		int amount = 0;
+		ArrayList<PurchasableCircularList> property = player.getProperties();
+		menu.showCardText(this);
+		for(PurchasableCircularList p : property) {
+			if(p.getStage() < p.getMaxStage()) {
+				amount += p.getStage() * dmHouse;
+			} else {
+				amount += p.getMaxStage() * dmHotel;
+			}
+		}
+		player.pay(amount);
+		parking.addMoney(amount);
 	}
 }

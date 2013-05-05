@@ -1,5 +1,7 @@
 package objects.map.purchasable;
 
+import objects.Player;
+
 /**
  * The structure of Station is a circular list of all Station objects.
  *
@@ -40,5 +42,15 @@ public class Station extends PurchasableCircularList {
 			next.stage = index;
 			next = next.getNextGroupElement();
 		} while(!next.equals(this));
+	}
+
+	//JAVADOC
+	public void action(Player player, boolean doublePay) {
+		if(doublePay && owner != null && !inMortgage) {
+			player.pay(getBill(player) * 2);
+			owner.addMoney(getBill(player) * 2);
+		} else {
+			action(player);
+		}
 	}
 }
