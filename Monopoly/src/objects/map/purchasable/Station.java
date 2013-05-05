@@ -34,6 +34,9 @@ public class Station extends PurchasableCircularList {
 		while(!next.equals(this)) {
 			if(next.getOwner() != null && next.getOwner().equals(owner)) {
 				index++;
+				if(index == INCOME.length - 1) {
+					break;
+				}
 			}
 			next = next.getNextGroupElement();
 		}
