@@ -76,14 +76,16 @@ public class Player {
 	}
 
 	/**
-	 * @param purchasable The value determines the PurchasableCircularList object the property that will be added to the player.
+	 * @param purchasable The value determines the PurchasableCircularList object the property that will be added to
+	 *                       the player.
 	 */
 	public void addProperty(PurchasableCircularList purchasable) {
 		this.property.add(purchasable);
 	}
 
 	/**
-	 * @param purchasable The value determines the PurchasableCircularList object the property that will be removed to the player.
+	 * @param purchasable The value determines the PurchasableCircularList object the property that will be removed to
+	 *                       the player.
 	 */
 	public void removeProperty(PurchasableCircularList purchasable) {
 		this.property.remove(purchasable);
@@ -174,7 +176,7 @@ public class Player {
 	 * @param by     The value determines the amount the Player shall go.
 	 * @param overGo The value determines if the Player will get the bonus of Go if he passed it.
 	 */
-	private void move(int by, boolean overGo) {
+	public void move(int by, boolean overGo) {
 		if(field.getDiceNext(by) != null) {
 			field = field.getDiceNext(by);
 		} else {
