@@ -33,7 +33,6 @@ public class MonoTest {
 			this.jail = mac.getJail();
 			this.menu = menu;
 		} catch(StorageReaderException e) {
-			//TODO catch the exceptions properly
 			System.err.println(e.getMessageStack());
 		} catch(NoInstanceException e) {
 			System.err.println(e.getMessage());

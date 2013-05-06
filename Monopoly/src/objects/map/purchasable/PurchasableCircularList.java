@@ -17,7 +17,6 @@ public abstract class PurchasableCircularList extends FieldCircularList {
 	protected final int                     MORTGAGE;   //Hypothek
 	protected       boolean                 inMortgage;
 	protected final int                     PRICE;
-	//TODO The price has to be able to be set by the player [-1 for not for sale and everything above for sale (should lead to a bidding option)].
 	protected       int                     stage;
 	protected       Player                  owner;
 	protected       PurchasableCircularList nextGroupElement;
@@ -178,7 +177,6 @@ public abstract class PurchasableCircularList extends FieldCircularList {
 	}
 
 	//JAVADOC
-	//TODO improve
 	@Override
 	public void action(Player player) {
 		if(owner != null && !inMortgage) {

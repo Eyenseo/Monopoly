@@ -26,7 +26,6 @@ public class Monopoly {
 	private Menu              menu;
 	private Vector<Player> playerVector = new Vector<Player>();
 
-	//TODO make a Menu Interface
 	Monopoly(Menu menu) {
 		try {
 			MapArrayCreator mac = new MapArrayCreator();

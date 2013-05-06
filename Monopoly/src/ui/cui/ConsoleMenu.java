@@ -205,7 +205,6 @@ public class ConsoleMenu implements Menu {
 	/**
 	 * Prints "Sie sind im Gefaengnis!"
 	 */
-	//TODO probably improve
 	@Override
 	public void showInJail() {
 		System.out.println("Sie sind im Gefaengnis!");
