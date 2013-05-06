@@ -99,37 +99,37 @@ public class Connector {
 	 * @param community      The value determines the CardStack which has the Card objects from the community file.
 	 */
 	private void connectMatching(ArrayList<FieldCircularList> fieldArrayList, CardStack chance, CardStack community) {
-		FieldCircularList a;
+		FieldCircularList field;
 		Parking parking = null;
 		Jail jail = null;
 		while(!fieldArrayList.isEmpty()) {
-			a = fieldArrayList.get(0);
-			if(a instanceof Parking) {
-				parking = (Parking) a;
-			} else if(a instanceof Jail) {
-				jail = (Jail) a;
+			field = fieldArrayList.get(0);
+			if(field instanceof Parking) {
+				parking = (Parking) field;
+			} else if(field instanceof Jail) {
+				jail = (Jail) field;
 			}
 			fieldArrayList.remove(0);
-			if(a instanceof PurchasableCircularList) {
-				if(a instanceof Street) {
-					makeCircularStreetList((Street) a, fieldArrayList);
-				} else if(a instanceof Station) {
-					makeCircularStationList((Station) a, fieldArrayList);
-				} else if(a instanceof Facility) {
-					makeCircularFacilityList((Facility) a, fieldArrayList);
+			if(field instanceof PurchasableCircularList) {
+				if(field instanceof Street) {
+					makeCircularStreetList((Street) field, fieldArrayList);
+				} else if(field instanceof Station) {
+					makeCircularStationList((Station) field, fieldArrayList);
+				} else if(field instanceof Facility) {
+					makeCircularFacilityList((Facility) field, fieldArrayList);
 				}
-			} else if(a instanceof CardField) {
-				if(a instanceof Chance) {
-					((CardField) a).setCardStack(chance);
+			} else if(field instanceof CardField) {
+				if(field instanceof Chance) {
+					((CardField) field).setCardStack(chance);
 				} else {
-					((CardField) a).setCardStack(community);
+					((CardField) field).setCardStack(community);
 				}
-			} else if(a instanceof Tax) {
-				connectTax((Tax) a, fieldArrayList, parking);
-			} else if(a instanceof GoToJail) {
-				connectGoToJail((GoToJail) a, fieldArrayList, jail);
-			} else if(a instanceof Jail) {
-				connectJail((Jail) a, fieldArrayList, parking);
+			} else if(field instanceof Tax) {
+				connectTax((Tax) field, fieldArrayList, parking);
+			} else if(field instanceof GoToJail) {
+				connectGoToJail((GoToJail) field, fieldArrayList, jail);
+			} else if(field instanceof Jail) {
+				connectJail((Jail) field, fieldArrayList, parking);
 			}
 		}
 	}
@@ -228,9 +228,9 @@ public class Connector {
 	 */
 	private void connectGoToJail(GoToJail goToJail, ArrayList<FieldCircularList> fieldArrayList, Jail jail) {
 		if(jail == null) {
-			for(FieldCircularList aFieldArrayList : fieldArrayList) {
-				if(aFieldArrayList instanceof Jail) {
-					goToJail.setJail((Jail) aFieldArrayList);
+			for(FieldCircularList next : fieldArrayList) {
+				if(next instanceof Jail) {
+					goToJail.setJail((Jail) next);
 					break;
 				}
 			}
@@ -272,51 +272,51 @@ public class Connector {
 	private void connectCards(CardStack current, FieldCircularList[] map, CardStack community,
 	                          Vector<Player> playerVector, Menu menu) throws CardConnectionException {
 		boolean found;
-		for(Card c : current.getStack()) {
-			if(c instanceof GoTo) {
+		for(Card card : current.getStack()) {
+			if(card instanceof GoTo) {
 				found = false;
-				String name = ((GoTo) c).getFieldName();
-				for(FieldCircularList f : map) {
-					if(f.getName().equals(name)) {
-						((GoTo) c).setField(f);
-						((GoTo) c).setGo(map[0]);
+				String name = ((GoTo) card).getFieldName();
+				for(FieldCircularList field : map) {
+					if(field.getName().equals(name)) {
+						((GoTo) card).setField(field);
+						((GoTo) card).setGo(map[0]);
 						found = true;
 					}
 				}
 				if(!found) {
-					throw new CardConnectionException(c);
+					throw new CardConnectionException(card);
 				}
-			} else if(c instanceof Arrest) {
-				for(FieldCircularList f : map) {
-					if(f instanceof Jail) {
-						((Arrest) c).setJail(f);
+			} else if(card instanceof Arrest) {
+				for(FieldCircularList field : map) {
+					if(field instanceof Jail) {
+						((Arrest) card).setJail(field);
 					}
 				}
-			} else if(c instanceof PayFineTakeCard) {
-				((PayFineTakeCard) c).setCommunity(community);
-				for(FieldCircularList f : map) {
-					if(f instanceof Parking) {
-						((PayFineTakeCard) c).setParking((Parking) f);
+			} else if(card instanceof PayFineTakeCard) {
+				((PayFineTakeCard) card).setCommunity(community);
+				for(FieldCircularList field : map) {
+					if(field instanceof Parking) {
+						((PayFineTakeCard) card).setParking((Parking) field);
 					}
 				}
-			} else if(c instanceof Jailbait) {
-				((Jailbait) c).setCardStack(current);
-			} else if(c instanceof Payment) {
-				for(FieldCircularList f : map) {
-					if(f instanceof Parking) {
-						((Payment) c).setParking((Parking) f);
+			} else if(card instanceof Jailbait) {
+				((Jailbait) card).setCardStack(current);
+			} else if(card instanceof Payment) {
+				for(FieldCircularList field : map) {
+					if(field instanceof Parking) {
+						((Payment) card).setParking((Parking) field);
 					}
 				}
-			} else if(c instanceof StreetWork) {
-				for(FieldCircularList f : map) {
-					if(f instanceof Parking) {
-						((StreetWork) c).setParking((Parking) f);
+			} else if(card instanceof StreetWork) {
+				for(FieldCircularList field : map) {
+					if(field instanceof Parking) {
+						((StreetWork) card).setParking((Parking) field);
 					}
 				}
-			} else if(c instanceof SpecialPayment) {
-				((SpecialPayment) c).setPlayerVector(playerVector);
+			} else if(card instanceof SpecialPayment) {
+				((SpecialPayment) card).setPlayerVector(playerVector);
 			}
-			c.setMenu(menu);
+			card.setMenu(menu);
 		}
 	}
 }
