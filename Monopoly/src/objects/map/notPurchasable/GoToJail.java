@@ -25,7 +25,7 @@ public class GoToJail extends NotPurchasable {
 	}
 
 	/**
-	 * @param field The value determines the Jail FieldCircularList object.
+	 * @param jail The value determines the Jail object.
 	 */
 	public void setJail(Jail jail) {
 		this.jail = jail;
