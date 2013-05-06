@@ -18,6 +18,7 @@ public class GoBack extends Card {
 		this.fields = fields;
 	}
 
+	//JAVADOC
 	@Override
 	public void action(Player player) {
 		menu.showCardText(this);

@@ -48,6 +48,7 @@ public class GoTo extends Card {
 		go = field;
 	}
 
+	//JAVADOC
 	@Override
 	public void action(Player player) {
 		menu.showCardText(this);
