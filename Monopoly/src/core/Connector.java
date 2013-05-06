@@ -230,7 +230,7 @@ public class Connector {
 		if(jail == null) {
 			for(FieldCircularList aFieldArrayList : fieldArrayList) {
 				if(aFieldArrayList instanceof Jail) {
-					goToJail.setJail(aFieldArrayList);
+					goToJail.setJail((Jail) aFieldArrayList);
 					break;
 				}
 			}

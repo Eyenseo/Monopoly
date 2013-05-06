@@ -2,7 +2,6 @@ package objects.map.notPurchasable;
 
 import objects.Player;
 import objects.exceptions.data.MoreThanOneDataSetException;
-import objects.map.FieldCircularList;
 
 /**
  * The Community Class is the FieldCircularList subclass.
@@ -12,7 +11,7 @@ import objects.map.FieldCircularList;
  */
 public class GoToJail extends NotPurchasable {
 	private static boolean justOneInstance = false;
-	private FieldCircularList jail;
+	private Jail jail;
 
 	/**
 	 * @param name The value determines the name of the Field.
@@ -28,9 +27,8 @@ public class GoToJail extends NotPurchasable {
 	/**
 	 * @param field The value determines the Jail FieldCircularList object.
 	 */
-	//TODO change to Jail
-	public void setJail(FieldCircularList field) {
-		this.jail = field;
+	public void setJail(Jail jail) {
+		this.jail = jail;
 	}
 
 	@Override
