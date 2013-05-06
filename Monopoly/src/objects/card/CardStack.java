@@ -3,7 +3,8 @@ package objects.card;
 import core.data.CardCreator;
 import objects.exceptions.data.StorageReaderException;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * The CardStack represents the stack of Cards and is responsible for the shuffling of the Card objects.
@@ -12,8 +13,8 @@ import java.util.Vector;
  * @version 0.1
  */
 public class CardStack {
-	private Vector<Card> stack;
-	private int          top;
+	private ArrayList<Card> stack = new ArrayList<Card>();
+	private int top;
 
 	/**
 	 * @param file The value determines the file located in the storage package to be read of.
@@ -21,18 +22,26 @@ public class CardStack {
 	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
 	public CardStack(String file, String name) throws StorageReaderException {
-		//TODO randomise the Card objects
+		ArrayList<Card> temp;
+		Random random = new Random();
+		int index;
 		this.top = 0;
-		this.stack = new CardCreator(file, name).cardArray();
+		temp = new CardCreator(file, name).cardArray();
+		while(!temp.isEmpty()) {
+			index = random.nextInt(temp.size());
+			index = index - (index == 0 ? 0 : 1);
+			stack.add(temp.get(index));
+			temp.remove(index);
+		}
 		for(int i = 0; i < stack.size(); i++) {
 			stack.get(i).setIndex(i);
 		}
 	}
 
 	/**
-	 * @return The return value is a Vector of Cards.
+	 * @return The return value is a ArrayList of Cards.
 	 */
-	public Vector<Card> getStack() {
+	public ArrayList<Card> getStack() {
 		return stack;
 	}
 

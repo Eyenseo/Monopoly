@@ -6,7 +6,7 @@ import objects.exceptions.data.EndOfBlockException;
 import objects.exceptions.data.StorageReaderException;
 import objects.exceptions.data.card.*;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * The CardCreator creates Card objects based on the data in a file located in the storage package.
@@ -33,11 +33,11 @@ public class CardCreator extends StorageReader {
 	 *
 	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
 	 */
-	public Vector<Card> cardArray() throws StorageReaderException {
-		Vector<Card> cardVector = new Vector<Card>();
+	public ArrayList<Card> cardArray() throws StorageReaderException {
+		ArrayList<Card> cardVector = new ArrayList<Card>();
 		Card temp;
 		while((temp = nextCard()) != null) {
-			cardVector.addElement(temp);
+			cardVector.add(temp);
 		}
 		return cardVector;
 	}

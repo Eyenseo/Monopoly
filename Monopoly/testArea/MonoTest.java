@@ -10,6 +10,7 @@ import objects.exceptions.data.StorageReaderException;
 import objects.map.FieldCircularList;
 import ui.cui.ConsoleMenu;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class MonoTest {
@@ -89,7 +90,7 @@ public class MonoTest {
 		m.addPlayer(new Player("Markus", m.STARTMONEY));
 		julia.setInJail(true);
 		julia.setField(m.jail);
-		Vector<Card> v = m.c.getStack();
+		ArrayList<Card> v = m.c.getStack();
 		for(int i = 0; i < v.size(); i++) {
 			if(v.get(i) instanceof Jailbait) {
 				v.get(i).action(julia);
