@@ -26,6 +26,7 @@ public class Facility extends PurchasableCircularList {
 
 	@Override
 	/**
+	 * @param player The value determines the the player who has to pay the bill.
 	 * @return The return value is the current income.
 	 */
 	public int getBill(Player player) {
