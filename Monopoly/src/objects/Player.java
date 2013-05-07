@@ -146,7 +146,7 @@ public class Player {
     }
 
     /**
-     * The method removes a jailbait Card from the Player and adds it back to its CardStack and sets teh player free.
+     * The method removes a jailbait Card from the Player and adds it back to its CardStack and sets the player free.
      */
     public void useJailbait() {
         jailbait.firstElement().freePlayer(this);
