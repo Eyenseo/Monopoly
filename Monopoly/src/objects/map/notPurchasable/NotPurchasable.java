@@ -9,10 +9,10 @@ import objects.map.FieldCircularList;
  * @version 1
  */
 abstract class NotPurchasable extends FieldCircularList {
-	/**
-	 * @param name The value determines the name of the object.
-	 */
-	NotPurchasable(String name) {
-		super(name);
-	}
+    /**
+     * @param name The value determines the name of the object.
+     */
+    NotPurchasable(String name) {
+        super(name);
+    }
 }
