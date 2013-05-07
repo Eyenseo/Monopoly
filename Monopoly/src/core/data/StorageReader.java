@@ -5,9 +5,8 @@ import objects.exceptions.data.EndOfFileException;
 import objects.exceptions.data.StorageReaderException;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * The StorageReader is a input class that reads the files in the storage package.
@@ -17,7 +16,7 @@ import java.io.IOException;
  */
 abstract class StorageReader {
 	private BufferedReader file;
-	String path = "./Monopoly/src/storage/";
+	String path = "/storage/";
 
 	/**
 	 * @param file The value determines which file will be loaded.
@@ -27,9 +26,10 @@ abstract class StorageReader {
 	StorageReader(String file) throws StorageReaderException {
 		try {
 			//TODO Path is different if run as package.
-			this.file = new BufferedReader(new FileReader(path + file));
+			//			this.file = new BufferedReader(new FileReader(path + file));
+			this.file = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path + file)));
 			this.path += file;
-		} catch(FileNotFoundException e) {
+		} catch(NullPointerException e) {
 			throw new StorageReaderException("The requested file was not found:\n\t" + path, e);
 		}
 	}
