@@ -1,5 +1,6 @@
-public class ForEachTest {
+package randomTests;
 
+public class ForEachTest {
 	public static void main(String[] args) {
 		Test[] t = new Test[5];
 		for(int i = 0; i < t.length; i++) {

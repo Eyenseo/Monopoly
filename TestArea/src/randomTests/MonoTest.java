@@ -1,3 +1,5 @@
+package randomTests;
+
 import core.Connector;
 import core.data.MapArrayCreator;
 import objects.Player;
