@@ -93,7 +93,7 @@ public class CardCreator extends StorageReader {
 			text = nextString();
 			int fields = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new GoBack(NAME, text, fields);
 		} catch(Exception e) {
@@ -113,7 +113,7 @@ public class CardCreator extends StorageReader {
 			String field = nextString();
 			boolean overGo = nextString().equals("t");
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new GoTo(NAME, text, field, overGo);
 		} catch(Exception e) {
@@ -131,7 +131,7 @@ public class CardCreator extends StorageReader {
 		try {
 			text = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new GoToStation(NAME, text);
 		} catch(Exception e) {
@@ -149,7 +149,7 @@ public class CardCreator extends StorageReader {
 		try {
 			text = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Arrest(NAME, text);
 		} catch(Exception e) {
@@ -167,7 +167,7 @@ public class CardCreator extends StorageReader {
 		try {
 			text = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Jailbait(NAME, text);
 		} catch(Exception e) {
@@ -186,7 +186,7 @@ public class CardCreator extends StorageReader {
 			text = nextString();
 			int dm = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new PayFineTakeCard(NAME, text, dm);
 		} catch(Exception e) {
@@ -205,7 +205,7 @@ public class CardCreator extends StorageReader {
 			text = nextString();
 			int dm = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Payment(NAME, text, dm);
 		} catch(Exception e) {
@@ -224,7 +224,7 @@ public class CardCreator extends StorageReader {
 			text = nextString();
 			int dm = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new SpecialPayment(NAME, text, dm);
 		} catch(Exception e) {
@@ -244,7 +244,7 @@ public class CardCreator extends StorageReader {
 			int dmHouse = nextInt();
 			int dmHotel = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new StreetWork(NAME, text, dmHouse, dmHotel);
 		} catch(Exception e) {

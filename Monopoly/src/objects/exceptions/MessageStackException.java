@@ -2,7 +2,6 @@ package objects.exceptions;
 
 //JAVADOC
 public abstract class MessageStackException extends Exception {
-
 	//JAVADOC
 	public MessageStackException(String message) {
 		super(message);

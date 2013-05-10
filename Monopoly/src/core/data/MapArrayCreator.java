@@ -134,7 +134,7 @@ public class MapArrayCreator extends StorageReader {
 			int upgrade = nextInt();
 			int mortgage = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Street(name, price, income, mortgage, upgrade, color);
 		} catch(Exception e) {
@@ -158,7 +158,7 @@ public class MapArrayCreator extends StorageReader {
 			}
 			int mortgage = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Station(name, price, income, mortgage);
 		} catch(Exception e) {
@@ -179,7 +179,7 @@ public class MapArrayCreator extends StorageReader {
 			int[] income = {nextInt(), nextInt()};
 			int mortgage = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Facility(name, price, income, mortgage);
 		} catch(Exception e) {
@@ -198,7 +198,7 @@ public class MapArrayCreator extends StorageReader {
 			name = nextString();
 			int bill = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Tax(name, bill);
 		} catch(Exception e) {
@@ -216,7 +216,7 @@ public class MapArrayCreator extends StorageReader {
 		try {
 			name = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Chance(name);
 		} catch(Exception e) {
@@ -234,7 +234,7 @@ public class MapArrayCreator extends StorageReader {
 		try {
 			name = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Community(name);
 		} catch(Exception e) {
@@ -253,7 +253,7 @@ public class MapArrayCreator extends StorageReader {
 			name = nextString();
 			int turnMoney = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Go(name, turnMoney);
 		} catch(Exception e) {
@@ -271,7 +271,7 @@ public class MapArrayCreator extends StorageReader {
 		try {
 			name = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Jail(name);
 		} catch(Exception e) {
@@ -289,7 +289,7 @@ public class MapArrayCreator extends StorageReader {
 		try {
 			name = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Parking(name);
 		} catch(Exception e) {
@@ -307,7 +307,7 @@ public class MapArrayCreator extends StorageReader {
 		try {
 			name = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new GoToJail(name);
 		} catch(Exception e) {

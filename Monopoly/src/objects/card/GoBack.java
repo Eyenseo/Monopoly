@@ -3,10 +3,13 @@ package objects.card;
 
 import objects.Player;
 
+import java.io.Serializable;
+
 /**
  * GoBack is the back card.
  */
-public class GoBack extends Card {
+public class GoBack extends Card implements Serializable {
+	private static final long serialVersionUID = 7543740810702116460L;
 	private int fields;
 
 	/**

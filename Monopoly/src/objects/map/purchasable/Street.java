@@ -1,5 +1,7 @@
 package objects.map.purchasable;
 
+import java.io.Serializable;
+
 /**
  * The structure of Street is a circular list of all Street objects that belong together e.g.
  * all Streets that are red.
@@ -7,7 +9,8 @@ package objects.map.purchasable;
  * @author Eyenseo
  * @version 0.1
  */
-public class Street extends PurchasableCircularList {
+public class Street extends PurchasableCircularList implements Serializable {
+	private static final long serialVersionUID = 8118177447664813032L;
 	private final int[] COLOR;
 	private final int   UPGRADE;
 

@@ -7,7 +7,6 @@ package objects.exceptions.data;
  * @version 1
  */
 public class ControlWordNotFoundException extends StorageReaderException {
-
 	/**
 	 * @param word The value determines the control world that wasn't found.
 	 */

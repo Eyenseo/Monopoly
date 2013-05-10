@@ -3,6 +3,7 @@ package objects.map.purchasable;
 import objects.Player;
 import objects.map.FieldCircularList;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +13,8 @@ import java.util.ArrayList;
  * @author Eyenseo
  * @version 1
  */
-public abstract class PurchasableCircularList extends FieldCircularList {
+public abstract class PurchasableCircularList extends FieldCircularList implements Serializable {
+	private static final long serialVersionUID = 5554380896193644875L;
 	protected final int[]                   INCOME;
 	protected final int                     MORTGAGE;   //Hypothek
 	protected       boolean                 inMortgage;

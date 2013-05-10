@@ -4,12 +4,15 @@ package objects.card;
 import objects.Player;
 import objects.map.notPurchasable.Parking;
 
+import java.io.Serializable;
+
 /**
  * Payment is a transaction card (gain or loss).
  *
  * @version 1
  */
-public class Payment extends Card {
+public class Payment extends Card implements Serializable {
+	private static final long serialVersionUID = 3661515495615563278L;
 	private int dm;
 	Parking parking;
 

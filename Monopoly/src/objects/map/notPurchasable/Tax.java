@@ -2,13 +2,16 @@ package objects.map.notPurchasable;
 
 import objects.Player;
 
+import java.io.Serializable;
+
 /**
  * The Tax Class is the FieldCircularList subclass.
  *
  * @author Eyenseo
  * @version 1
  */
-public class Tax extends NotPurchasable {
+public class Tax extends NotPurchasable implements Serializable {
+	private static final long serialVersionUID = 5530039603072031838L;
 	private       Parking parking;
 	private final int     bill;
 

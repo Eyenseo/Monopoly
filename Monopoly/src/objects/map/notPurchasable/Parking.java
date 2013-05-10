@@ -3,15 +3,18 @@ package objects.map.notPurchasable;
 import objects.Player;
 import objects.exceptions.data.MoreThanOneDataSetException;
 
+import java.io.Serializable;
+
 /**
  * The Parking class is the FieldCircularList subclass that keeps all the fines of the Player Objects, if there is none or more than one Instance of this class the game will not start.
  *
  * @author Eyenseo
  * @version 1
  */
-public class Parking extends NotPurchasable {
-	private static boolean justOneInstance = false;
-	private        int     money           = 0;
+public class Parking extends NotPurchasable implements Serializable {
+	private static final long    serialVersionUID = 6193402746206108126L;
+	private static       boolean justOneInstance  = false;
+	private              int     money            = 0;
 
 	/**
 	 * @param name The value determines the name of the Field.

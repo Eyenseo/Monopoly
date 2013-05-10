@@ -5,6 +5,7 @@ import objects.Player;
 import objects.map.notPurchasable.Parking;
 import objects.map.purchasable.PurchasableCircularList;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +13,8 @@ import java.util.ArrayList;
  *
  * @version 1
  */
-public class StreetWork extends Card {
+public class StreetWork extends Card implements Serializable {
+	private static final long serialVersionUID = 8081671259197653645L;
 	private int dmHouse;
 	private int dmHotel;
 	Parking parking;

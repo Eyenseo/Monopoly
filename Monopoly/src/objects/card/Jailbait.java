@@ -1,6 +1,8 @@
 package objects.card;
 
 import objects.Player;
+
+import java.io.Serializable;
 //JAVADOC
 
 /**
@@ -8,7 +10,8 @@ import objects.Player;
  *
  * @version 0.1
  */
-public class Jailbait extends Card {
+public class Jailbait extends Card implements Serializable {
+	private static final long serialVersionUID = 1422468157314847166L;
 	private CardStack cardStack;
 
 	/**

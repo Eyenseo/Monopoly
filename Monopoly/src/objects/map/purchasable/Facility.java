@@ -2,13 +2,16 @@ package objects.map.purchasable;
 
 import objects.Player;
 
+import java.io.Serializable;
+
 /**
  * The structure of Facility is a circular list of all Facility objects.
  *
  * @author Eyenseo
  * @version 1
  */
-public class Facility extends PurchasableCircularList {
+public class Facility extends PurchasableCircularList implements Serializable {
+	private static final long serialVersionUID = -8428553388916372195L;
 
 	/**
 	 * @param name     The value determines the name of the object.

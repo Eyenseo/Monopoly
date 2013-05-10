@@ -4,10 +4,13 @@ package objects.card;
 import objects.Player;
 import ui.Menu;
 
+import java.io.Serializable;
+
 /**
  * Card is the superclass of every card object.
  */
-public abstract class Card {
+public abstract class Card implements Serializable {
+	private static final long serialVersionUID = 4057299799394754933L;
 	private final String NAME;
 	private final String TEXT;
 	int  index;

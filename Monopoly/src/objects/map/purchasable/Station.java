@@ -2,13 +2,17 @@ package objects.map.purchasable;
 
 import objects.Player;
 
+import java.io.Serializable;
+
 /**
  * The structure of Station is a circular list of all Station objects.
  *
  * @author Eyenseo
  * @version 0.1
  */
-public class Station extends PurchasableCircularList {
+public class Station extends PurchasableCircularList implements Serializable {
+	private static final long serialVersionUID = 1200011350581598724L;
+
 	/**
 	 * @param name     The value determines the name of the object.
 	 * @param price    The value determines the price that the player has to pay to buy it.

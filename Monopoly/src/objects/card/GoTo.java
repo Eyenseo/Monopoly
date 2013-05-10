@@ -2,6 +2,8 @@ package objects.card;
 
 import objects.Player;
 import objects.map.FieldCircularList;
+
+import java.io.Serializable;
 //JAVADOC
 
 /**
@@ -9,7 +11,8 @@ import objects.map.FieldCircularList;
  *
  * @version 1
  */
-public class GoTo extends Card {
+public class GoTo extends Card implements Serializable {
+	private static final long serialVersionUID = 5348138600989361405L;
 	private final String            FIELDNAME;
 	private final boolean           OVERGO;
 	private       FieldCircularList field;

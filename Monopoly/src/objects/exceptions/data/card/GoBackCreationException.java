@@ -9,7 +9,6 @@ import objects.exceptions.data.StorageReaderException;
  * @version 1
  */
 public class GoBackCreationException extends StorageReaderException {
-
 	/**
 	 * @param name  The value determines the name of the Card.
 	 * @param cause The value determines the cause of the Exception.

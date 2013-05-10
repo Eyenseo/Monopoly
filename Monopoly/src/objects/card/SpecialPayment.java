@@ -3,6 +3,7 @@ package objects.card;
 
 import objects.Player;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 /**
@@ -10,7 +11,8 @@ import java.util.Vector;
  *
  * @version 1
  */
-public class SpecialPayment extends Card {
+public class SpecialPayment extends Card implements Serializable {
+	private static final long serialVersionUID = 4614526083952983870L;
 	private int dm;
 	Vector<Player> playerVector;
 

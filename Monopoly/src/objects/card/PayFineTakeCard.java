@@ -4,12 +4,15 @@ package objects.card;
 import objects.Player;
 import objects.map.notPurchasable.Parking;
 
+import java.io.Serializable;
+
 /**
  * PayFineTakeCard is special card (pay fine or draw a card).
  *
  * @version 1
  */
-public class PayFineTakeCard extends Card {
+public class PayFineTakeCard extends Card implements Serializable {
+	private static final long serialVersionUID = -6500337756850536820L;
 	int       dm;
 	String    option;
 	CardStack community;

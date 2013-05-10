@@ -3,13 +3,16 @@ package objects.map.notPurchasable;
 import objects.Player;
 import objects.exceptions.data.MoreThanOneDataSetException;
 
+import java.io.Serializable;
+
 /**
  * The Jail class is the FieldCircularList subclass, if there is none or more than one Instance of this class the game will not start.
  *
  * @author Eyenseo
  * @version 1
  */
-public class Jail extends NotPurchasable {
+public class Jail extends NotPurchasable implements Serializable {
+	private static final long serialVersionUID = -7791364597281521600L;
 	private Parking parking;
 	private static boolean justOneInstance = false;
 

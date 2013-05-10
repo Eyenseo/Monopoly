@@ -3,14 +3,17 @@ package objects.map.notPurchasable;
 import objects.Player;
 import objects.exceptions.data.MoreThanOneDataSetException;
 
+import java.io.Serializable;
+
 /**
  * The Community Class is the FieldCircularList subclass.
  *
  * @author Eyenseo
  * @version 1
  */
-public class GoToJail extends NotPurchasable {
-	private static boolean justOneInstance = false;
+public class GoToJail extends NotPurchasable implements Serializable {
+	private static final long    serialVersionUID = 2310428836358458471L;
+	private static       boolean justOneInstance  = false;
 	private Jail jail;
 
 	/**

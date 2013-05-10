@@ -2,6 +2,8 @@ package objects.card;
 
 import objects.Player;
 import objects.map.FieldCircularList;
+
+import java.io.Serializable;
 //JAVADOC
 
 /**
@@ -9,7 +11,8 @@ import objects.map.FieldCircularList;
  *
  * @version 1
  */
-public class Arrest extends Card {
+public class Arrest extends Card implements Serializable {
+	private static final long serialVersionUID = -8298343677959644482L;
 	FieldCircularList jail;
 
 	/**

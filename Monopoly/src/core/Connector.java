@@ -37,6 +37,7 @@ public class Connector {
 		makeCircularFieldList(map);
 		connectMatching(arrayToArrayList(map), chance, community);
 		setDiceArray(map);
+		//TODO Check for notOneInstance
 		connectCards(chance, map, community, playerVector, menu);
 		connectCards(community, map, community, playerVector, menu);
 	}

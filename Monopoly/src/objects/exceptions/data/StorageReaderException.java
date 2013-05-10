@@ -9,7 +9,6 @@ import objects.exceptions.MessageStackException;
  * @version 1
  */
 public class StorageReaderException extends MessageStackException {
-
 	/**
 	 * @param message The value determines the message that will be displayed when viewing the error report.
 	 */

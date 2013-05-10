@@ -2,13 +2,16 @@ package objects.map;
 
 import objects.Player;
 
+import java.io.Serializable;
+
 /**
  * The structure of FieldCircularList and the subclasses is a circular list.
  *
  * @author Eyenseo
  * @version 1
  */
-public abstract class FieldCircularList {
+public abstract class FieldCircularList implements Serializable {
+	private static final long serialVersionUID = -5568733184014294625L;
 	private int                 fieldNumber;
 	private String              name;
 	private FieldCircularList   next;

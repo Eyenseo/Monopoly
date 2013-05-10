@@ -3,6 +3,7 @@ package objects.card;
 import core.data.CardCreator;
 import objects.exceptions.data.StorageReaderException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,8 +13,9 @@ import java.util.Random;
  * @author Eyenseo
  * @version 0.1
  */
-public class CardStack {
-	private ArrayList<Card> stack = new ArrayList<Card>();
+public class CardStack implements Serializable {
+	private static final long            serialVersionUID = 5367102863013409270L;
+	private              ArrayList<Card> stack            = new ArrayList<Card>();
 	private int top;
 
 	/**
@@ -33,6 +35,7 @@ public class CardStack {
 			stack.add(temp.get(index));
 			temp.remove(index);
 		}
+		//TODO Check for notOneInstance
 		for(int i = 0; i < stack.size(); i++) {
 			stack.get(i).setIndex(i);
 		}

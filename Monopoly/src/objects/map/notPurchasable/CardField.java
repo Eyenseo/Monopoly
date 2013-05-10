@@ -3,6 +3,8 @@ package objects.map.notPurchasable;
 import objects.Player;
 import objects.card.CardStack;
 
+import java.io.Serializable;
+
 /**
  * The CardField class is the super class of all FieldCircularList subclasses that do something with a CardStack.
  *
@@ -10,7 +12,8 @@ import objects.card.CardStack;
  * @version 1
  * @see CardStack
  */
-public abstract class CardField extends NotPurchasable {
+public abstract class CardField extends NotPurchasable implements Serializable {
+	private static final long serialVersionUID = -5945920534429656837L;
 	CardStack cardStack;
 
 	/**
