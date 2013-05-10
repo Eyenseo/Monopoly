@@ -1,15 +1,67 @@
 package objects.card;
+//JAVADOC
+
+import objects.Player;
+import objects.map.notPurchasable.Parking;
 
 /**
  * PayFineTakeCard is special card (pay fine or draw a card).
- * A card is a trigger for a specific event defined in the gameplay mechanics
+ *
+ * @version 1
  */
 public class PayFineTakeCard extends Card {
+	int       dm;
+	String    option;
+	CardStack community;
+	Parking   parking;
+
 	/**
-	 * @param name Name of the card
-	 * @param text Text of the card
+	 * @param name The value determines the name of the Card.
+	 * @param text The value determines the text of the Card.
+	 * @param dm   The value determines the amount to pay by the Player.
 	 */
-	public PayFineTakeCard(String name, String text) {
+	public PayFineTakeCard(String name, String text, int dm) {
 		super(name, text);
+		this.dm = dm;
+		option = "Wollen Sie eine Gemeinschaftskarte Karte aufnehmen? j/n";
+	}
+
+	/**
+	 * @return The return value is the Options String.
+	 */
+	public String getOption() {
+		return option;
+	}
+
+	/**
+	 * @return The return value is the community CardStack.
+	 */
+	public CardStack getCommunity() {
+		return community;
+	}
+
+	/**
+	 * @param parking The value determines parking.
+	 */
+	public void setParking(Parking parking) {
+		this.parking = parking;
+	}
+
+	/**
+	 * @param community The value determines the community Card Stack.
+	 */
+	public void setCommunity(CardStack community) {
+		this.community = community;
+	}
+
+	//JAVADOC
+	@Override
+	public void action(Player player) {
+		if(menu.showCardText(this)) {
+			community.nextCard().action(player);
+		} else {
+			player.pay(dm);
+			parking.addMoney(dm);
+		}
 	}
 }

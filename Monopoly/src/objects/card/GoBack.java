@@ -1,18 +1,28 @@
 package objects.card;
+//JAVADOC
+
+import objects.Player;
 
 /**
- * GoBack is the back card (Gehe x Felder zurück).
- * A card is a trigger for a specific event defined in the gameplay mechanics
+ * GoBack is the back card.
  */
 public class GoBack extends Card {
 	private int fields;
 
 	/**
-	 * @param name Name of the card
-	 * @param text Text of the card
+	 * @param name The value determines the name of the Card.
+	 * @param text The value determines the text of the Card.
 	 */
 	public GoBack(String name, String text, int fields) {
 		super(name, text);
 		this.fields = fields;
+	}
+
+	//JAVADOC
+	@Override
+	public void action(Player player) {
+		menu.showCardText(this);
+		player.move(fields, false);
+		player.getField().action(player);
 	}
 }

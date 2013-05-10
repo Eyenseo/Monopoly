@@ -1,18 +1,39 @@
 package objects.card;
+//JAVADOC
+
+import objects.Player;
+
+import java.util.Vector;
 
 /**
  * SpecialPayment is a special transaction card (player based transactions).
- * A card is a trigger for a specific event defined in the gameplay mechanics
+ *
+ * @version 1
  */
 public class SpecialPayment extends Card {
 	private int dm;
+	Vector<Player> playerVector;
 
 	/**
-	 * @param name Name of the card
-	 * @param text Text of the card
+	 * @param name The value determines the name of the Card.
+	 * @param text The value determines the text of the Card.
 	 */
 	public SpecialPayment(String name, String text, int dm) {
 		super(name, text);
 		this.dm = dm;
+	}
+
+	//JavaDoc
+	@Override
+	public void action(Player player) {
+		menu.showCardText(this);
+		for(Player p : playerVector) {
+			player.pay(dm);
+			p.addMoney(dm);
+		}
+	}
+
+	public void setPlayerVector(Vector<Player> playerVector) {
+		this.playerVector = playerVector;
 	}
 }

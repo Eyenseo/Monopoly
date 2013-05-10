@@ -1,15 +1,21 @@
 package objects.card;
+//JAVADOC
+
+import objects.Player;
+import ui.Menu;
 
 /**
- * Card is the superclass of every card object
+ * Card is the superclass of every card object.
  */
 public abstract class Card {
 	private final String NAME;
 	private final String TEXT;
+	int  index;
+	Menu menu;
 
 	/**
-	 * @param name Name of the card
-	 * @param text Textfield of the card
+	 * @param name The value determines the name of the Card.
+	 * @param text The value determines the text of the Card.
 	 */
 	Card(String name, String text) {
 		this.NAME = name;
@@ -17,17 +23,34 @@ public abstract class Card {
 	}
 
 	/**
-	 * @return This returns the name of a card.
+	 * @return The return value is the name of a Card.
 	 */
 	public String getName() {
 		return this.NAME;
 	}
 
 	/**
-	 * @return This returns the textfield of a card.
+	 * @return The return value is the text field of a Card.
 	 */
 	public String getText() {
 		return this.TEXT;
 	}
-	//	public abstract void action();
+
+	//JAVADOC
+	public abstract void action(Player player);
+
+	/**
+	 * @param index The value determines the index of the Card in the CardStack
+	 * @see CardStack
+	 */
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	/**
+	 * @param menu The value determines what menu will be used.
+	 */
+	public void setMenu(Menu menu) {
+		this.menu = menu;
+	}
 }

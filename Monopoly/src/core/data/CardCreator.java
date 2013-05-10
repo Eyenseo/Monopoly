@@ -1,38 +1,54 @@
 package core.data;
 
 import objects.card.*;
-import objects.exceptions.EndOfBlockException;
-import objects.exceptions.StorageReaderException;
-import objects.exceptions.card.*;
+import objects.exceptions.data.ControlWordNotFoundException;
+import objects.exceptions.data.EndOfBlockException;
+import objects.exceptions.data.StorageReaderException;
+import objects.exceptions.data.card.*;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
-//TODO Doc
+/**
+ * The CardCreator creates Card objects based on the data in a file located in the storage package.
+ *
+ * @author Eyenseo
+ * @version 1
+ * @see Card
+ */
 public class CardCreator extends StorageReader {
 	private final String NAME;
 
-	//TODO Doc
-	public CardCreator(String file, String name) {
+	/**
+	 * @param file The value determines which file will be loaded.
+	 * @param name The value determines the name of the Cards
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
+	public CardCreator(String file, String name) throws StorageReaderException {
 		super(file);
 		NAME = name;
 	}
 
-	//TODO Doc
-	public Card[] cardArray() throws StorageReaderException {
-		Vector<Card> cardVector = new Vector<Card>();
-		Card[] cardArray;
+	/**
+	 * @return The return value is a Vector with Card objects fom the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
+	public ArrayList<Card> cardArray() throws StorageReaderException {
+		ArrayList<Card> cardVector = new ArrayList<Card>();
 		Card temp;
 		while((temp = nextCard()) != null) {
 			cardVector.add(temp);
 		}
-		cardArray = new Card[cardVector.size()];
-		cardVector.toArray(cardArray);
-		return cardArray;
+		return cardVector;
 	}
 
-	//TODO Doc
+	/**
+	 * @return The return value is the next Card, if the end of the file is reached it returns null.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
 	private Card nextCard() throws StorageReaderException {
-		String line = nextControllWord();
+		String line = nextControlWord();
 		if(line != null) {
 			if(line.equals("#back")) {
 				return createGoBack();
@@ -44,7 +60,7 @@ public class CardCreator extends StorageReader {
 				return createGoToStation();
 			}
 			if(line.equals("#jail")) {
-				return createJail();
+				return createArrest();
 			}
 			if(line.equals("#jailbait")) {
 				return createJailbait();
@@ -61,12 +77,16 @@ public class CardCreator extends StorageReader {
 			if(line.equals("#streetWork")) {
 				return createStreetWork();
 			}
-			throw new CardCreationException(line);
+			throw new ControlWordNotFoundException(line);
 		}
 		return null;
 	}
 
-	//TODO Doc
+	/**
+	 * @return the return value is a GoBack Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
 	private GoBack createGoBack() throws StorageReaderException {
 		String text = null;
 		try {
@@ -77,11 +97,15 @@ public class CardCreator extends StorageReader {
 			}
 			return new GoBack(NAME, text, fields);
 		} catch(Exception e) {
-			throw new GoBackCreationException(NAME, e);
+			throw new GoBackCreationException(NAME + ": " + text, e);
 		}
 	}
 
-	//TODO Doc
+	/**
+	 * @return the return value is a GoTo Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
 	private GoTo createGoTo() throws StorageReaderException {
 		String text = null;
 		try {
@@ -93,11 +117,15 @@ public class CardCreator extends StorageReader {
 			}
 			return new GoTo(NAME, text, field, overGo);
 		} catch(Exception e) {
-			throw new GoToCreationException(NAME, e);
+			throw new GoToCreationException(NAME + ": " + text, e);
 		}
 	}
 
-	//TODO Doc
+	/**
+	 * @return the return value is a GoToStation Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
 	private GoToStation createGoToStation() throws StorageReaderException {
 		String text = null;
 		try {
@@ -107,25 +135,33 @@ public class CardCreator extends StorageReader {
 			}
 			return new GoToStation(NAME, text);
 		} catch(Exception e) {
-			throw new GoToStationCreationException(NAME, e);
+			throw new GoToStationCreationException(NAME + ": " + text, e);
 		}
 	}
 
-	//TODO Doc
-	private Jail createJail() throws StorageReaderException {
+	/**
+	 * @return the return value is a Arrest Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
+	private Arrest createArrest() throws StorageReaderException {
 		String text = null;
 		try {
 			text = nextString();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new Jail(NAME, text);
+			return new Arrest(NAME, text);
 		} catch(Exception e) {
-			throw new JailCreationException(NAME, e);
+			throw new JailCreationException(NAME + ": " + text, e);
 		}
 	}
 
-	//TODO Doc
+	/**
+	 * @return the return value is a Jailbait Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
 	private Jailbait createJailbait() throws StorageReaderException {
 		String text = null;
 		try {
@@ -135,25 +171,34 @@ public class CardCreator extends StorageReader {
 			}
 			return new Jailbait(NAME, text);
 		} catch(Exception e) {
-			throw new JailbaitCreationException(NAME, e);
+			throw new JailbaitCreationException(NAME + ": " + text, e);
 		}
 	}
 
-	//TODO Doc
+	/**
+	 * @return the return value is a PayFineTakeCard Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
 	private PayFineTakeCard createPayFineTakeCard() throws StorageReaderException {
 		String text = null;
 		try {
 			text = nextString();
+			int dm = nextInt();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(path);
 			}
-			return new PayFineTakeCard(NAME, text);
+			return new PayFineTakeCard(NAME, text, dm);
 		} catch(Exception e) {
-			throw new PayFineTakeCardCreationException(NAME, e);
+			throw new PayFineTakeCardCreationException(NAME + ": " + text, e);
 		}
 	}
 
-	//TODO Doc
+	/**
+	 * @return the return value is a Payment Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
 	private Payment createPayment() throws StorageReaderException {
 		String text = null;
 		try {
@@ -164,11 +209,15 @@ public class CardCreator extends StorageReader {
 			}
 			return new Payment(NAME, text, dm);
 		} catch(Exception e) {
-			throw new PaymentCreationException(NAME, e);
+			throw new PaymentCreationException(NAME + ": " + text, e);
 		}
 	}
 
-	//TODO Doc
+	/**
+	 * @return the return value is a SpecialPayment Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
 	private SpecialPayment createSpecialPayment() throws StorageReaderException {
 		String text = null;
 		try {
@@ -179,11 +228,15 @@ public class CardCreator extends StorageReader {
 			}
 			return new SpecialPayment(NAME, text, dm);
 		} catch(Exception e) {
-			throw new SpecialPaymentCreationException(NAME, e);
+			throw new SpecialPaymentCreationException(NAME + ": " + text, e);
 		}
 	}
 
-	//TODO Doc
+	/**
+	 * @return the return value is a StreetWork Object based on the data in the file.
+	 *
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 */
 	private StreetWork createStreetWork() throws StorageReaderException {
 		String text = null;
 		try {
@@ -195,7 +248,7 @@ public class CardCreator extends StorageReader {
 			}
 			return new StreetWork(NAME, text, dmHouse, dmHotel);
 		} catch(Exception e) {
-			throw new StreetWorkCreationException(NAME, e);
+			throw new StreetWorkCreationException(NAME + ": " + text, e);
 		}
 	}
 }
