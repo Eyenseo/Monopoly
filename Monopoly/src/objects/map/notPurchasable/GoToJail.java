@@ -38,5 +38,6 @@ public class GoToJail extends NotPurchasable implements Serializable {
 	//JAVADOC
 	public void action(Player player) {
 		player.setField(jail);
+		player.setInJail(true);
 	}
 }
