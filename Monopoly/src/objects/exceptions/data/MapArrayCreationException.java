@@ -1,6 +1,5 @@
-package objects.exceptions.data.map;
+package objects.exceptions.data;
 
-import objects.exceptions.data.StorageReaderException;
 import objects.map.FieldCircularList;
 
 /**

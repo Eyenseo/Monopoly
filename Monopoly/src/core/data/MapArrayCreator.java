@@ -1,9 +1,9 @@
 package core.data;
 
 import objects.exceptions.data.ControlWordNotFoundException;
+import objects.exceptions.data.CreationException;
 import objects.exceptions.data.EndOfBlockException;
 import objects.exceptions.data.StorageReaderException;
-import objects.exceptions.data.map.*;
 import objects.map.FieldCircularList;
 import objects.map.notPurchasable.*;
 import objects.map.purchasable.Facility;
@@ -138,7 +138,7 @@ public class MapArrayCreator extends StorageReader {
 			}
 			return new Street(name, price, income, mortgage, upgrade, color);
 		} catch(Exception e) {
-			throw new StreetCreationException(name, e);
+			throw new CreationException(name, "Street", e);
 		}
 	}
 
@@ -162,7 +162,7 @@ public class MapArrayCreator extends StorageReader {
 			}
 			return new Station(name, price, income, mortgage);
 		} catch(Exception e) {
-			throw new StationCreationException(name, e);
+			throw new CreationException(name, "Station", e);
 		}
 	}
 
@@ -183,7 +183,7 @@ public class MapArrayCreator extends StorageReader {
 			}
 			return new Facility(name, price, income, mortgage);
 		} catch(Exception e) {
-			throw new FacilityCreationException(name, e);
+			throw new CreationException(name, "Facility", e);
 		}
 	}
 
@@ -202,7 +202,7 @@ public class MapArrayCreator extends StorageReader {
 			}
 			return new Tax(name, bill);
 		} catch(Exception e) {
-			throw new TaxCreationException(name, e);
+			throw new CreationException(name, "Tax", e);
 		}
 	}
 
@@ -220,7 +220,7 @@ public class MapArrayCreator extends StorageReader {
 			}
 			return new Chance(name);
 		} catch(Exception e) {
-			throw new ChanceCreationException(name, e);
+			throw new CreationException(name, "Chance", e);
 		}
 	}
 
@@ -238,7 +238,7 @@ public class MapArrayCreator extends StorageReader {
 			}
 			return new Community(name);
 		} catch(Exception e) {
-			throw new CommunityCreationException(name, e);
+			throw new CreationException(name, "Community", e);
 		}
 	}
 
@@ -257,7 +257,7 @@ public class MapArrayCreator extends StorageReader {
 			}
 			return new Go(name, turnMoney);
 		} catch(Exception e) {
-			throw new GoCreationException(name, e);
+			throw new CreationException(name, "Go", e);
 		}
 	}
 
@@ -275,7 +275,7 @@ public class MapArrayCreator extends StorageReader {
 			}
 			return new Jail(name);
 		} catch(Exception e) {
-			throw new JailCreationException(name, e);
+			throw new CreationException(name, "Jail", e);
 		}
 	}
 
@@ -293,7 +293,7 @@ public class MapArrayCreator extends StorageReader {
 			}
 			return new Parking(name);
 		} catch(Exception e) {
-			throw new ParkingCreationException(name, e);
+			throw new CreationException(name, "Parking", e);
 		}
 	}
 
@@ -311,7 +311,7 @@ public class MapArrayCreator extends StorageReader {
 			}
 			return new GoToJail(name);
 		} catch(Exception e) {
-			throw new GoToJailCreationException(name, e);
+			throw new CreationException(name, "GoToJail", e);
 		}
 	}
 }

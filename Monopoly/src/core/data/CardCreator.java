@@ -2,9 +2,9 @@ package core.data;
 
 import objects.card.*;
 import objects.exceptions.data.ControlWordNotFoundException;
+import objects.exceptions.data.CreationException;
 import objects.exceptions.data.EndOfBlockException;
 import objects.exceptions.data.StorageReaderException;
-import objects.exceptions.data.card.*;
 
 import java.util.ArrayList;
 
@@ -97,7 +97,7 @@ public class CardCreator extends StorageReader {
 			}
 			return new GoBack(NAME, text, fields);
 		} catch(Exception e) {
-			throw new GoBackCreationException(NAME + ": " + text, e);
+			throw new CreationException(NAME + ": " + text, "GoBack", e);
 		}
 	}
 
@@ -117,7 +117,7 @@ public class CardCreator extends StorageReader {
 			}
 			return new GoTo(NAME, text, field, overGo);
 		} catch(Exception e) {
-			throw new GoToCreationException(NAME + ": " + text, e);
+			throw new CreationException(NAME + ": " + text, "GoTo", e);
 		}
 	}
 
@@ -135,7 +135,7 @@ public class CardCreator extends StorageReader {
 			}
 			return new GoToStation(NAME, text);
 		} catch(Exception e) {
-			throw new GoToStationCreationException(NAME + ": " + text, e);
+			throw new CreationException(NAME + ": " + text, "GoToStation", e);
 		}
 	}
 
@@ -153,7 +153,7 @@ public class CardCreator extends StorageReader {
 			}
 			return new Arrest(NAME, text);
 		} catch(Exception e) {
-			throw new JailCreationException(NAME + ": " + text, e);
+			throw new CreationException(NAME + ": " + text, "Arrest", e);
 		}
 	}
 
@@ -171,7 +171,7 @@ public class CardCreator extends StorageReader {
 			}
 			return new Jailbait(NAME, text);
 		} catch(Exception e) {
-			throw new JailbaitCreationException(NAME + ": " + text, e);
+			throw new CreationException(NAME + ": " + text, "Jailbait", e);
 		}
 	}
 
@@ -190,7 +190,7 @@ public class CardCreator extends StorageReader {
 			}
 			return new PayFineTakeCard(NAME, text, dm);
 		} catch(Exception e) {
-			throw new PayFineTakeCardCreationException(NAME + ": " + text, e);
+			throw new CreationException(NAME + ": " + text, "PayFineTakeCard", e);
 		}
 	}
 
@@ -209,7 +209,7 @@ public class CardCreator extends StorageReader {
 			}
 			return new Payment(NAME, text, dm);
 		} catch(Exception e) {
-			throw new PaymentCreationException(NAME + ": " + text, e);
+			throw new CreationException(NAME + ": " + text, "Payment", e);
 		}
 	}
 
@@ -228,7 +228,7 @@ public class CardCreator extends StorageReader {
 			}
 			return new SpecialPayment(NAME, text, dm);
 		} catch(Exception e) {
-			throw new SpecialPaymentCreationException(NAME + ": " + text, e);
+			throw new CreationException(NAME + ": " + text, "SpecialPayment", e);
 		}
 	}
 
@@ -248,7 +248,7 @@ public class CardCreator extends StorageReader {
 			}
 			return new StreetWork(NAME, text, dmHouse, dmHotel);
 		} catch(Exception e) {
-			throw new StreetWorkCreationException(NAME + ": " + text, e);
+			throw new CreationException(NAME + ": " + text, "StreetWork", e);
 		}
 	}
 }
