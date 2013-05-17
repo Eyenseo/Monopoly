@@ -32,16 +32,16 @@ public class Street extends PurchasableCircularList implements Serializable {
 	 */
 	public Street(String name, int price, int[] income, int mortgage, int upgrade, int[] color) {
 		super(name, price, income, mortgage);
-		this.UPGRADE = upgrade;
-		this.COLOR = color;
+		UPGRADE = upgrade;
+		COLOR = color;
 	}
 
 	/**
 	 * This method is for buying houses or hotels and setting the stage accordingly up.
 	 */
 	public void nextStage() {
-		this.stage++;
-		this.owner.pay(UPGRADE);
+		stage++;
+		owner.pay(UPGRADE);
 	}
 
 	/**
@@ -50,8 +50,8 @@ public class Street extends PurchasableCircularList implements Serializable {
 	 */
 	public boolean isSameColor(Street street) {
 		String[] compare = {"", ""};
-		for(int i = 0; i < this.COLOR.length; i++) {
-			compare[0] += this.COLOR[i];
+		for(int i = 0; i < COLOR.length; i++) {
+			compare[0] += COLOR[i];
 			compare[1] += street.COLOR[i];
 		}
 		return compare[0].equals(compare[1]);

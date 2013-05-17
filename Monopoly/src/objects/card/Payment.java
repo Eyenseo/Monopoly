@@ -13,8 +13,8 @@ import java.io.Serializable;
  */
 public class Payment extends Card implements Serializable {
 	private static final long serialVersionUID = 3661515495615563278L;
-	private int dm;
-	Parking parking;
+	private int     dm;
+	private Parking parking;
 
 	/**
 	 * @param name The value determines the name of the Card.

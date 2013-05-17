@@ -23,7 +23,7 @@ public class Go extends NotPurchasable implements Serializable {
 	 */
 	public Go(String name, int turnMoney) throws MoreThanOneDataSetException {
 		super(name);
-		this.TURNMONEY = turnMoney;
+		TURNMONEY = turnMoney;
 		if(justOneInstance) {
 			throw new MoreThanOneDataSetException(name);
 		}

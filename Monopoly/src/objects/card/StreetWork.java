@@ -15,9 +15,9 @@ import java.util.ArrayList;
  */
 public class StreetWork extends Card implements Serializable {
 	private static final long serialVersionUID = 8081671259197653645L;
-	private int dmHouse;
-	private int dmHotel;
-	Parking parking;
+	private int     dmHouse;
+	private int     dmHotel;
+	private Parking parking;
 
 	/**
 	 * @param name    The value determines the name of the Card.

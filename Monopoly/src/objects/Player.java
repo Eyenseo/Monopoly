@@ -33,9 +33,9 @@ public class Player implements Serializable {
 	 * @param money The value determines the amount of money the Player has.
 	 */
 	public Player(String name, int money) {
-		this.NAME = name;
+		NAME = name;
 		this.money = money;
-		this.inJail = false;
+		inJail = false;
 		dices = new int[2];
 	}
 
@@ -43,14 +43,14 @@ public class Player implements Serializable {
 	 * @return The return value is the name of the Player.
 	 */
 	public String getName() {
-		return this.NAME;
+		return NAME;
 	}
 
 	/**
 	 * @return The return value is true if the player is in jail else false.
 	 */
 	public boolean isInJail() {
-		return this.inJail;
+		return inJail;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class Player implements Serializable {
 	 * @param purchasable The value determines the PurchasableCircularList object, that is being brought.
 	 */
 	public void buy(PurchasableCircularList purchasable) {
-		this.money -= purchasable.getPrice();
+		money -= purchasable.getPrice();
 		purchasable.setOwner(this);
 	}
 
@@ -81,35 +81,35 @@ public class Player implements Serializable {
 	 * @param purchasable The value determines the PurchasableCircularList object the property that will be added to the player.
 	 */
 	public void addProperty(PurchasableCircularList purchasable) {
-		this.property.add(purchasable);
+		property.add(purchasable);
 	}
 
 	/**
 	 * @param purchasable The value determines the PurchasableCircularList object the property that will be removed to the player.
 	 */
 	public void removeProperty(PurchasableCircularList purchasable) {
-		this.property.remove(purchasable);
+		property.remove(purchasable);
 	}
 
 	/**
 	 * @param amount The value determines the
 	 */
 	public void addMoney(int amount) {
-		this.money += amount;
+		money += amount;
 	}
 
 	/**
 	 * @return The return value is the money amount the Player has.
 	 */
 	public int getMoney() {
-		return this.money;
+		return money;
 	}
 
 	/**
 	 * @return The return value is the array with the last dices.
 	 */
 	public int[] getDices() {
-		return this.dices;
+		return dices;
 	}
 
 	/**
@@ -123,14 +123,14 @@ public class Player implements Serializable {
 	 * @param amount The value determines the money to be removed from the player.
 	 */
 	public void pay(int amount) {
-		this.money -= amount;
+		money -= amount;
 	}
 
 	/**
 	 * @return The return value is the FieldCircularList object the player is standing on.
 	 */
 	public FieldCircularList getField() {
-		return this.field;
+		return field;
 	}
 
 	/**
@@ -201,7 +201,7 @@ public class Player implements Serializable {
 	/**
 	 * @return The return value is a array with two random numbers between 1 and 6.
 	 */
-	public int[] throwDice() {
+	private int[] throwDice() {
 		dices[0] = randomGenerator.nextInt(6) + 1;
 		dices[1] = randomGenerator.nextInt(6) + 1;
 		return dices;

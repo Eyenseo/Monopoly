@@ -13,10 +13,10 @@ import java.io.Serializable;
  */
 public class PayFineTakeCard extends Card implements Serializable {
 	private static final long serialVersionUID = -6500337756850536820L;
-	int       dm;
-	String    option;
-	CardStack community;
-	Parking   parking;
+	private int       dm;
+	private String    option;
+	private CardStack community;
+	private Parking   parking;
 
 	/**
 	 * @param name The value determines the name of the Card.

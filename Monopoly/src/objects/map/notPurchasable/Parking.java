@@ -31,7 +31,7 @@ public class Parking extends NotPurchasable implements Serializable {
 	 * @return The return value is the amount of money the Parking object holds.
 	 */
 	public int getMoney() {
-		return this.money;
+		return money;
 	}
 
 	/**

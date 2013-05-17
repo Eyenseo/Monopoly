@@ -14,7 +14,7 @@ import java.nio.file.Files;
 import java.util.Vector;
 
 //JAVADOC
-public class Loader {
+class Loader {
 	private String path = "/storage/";
 	private FieldCircularList go;
 	private FieldCircularList jail;
@@ -46,8 +46,8 @@ public class Loader {
 				CardStack event = new CardStack("events.txt", "Event Karte");
 				CardStack community = new CardStack("community.txt", "Gemeinschafts Karte");
 				new Connector().connect(mac.getMap(), event, community, playerVector, menu);
-				this.go = mac.getGo();
-				this.jail = mac.getJail();
+				go = mac.getGo();
+				jail = mac.getJail();
 				this.menu = menu;
 				ObjectOutputStream serializedFile = new ObjectOutputStream(new FileOutputStream("monopoly.ser"));
 				serializedFile.writeObject(go);

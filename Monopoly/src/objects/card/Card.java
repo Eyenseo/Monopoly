@@ -21,22 +21,22 @@ public abstract class Card implements Serializable {
 	 * @param text The value determines the text of the Card.
 	 */
 	Card(String name, String text) {
-		this.NAME = name;
-		this.TEXT = text;
+		NAME = name;
+		TEXT = text;
 	}
 
 	/**
 	 * @return The return value is the name of a Card.
 	 */
 	public String getName() {
-		return this.NAME;
+		return NAME;
 	}
 
 	/**
 	 * @return The return value is the text field of a Card.
 	 */
 	public String getText() {
-		return this.TEXT;
+		return TEXT;
 	}
 
 	//JAVADOC

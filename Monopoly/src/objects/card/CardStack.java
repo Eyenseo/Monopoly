@@ -27,7 +27,7 @@ public class CardStack implements Serializable {
 		ArrayList<Card> temp;
 		Random random = new Random();
 		int index;
-		this.top = 0;
+		top = 0;
 		temp = new CardCreator(file, name).cardArray();
 		while(!temp.isEmpty()) {
 			index = random.nextInt(temp.size());

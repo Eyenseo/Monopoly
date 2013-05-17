@@ -3,19 +3,19 @@ package objects.exceptions;
 //JAVADOC
 public abstract class MessageStackException extends Exception {
 	//JAVADOC
-	public MessageStackException(String message) {
+	protected MessageStackException(String message) {
 		super(message);
 	}
 
 	//JAVADOC
-	public MessageStackException(String message, Throwable cause) {
+	protected MessageStackException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
 	//JAVADOC
 	public String getMessageStack() {
 		String message = getMessage() + '\n';
-		if(this.getCause() != null) {
+		if(getCause() != null) {
 			message += getCauseMessage();
 		}
 		return message;
@@ -23,10 +23,10 @@ public abstract class MessageStackException extends Exception {
 
 	//JAVADOC
 	private String getCauseMessage() {
-		if(this.getCause() instanceof MessageStackException) {
-			return getCauseMessage((MessageStackException) this.getCause());
+		if(getCause() instanceof MessageStackException) {
+			return getCauseMessage((MessageStackException) getCause());
 		} else {
-			return this.getCause().getMessage();
+			return getCause().getMessage();
 		}
 	}
 

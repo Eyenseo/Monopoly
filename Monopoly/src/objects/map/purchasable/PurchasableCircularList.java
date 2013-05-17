@@ -15,13 +15,13 @@ import java.util.ArrayList;
  */
 public abstract class PurchasableCircularList extends FieldCircularList implements Serializable {
 	private static final long serialVersionUID = 5554380896193644875L;
-	protected final int[]                   INCOME;
-	protected final int                     MORTGAGE;   //Hypothek
-	protected       boolean                 inMortgage;
-	protected final int                     PRICE;
-	protected       int                     stage;
-	protected       Player                  owner;
-	protected       PurchasableCircularList nextGroupElement;
+	final         int[] INCOME;
+	private final int   MORTGAGE;   //Hypothek
+	boolean inMortgage;
+	private final int PRICE;
+	int                     stage;
+	Player                  owner;
+	PurchasableCircularList nextGroupElement;
 
 	/**
 	 * @param name     The value determines the name of the object.
@@ -31,34 +31,34 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	 */
 	PurchasableCircularList(String name, int price, int[] income, int mortgage) {
 		super(name);
-		this.PRICE = price;
-		this.INCOME = income;
-		this.MORTGAGE = mortgage;
-		this.owner = null;
-		this.stage = 0;
-		this.inMortgage = false;
-		this.nextGroupElement = this;
+		PRICE = price;
+		INCOME = income;
+		MORTGAGE = mortgage;
+		owner = null;
+		stage = 0;
+		inMortgage = false;
+		nextGroupElement = this;
 	}
 
 	/**
 	 * @return The return value is the amount that has to be payed to become the owner.
 	 */
 	public int getPrice() {
-		return this.PRICE;
+		return PRICE;
 	}
 
 	/**
 	 * @return The return value is the mortgage value.
 	 */
 	public int getMortgage() {
-		return this.MORTGAGE;
+		return MORTGAGE;
 	}
 
 	/**
 	 * @return The return value is the stage.
 	 */
 	public int getStage() {
-		return this.stage;
+		return stage;
 	}
 
 	/**
@@ -79,7 +79,7 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	 * @return The return value is true if the PurchasableCircularList is in mortgage.
 	 */
 	public boolean isInMortgage() {
-		return this.inMortgage;
+		return inMortgage;
 	}
 
 	/**
@@ -90,9 +90,9 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	public void setInMortgage(boolean inMortgage) {
 		this.inMortgage = inMortgage;
 		if(inMortgage) {
-			owner.addMoney(this.MORTGAGE);
+			owner.addMoney(MORTGAGE);
 		} else {
-			owner.pay(this.MORTGAGE);
+			owner.pay(MORTGAGE);
 		}
 	}
 
@@ -101,7 +101,7 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	 * @return The return value is the current income.
 	 */
 	public int getBill(Player player) {
-		return this.INCOME[this.stage];
+		return INCOME[stage];
 	}
 
 	/**
@@ -119,14 +119,14 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 
 	@Override
 	public String toString() {
-		return this.getName() + ((getOwner() != null) ? " (" + getOwner() + ")" : "");
+		return getName() + ((getOwner() != null) ? " (" + getOwner() + ")" : "");
 	}
 
 	/**
 	 * @return The return value is the owner.
 	 */
 	public Player getOwner() {
-		return this.owner;
+		return owner;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	//TODO think of a way to keep the houses when trading
 	void sameOwnerCheck() {
 		boolean sameOwner = true;
-		PurchasableCircularList next = this.nextGroupElement;
+		PurchasableCircularList next = nextGroupElement;
 		while(sameOwner && !next.equals(this)) {
 			if(next.getOwner() == null || !next.getOwner().equals(owner)) {
 				sameOwner = false;
@@ -166,7 +166,7 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	/**
 	 * @return The return value is the next group member.
 	 */
-	public PurchasableCircularList getNextGroupElement() {
+	PurchasableCircularList getNextGroupElement() {
 		return nextGroupElement;
 	}
 

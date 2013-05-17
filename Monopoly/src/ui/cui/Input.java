@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
  * @author Eyenseo
  * @version 1
  */
-public class Input {
+class Input {
 	private BufferedReader bReader;
 	private String         input;
 
@@ -40,7 +40,7 @@ public class Input {
 	/**
 	 * @return The return value is the next char from the console.
 	 */
-	char readChar() {
+	private char readChar() {
 		input = readString();
 		if(input.length() == 1) {
 			return input.charAt(0);
@@ -70,7 +70,7 @@ public class Input {
 	 * @param options The value determines the chars to check against.
 	 * @return The return value is true if the input exists in options.
 	 */
-	boolean isCorrectChar(char input, char[] options) {
+	private boolean isCorrectChar(char input, char[] options) {
 		for(char o : options) {
 			if(o == input) {
 				return true;
@@ -146,7 +146,7 @@ public class Input {
 	 * @param options The value determines the ints to check against.
 	 * @return The return value is tur if the int was in the array.
 	 */
-	boolean isCorrectInt(int input, int[] options) {
+	private boolean isCorrectInt(int input, int[] options) {
 		for(int o : options) {
 			if(o == input) {
 				return true;

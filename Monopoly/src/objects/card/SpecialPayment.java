@@ -13,8 +13,8 @@ import java.util.Vector;
  */
 public class SpecialPayment extends Card implements Serializable {
 	private static final long serialVersionUID = 4614526083952983870L;
-	private int dm;
-	Vector<Player> playerVector;
+	private int            dm;
+	private Vector<Player> playerVector;
 
 	/**
 	 * @param name The value determines the name of the Card.

@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class Arrest extends Card implements Serializable {
 	private static final long serialVersionUID = -8298343677959644482L;
-	FieldCircularList jail;
+	private FieldCircularList jail;
 
 	/**
 	 * @param name The value determines the name of the Card.

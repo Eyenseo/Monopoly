@@ -8,8 +8,8 @@ import objects.map.FieldCircularList;
  * @author Eyenseo
  * @version 1
  */
-public class MapArrayCreationException extends StorageReaderException {
-	String message = "";
+class MapArrayCreationException extends StorageReaderException {
+	private String message = "";
 
 	/**
 	 * The message will hold the last two FieldCircularList object names that were created successfully if possible.

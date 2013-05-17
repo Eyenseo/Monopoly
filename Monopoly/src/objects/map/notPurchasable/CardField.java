@@ -14,12 +14,12 @@ import java.io.Serializable;
  */
 public abstract class CardField extends NotPurchasable implements Serializable {
 	private static final long serialVersionUID = -5945920534429656837L;
-	CardStack cardStack;
+	private CardStack cardStack;
 
 	/**
 	 * @param name The value determines the name of the FieldCircularList.
 	 */
-	protected CardField(String name) {
+	CardField(String name) {
 		super(name);
 	}
 

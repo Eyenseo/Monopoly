@@ -23,7 +23,7 @@ abstract class StorageReader {
 	 */
 	StorageReader(String fileName) throws StorageReaderException {
 		try {
-			this.file = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
+			file = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
 			this.fileName = fileName;
 		} catch(FileNotFoundException e) {
 			throw new StorageReaderException("The requested file was not found:\n\t" + this.fileName, e);
@@ -96,7 +96,7 @@ abstract class StorageReader {
 	 * @param line The value determines the String to be checked
 	 * @return The return value is true if the String is a comment.
 	 */
-	boolean isCommentString(String line) {
+	private boolean isCommentString(String line) {
 		return line.length() >= 2 && (line.charAt(0) == '#' && line.charAt(1) == '#');
 	}
 
@@ -125,7 +125,7 @@ abstract class StorageReader {
 	 * @param line The value determines the String to be checked
 	 * @return The return value is true if the next line is the end of a data block.
 	 */
-	boolean isEndOfBlock(String line) {
+	private boolean isEndOfBlock(String line) {
 		return line != null && (line.length() >= 2 && (line.charAt(0) == '#' && line.charAt(1) == '!'));
 	}
 
@@ -133,7 +133,7 @@ abstract class StorageReader {
 	 * @param line The value determines the String to be checked
 	 * @return The return value is true if the String is a control word.
 	 */
-	boolean isControlWord(String line) {
+	private boolean isControlWord(String line) {
 		return line != null && (line.length() >= 2 && (line.charAt(0) == '#' && line.charAt(1) != ' '));
 	}
 }

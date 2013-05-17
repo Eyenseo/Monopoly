@@ -23,7 +23,7 @@ public class Monopoly {
 	private Vector<Player>    playerVector;
 
 	//JAVADOC
-	Monopoly(Loader loader) {
+	private Monopoly(Loader loader) {
 		go = loader.getGo();
 		jail = loader.getJail();
 		playerVector = loader.getPlayerVector();
@@ -84,7 +84,7 @@ public class Monopoly {
 	/**
 	 * @return The return value is true if the game is over and false if it's not.
 	 */
-	public boolean isGameOver() {
+	private boolean isGameOver() {
 		return gameOver;
 	}
 

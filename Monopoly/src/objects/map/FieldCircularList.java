@@ -21,10 +21,10 @@ public abstract class FieldCircularList implements Serializable {
 	/**
 	 * @param name The value determines the name of the Field.
 	 */
-	public FieldCircularList(String name) {
+	protected FieldCircularList(String name) {
 		this.name = name;
-		this.next = this;
-		this.previous = this;
+		next = this;
+		previous = this;
 	}
 
 	/**
@@ -38,7 +38,7 @@ public abstract class FieldCircularList implements Serializable {
 	 * @return The return value is the name.
 	 */
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	//JAVADOC
@@ -53,10 +53,10 @@ public abstract class FieldCircularList implements Serializable {
 		if(previous.previous.equals(previous)) {
 			previous.next = this;
 			previous.previous = this;
-			this.next = previous;
+			next = previous;
 		} else {
-			this.next = previous.next;
-			this.next.previous = this;
+			next = previous.next;
+			next.previous = this;
 			previous.next = this;
 		}
 		this.previous = previous;

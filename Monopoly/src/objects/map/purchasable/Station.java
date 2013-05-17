@@ -34,7 +34,7 @@ public class Station extends PurchasableCircularList implements Serializable {
 	 */
 	@Override void sameOwnerCheck() {
 		int index = 0;
-		PurchasableCircularList next = this.nextGroupElement;
+		PurchasableCircularList next = nextGroupElement;
 		while(!next.equals(this)) {
 			if(next.getOwner() != null && next.getOwner().equals(owner)) {
 				index++;
