@@ -45,7 +45,7 @@ public class MonoTest {
 
 	private void addPlayer(Player player) {
 		playerVector.add(player);
-		player.setField(go);
+		player.setPosition(go);
 	}
 
 	private void nextRound() {
@@ -68,7 +68,7 @@ public class MonoTest {
 			gameOver = turnState == 4;
 		}
 		if(doublesTime == 3) {
-			player.setField(jail);
+			player.setPosition(jail);
 			player.setInJail(true);
 			menu.showInJail();
 		} else if(turnState == 3) {
@@ -90,7 +90,7 @@ public class MonoTest {
 		m.addPlayer(julia);
 		m.addPlayer(new Player("Markus", m.STARTMONEY));
 		julia.setInJail(true);
-		julia.setField(m.jail);
+		julia.setPosition(m.jail);
 		ArrayList<Card> v = m.c.getStack();
 		for(int i = 0; i < v.size(); i++) {
 			if(v.get(i) instanceof Jailbait) {

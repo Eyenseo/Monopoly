@@ -119,7 +119,7 @@ public class FourthTest {
 		gridBagConstraints.gridwidth = 2;
 		panel.add(endApp, gridBagConstraints);
 
-		//TODO change this stuff
+		//TODO change this workaround
 		JFrame packer = new JFrame();
 		packer.add(panel);
 		packer.pack();
@@ -134,13 +134,23 @@ public class FourthTest {
 		JPanel panel = new JPanel(new GridLayout());
 		panel.setBackground(new Color(234, 69, 227));
 
-		JTextArea textArea = new JTextArea("BALALALLLALALAALLALALALA");
+		JTextArea see = new JTextArea("BALALALLLALALAALLALALALA");
+		see.setEditable(false);
 
-		JScrollPane scrollPane = new JScrollPane(textArea);
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		JScrollPane seeScrollPane = new JScrollPane(see);
+		seeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		seeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-		panel.add(scrollPane);
+		JTextArea write = new JTextArea("BALALALLLALALAALLALALALA");
+
+		JScrollPane writeScrollPane = new JScrollPane(write);
+		writeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+		writeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, seeScrollPane, writeScrollPane);
+
+		panel.add(splitPane);
 		return panel;
 	}
 

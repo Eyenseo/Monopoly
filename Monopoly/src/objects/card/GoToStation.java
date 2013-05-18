@@ -27,11 +27,11 @@ public class GoToStation extends Card implements Serializable {
 	@Override
 	public void action(Player player) {
 		menu.showCardText(this);
-		FieldCircularList field = player.getField();
+		FieldCircularList field = player.getPosition();
 		while(!(field instanceof Station)) {
 			field = field.getNext();
 		}
-		player.setField(field);
+		player.setPosition(field);
 		field.action(player);
 	}
 }

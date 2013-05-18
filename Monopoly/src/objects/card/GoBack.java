@@ -26,6 +26,6 @@ public class GoBack extends Card implements Serializable {
 	public void action(Player player) {
 		menu.showCardText(this);
 		player.move(fields, false);
-		player.getField().action(player);
+		player.getPosition().action(player);
 	}
 }

@@ -35,6 +35,6 @@ public class Arrest extends Card implements Serializable {
 	public void action(Player player) {
 		menu.showCardText(this);
 		player.setInJail(true);
-		player.setField(jail);
+		player.setPosition(jail);
 	}
 }

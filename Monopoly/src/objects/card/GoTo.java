@@ -55,10 +55,10 @@ public class GoTo extends Card implements Serializable {
 	@Override
 	public void action(Player player) {
 		menu.showCardText(this);
-		if(OVERGO && field.getFieldNumber() < player.getField().getFieldNumber()) {
+		if(OVERGO && field.getFieldNumber() < player.getPosition().getFieldNumber()) {
 			go.action(player);
 		}
-		player.setField(field);
-		player.getField().action(player);
+		player.setPosition(field);
+		player.getPosition().action(player);
 	}
 }

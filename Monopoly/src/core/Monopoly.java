@@ -35,7 +35,7 @@ public class Monopoly {
 	 */
 	private void addPlayer(Player player) {
 		playerVector.add(player);
-		player.setField(go);
+		player.setPosition(go);
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class Monopoly {
 		while(turnState != 2 && !gameOver) {
 			turnState = menu.mainMenu(player, playerVector, turnState);
 			if(doublesTime == 3) {
-				player.setField(jail);
+				player.setPosition(jail);
 				player.setInJail(true);
 				menu.showInJail();
 				turnState = 2;

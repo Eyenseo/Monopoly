@@ -22,7 +22,7 @@ public class Player implements Serializable {
 	private       boolean           inJail;
 	private       int               money;
 	private       int[]             dices;
-	private       FieldCircularList field;
+	private       FieldCircularList position;
 	private Random                             randomGenerator = new Random();
 	private Vector<Jailbait>                   jailbait        = new Vector<Jailbait>();
 	private ArrayList<PurchasableCircularList> property        = new ArrayList<PurchasableCircularList>();
@@ -129,15 +129,15 @@ public class Player implements Serializable {
 	/**
 	 * @return The return value is the FieldCircularList object the player is standing on.
 	 */
-	public FieldCircularList getField() {
-		return field;
+	public FieldCircularList getPosition() {
+		return position;
 	}
 
 	/**
-	 * @param field The value determines the new FieldCircularList object the player is standing on.
+	 * @param position The value determines the new FieldCircularList object the player is standing on.
 	 */
-	public void setField(FieldCircularList field) {
-		this.field = field;
+	public void setPosition(FieldCircularList position) {
+		this.position = position;
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class Player implements Serializable {
 		if(!inJail || !doubles) {
 			move(dices[0] + dices[1], true);
 		}
-		field.action(this);
+		position.action(this);
 		return doubles;
 	}
 
@@ -178,21 +178,21 @@ public class Player implements Serializable {
 	 */
 	public void move(int by, boolean overGo) {
 		if(by > 0) {
-			if(field.getDiceNext(by) != null) {
-				field = field.getDiceNext(by);
+			if(position.getDiceNext(by) != null) {
+				position = position.getDiceNext(by);
 			} else {
 				for(int i = 0; i < by; i++) {
-					field = field.getNext();
-					if(overGo && field instanceof Go) {
-						field.action(this);
+					position = position.getNext();
+					if(overGo && position instanceof Go) {
+						position.action(this);
 					}
 				}
 			}
 		} else {
 			for(int i = by; i < 0; i++) {
-				field = field.getPrevious();
-				if(overGo && field instanceof Go) {
-					field.action(this);
+				position = position.getPrevious();
+				if(overGo && position instanceof Go) {
+					position.action(this);
 				}
 			}
 		}

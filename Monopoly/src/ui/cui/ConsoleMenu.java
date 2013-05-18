@@ -225,7 +225,7 @@ public class ConsoleMenu implements Menu, Serializable {
 	 */
 	private String getTurnDetails(Player player, boolean beginOfTurn) {
 		String turnDetails = "";
-		FieldCircularList field = player.getField();
+		FieldCircularList field = player.getPosition();
 		if(beginOfTurn) {
 			turnDetails += player.getName() + " ist am Zug!";
 		} else {
@@ -275,7 +275,7 @@ public class ConsoleMenu implements Menu, Serializable {
 	 * @return The return value is a Array - the index is the Menu point that the human has to enter, the value is the method number to be started.
 	 */
 	private int[] buildActionMenu(Player player, int turnState) {
-		FieldCircularList field = player.getField();
+		FieldCircularList field = player.getPosition();
 		ArrayList<Integer> options = new ArrayList<Integer>();
 		options.add(1);
 		if(turnState == 0) {
@@ -791,12 +791,12 @@ public class ConsoleMenu implements Menu, Serializable {
 					end = true;
 					break;
 				case 20: //Buy
-					player.buy((PurchasableCircularList) player.getField());
-					System.out.println(propertyDetail(player, (PurchasableCircularList) player.getField()));
+					player.buy((PurchasableCircularList) player.getPosition());
+					System.out.println(propertyDetail(player, (PurchasableCircularList) player.getPosition()));
 					choice = 0;
 					break;
 				case 21: //Buy upgrade (House/Hotel)
-					((Street) player.getField()).nextStage();
+					((Street) player.getPosition()).nextStage();
 					choice = 0;
 					break;
 				case 22: //Get Mortgage
@@ -814,7 +814,7 @@ public class ConsoleMenu implements Menu, Serializable {
 					choice = 1;
 					break;
 				case 30: //Pay to get out of jail
-					((Jail) player.getField()).payFine(player);
+					((Jail) player.getPosition()).payFine(player);
 					choice = 0;
 					break;
 				case 31: //Use Community jailbait card
