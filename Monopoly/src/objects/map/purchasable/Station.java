@@ -46,7 +46,9 @@ public class Station extends PurchasableCircularList implements Serializable {
 		}
 		next = this;
 		do {
-			next.stage = index;
+			if(next.getOwner() != null && next.getOwner().equals(getOwner())) {
+				next.stage = index;
+			}
 			next = next.getNextGroupElement();
 		} while(!next.equals(this));
 	}
