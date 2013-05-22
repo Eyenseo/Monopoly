@@ -28,11 +28,15 @@ public class SpecialPayment extends Card implements Serializable {
 	//JavaDoc
 	@Override
 	public void action(Player player) {
+		int amount = 0;
 		menu.showCardText(this);
 		for(Player p : playerVector) {
-			player.pay(dm);
-			p.addMoney(dm);
+			if(!player.equals(p)) {
+				p.addMoney(dm);
+				amount += dm;
+			}
 		}
+		player.pay(amount);
 	}
 
 	public void setPlayerVector(Vector<Player> playerVector) {
