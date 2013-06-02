@@ -3,8 +3,8 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class PlaneExtendTest extends JPanel {
-	public PlaneExtendTest() {
+public class PanelExtendTest extends JPanel {
+	public PanelExtendTest() {
 		super(new GridBagLayout());
 
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -37,7 +37,7 @@ class Run {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 
-		frame.getContentPane().add(new PlaneExtendTest());
+		frame.getContentPane().add(new PanelExtendTest());
 		frame.pack();
 		frame.setVisible(true);
 	}
