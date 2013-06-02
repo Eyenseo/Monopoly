@@ -127,7 +127,7 @@ public class MapArrayCreator extends StorageReader {
 				color[i] = nextInt();
 			}
 			int price = nextInt();
-			int[] income = new int[6];
+			int[] income = new int[7];
 			for(int i = 0; i < income.length; i++) {
 				income[i] = nextInt();
 			}
