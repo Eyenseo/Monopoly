@@ -62,4 +62,44 @@ public class Station extends PurchasableCircularList implements Serializable {
 			action(player);
 		}
 	}
+
+	@Override
+	public void setOwner(Player player) {
+		super.setOwner(player);
+		globalStageUpdate();
+	}
+
+	void globalStageUpdate() {
+		Station next = (Station) nextGroupElement;
+		do {
+			next.integrityCheck();
+			next = (Station) next.getNextGroupElement();
+		} while(!next.equals(this));
+	}
+
+	public void integrityCheck() {
+		PurchasableCircularList next = nextGroupElement;
+		int stations = 0;
+		int owned = 0;
+		do {
+			stations++;
+			next = next.getNextGroupElement();
+		} while(!next.equals(this));
+		next = this;
+		do {
+			if(next.getOwner() != null && next.getOwner().equals(this.owner)) {
+				owned++;
+			}
+			next = next.getNextGroupElement();
+		} while(!next.equals(this));
+		if(owned >= (stations * 0.75)) {
+			stage = 3;
+		} else if(owned >= (stations * 0.5)) {
+			stage = 2;
+		} else if(owned >= (stations * 0.25)) {
+			stage = 1;
+		} else {
+			stage = 0;
+		}
+	}
 }
