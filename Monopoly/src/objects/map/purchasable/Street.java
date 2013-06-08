@@ -11,8 +11,9 @@ import java.io.Serializable;
  */
 public class Street extends PurchasableCircularList implements Serializable {
 	private static final long serialVersionUID = 8118177447664813032L;
-	private final int[] COLOR;
-	private final int   UPGRADE;
+	private final int[]   COLOR;
+	private final int     UPGRADE;
+	private       boolean upgradeable;
 
 	/**
 	 * @param name     The value determines the name of the object.
@@ -34,6 +35,7 @@ public class Street extends PurchasableCircularList implements Serializable {
 		super(name, price, income, mortgage);
 		UPGRADE = upgrade;
 		COLOR = color;
+		upgradeable = false;
 	}
 
 	/**
@@ -55,5 +57,35 @@ public class Street extends PurchasableCircularList implements Serializable {
 			compare[1] += street.COLOR[i];
 		}
 		return compare[0].equals(compare[1]);
+	}
+
+	/**
+	 * This method checks if all group members are owned by the same owner and sets the upgradeable status.
+	 */
+	//TODO think of a way to keep the houses when trading
+	@Override
+	public void sameOwnerCheck() {
+		boolean sameOwner = true;
+		Street next = this;
+		do {
+			if(next.getOwner() == null || !next.getOwner().equals(owner)) {
+				sameOwner = false;
+			}
+			next = (Street) next.getNextGroupElement();
+		} while(sameOwner && !next.equals(this));
+		next = this;
+		do {
+			next.upgradeable = sameOwner;
+			if(sameOwner) {
+				if(next.stage == 0) {
+					next.stage = 1;
+				}
+			} else {
+				if(next.stage == 1) {
+					next.stage = 0;
+				}
+			}
+			next = (Street) next.getNextGroupElement();
+		} while(!next.equals(this));
 	}
 }
