@@ -35,4 +35,39 @@ public class Facility extends PurchasableCircularList implements Serializable {
 	public int getBill(Player player) {
 		return INCOME[stage] * (player.getDices()[0] + player.getDices()[1]);
 	}
+
+	@Override public void setOwner(Player player) {
+		super.setOwner(player);
+		globalStageUpdate();
+	}
+
+	void globalStageUpdate() {
+		Facility next = (Facility) nextGroupElement;
+		do {
+			next.intergrityCheck();
+			next = (Facility) next.getNextGroupElement();
+		} while(!next.equals(this));
+	}
+
+	public void intergrityCheck() {
+		PurchasableCircularList next = nextGroupElement;
+		int facilities = 0;
+		int owned = 0;
+		do {
+			facilities++;
+			next = next.getNextGroupElement();
+		} while(!next.equals(this));
+		next = this;
+		do {
+			if(next.getOwner() != null && next.getOwner().equals(this.owner)) {
+				owned++;
+			}
+			next = next.getNextGroupElement();
+		} while(!next.equals(this));
+		if(owned > (facilities / 2)) {
+			stage = 1;
+		} else {
+			stage = 0;
+		}
+	}
 }
