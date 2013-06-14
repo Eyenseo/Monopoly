@@ -2,8 +2,14 @@ package objects.listeners;
 
 import objects.events.ModelEvent;
 
-//JAVADOC
+/**
+ * The ModelEventListener is the listener for a ModelEvent
+ */
 public interface ModelEventListener {
-	//JAVADOC
+	/**
+	 * The method will be performed if a ModelEvent happens
+	 *
+	 * @param event the value determines the event
+	 */
 	public void actionPerformed(ModelEvent event);
 }

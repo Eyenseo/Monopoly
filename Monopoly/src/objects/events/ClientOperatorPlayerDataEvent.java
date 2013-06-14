@@ -1,20 +1,27 @@
 package objects.events;
 
-import objects.value.connection.data.PlayerData;
+import objects.value.PlayerData;
 
 import java.util.EventObject;
 
-//JAVADOC
+/**
+ * The ClientOperatorPlayerDataEvent is thrown at the client if there is new PlayerData
+ */
 public class ClientOperatorPlayerDataEvent extends EventObject {
-	private PlayerData playerData;
+	private final PlayerData playerData;
 
-	//JAVADOC
+	/**
+	 * @param source     the value determines the source of the event
+	 * @param playerData the value determines the PlayerData of the event
+	 */
 	public ClientOperatorPlayerDataEvent(Object source, PlayerData playerData) {
 		super(source);
 		this.playerData = playerData;
 	}
 
-	//JAVADOC
+	/**
+	 * @return the return value is the PlayerData of the event
+	 */
 	public PlayerData getPlayerData() {
 		return playerData;
 	}

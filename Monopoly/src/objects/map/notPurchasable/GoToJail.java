@@ -7,9 +7,6 @@ import java.io.Serializable;
 
 /**
  * The Community Class is the FieldCircularList subclass.
- *
- * @author Eyenseo
- * @version 1
  */
 public class GoToJail extends NotPurchasable implements Serializable {
 	private static final long    serialVersionUID = 2310428836358458471L;
@@ -34,9 +31,12 @@ public class GoToJail extends NotPurchasable implements Serializable {
 		this.jail = jail;
 	}
 
-	@Override
-	//JAVADOC
-	public void action(Player player) {
+	/**
+	 * The method will set the players position to the jail and him in jail
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	@Override public void action(Player player) {
 		player.setPosition(jail);
 		player.setInJail(true);
 	}

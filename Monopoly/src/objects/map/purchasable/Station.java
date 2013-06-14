@@ -1,6 +1,8 @@
 package objects.map.purchasable;
 
 import objects.Player;
+import objects.value.map.FieldData;
+import objects.value.map.StationData;
 
 import java.io.Serializable;
 
@@ -18,7 +20,7 @@ public class Station extends PurchasableCircularList implements Serializable {
 	 * @param price    The value determines the price that the player has to pay to buy it.
 	 * @param income   The values of the array determine the income at the different stages.
 	 *                 <ol start="0">
-	 *                 <li>1 Station</li>
+	 *                 <li>1Station</li>
 	 *                 <li>2 Stations</li>
 	 *                 <li>3 Stations</li>
 	 *                 <li>4 Stations</li>
@@ -36,7 +38,7 @@ public class Station extends PurchasableCircularList implements Serializable {
 		int index = 0;
 		PurchasableCircularList next = nextGroupElement;
 		while(!next.equals(this)) {
-			if(next.getOwner() != null && next.getOwner().equals(owner)) {
+			if(next.getOwner() != null && next.getOwner().equals(getOwner())) {
 				index++;
 				if(index == INCOME.length - 1) {
 					break;
@@ -47,29 +49,58 @@ public class Station extends PurchasableCircularList implements Serializable {
 		next = this;
 		do {
 			if(next.getOwner() != null && next.getOwner().equals(getOwner())) {
-				next.stage = index;
+				next.setStage(index);
 			}
 			next = next.getNextGroupElement();
 		} while(!next.equals(this));
+		firePurchasableEvent();
 	}
 
-	//JAVADOC
+	//TODO Change stage increasing for variable numbers of Stations
+
+	/**
+	 * The method will transfer the money the player has to pay to the owner
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	//TODO Check if used
 	public void action(Player player, boolean doublePay) {
-		if(doublePay && owner != null && !inMortgage) {
+		if(!player.equals(getOwner()) && doublePay && getOwner() != null && !isInMortgage()) {
 			player.pay(getBill(player) * 2);
-			owner.addMoney(getBill(player) * 2);
+			getOwner().addMoney(getBill(player) * 2);
 		} else {
 			action(player);
 		}
 	}
 
-	@Override
-	public void setOwner(Player player) {
-		super.setOwner(player);
+	/**
+	 * @return the return value is a new FieldData object of StationData with the current attributes of the Station
+	 */
+	@Override public FieldData toFieldData() {
+		if(owner != null) {
+			return new StationData(FIELDNUMBER, NAME, INCOME, MORTGAGE, PRICE, inMortgage, stage,
+			                       owner.toPlayerData(false));
+		} else {
+			return new StationData(FIELDNUMBER, NAME, INCOME, MORTGAGE, PRICE, inMortgage, stage, null);
+		}
+	}
+
+	/**
+	 * The method adds this object to the new owner and removes it from the old one.
+	 * The method will fire PurchasableEvent
+	 * The method will check if the stage is right on all its group members
+	 *
+	 * @param owner The value determines the owner.
+	 */
+	@Override public void setOwner(Player owner) {
+		super.setOwner(owner);
 		globalStageUpdate();
 	}
 
-	void globalStageUpdate() {
+	/**
+	 * The method will check if the stage is right on all its group members
+	 */
+	private void globalStageUpdate() {
 		Station next = (Station) nextGroupElement;
 		do {
 			next.integrityCheck();
@@ -77,7 +108,10 @@ public class Station extends PurchasableCircularList implements Serializable {
 		} while(!next.equals(this));
 	}
 
-	public void integrityCheck() {
+	/**
+	 * The method will check for each group member the owner and set the stage accordingly
+	 */
+	private void integrityCheck() {
 		PurchasableCircularList next = nextGroupElement;
 		int stations = 0;
 		int owned = 0;
@@ -87,7 +121,7 @@ public class Station extends PurchasableCircularList implements Serializable {
 		} while(!next.equals(this));
 		next = this;
 		do {
-			if(next.getOwner() != null && next.getOwner().equals(this.owner)) {
+			if(next.getOwner() != null && next.getOwner().equals(owner)) {
 				owned++;
 			}
 			next = next.getNextGroupElement();

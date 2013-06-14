@@ -6,9 +6,6 @@ import objects.exceptions.MessageStackException;
 
 /**
  * The CardConnectionException will be thrown if the needed Street object is not found for a GoTo object.
- *
- * @author Eyenseo
- * @version 1
  */
 public class CardConnectionException extends MessageStackException {
 	/**

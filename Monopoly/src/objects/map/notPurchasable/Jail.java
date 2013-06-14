@@ -6,10 +6,8 @@ import objects.exceptions.data.MoreThanOneDataSetException;
 import java.io.Serializable;
 
 /**
- * The Jail class is the FieldCircularList subclass, if there is none or more than one Instance of this class the game will not start.
- *
- * @author Eyenseo
- * @version 1
+ * The Jail class is the FieldCircularList subclass, if there is none or more than one Instance of this class the game
+ * will not start.
  */
 public class Jail extends NotPurchasable implements Serializable {
 	private static final long serialVersionUID = -7791364597281521600L;
@@ -45,8 +43,11 @@ public class Jail extends NotPurchasable implements Serializable {
 		player.setInJail(false);
 	}
 
-	@Override
-	//JAVADOC
-	public void action(Player player) {
+	/**
+	 * The method does nothing
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	@Override public void action(Player player) {
 	}
 }

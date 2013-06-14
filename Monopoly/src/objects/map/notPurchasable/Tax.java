@@ -6,9 +6,6 @@ import java.io.Serializable;
 
 /**
  * The Tax Class is the FieldCircularList subclass.
- *
- * @author Eyenseo
- * @version 1
  */
 public class Tax extends NotPurchasable implements Serializable {
 	private static final long serialVersionUID = 5530039603072031838L;
@@ -31,9 +28,12 @@ public class Tax extends NotPurchasable implements Serializable {
 		this.parking = parking;
 	}
 
-	@Override
-	//JAVADOC
-	public void action(Player player) {
+	/**
+	 * The method will transfer the tax money from the player to <code>Parking</code>
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	@Override public void action(Player player) {
 		player.pay(bill);
 		parking.addMoney(bill);
 	}

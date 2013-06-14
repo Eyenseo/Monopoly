@@ -8,9 +8,6 @@ import java.io.*;
 
 /**
  * The StorageReader is a input class that reads the files in the storage package.
- *
- * @author Eyenseo
- * @version 1
  */
 abstract class StorageReader {
 	private BufferedReader file;
@@ -75,7 +72,8 @@ abstract class StorageReader {
 	/**
 	 * @return The return value is the next valid control word as String.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	String nextControlWord() throws StorageReaderException {
 		try {

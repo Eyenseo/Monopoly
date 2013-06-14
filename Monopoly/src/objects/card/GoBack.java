@@ -1,5 +1,4 @@
 package objects.card;
-//JAVADOC
 
 import objects.Player;
 
@@ -10,7 +9,7 @@ import java.io.Serializable;
  */
 public class GoBack extends Card implements Serializable {
 	private static final long serialVersionUID = 7543740810702116460L;
-	private int fields;
+	private final int fields;
 
 	/**
 	 * @param name The value determines the name of the Card.
@@ -21,7 +20,12 @@ public class GoBack extends Card implements Serializable {
 		this.fields = fields;
 	}
 
-	//JAVADOC
+	/**
+	 * --- TODO
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
 		menu.showCardText(this);

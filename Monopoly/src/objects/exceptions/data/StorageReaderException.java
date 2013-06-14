@@ -4,9 +4,6 @@ import objects.exceptions.MessageStackException;
 
 /**
  * The StorageReaderException is the basic Exception for all Exceptions thrown while reading out of the storage.
- *
- * @author Eyenseo
- * @version 1
  */
 public class StorageReaderException extends MessageStackException {
 	/**

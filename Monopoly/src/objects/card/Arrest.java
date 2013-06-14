@@ -4,7 +4,6 @@ import objects.Player;
 import objects.map.FieldCircularList;
 
 import java.io.Serializable;
-//JAVADOC
 
 /**
  * Arrest is the jail card.
@@ -30,11 +29,15 @@ public class Arrest extends Card implements Serializable {
 		this.jail = jail;
 	}
 
-	//JavaDoc
+	/**
+	 * The method will set the player position to jail and set the player to be inJail
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
 	@Override
 	public void action(Player player) {
 		menu.showCardText(this);
-		player.setInJail(true);
 		player.setPosition(jail);
+		player.setInJail(true);
 	}
 }

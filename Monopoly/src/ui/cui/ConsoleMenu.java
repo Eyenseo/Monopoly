@@ -19,9 +19,6 @@ import java.util.Vector;
 
 /**
  * The ConsoleMenu class provides all interaction with the Human over the console.
- *
- * @author Eyenseo
- * @version 1
  */
 public class ConsoleMenu implements Menu, Serializable {
 	private static final long  serialVersionUID = -1831543365905452321L;
@@ -85,7 +82,8 @@ public class ConsoleMenu implements Menu, Serializable {
 	/**
 	 * The method prints the Details of the group members without index.
 	 *
-	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList objects.
+	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList
+	 *                 objects.
 	 * @param property The value determines the PurchasableCircularList object of the group to be shown.
 	 */
 	private void groupDetails(Player player, PurchasableCircularList property) {
@@ -93,7 +91,8 @@ public class ConsoleMenu implements Menu, Serializable {
 	}
 
 	/**
-	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList objects.
+	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList
+	 *                 objects.
 	 * @param property The value determines the PurchasableCircularList object of the group to be shown.
 	 * @param index    The value determines the start index to be shown.
 	 * @return The return value is a, in two column arranged String of the propertyDetail method.
@@ -110,7 +109,8 @@ public class ConsoleMenu implements Menu, Serializable {
 	}
 
 	/**
-	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList objects.
+	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList
+	 *                 objects.
 	 * @param property The value determines the PurchasableCircularList object of the group to be shown.
 	 * @param index    The value determines the start index to be shown.
 	 * @return The return value is a box with all information about a PurchasableCircularList object.
@@ -202,7 +202,8 @@ public class ConsoleMenu implements Menu, Serializable {
 	}
 
 	/**
-	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList objects.
+	 * @param player   The value determines the payer to check against for the owner of the PurchasableCircularList
+	 *                 objects.
 	 * @param property The value determines the PurchasableCircularList object of the group to be shown.
 	 * @return The return value is a box with all information about a PurchasableCircularList object.
 	 */
@@ -272,7 +273,8 @@ public class ConsoleMenu implements Menu, Serializable {
 	/**
 	 * @param player    The value determines the player who is currently at turn.
 	 * @param turnState The value determines the turn state.
-	 * @return The return value is a Array - the index is the Menu point that the human has to enter, the value is the method number to be started.
+	 * @return The return value is a Array - the index is the Menu point that the human has to enter, the value is the
+	 *         method number to be started.
 	 */
 	private int[] buildActionMenu(Player player, int turnState) {
 		FieldCircularList field = player.getPosition();
@@ -351,7 +353,8 @@ public class ConsoleMenu implements Menu, Serializable {
 
 	/**
 	 * @param player The value determines the player who is currently at turn.
-	 * @return The return value is a Array - the index is the Menu point that the human has to enter, the value is the method number to be started.
+	 * @return The return value is a Array - the index is the Menu point that the human has to enter, the value is the
+	 *         method number to be started.
 	 */
 	private int[] buildOrganisationMenu(Player player) {
 		ArrayList<Integer> options = new ArrayList<Integer>();
@@ -791,7 +794,8 @@ public class ConsoleMenu implements Menu, Serializable {
 					end = true;
 					break;
 				case 20: //Buy
-					player.buy((PurchasableCircularList) player.getPosition());
+					player.pay(((PurchasableCircularList) player.getPosition()).getPrice());
+					((PurchasableCircularList) player.getPosition()).setOwner(player);
 					System.out.println(propertyDetail(player, (PurchasableCircularList) player.getPosition()));
 					choice = 0;
 					break;

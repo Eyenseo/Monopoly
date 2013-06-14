@@ -2,9 +2,13 @@ package objects.events;
 
 import java.util.EventObject;
 
-//JAVADOC
+/**
+ * The PurchasableEvent is thrown in the gui
+ */
 public class PurchasableEvent extends EventObject {
-	//JAVADOC
+	/**
+	 * @param source the value determines the source of the event
+	 */
 	public PurchasableEvent(Object source) {
 		super(source);
 	}

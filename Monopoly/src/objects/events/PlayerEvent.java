@@ -4,9 +4,13 @@ import objects.Player;
 
 import java.util.EventObject;
 
-//JAVADOC
+/**
+ * The PlayerEvent is thrown in the gui
+ */
 public class PlayerEvent extends EventObject {
-	//JAVADOC
+	/**
+	 * @param source the value determines the source of the event
+	 */
 	public PlayerEvent(Player source) {
 		super(source);
 	}

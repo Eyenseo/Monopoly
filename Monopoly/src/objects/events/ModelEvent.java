@@ -2,9 +2,13 @@ package objects.events;
 
 import java.util.EventObject;
 
-//JAVADOC
+/**
+ * The ModelEvent is thrown in the gui
+ */
 public class ModelEvent extends EventObject {
-	//JAVADOC
+	/**
+	 * @param source the value determines the source of the event
+	 */
 	public ModelEvent(Object source) {
 		super(source);
 	}

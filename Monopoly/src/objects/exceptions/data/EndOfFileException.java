@@ -2,9 +2,6 @@ package objects.exceptions.data;
 
 /**
  * The EndOfFileException is the Exception if a file ends unexpected..
- *
- * @author Eyenseo
- * @version 1
  */
 public class EndOfFileException extends StorageReaderException {
 	/**

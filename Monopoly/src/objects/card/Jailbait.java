@@ -3,7 +3,6 @@ package objects.card;
 import objects.Player;
 
 import java.io.Serializable;
-//JAVADOC
 
 /**
  * Jailbait is the jailbait card.
@@ -37,7 +36,12 @@ public class Jailbait extends Card implements Serializable {
 		player.setInJail(false);
 	}
 
-	//JAVADOC
+	/**
+	 * --- TODO
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
 		menu.showCardText(this);

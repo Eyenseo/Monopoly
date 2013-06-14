@@ -6,10 +6,8 @@ import objects.exceptions.data.MoreThanOneDataSetException;
 import java.io.Serializable;
 
 /**
- * The Go Class is the FieldCircularList subclass that is the Start of the game, if there is none or more than one Instance of this class the game will not start.
- *
- * @author Eyenseo
- * @version 1
+ * The Go Class is the FieldCircularList subclass that is the Start of the game, if there is none or more than one
+ * Instance of this class the game will not start.
  */
 public class Go extends NotPurchasable implements Serializable {
 	private static final long    serialVersionUID = 6005179230915968193L;
@@ -30,7 +28,11 @@ public class Go extends NotPurchasable implements Serializable {
 		Go.justOneInstance = true;
 	}
 
-	//JAVADOC
+	/**
+	 * The method will add money to the player
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
 	@Override
 	public void action(Player player) {
 		player.addMoney(TURNMONEY);

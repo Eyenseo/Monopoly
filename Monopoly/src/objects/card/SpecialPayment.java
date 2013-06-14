@@ -1,10 +1,9 @@
 package objects.card;
-//JAVADOC
 
 import objects.Player;
 
 import java.io.Serializable;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * SpecialPayment is a special transaction card (player based transactions).
@@ -13,8 +12,8 @@ import java.util.Vector;
  */
 public class SpecialPayment extends Card implements Serializable {
 	private static final long serialVersionUID = 4614526083952983870L;
-	private int            dm;
-	private Vector<Player> playerVector;
+	private final int               dm;
+	private       ArrayList<Player> playerArrayList;
 
 	/**
 	 * @param name The value determines the name of the Card.
@@ -25,12 +24,17 @@ public class SpecialPayment extends Card implements Serializable {
 		this.dm = dm;
 	}
 
-	//JavaDoc
+	/**
+	 * --- TODO
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
 		int amount = 0;
 		menu.showCardText(this);
-		for(Player p : playerVector) {
+		for(Player p : playerArrayList) {
 			if(!player.equals(p)) {
 				p.addMoney(dm);
 				amount += dm;
@@ -39,7 +43,10 @@ public class SpecialPayment extends Card implements Serializable {
 		player.pay(amount);
 	}
 
-	public void setPlayerVector(Vector<Player> playerVector) {
-		this.playerVector = playerVector;
+	/**
+	 * @param playerArrayList the value determines the array list where all player are stored
+	 */
+	public void setPlayerArrayList(ArrayList<Player> playerArrayList) {
+		this.playerArrayList = playerArrayList;
 	}
 }

@@ -1,5 +1,4 @@
 package objects.card;
-//JAVADOC
 
 import objects.Player;
 import objects.map.FieldCircularList;
@@ -23,7 +22,12 @@ public class GoToStation extends Card implements Serializable {
 		super(name, text);
 	}
 
-	//JAVADOC
+	/**
+	 * --- TODO
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
 		menu.showCardText(this);

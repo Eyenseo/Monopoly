@@ -1,5 +1,4 @@
 package objects.card;
-//JAVADOC
 
 import objects.Player;
 import objects.map.notPurchasable.Parking;
@@ -15,9 +14,9 @@ import java.util.ArrayList;
  */
 public class StreetWork extends Card implements Serializable {
 	private static final long serialVersionUID = 8081671259197653645L;
-	private int     dmHouse;
-	private int     dmHotel;
-	private Parking parking;
+	private final int     dmHouse;
+	private final int     dmHotel;
+	private       Parking parking;
 
 	/**
 	 * @param name    The value determines the name of the Card.
@@ -38,7 +37,12 @@ public class StreetWork extends Card implements Serializable {
 		this.parking = parking;
 	}
 
-	//javadoc
+	/**
+	 * --- TODO
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
 		int amount = 0;

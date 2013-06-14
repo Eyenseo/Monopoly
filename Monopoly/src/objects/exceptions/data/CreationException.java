@@ -2,9 +2,6 @@ package objects.exceptions.data;
 
 /**
  * The CreationException will be thrown if there was a problem while creating a object.
- *
- * @author Eyenseo
- * @version 1
  */
 public class CreationException extends StorageReaderException {
 	/**

@@ -8,8 +8,6 @@ import java.io.Serializable;
 /**
  * The CardField class is the super class of all FieldCircularList subclasses that do something with a CardStack.
  *
- * @author Eyenseo
- * @version 1
  * @see CardStack
  */
 public abstract class CardField extends NotPurchasable implements Serializable {
@@ -30,9 +28,12 @@ public abstract class CardField extends NotPurchasable implements Serializable {
 		this.cardStack = cardStack;
 	}
 
-	@Override
-	//JAVADOC
-	public void action(Player player) {
+	/**
+	 * The method will get the next card an run its <code>action</code> method
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	@Override public void action(Player player) {
 		cardStack.nextCard().action(player);
 	}
 }

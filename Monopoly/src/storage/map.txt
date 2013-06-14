@@ -2,55 +2,56 @@
 ##		##	Comment
 ##		#!	Object is finished
 ##		#Street
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##			color red
 ##			color green
 ##			color blue
 ##          price
-##			income
-##			income (normally double of the first income)
-##			income
-##			income
+##			income              (first income should be under 10k)
+##			income              (normally double of the first income)
 ##			income
 ##			income
 ##			income
-##			upgrade (house/hotel)
+##			income
+##			income
+##			upgrade             (house/hotel)
 ##			mortgage
 ##		#Station
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##			price
-##			income
+##			income              (first income should be under 10k)
 ##			income
 ##			income
 ##			income
 ##			mortgage
 ##		#Facility
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##			price
-##			income
+##			income              (first income should be under 10k)
 ##			income
 ##			mortgage
 ##		#Tax
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##			amount
 ##		#Chance
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##		#Community
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##		#Go
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##			moneyByTurn
 ##		#Jail
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##		#Parking
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##		#GoToJail
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##
 ##  Instruction:
 ##      #Go	has to be the first data block!
 ##      No parameter is optional!
 ##
+
 #Go
 Los
 4000

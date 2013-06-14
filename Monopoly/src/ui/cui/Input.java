@@ -5,9 +5,6 @@ import java.io.InputStreamReader;
 
 /**
  * The Input class is responsible for the interaction with the Human.
- *
- * @author Eyenseo
- * @version 1
  */
 class Input {
 	private BufferedReader bReader;

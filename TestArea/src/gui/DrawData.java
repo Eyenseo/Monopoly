@@ -123,6 +123,7 @@ class PurchasableCard extends JPanel {
 			incomeValueX[i] = -gapX + width - fontMetrics.stringWidth("" + data.INCOME[i]);
 			incomeValueY[i] = incomeTextY[i];
 		}
+
 		//Upgrade
 		upgradeTextX = gapX;
 		upgradeTextY = gapY + gap + lineHeightAdjustment + incomeTextY[incomeTextY.length - 1];
@@ -140,7 +141,8 @@ class PurchasableCard extends JPanel {
 		super.paintComponent(g);
 
 		//This sets the Antialiasing for the drawing on - without the text looks really bad.
-		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		((Graphics2D) g)
+				.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 
 		//Background
 		g.setColor(new Color(255, 255, 255));

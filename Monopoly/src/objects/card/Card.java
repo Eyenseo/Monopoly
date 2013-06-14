@@ -1,5 +1,4 @@
 package objects.card;
-//JAVADOC
 
 import objects.Player;
 import ui.Menu;
@@ -39,7 +38,11 @@ public abstract class Card implements Serializable {
 		return TEXT;
 	}
 
-	//JAVADOC
+	/**
+	 * The method will do what ever the objects propose is
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
 	public abstract void action(Player player);
 
 	/**

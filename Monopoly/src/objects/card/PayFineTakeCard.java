@@ -1,5 +1,4 @@
 package objects.card;
-//JAVADOC
 
 import objects.Player;
 import objects.map.notPurchasable.Parking;
@@ -13,10 +12,10 @@ import java.io.Serializable;
  */
 public class PayFineTakeCard extends Card implements Serializable {
 	private static final long serialVersionUID = -6500337756850536820L;
-	private int       dm;
-	private String    option;
-	private CardStack community;
-	private Parking   parking;
+	private final int       dm;
+	private final String    option;
+	private       CardStack community;
+	private       Parking   parking;
 
 	/**
 	 * @param name The value determines the name of the Card.
@@ -37,13 +36,6 @@ public class PayFineTakeCard extends Card implements Serializable {
 	}
 
 	/**
-	 * @return The return value is the community CardStack.
-	 */
-	public CardStack getCommunity() {
-		return community;
-	}
-
-	/**
 	 * @param parking The value determines parking.
 	 */
 	public void setParking(Parking parking) {
@@ -57,7 +49,12 @@ public class PayFineTakeCard extends Card implements Serializable {
 		this.community = community;
 	}
 
-	//JAVADOC
+	/**
+	 * --- TODO
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
 		if(menu.showCardText(this)) {

@@ -1,27 +1,28 @@
 package objects.map.purchasable;
 
 import objects.Player;
+import objects.events.PurchasableEvent;
+import objects.listeners.PurchasableEventListener;
 import objects.map.FieldCircularList;
+import objects.value.map.FieldData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * The structure of PurchasableCircularList and the subclasses is a circular list of all objects that
- * belong together e.g. all Stations in one list, or all Streets that are red.
- *
- * @author Eyenseo
- * @version 1
+ * The structure of PurchasableCircularList and the subclasses is a circular list of all objects that belong together
+ * e.g. all Stations in one list, or all Streets that are red.
  */
 public abstract class PurchasableCircularList extends FieldCircularList implements Serializable {
 	private static final long serialVersionUID = 5554380896193644875L;
-	final         int[] INCOME;
-	private final int   MORTGAGE;   //Hypothek
-	boolean inMortgage;
-	private final int PRICE;
+	final int[] INCOME;
+	final int   MORTGAGE;   //Hypothek
+	final int   PRICE;
+	PurchasableCircularList nextGroupElement;
+	boolean                 inMortgage;
 	int                     stage;
 	Player                  owner;
-	PurchasableCircularList nextGroupElement;
+	private final ArrayList<PurchasableEventListener> listener;
 
 	/**
 	 * @param name     The value determines the name of the object.
@@ -38,6 +39,7 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 		stage = 0;
 		inMortgage = false;
 		nextGroupElement = this;
+		listener = new ArrayList<PurchasableEventListener>();
 	}
 
 	/**
@@ -84,16 +86,28 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 
 	/**
 	 * The method removes or adds the mortgage amount to the owner.
+	 * The method will fire PurchasableEvent
 	 *
 	 * @param inMortgage The value determines the mortgage stage.
 	 */
 	public void setInMortgage(boolean inMortgage) {
 		this.inMortgage = inMortgage;
+		firePurchasableEvent();
 		if(inMortgage) {
 			owner.addMoney(MORTGAGE);
 		} else {
 			owner.pay(MORTGAGE);
 		}
+	}
+
+	/**
+	 * The method will fire a PurchasableEvent
+	 *
+	 * @param stage the value determines the stage to be set
+	 */
+	void setStage(int stage) {
+		this.stage = stage;
+		firePurchasableEvent();
 	}
 
 	/**
@@ -131,6 +145,7 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 
 	/**
 	 * The method adds this object to the new owner and removes it from the old one.
+	 * The method will fire PurchasableEvent
 	 *
 	 * @param owner The value determines the owner.
 	 */
@@ -139,6 +154,7 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 			this.owner.removeProperty(this);
 		}
 		this.owner = owner;
+		firePurchasableEvent();
 		owner.addProperty(this);
 		sameOwnerCheck();
 	}
@@ -158,7 +174,7 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 		}
 		next = this;
 		do {
-			next.stage = sameOwner ? 1 : 0;
+			next.setStage(sameOwner ? 1 : 0);
 			next = next.getNextGroupElement();
 		} while(sameOwner && !next.equals(this));
 	}
@@ -178,12 +194,42 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 		this.nextGroupElement = nextGroupElement;
 	}
 
-	//JAVADOC
+	/**
+	 * The method will transfer the money the player has to pay to the owner
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
 	@Override
 	public void action(Player player) {
-		if(owner != null && !inMortgage) {
+		if(!player.equals(owner) && owner != null && !inMortgage) {
 			player.pay(getBill(player));
 			owner.addMoney(getBill(player));
+		}
+	}
+
+	@Override public abstract FieldData toFieldData();
+
+	/**
+	 * @param listener the value determines the listener to be added
+	 */
+	public void addPurchasableEventListener(PurchasableEventListener listener) {
+		this.listener.add(listener);
+	}
+
+	/**
+	 * @param listener the value determines the listener to be removed
+	 */
+	public void removePurchasableEventListener(PurchasableEventListener listener) {
+		this.listener.remove(listener);
+	}
+
+	/**
+	 * The method will fire PurchasableEvent.
+	 */
+	void firePurchasableEvent() {
+		PurchasableEvent event = new PurchasableEvent(this);
+		for(Object l : listener) {
+			((PurchasableEventListener) l).actionPerformed(event);
 		}
 	}
 }

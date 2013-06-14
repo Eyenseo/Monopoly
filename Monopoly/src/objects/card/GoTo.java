@@ -4,7 +4,6 @@ import objects.Player;
 import objects.map.FieldCircularList;
 
 import java.io.Serializable;
-//JAVADOC
 
 /**
  * GoTo is the go to card
@@ -51,7 +50,12 @@ public class GoTo extends Card implements Serializable {
 		go = field;
 	}
 
-	//JAVADOC
+	/**
+	 * --- TODO
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
 		menu.showCardText(this);

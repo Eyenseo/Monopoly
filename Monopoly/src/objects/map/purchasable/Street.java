@@ -1,10 +1,12 @@
 package objects.map.purchasable;
 
+import objects.value.map.FieldData;
+import objects.value.map.StreetData;
+
 import java.io.Serializable;
 
 /**
- * The structure of Street is a circular list of all Street objects that belong together e.g.
- * all Streets that are red.
+ * The structure of Street is a circular list of all Street objects that belong together e.g. all Streets that are red.
  *
  * @author Eyenseo
  * @version 0.1
@@ -20,7 +22,7 @@ public class Street extends PurchasableCircularList implements Serializable {
 	 * @param price    The value determines the price that the player has to pay to buy it.
 	 * @param income   The values of the array determine the income at the different stages.
 	 *                 <ol start="0">
-	 *                 <li>Color not complete</li>
+	 *                 <li>Color  not complete</li>
 	 *                 <li>Color complete</li>
 	 *                 <li>1 house</li>
 	 *                 <li>2 houses</li>
@@ -28,8 +30,9 @@ public class Street extends PurchasableCircularList implements Serializable {
 	 *                 </ol>
 	 * @param mortgage The value determines the amount of the mortgage.
 	 * @param upgrade  The value determines how much the owner has to pay for a house or hotel.
-	 * @param color    The values of the array determine the color of the Street object. The Array has to
-	 *                 be three long, each of the places represent one color {R,G,B}.
+	 * @param color    The values of the array determine the color of the Street object. The Array has to be three
+	 *                 long,
+	 *                 each of the places represent one color {R,G,B}.
 	 */
 	public Street(String name, int price, int[] income, int mortgage, int upgrade, int[] color) {
 		super(name, price, income, mortgage);
@@ -42,8 +45,8 @@ public class Street extends PurchasableCircularList implements Serializable {
 	 * This method is for buying houses or hotels and setting the stage accordingly up.
 	 */
 	public void nextStage() {
-		stage++;
-		owner.pay(UPGRADE);
+		setStage(getStage() + 1);
+		getOwner().pay(UPGRADE);
 	}
 
 	/**
@@ -60,11 +63,23 @@ public class Street extends PurchasableCircularList implements Serializable {
 	}
 
 	/**
+	 * @return the return value is a new StreetData object of FacilityData with the current attributes of the Street
+	 */
+	@Override public FieldData toFieldData() {
+		if(owner != null) {
+			return new StreetData(FIELDNUMBER, NAME, INCOME, MORTGAGE, PRICE, inMortgage, stage,
+			                      owner.toPlayerData(false), COLOR, UPGRADE, upgradeable);
+		} else {
+			return new StreetData(FIELDNUMBER, NAME, INCOME, MORTGAGE, PRICE, inMortgage, stage, null, COLOR, UPGRADE,
+			                      upgradeable);
+		}
+	}
+
+	/**
 	 * This method checks if all group members are owned by the same owner and sets the upgradeable status.
 	 */
-	//TODO think of a way to keep the houses when trading
-	@Override
-	public void sameOwnerCheck() {
+	//TODO extend method to check if houses are equally split between the group members
+	@Override public void sameOwnerCheck() {
 		boolean sameOwner = true;
 		Street next = this;
 		do {
@@ -87,5 +102,19 @@ public class Street extends PurchasableCircularList implements Serializable {
 			}
 			next = (Street) next.getNextGroupElement();
 		} while(!next.equals(this));
+	}
+
+	/**
+	 * @return The return value is true if the Street is upgradeable
+	 */
+	public boolean isUpgradeable() {
+		return upgradeable;
+	}
+
+	/**
+	 * @param upgradeable The value determines if te Street is upgradeable (true)
+	 */
+	public void setUpgradeable(boolean upgradeable) {
+		this.upgradeable = upgradeable;
 	}
 }

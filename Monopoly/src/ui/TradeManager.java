@@ -8,9 +8,6 @@ import java.util.Vector;
 
 /**
  * The TradeManager stores the information about a trade between two player.
- *
- * @author Eyenseo
- * @version 1
  */
 public class TradeManager {
 	private HashMap<Player, Vector<PurchasableCircularList>> property =
@@ -55,7 +52,9 @@ public class TradeManager {
 	}
 
 	/**
-	 * The method adds/removes the chosen amount of money to the players and sets the PurchasableCircularList object to the new owner.
+	 * The method adds/removes the chosen amount of money to the players and sets the PurchasableCircularList object to
+	 * the
+	 * new owner.
 	 *
 	 * @return The return value is true if both player have enough money for the trade, false if not
 	 */
