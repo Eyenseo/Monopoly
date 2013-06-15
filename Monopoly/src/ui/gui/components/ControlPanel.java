@@ -44,37 +44,30 @@ class ControlPanel extends JPanel {
 		super(new BorderLayout());
 		this.clientOperator = clientOperator;
 		this.model = model;
-
 		//Text
 		haggleText = "Handeln";
-		mortgageText = "Hypotek";
+		mortgageText = "Hypothek";
 		giveUpText = "Aufgeben";
 		endAppText = "Beenden";
 		chatHistoryText = "BALALALLLALALAALLALALALA";
-
 		add(buildButtonPanel(), BorderLayout.NORTH);
-
 		add(buildChatPanel(), BorderLayout.CENTER);
-
 		model.addModelEventListener(Model.ModelEventName.TURNOPTION, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
 				updateTurnOption();
 			}
 		});
-
 		model.addModelEventListener(Model.ModelEventName.BUYOPTION, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
 				updateBuyOption();
 			}
 		});
-
 		model.addModelEventListener(Model.ModelEventName.TURNSTATE, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
 				updateBuyOption();
 				updateTurnOption();
 			}
 		});
-
 		registerButtonListener();
 	}
 
@@ -93,10 +86,8 @@ class ControlPanel extends JPanel {
 	 */
 	private JPanel buildButtonPanel() {
 		JPanel panel = new JPanel(new GridBagLayout());
-
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-
 		// Button for throw dice, end turn, begin next turn
 		turnOption = new JButton();
 		turnOption.setText(turnOptionText);
@@ -104,7 +95,6 @@ class ControlPanel extends JPanel {
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
 		panel.add(turnOption, gridBagConstraints);
-
 		// Button to buy a house, hotel, property
 		buyOption = new JButton();
 		buyOption.setText(buyOptionText);
@@ -112,7 +102,6 @@ class ControlPanel extends JPanel {
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
 		panel.add(buyOption, gridBagConstraints);
-
 		// Button to haggle with a player
 		haggle = new JButton();
 		haggle.setText(haggleText);
@@ -121,7 +110,6 @@ class ControlPanel extends JPanel {
 		gridBagConstraints.gridy = 1;
 		gridBagConstraints.gridwidth = 2;
 		panel.add(haggle, gridBagConstraints);
-
 		// Button to take a mortgage
 		mortgage = new JButton();
 		mortgage.setText(mortgageText);
@@ -130,7 +118,6 @@ class ControlPanel extends JPanel {
 		gridBagConstraints.gridy = 2;
 		gridBagConstraints.gridwidth = 2;
 		panel.add(mortgage, gridBagConstraints);
-
 		// Button to give up
 		giveUp = new JButton();
 		giveUp.setText(giveUpText);
@@ -140,7 +127,6 @@ class ControlPanel extends JPanel {
 		gridBagConstraints.gridy = 3;
 		gridBagConstraints.gridwidth = 2;
 		panel.add(giveUp, gridBagConstraints);
-
 		// Button to end program
 		endApp = new JButton();
 		endApp.setText(endAppText);
@@ -149,7 +135,6 @@ class ControlPanel extends JPanel {
 		gridBagConstraints.gridy = 4;
 		gridBagConstraints.gridwidth = 2;
 		panel.add(endApp, gridBagConstraints);
-
 		return panel;
 	}
 
@@ -161,28 +146,22 @@ class ControlPanel extends JPanel {
 	 */
 	private JPanel buildChatPanel() {
 		final JPanel panel = new JPanel(new BorderLayout());
-
 		chatHistory = new JTextArea("BALALALLLALALAALLALALALA");
 		chatHistory.setEditable(false);
-
 		JScrollPane seeScrollPane = new JScrollPane(chatHistory);
 		seeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		seeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		seeScrollPane.setPreferredSize(new Dimension(100, 150));
-
 		chatMessage = new JTextArea("BALALALLLALALAALLALALALA");
-
 		JScrollPane writeScrollPane = new JScrollPane(chatMessage);
 		writeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		writeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		writeScrollPane.setPreferredSize(new Dimension(100, 50));
-
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		splitPane.setResizeWeight(0.7);
 		splitPane.setTopComponent(seeScrollPane);
 		splitPane.setBottomComponent(writeScrollPane);
 		panel.add(splitPane, BorderLayout.CENTER);
-
 		return panel;
 	}
 
@@ -221,7 +200,6 @@ class ControlPanel extends JPanel {
 		} else {
 			buyOption.setEnabled(true);
 		}
-
 		switch(model.getBuyOptionState()) {
 			case PURCHASABLE:
 				buyOptionText = "Feld kaufen (" + model.getPurchasablePrice() + ")";
@@ -255,7 +233,6 @@ class ControlPanel extends JPanel {
 				                                          model.getBuyOptionState() == Model.BuyOptionState.BUYHOUSE));
 			}
 		});
-
 		haggle.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				model.setCurrentMainPanelName(Model.CurrentMainPanelName.HAGGLE);
@@ -266,7 +243,6 @@ class ControlPanel extends JPanel {
 				model.setCurrentMainPanelName(Model.CurrentMainPanelName.MORTGAGE);
 			}
 		});
-
 		giveUp.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(new JFrame(), "Not jet implemented.");

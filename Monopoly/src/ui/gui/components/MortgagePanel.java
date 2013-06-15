@@ -34,40 +34,32 @@ public class MortgagePanel extends JPanel {
 		this.model = model;
 		this.clientOperator = clientOperator;
 		setLayout(new BorderLayout());
-
 		purchasable = new JPanel();
 		purchasable.setLayout(new PurchasableCardLayout());
-
 		JScrollPane scrollPane = new JScrollPane(purchasable);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-
-		JButton back = new JButton("Zrueck");
+		JButton back = new JButton("Zurueck");
 		back.setAlignmentY(JButton.BOTTOM_ALIGNMENT);
 		back.setAlignmentX(JButton.RIGHT_ALIGNMENT);
-
 		back.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				MortgagePanel.this.model.setCurrentMainPanelName(Model.CurrentMainPanelName.GAME);
 			}
 		});
-
 		model.addModelEventListener(Model.ModelEventName.PROPERTY, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
 				checkPurchasableData();
 			}
 		});
-
 		model.addModelEventListener(Model.ModelEventName.INTMORTAGE, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
 				updatePurchasableCards();
 			}
 		});
 		panel.add(back);
-
 		add(scrollPane, BorderLayout.CENTER);
 		add(panel, BorderLayout.SOUTH);
 	}
@@ -78,7 +70,6 @@ public class MortgagePanel extends JPanel {
 	//TODO check method - especially for loops
 	private void checkPurchasableData() {
 		boolean change;
-
 		//add new components
 		for(PurchasableData data : model.getClientPurchasable()) {
 			change = true;
@@ -89,7 +80,6 @@ public class MortgagePanel extends JPanel {
 					}
 				}
 			}
-
 			if(change) {
 				PurchasableCardLayoutConstraints constraints = new PurchasableCardLayoutConstraints();
 				PurchasableCardPanel panel = new PurchasableCardPanel(data);
@@ -106,7 +96,6 @@ public class MortgagePanel extends JPanel {
 						clientOperator.sendActionData(data);
 					}
 				});
-
 				if(data instanceof StreetData) {
 					constraints.type = PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.STREET;
 				} else if(data instanceof StationData) {
@@ -118,7 +107,6 @@ public class MortgagePanel extends JPanel {
 				purchasable.add(panel, constraints);
 			}
 		}
-
 		//remove new components
 		for(Component panel : purchasable.getComponents()) {
 			if(panel instanceof PurchasableCardPanel) {
@@ -128,13 +116,11 @@ public class MortgagePanel extends JPanel {
 						change = false;
 					}
 				}
-
 				if(change) {
 					purchasable.remove(panel);
 				}
 			}
 		}
-
 		updatePurchasableCards();
 	}
 
