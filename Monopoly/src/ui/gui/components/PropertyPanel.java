@@ -89,6 +89,7 @@ class PropertyPanel extends JPanel {
 						}
 					}
 				}
+				repaint();
 			}
 		};
 
