@@ -29,7 +29,7 @@ import java.util.HashMap;
  * <li>POSITION</li>
  * <li>TURNSTATE</li>
  * <li>THREWDICE</li>
- * <li>INTMORTAGE</li>
+ * <li>INMORTAGE</li>
  * <li>STAGE</li>
  * <li>PROPERTY</li>
  * <li>TURNOPTION</li>
@@ -191,7 +191,7 @@ public class Model {
 	 * current position of the player of the model it will fire either ModelEvent:
 	 * <ul>
 	 * <li>PROPERTY</li>
-	 * <li>INTMORTAGE</li>
+	 * <li>INMORTAGE</li>
 	 * <li>STAGE</li>
 	 * <li>POSITION</li>
 	 * </ul>
@@ -229,7 +229,7 @@ public class Model {
 
 			if(property.isInMortgage() != purchasableData.isInMortgage()) {
 				property.setInMortgage(purchasableData.isInMortgage());
-				fireModelEvent(ModelEventName.INTMORTAGE);
+				fireModelEvent(ModelEventName.INMORTAGE);
 			}
 
 			if(property.getStage() != purchasableData.getStage()) {
@@ -534,7 +534,7 @@ public class Model {
 	 * Types of ModelEvents
 	 */
 	public enum ModelEventName {
-		DICE, ISINJAIL, MONEY, POSITION, TURNSTATE, THREWDICE, INTMORTAGE, STAGE, PROPERTY, TURNOPTION, BUYOPTION,
+		DICE, ISINJAIL, MONEY, POSITION, TURNSTATE, THREWDICE, INMORTAGE, STAGE, PROPERTY, TURNOPTION, BUYOPTION,
 		MAINPANEL, HAGGLE
 	}
 

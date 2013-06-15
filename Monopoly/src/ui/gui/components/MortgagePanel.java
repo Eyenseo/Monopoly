@@ -60,7 +60,7 @@ public class MortgagePanel extends JPanel {
 				checkPurchasableData();
 			}
 		});
-		model.addModelEventListener(Model.ModelEventName.INTMORTAGE, new ModelEventListener() {
+		model.addModelEventListener(Model.ModelEventName.INMORTAGE, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
 				updatePurchasableCards();
 			}

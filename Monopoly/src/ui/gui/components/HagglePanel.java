@@ -310,7 +310,7 @@ public class HagglePanel extends JPanel {
 
 		model.addModelEventListener(Model.ModelEventName.PROPERTY, listener);
 		model.addModelEventListener(Model.ModelEventName.STAGE, listener);
-		model.addModelEventListener(Model.ModelEventName.INTMORTAGE, listener);
+		model.addModelEventListener(Model.ModelEventName.INMORTAGE, listener);
 	}
 
 	/**
