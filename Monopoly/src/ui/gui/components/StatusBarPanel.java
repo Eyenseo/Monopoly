@@ -145,7 +145,7 @@ public class StatusBarPanel extends JPanel {
 						if(model.isStreet()) {
 							int stage = model.getStreetStage();
 
-							if(5 == stage) {
+							if(6 == stage) {
 								doc.insertString(doc.getLength(), "\tHotel: 1", style);
 							} else if(stage > 1) {
 								doc.insertString(doc.getLength(), "\tHaeuser: " + (stage - 1), style);
