@@ -245,12 +245,12 @@ class ControlPanel extends JPanel {
 		});
 		giveUp.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(new JFrame(), "Not jet implemented.");
+				JOptionPane.showMessageDialog(new JFrame(), "Not yet implemented.");
 			}
 		});
 		endApp.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(new JFrame(), "Not jet implemented.");
+				JOptionPane.showMessageDialog(new JFrame(), "Not yet implemented.");
 			}
 		});
 	}
