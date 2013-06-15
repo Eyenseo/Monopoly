@@ -54,7 +54,11 @@ public class CardStack implements Serializable {
 	 * @return The return value is the next Card object of the stack.
 	 */
 	public Card nextCard() {
-		top++;
+		if(stack.size() > top) {
+			top++;
+		} else {
+			top = 1;
+		}
 		return stack.get(top - 1);
 	}
 
