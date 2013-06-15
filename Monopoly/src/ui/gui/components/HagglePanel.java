@@ -181,6 +181,11 @@ public class HagglePanel extends JPanel {
 	@Override protected void paintComponent(Graphics g) {
 		//TODO find a better fix for decenter on first opening
 		hagglePane.setDividerLocation(0.5);
+
+		hagglePane.validate();
+		playerContent.setSize(new Dimension(hagglePane.getRightComponent().getWidth(), playerContent.getHeight()));
+		hagglePane.validate();
+
 		super.paintComponent(g);
 	}
 
@@ -300,7 +305,6 @@ public class HagglePanel extends JPanel {
 						}
 					}
 				}
-				hagglePane.setDividerLocation(0.5);
 			}
 		};
 
