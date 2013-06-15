@@ -82,26 +82,31 @@ public class Street extends PurchasableCircularList implements Serializable {
 	@Override public void sameOwnerCheck() {
 		boolean sameOwner = true;
 		Street next = this;
+
 		do {
 			if(next.getOwner() == null || !next.getOwner().equals(owner)) {
 				sameOwner = false;
 			}
 			next = (Street) next.getNextGroupElement();
 		} while(sameOwner && !next.equals(this));
+
 		next = this;
+
 		do {
 			next.upgradeable = sameOwner;
 			if(sameOwner) {
 				if(next.stage == 0) {
-					next.stage = 1;
+					next.setStage(1);
 				}
 			} else {
 				if(next.stage == 1) {
-					next.stage = 0;
+					next.setStage(0);
 				}
 			}
 			next = (Street) next.getNextGroupElement();
 		} while(!next.equals(this));
+
+		firePurchasableEvent();
 	}
 
 	/**
