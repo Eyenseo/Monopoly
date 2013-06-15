@@ -31,6 +31,7 @@ class PropertyPanel extends JPanel {
 		content = new JPanel();
 		content.setLayout(new PurchasableCardLayout());
 		JScrollPane scrollPane = new JScrollPane(content);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scrollPane);

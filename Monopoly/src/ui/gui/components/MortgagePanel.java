@@ -34,13 +34,18 @@ public class MortgagePanel extends JPanel {
 		this.model = model;
 		this.clientOperator = clientOperator;
 		setLayout(new BorderLayout());
+
 		purchasable = new JPanel();
 		purchasable.setLayout(new PurchasableCardLayout());
+
 		JScrollPane scrollPane = new JScrollPane(purchasable);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+
 		JButton back = new JButton("Zurueck");
 		back.setAlignmentY(JButton.BOTTOM_ALIGNMENT);
 		back.setAlignmentX(JButton.RIGHT_ALIGNMENT);
@@ -49,6 +54,7 @@ public class MortgagePanel extends JPanel {
 				MortgagePanel.this.model.setCurrentMainPanelName(Model.CurrentMainPanelName.GAME);
 			}
 		});
+
 		model.addModelEventListener(Model.ModelEventName.PROPERTY, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
 				checkPurchasableData();
@@ -59,7 +65,9 @@ public class MortgagePanel extends JPanel {
 				updatePurchasableCards();
 			}
 		});
+
 		panel.add(back);
+
 		add(scrollPane, BorderLayout.CENTER);
 		add(panel, BorderLayout.SOUTH);
 	}

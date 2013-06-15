@@ -339,6 +339,8 @@ public class HagglePanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(sellerContent);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
 		return scrollPane;
 	}
 
@@ -354,6 +356,7 @@ public class HagglePanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(playerContent);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
 		return scrollPane;
 	}
