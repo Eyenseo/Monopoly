@@ -67,7 +67,6 @@ public class MainFrame extends JFrame {
 						break;
 					case HAGGLE:
 						mainPanel.add(hagglePanel, BorderLayout.CENTER);
-						hagglePanel.centerSplit();
 				}
 				validate();
 				repaint();

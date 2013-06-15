@@ -178,9 +178,10 @@ public class HagglePanel extends JPanel {
 	/**
 	 * The method is a work around without the split view doesn't splits in the center
 	 */
-	//TODO find a fix for decenter on first opening
-	public void centerSplit() {
+	@Override protected void paintComponent(Graphics g) {
+		//TODO find a better fix for decenter on first opening
 		hagglePane.setDividerLocation(0.5);
+		super.paintComponent(g);
 	}
 
 	/**
