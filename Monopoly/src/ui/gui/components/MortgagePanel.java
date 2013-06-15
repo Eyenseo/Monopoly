@@ -78,9 +78,11 @@ public class MortgagePanel extends JPanel {
 	//TODO check method - especially for loops
 	private void checkPurchasableData() {
 		boolean change;
+
 		//add new components
 		for(PurchasableData data : model.getClientPurchasable()) {
 			change = true;
+
 			for(Component panel : purchasable.getComponents()) {
 				if(panel instanceof PurchasableCardPanel) {
 					if(((PurchasableCardPanel) panel).getData().equals(data)) {
@@ -115,6 +117,7 @@ public class MortgagePanel extends JPanel {
 				purchasable.add(panel, constraints);
 			}
 		}
+
 		//remove new components
 		for(Component panel : purchasable.getComponents()) {
 			if(panel instanceof PurchasableCardPanel) {

@@ -189,6 +189,7 @@ class ControlPanel extends JPanel {
 		} else {
 			turnOption.setEnabled(true);
 		}
+
 		switch(model.getTurnOptionState()) {
 			case THROWDICE:
 				turnOptionText = "Wuerfeln";
@@ -203,6 +204,7 @@ class ControlPanel extends JPanel {
 				turnOptionText = "Wuerfeln";
 				break;
 		}
+
 		turnOption.setText(turnOptionText);
 	}
 
@@ -215,6 +217,7 @@ class ControlPanel extends JPanel {
 		} else {
 			buyOption.setEnabled(true);
 		}
+
 		switch(model.getBuyOptionState()) {
 			case PURCHASABLE:
 				buyOptionText = "Feld kaufen (" + model.getPurchasablePrice() + ")";
@@ -229,6 +232,7 @@ class ControlPanel extends JPanel {
 				buyOptionText = "Nichts zu kaufen";
 				break;
 		}
+
 		buyOption.setText(buyOptionText);
 	}
 
