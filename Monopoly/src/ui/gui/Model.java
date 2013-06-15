@@ -231,9 +231,14 @@ public class Model {
 				property.setInMortgage(purchasableData.isInMortgage());
 				fireModelEvent(ModelEventName.INTMORTAGE);
 			}
+
 			if(property.getStage() != purchasableData.getStage()) {
 				property.setStage(purchasableData.getStage());
 				fireModelEvent(ModelEventName.STAGE);
+			}
+
+			if(purchasableData instanceof StreetData) {
+				((StreetData) property).setUpgradeable(((StreetData) purchasableData).isUpgradeable());
 			}
 		}
 

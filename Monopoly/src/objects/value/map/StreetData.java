@@ -8,7 +8,7 @@ import objects.value.PlayerData;
 public class StreetData extends PurchasableData {
 	private final int[]   COLOR;
 	private final int     UPGRADE;
-	private final boolean upgradeable;
+	private       boolean upgradeable;
 
 	/**
 	 * @param fieldNumber the value determines the id
@@ -49,5 +49,12 @@ public class StreetData extends PurchasableData {
 	 */
 	public boolean isUpgradeable() {
 		return upgradeable;
+	}
+
+	/**
+	 * @param upgradeable The value determines the upgradeable state of the Street
+	 */
+	public void setUpgradeable(boolean upgradeable) {
+		this.upgradeable = upgradeable;
 	}
 }
