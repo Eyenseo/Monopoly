@@ -146,17 +146,23 @@ public class HagglePanel extends JPanel {
 	 */
 	private void createHeader() {
 		ArrayList<PlayerData> playerDataArrayList = model.getPlayerArrayList();
-		//TODO Exclude ClientPlayer
-		String[] playerNames = new String[playerDataArrayList.size()];
-		for(int i = 0; i < playerNames.length; i++) {
-			playerNames[i] = playerDataArrayList.get(i).getName();
+		String[] playerNames = new String[playerDataArrayList.size() - 1];
+		for(int i = 0, j = 0; i < playerDataArrayList.size(); i++) {
+			if(i != model.getClientPlayer().getId()) {
+				playerNames[j] = playerDataArrayList.get(i).getName();
+				j++;
+			}
 		}
 
 		playerList = new JComboBox<String>(playerNames);
 		playerList.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				JComboBox playerList = (JComboBox) e.getSource();
-				model.setHaggleData(new HaggleData(model.getClientPlayer().getId(), playerList.getSelectedIndex()));
+				int index = playerList.getSelectedIndex();
+				if(index >= model.getClientPlayer().getId()) {
+					index++;
+				}
+				model.setHaggleData(new HaggleData(model.getClientPlayer().getId(), index));
 				clientOperator.sendActionData(model.getHaggleData());
 				playerList.setEnabled(false);
 			}
