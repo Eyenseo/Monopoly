@@ -23,8 +23,8 @@ public class MapTest {
 
 		FieldCard card2 = new FieldCard("Zusatzsteuer", "/storage/images/werk.png", 7000);
 		card2.updatePlayerPosition(0, 'M', new Color(255, 0, 199), true);
-		card2.updatePlayerPosition(1, 'O', new Color(50, 255, 206), true);
-		card2.updatePlayerPosition(2, 'I', new Color(19, 255, 23), true);
+		card2.updatePlayerPosition(1, 'O', new Color(115, 115, 115), true);
+		card2.updatePlayerPosition(2, 'I', new Color(255, 255, 255), true);
 		card2.updatePlayerPosition(3, 'N', new Color(217, 108, 199), true);
 
 		FieldCard card3 = new FieldCard("Gemeinschaftsfeld", "/storage/images/ereignesfeld.png");
@@ -36,6 +36,11 @@ public class MapTest {
 		panel.add(card);
 		panel.add(card2);
 		panel.add(card3);
+		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/bahnhof.png"));
+		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/freiParken.png"));
+		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/gefaengnis.png"));
+		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/geheInsGefaengnis.png"));
+		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/los.png"));
 
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -94,7 +99,7 @@ class FieldCard extends JPanel {
 		normFont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
 
 		borderColor = new Color(0, 0, 0);
-		backgroundColor = new Color(255, 255, 255);
+		backgroundColor = new Color(192, 206, 155);
 
 		playerHashMap = new HashMap<Integer, PlayerFigure>();
 
@@ -133,7 +138,7 @@ class FieldCard extends JPanel {
 		normFont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
 
 		borderColor = new Color(0, 0, 0);
-		backgroundColor = new Color(255, 255, 255);
+		backgroundColor = new Color(192, 206, 155);
 
 		playerHashMap = new HashMap<Integer, PlayerFigure>();
 
@@ -172,7 +177,7 @@ class FieldCard extends JPanel {
 		normFont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
 
 		borderColor = new Color(0, 0, 0);
-		backgroundColor = new Color(255, 255, 255);
+		backgroundColor = new Color(192, 206, 155);
 
 		playerHashMap = new HashMap<Integer, PlayerFigure>();
 
@@ -219,7 +224,8 @@ class FieldCard extends JPanel {
 		lastElementY += headerNameY + gapY;
 
 		if(image != null) {
-			g.drawImage(image, (width - image.getWidth(null)) / 2, 50, null);
+			g.drawImage(image, (width - image.getWidth(null)) / 2, (height + lastElementY - image.getHeight(null)) / 2,
+			            null);
 		}
 
 		if(price != null) {
