@@ -81,7 +81,7 @@ public class PurchasableCardPanel extends JPanel {
 	 */
 	private void setText() {
 		//Price
-		priceText = "Grundstueckwert";
+		priceText = "Grundstueckswert";
 		//Income
 		incomeLeadingText = "Miete ";
 		if(data instanceof StreetData) {
@@ -170,7 +170,7 @@ public class PurchasableCardPanel extends JPanel {
 	@Override protected void paintComponent(Graphics g) {
 		//		super.paintComponent(g);
 
-		//This sets the Antialiasing for the drawing - without the text looks really bad.
+		//This sets the Antialiasing for the drawing - without it the text looks really bad.
 		((Graphics2D) g)
 				.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 

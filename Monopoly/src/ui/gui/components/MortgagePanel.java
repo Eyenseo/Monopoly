@@ -19,7 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * The MortgagePanel provides th user with the option to take and redeem mortgage of his purchasables
+ * The MortgagePanel provides the user with the option to take and redeem mortgage of his purchasables
  */
 public class MortgagePanel extends JPanel {
 	private final ClientOperator clientOperator;
