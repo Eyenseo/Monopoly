@@ -88,7 +88,7 @@ public class StatusBarPanel extends JPanel {
 							StyleConstants.setForeground(style, new Color(255, 0, 0));
 							doc.insertString(doc.getLength(), "-" + (oldMoney - currentMoney), style);
 						} else if(currentMoney > oldMoney) {
-							StyleConstants.setForeground(style, new Color(0, 255, 0));
+							StyleConstants.setForeground(style, new Color(0, 198, 0));
 							doc.insertString(doc.getLength(), "+" + (currentMoney - oldMoney), style);
 						}
 						StyleConstants.setForeground(style, new Color(0, 0, 0));
