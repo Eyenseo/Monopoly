@@ -71,7 +71,7 @@ public class Street extends PurchasableCircularList implements Serializable {
 			                      owner.toPlayerData(false), COLOR, UPGRADE, upgradeable);
 		} else {
 			return new StreetData(FIELDNUMBER, NAME, INCOME, MORTGAGE, PRICE, inMortgage, stage, null, COLOR, UPGRADE,
-			                      upgradeable);
+			                      isUpgradeable());
 		}
 	}
 
@@ -113,6 +113,9 @@ public class Street extends PurchasableCircularList implements Serializable {
 	 * @return The return value is true if the Street is upgradeable
 	 */
 	public boolean isUpgradeable() {
+		if(inMortgage) {
+			return false;
+		}
 		return upgradeable;
 	}
 

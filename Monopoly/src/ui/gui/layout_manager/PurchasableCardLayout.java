@@ -152,7 +152,7 @@ public class PurchasableCardLayout implements LayoutManager2 {
 		if(preferred) {
 			maxWidth = (parent.getWidth() - (parent.getInsets().left + parent.getInsets().right));
 		} else {
-			maxWidth = (PurchasableCardPanel.width - (parent.getInsets().left + parent.getInsets().right));
+			maxWidth = (PurchasableCardPanel.width + (parent.getInsets().left + parent.getInsets().right));
 		}
 		dimension = calculateGroupSize(streetComponents, maxWidth, dimension);
 		dimension = calculateGroupSize(stationComponents, maxWidth, dimension);
