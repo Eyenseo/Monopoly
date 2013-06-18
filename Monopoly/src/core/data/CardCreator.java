@@ -6,6 +6,7 @@ import objects.exceptions.data.CreationException;
 import objects.exceptions.data.EndOfBlockException;
 import objects.exceptions.data.StorageReaderException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -42,7 +43,12 @@ public class CardCreator extends StorageReader {
 			cardVector.add(temp);
 		}
 
-		//TODO close File When finished
+		try {
+			file.close();
+		} catch(IOException e) {
+			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		}
+
 		return cardVector;
 	}
 

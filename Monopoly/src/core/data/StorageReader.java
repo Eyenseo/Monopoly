@@ -10,12 +10,13 @@ import java.io.*;
  * The StorageReader is a input class that reads the files in the storage package.
  */
 abstract class StorageReader {
-	private BufferedReader file;
-	String fileName;
+	BufferedReader file;
+	String         fileName;
 
 	/**
 	 * @param fileName The value determines which file will be loaded.
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
+	 * should be
 	 *                                read out with getMessageStack.
 	 */
 	StorageReader(String fileName) throws StorageReaderException {
@@ -30,7 +31,8 @@ abstract class StorageReader {
 	/**
 	 * @return The return value is the next valid line as int.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
+	 * should be
 	 *                                read out with getMessageStack.
 	 */
 	int nextInt() throws StorageReaderException {
@@ -45,7 +47,8 @@ abstract class StorageReader {
 	/**
 	 * @return The return value is the next valid line as String.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
+	 * should be
 	 *                                read out with getMessageStack.
 	 */
 	String nextString() throws StorageReaderException {
@@ -72,7 +75,8 @@ abstract class StorageReader {
 	/**
 	 * @return The return value is the next valid control word as String.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
+	 * should be
 	 *                                read out with getMessageStack.
 	 */
 	String nextControlWord() throws StorageReaderException {
@@ -101,7 +105,8 @@ abstract class StorageReader {
 	/**
 	 * @return The return value is true if the next line is the end of a data block.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
+	 * should be
 	 *                                read out with getMessageStack.
 	 */
 	boolean isEndOfBlock() throws StorageReaderException {
