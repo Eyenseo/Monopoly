@@ -6,8 +6,6 @@ import objects.map.FieldCircularList;
 import objects.map.purchasable.PurchasableCircularList;
 import objects.map.purchasable.Street;
 import objects.value.action.*;
-import ui.Menu;
-import ui.cui.ConsoleMenu;
 
 import java.util.ArrayList;
 
@@ -31,7 +29,7 @@ public class Monopoly {
 		go = loader.getGo();
 		jail = loader.getJail();
 		playerArrayList = loader.getPlayerArrayList();
-		serverOperator = new ServerOperator(this);
+		serverOperator = new ServerOperator(this, loader);
 
 		//The thread will set the next player as active and will then wait for him to finish his turn and sets the
 		//next player active and waits ...
@@ -44,9 +42,6 @@ public class Monopoly {
 						while(!gameOver) {
 							for(Player player : playerArrayList) {
 								player.setTurnEnd(false);
-
-								System.out.println(player.getName());
-
 								turnThread.wait();  //TODO possible replace with "Condition"
 
 								if(player.isGiveUp()) {
@@ -64,8 +59,7 @@ public class Monopoly {
 
 	public static void main(String[] args) {
 		try {
-			Menu menu = new ConsoleMenu();  //TODO remove
-			Monopoly m = new Monopoly(new Loader(menu));
+			Monopoly m = new Monopoly(new Loader());
 
 			//		for(int i = menu.playerAmount(); i > 0; i--) {
 			//			m.addPlayer(new Player(menu.getName(), m.STARTMONEY));

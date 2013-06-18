@@ -73,6 +73,17 @@ public class MainFrame extends JFrame {
 			}
 		});
 
+		model.addModelEventListener(Model.ModelEventName.CARD, new ModelEventListener() {
+			@Override public void actionPerformed(ModelEvent event) {
+				int lastCardData = MainFrame.this.model.getCardDataArrayList().size() - 1;
+
+				if(lastCardData >= 0) {
+					new CustomDialog(MainFrame.this.model,
+					                 MainFrame.this.model.getCardDataArrayList().get(lastCardData));
+				}
+			}
+		});
+
 		pack();
 		setVisible(true);
 	}

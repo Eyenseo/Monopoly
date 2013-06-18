@@ -1,11 +1,14 @@
 package core;
 
+import objects.events.ClientOperatorCardDataEvent;
 import objects.events.ClientOperatorHaggleDataEvent;
 import objects.events.ClientOperatorPlayerDataEvent;
 import objects.events.ClientOperatorPurchasableDataEvent;
+import objects.listeners.ClientOperatorCardDataEventListener;
 import objects.listeners.ClientOperatorHaggleDataEventListener;
 import objects.listeners.ClientOperatorPlayerDataEventListener;
 import objects.listeners.ClientOperatorPurchasableDataEventListener;
+import objects.value.CardData;
 import objects.value.InitializeMapData;
 import objects.value.InitializePlayer;
 import objects.value.PlayerData;
@@ -35,6 +38,7 @@ public class ClientOperator {
 	private final ArrayList<ClientOperatorPlayerDataEventListener>      playerDataEventListeners;
 	private final ArrayList<ClientOperatorPurchasableDataEventListener> fieldDataEventListeners;
 	private final ArrayList<ClientOperatorHaggleDataEventListener>      haggleDataEventListeners;
+	private final ArrayList<ClientOperatorCardDataEventListener>        cardDataEventListeners;
 
 	/**
 	 * @param server the value determines the server to communicate with
@@ -44,6 +48,7 @@ public class ClientOperator {
 		playerDataEventListeners = new ArrayList<ClientOperatorPlayerDataEventListener>();
 		fieldDataEventListeners = new ArrayList<ClientOperatorPurchasableDataEventListener>();
 		haggleDataEventListeners = new ArrayList<ClientOperatorHaggleDataEventListener>();
+		cardDataEventListeners = new ArrayList<ClientOperatorCardDataEventListener>();
 	}
 
 	/**
@@ -111,6 +116,11 @@ public class ClientOperator {
 		firePurchasableDataEvent((PurchasableData) fieldData);
 	}
 
+	//JAVADOC
+	public void updateCardData(CardData cardData) {
+		fireCardDataEvent(cardData);
+	}
+
 	/**
 	 * The method will fire ClientOperatorPurchasableEvent with the purchasableData as attribute of the event.
 	 *
@@ -119,6 +129,14 @@ public class ClientOperator {
 	private void firePurchasableDataEvent(PurchasableData purchasableData) {
 		ClientOperatorPurchasableDataEvent event = new ClientOperatorPurchasableDataEvent(this, purchasableData);
 		for(ClientOperatorPurchasableDataEventListener l : fieldDataEventListeners) {
+			l.actionPerformed(event);
+		}
+	}
+
+	//JAVADOC
+	private void fireCardDataEvent(CardData cardData) {
+		ClientOperatorCardDataEvent event = new ClientOperatorCardDataEvent(this, cardData);
+		for(ClientOperatorCardDataEventListener l : cardDataEventListeners) {
 			l.actionPerformed(event);
 		}
 	}
@@ -163,6 +181,16 @@ public class ClientOperator {
 	 */
 	public void removeFieldDataEventListener(ClientOperatorPurchasableDataEventListener listener) {
 		fieldDataEventListeners.remove(listener);
+	}
+
+	//JAVADOC
+	public void addCardDataEventListener(ClientOperatorCardDataEventListener listener) {
+		cardDataEventListeners.add(listener);
+	}
+
+	//JAVADOC
+	public void removeCardEventListener(ClientOperatorCardDataEventListener listener) {
+		cardDataEventListeners.remove(listener);
 	}
 
 	/**

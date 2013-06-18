@@ -1,19 +1,24 @@
 package objects.card;
 
+import core.ServerOperator;
 import objects.Player;
-import ui.Menu;
+import objects.events.CardEvent;
+import objects.listeners.CardEventListener;
+import objects.value.CardData;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Card is the superclass of every card object.
  */
 public abstract class Card implements Serializable {
 	private static final long serialVersionUID = 4057299799394754933L;
-	private final String NAME;
-	private final String TEXT;
-	int  index;
-	Menu menu;
+	private final String                       NAME;
+	private final String                       TEXT;
+	private       ArrayList<CardEventListener> listener;
+	int            index;
+	ServerOperator serverOperator;
 
 	/**
 	 * @param name The value determines the name of the Card.
@@ -22,6 +27,22 @@ public abstract class Card implements Serializable {
 	Card(String name, String text) {
 		NAME = name;
 		TEXT = text;
+		listener = new ArrayList<CardEventListener>();
+	}
+
+	public void addCardEventListener(CardEventListener listener) {
+		this.listener.add(listener);
+	}
+
+	public void removeCardEventListener(CardEventListener listener) {
+		this.listener.remove(listener);
+	}
+
+	public void fireCardEvent(String playerName) {
+		CardEvent event = new CardEvent(this, new CardData(playerName, NAME, TEXT));
+		for(CardEventListener listener : this.listener) {
+			listener.actionPerformed(event);
+		}
 	}
 
 	/**
@@ -51,12 +72,5 @@ public abstract class Card implements Serializable {
 	 */
 	public void setIndex(int index) {
 		this.index = index;
-	}
-
-	/**
-	 * @param menu The value determines what menu will be used.
-	 */
-	public void setMenu(Menu menu) {
-		this.menu = menu;
 	}
 }

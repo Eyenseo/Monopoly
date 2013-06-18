@@ -33,7 +33,7 @@ public class SpecialPayment extends Card implements Serializable {
 	@Override
 	public void action(Player player) {
 		int amount = 0;
-		menu.showCardText(this);
+		fireCardEvent(player.getName());
 		for(Player p : playerArrayList) {
 			if(!player.equals(p)) {
 				p.addMoney(dm);

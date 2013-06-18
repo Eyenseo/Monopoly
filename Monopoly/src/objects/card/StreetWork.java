@@ -47,7 +47,7 @@ public class StreetWork extends Card implements Serializable {
 	public void action(Player player) {
 		int amount = 0;
 		ArrayList<PurchasableCircularList> property = player.getProperties();
-		menu.showCardText(this);
+		fireCardEvent(player.getName());
 		for(PurchasableCircularList p : property) {
 			if(p.getStage() < p.getMaxStage()) {
 				amount += p.getStage() * dmHouse;

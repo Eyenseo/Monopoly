@@ -30,7 +30,7 @@ public class GoToStation extends Card implements Serializable {
 	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
-		menu.showCardText(this);
+		fireCardEvent(player.getName());
 		FieldCircularList field = player.getPosition();
 		while(!(field instanceof Station)) {
 			field = field.getNext();

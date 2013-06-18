@@ -1,14 +1,9 @@
 package ui.gui;
 
 import core.ClientOperator;
-import objects.events.ClientOperatorHaggleDataEvent;
-import objects.events.ClientOperatorPlayerDataEvent;
-import objects.events.ClientOperatorPurchasableDataEvent;
-import objects.events.ModelEvent;
-import objects.listeners.ClientOperatorHaggleDataEventListener;
-import objects.listeners.ClientOperatorPlayerDataEventListener;
-import objects.listeners.ClientOperatorPurchasableDataEventListener;
-import objects.listeners.ModelEventListener;
+import objects.events.*;
+import objects.listeners.*;
+import objects.value.CardData;
 import objects.value.InitializeMapData;
 import objects.value.PlayerData;
 import objects.value.action.HaggleData;
@@ -46,12 +41,12 @@ public class Model {
 	private       HashMap<Integer, ArrayList<PurchasableData>>           purchasableHashMap;
 	private       ArrayList<PlayerData>                                  playerArrayList;
 	private       PlayerData                                             clientPlayer; //TODO change to int
+	private       ArrayList<CardData>                                    cardDataArrayList;
 	private       int                                                    oldMoney;
 	//Action Data
 	private       HaggleData                                             haggleData;
 	//States
 	private       CurrentMainPanelName                                   currentMainPanelName;
-	//not necessary for the cui
 	private       TurnOptionState                                        turnOptionState;
 	private       BuyOptionState                                         buyOptionState;
 
@@ -65,6 +60,9 @@ public class Model {
 		for(ModelEventName eventName : ModelEventName.values()) {
 			listener.put(eventName, new ArrayList<ModelEventListener>());
 		}
+
+		//CardData
+		cardDataArrayList = new ArrayList<CardData>();
 
 		//Map
 		map = initializeMapData.getMap();
@@ -92,6 +90,13 @@ public class Model {
 			@Override public void actionPerformed(ClientOperatorHaggleDataEvent event) {
 				haggleData = new HaggleData(event.getHaggleData());
 				fireModelEvent(ModelEventName.HAGGLE);
+			}
+		});
+
+		clientOperator.addCardDataEventListener(new ClientOperatorCardDataEventListener() {
+			@Override public void actionPerformed(ClientOperatorCardDataEvent event) {
+				cardDataArrayList.add(event.getCardData());
+				fireModelEvent(ModelEventName.CARD);
 			}
 		});
 	}
@@ -506,6 +511,11 @@ public class Model {
 		return playerArrayList;
 	}
 
+	//JAVADOC
+	public ArrayList<CardData> getCardDataArrayList() {
+		return cardDataArrayList;
+	}
+
 	/**
 	 * <ul>
 	 * <li>THROWDICE: the player can throw the dice for the first time</li>
@@ -535,7 +545,7 @@ public class Model {
 	 */
 	public enum ModelEventName {
 		DICE, ISINJAIL, MONEY, POSITION, TURNSTATE, THREWDICE, INMORTAGE, STAGE, PROPERTY, TURNOPTION, BUYOPTION,
-		MAINPANEL, HAGGLE
+		MAINPANEL, HAGGLE, CARD
 	}
 
 	/**

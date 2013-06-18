@@ -6,7 +6,6 @@ import objects.card.CardStack;
 import objects.exceptions.MessageStackException;
 import objects.exceptions.core.LoaderException;
 import objects.map.FieldCircularList;
-import ui.Menu;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -20,19 +19,18 @@ class Loader {
 	private final String path = "/storage/";
 	private FieldCircularList go;
 	private FieldCircularList jail;
+	private CardStack         event;
+	private CardStack         community;
 	private ArrayList<Player> playerArrayList = new ArrayList<Player>();
-	private Menu menu;
 
 	/**
 	 * In the constructor the files that are not present will be copied to the execute location and if there isn't
 	 * serialized the file will be created.
 	 *
-	 * @param menu to be deleted
 	 * @throws MessageStackException the exception will be thrown if there was a problem while reading or writing from
 	 *                               the files
 	 */
-	//TODO remove menu
-	public Loader(Menu menu) throws MessageStackException {
+	public Loader() throws MessageStackException {
 		copyFile("map.txt");
 		copyFile("community.txt");
 		copyFile("events.txt");
@@ -41,8 +39,9 @@ class Loader {
 				ObjectInputStream serializedFile = new ObjectInputStream(new FileInputStream("monopoly.ser"));
 				go = (FieldCircularList) serializedFile.readObject();
 				jail = (FieldCircularList) serializedFile.readObject();
+				event = (CardStack) serializedFile.readObject();
+				community = (CardStack) serializedFile.readObject();
 				playerArrayList = (ArrayList<Player>) serializedFile.readObject();
-				this.menu = (Menu) serializedFile.readObject();
 			} catch(IOException e) {
 				new File("monopoly.ser").delete();
 				throw new LoaderException("The problem occurred while reading the file monopoly.ser.", e);
@@ -54,18 +53,18 @@ class Loader {
 			try {
 				//TODO load files in three threads and check for a.join(), b.join() c.join()
 				MapArrayCreator mac = new MapArrayCreator();
-				CardStack event = new CardStack("events.txt", "Event Karte");
-				CardStack community = new CardStack("community.txt", "Gemeinschafts Karte");
-				new Connector().connect(mac.getMap(), event, community, playerArrayList, menu);
+				event = new CardStack("events.txt", "Event Karte");
+				community = new CardStack("community.txt", "Gemeinschafts Karte");
+				new Connector().connect(mac.getMap(), event, community, playerArrayList);
 				go = mac.getGo();
 				jail = mac.getJail();
-				this.menu = menu;
 				ObjectOutputStream serializedFile =
 						new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("monopoly.ser")));
 				serializedFile.writeObject(go);
 				serializedFile.writeObject(jail);
+				serializedFile.writeObject(event);
+				serializedFile.writeObject(community);
 				serializedFile.writeObject(playerArrayList);
-				serializedFile.writeObject(menu);
 				serializedFile.close();
 			} catch(IOException e) {
 				new File("monopoly.ser").delete();
@@ -123,5 +122,13 @@ class Loader {
 	 */
 	public ArrayList<Player> getPlayerArrayList() {
 		return playerArrayList;
+	}
+
+	CardStack getEvent() {
+		return event;
+	}
+
+	CardStack getCommunity() {
+		return community;
 	}
 }

@@ -1,12 +1,17 @@
 package core;
 
 import objects.Player;
+import objects.card.Card;
+import objects.card.CardStack;
+import objects.events.CardEvent;
 import objects.events.PlayerEvent;
 import objects.events.PurchasableEvent;
+import objects.listeners.CardEventListener;
 import objects.listeners.PlayerEventListener;
 import objects.listeners.PurchasableEventListener;
 import objects.map.FieldCircularList;
 import objects.map.purchasable.PurchasableCircularList;
+import objects.value.CardData;
 import objects.value.InitializeMapData;
 import objects.value.InitializePlayer;
 import objects.value.PlayerData;
@@ -19,22 +24,22 @@ import java.util.ArrayList;
 /**
  * The ServerOperator is the class that communicates with the clients
  */
-class ServerOperator {
+public class ServerOperator {
 	private final ArrayList<ClientOperator> destination;
 	private final Monopoly                  monopoly;
 
 	/**
 	 * @param monopoly the value determines the Monopoly object at which the event listeners will be registered
 	 */
-	public ServerOperator(Monopoly monopoly) {
+	public ServerOperator(Monopoly monopoly, Loader loader) {
 		this.monopoly = monopoly;
 		destination = new ArrayList<ClientOperator>();
 
 		FieldCircularList go = monopoly.getGo();
-		FieldCircularList current = go;
+		FieldCircularList currentField = go;
 		do {
-			if(current instanceof PurchasableCircularList) {
-				final PurchasableCircularList purchasable = (PurchasableCircularList) current;
+			if(currentField instanceof PurchasableCircularList) {
+				final PurchasableCircularList purchasable = (PurchasableCircularList) currentField;
 				purchasable.addPurchasableEventListener(new PurchasableEventListener() {
 					@Override public void actionPerformed(PurchasableEvent event) {
 						for(ClientOperator client : destination) {
@@ -43,8 +48,44 @@ class ServerOperator {
 					}
 				});
 			}
-			current = current.getNext();
-		} while(!current.equals(go));
+			currentField = currentField.getNext();
+		} while(!currentField.equals(go));
+
+		Card start;
+		Card currentCard;
+		CardStack stack;
+
+		//Register events at the event CardStack
+		stack = loader.getEvent();
+		start = stack.nextCard();
+		currentCard = start;
+		do {
+			currentCard.addCardEventListener(new CardEventListener() {
+				@Override public void actionPerformed(CardEvent event) {
+					sendCardData(event.getCardData());
+				}
+			});
+			currentCard = stack.nextCard();
+		} while(!start.equals(currentCard));
+
+		//Register Events at the community CardStack
+		stack = loader.getCommunity();
+		start = stack.nextCard();
+		currentCard = start;
+		do {
+			currentCard.addCardEventListener(new CardEventListener() {
+				@Override public void actionPerformed(CardEvent event) {
+					sendCardData(event.getCardData());
+				}
+			});
+			currentCard = stack.nextCard();
+		} while(!start.equals(currentCard));
+	}
+
+	public void sendCardData(CardData cardData) {
+		for(ClientOperator client : destination) {
+			client.updateCardData(cardData);
+		}
 	}
 
 	/**

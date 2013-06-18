@@ -10,7 +10,6 @@ import objects.map.purchasable.Facility;
 import objects.map.purchasable.PurchasableCircularList;
 import objects.map.purchasable.Station;
 import objects.map.purchasable.Street;
-import ui.Menu;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,19 +23,17 @@ public class Connector {
 	 * @param chance          The value determines the CardStack which has the Card objects from the chance file.
 	 * @param community       The value determines the CardStack which has the Card objects from the community file.
 	 * @param playerArrayList The value determines the Vector where all Player objects are stored.
-	 * @param menu            The value determines the Menu that will be used.
 	 * @throws NoInstanceException     The Exception is thrown if either no Jail, Parking, Go object exists.
 	 * @throws CardConnectionException The Exception is thrown if the Street for the GoTo Card is not found.
 	 */
 	public void connect(FieldCircularList[] map, CardStack chance, CardStack community,
-	                    ArrayList<Player> playerArrayList, Menu menu)
-			throws NoInstanceException, CardConnectionException {
+	                    ArrayList<Player> playerArrayList) throws NoInstanceException, CardConnectionException {
 		makeCircularFieldList(map);
 		connectMatching(arrayToArrayList(map), chance, community);
 		setDiceArray(map);
 		//TODO Check for notOneInstance
-		connectCards(chance, map, community, playerArrayList, menu);
-		connectCards(community, map, community, playerArrayList, menu);
+		connectCards(chance, map, community, playerArrayList);
+		connectCards(community, map, community, playerArrayList);
 	}
 
 	/**
@@ -272,11 +269,10 @@ public class Connector {
 	 * @param map             The value determines the FieldCircularList objects to check.
 	 * @param community       The value determines the community CardStack.
 	 * @param playerArrayList The value determines the Vector where all Player objects are stored.
-	 * @param menu            The value determines what Menu will be used
 	 * @throws CardConnectionException The Exception is thrown if the Street for the GoTo Card is not found.
 	 */
 	private void connectCards(CardStack current, FieldCircularList[] map, CardStack community,
-	                          ArrayList<Player> playerArrayList, Menu menu) throws CardConnectionException {
+	                          ArrayList<Player> playerArrayList) throws CardConnectionException {
 		boolean found;
 
 		for(Card card : current.getStack()) {
@@ -332,7 +328,6 @@ public class Connector {
 				//SpecialPayment needs a reference to the Players
 				((SpecialPayment) card).setPlayerArrayList(playerArrayList);
 			}
-			card.setMenu(menu);
 		}
 	}
 }

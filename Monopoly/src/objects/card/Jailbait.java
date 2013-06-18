@@ -44,7 +44,7 @@ public class Jailbait extends Card implements Serializable {
 	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
-		menu.showCardText(this);
+		fireCardEvent(player.getName());
 		player.addJailbait(this);
 		cardStack.removeCard(index);
 	}

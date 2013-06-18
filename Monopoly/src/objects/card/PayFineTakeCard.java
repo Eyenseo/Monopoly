@@ -57,11 +57,8 @@ public class PayFineTakeCard extends Card implements Serializable {
 	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
-		if(menu.showCardText(this)) {
-			community.nextCard().action(player);
-		} else {
-			player.pay(dm);
-			parking.addMoney(dm);
-		}
+		fireCardEvent(player.getName());
+		community.nextCard().action(player);
+		//TODO wait for the player to return a choice  - whether to take a community card or to pay a fine.
 	}
 }

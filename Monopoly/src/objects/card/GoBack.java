@@ -28,7 +28,7 @@ public class GoBack extends Card implements Serializable {
 	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
-		menu.showCardText(this);
+		fireCardEvent(player.getName());
 		player.move(fields, false);
 		player.getPosition().action(player);
 	}

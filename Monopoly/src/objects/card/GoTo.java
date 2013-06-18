@@ -58,7 +58,7 @@ public class GoTo extends Card implements Serializable {
 	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
-		menu.showCardText(this);
+		fireCardEvent(player.getName());
 		if(OVERGO && field.getFieldNumber() < player.getPosition().getFieldNumber()) {
 			go.action(player);
 		}
