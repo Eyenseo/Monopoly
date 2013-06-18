@@ -119,7 +119,6 @@ public class FourthTest {
 		gridBagConstraints.gridwidth = 2;
 		panel.add(endApp, gridBagConstraints);
 
-		//TODO change this workaround
 		JFrame packer = new JFrame();
 		packer.add(panel);
 		packer.pack();

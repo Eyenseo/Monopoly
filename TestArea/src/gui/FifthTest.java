@@ -16,7 +16,7 @@ public class FifthTest extends JPanel {
 
 	private JTextPane money;
 	private JTextPane position;
-	private JTextPane dice;   //TODO make JTextPane
+	private JTextPane dice;
 
 	public FifthTest() {
 		super(new GridBagLayout());
@@ -31,7 +31,7 @@ public class FifthTest extends JPanel {
 
 		money = new JTextPane();
 		money.setEditable(false);
-		money.setPreferredSize(new Dimension(200, 20)); //TODO make a relative calculation!
+		money.setPreferredSize(new Dimension(200, 20));
 		money.setText("Left");
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.weightx = 0.25;
