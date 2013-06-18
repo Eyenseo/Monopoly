@@ -419,7 +419,7 @@ public class Model {
 	 * @param listener the value determines the listener to be removed
 	 */
 	public void removeModelEventListener(ModelEventName eventName, ModelEventListener listener) {
-		this.listener.remove(eventName).add(listener);
+		this.listener.remove(eventName).remove(listener);
 	}
 
 	/**
@@ -456,7 +456,7 @@ public class Model {
 	}
 
 	/**
-	 * The methos will change turnOptionState to THROWDICE if the player starts his turn, to THROWDICEAGAIN if he got a
+	 * The method will change turnOptionState to THROWDICE if the player starts his turn, to THROWDICEAGAIN if he got a
 	 * double, to ENDTURN if he can only end his turn or deactivated if he cant do anything
 	 */
 	private void updateTurnOption() {
@@ -498,7 +498,7 @@ public class Model {
 	}
 
 	/**
-	 * @return the return value holds all boughts purchaseables for all player
+	 * @return the return value holds all bought purchaseables for all player
 	 */
 	public HashMap<Integer, ArrayList<PurchasableData>> getPurchasableHashMap() {
 		return purchasableHashMap;
