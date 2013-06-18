@@ -30,7 +30,7 @@ public class HagglePanel extends JPanel {
 	private       JPanel            playerContent;
 	private       JSplitPane        hagglePane;
 	private       JPanel            headerPanel;
-	private       JPanel            fodderPanel;
+	private       JPanel            basePanel;
 	private       JButton           accept;
 	private       JTextField        tradeSellerMoney;
 	private       JTextField        tradePlayerMoney;
@@ -46,12 +46,12 @@ public class HagglePanel extends JPanel {
 		this.clientOperator = clientOperator;
 		createHeader();
 		createHagglePane();
-		createFodder();
+		createBase();
 		createPlayerContent();
 
 		add(headerPanel, BorderLayout.NORTH);
 		add(hagglePane, BorderLayout.CENTER);
-		add(fodderPanel, BorderLayout.SOUTH);
+		add(basePanel, BorderLayout.SOUTH);
 
 		model.addModelEventListener(Model.ModelEventName.HAGGLE, haggleListener());
 	}
@@ -362,13 +362,13 @@ public class HagglePanel extends JPanel {
 	}
 
 	/**
-	 * The method will create the fodderPanel which a textArea that displays the money to be payed by the player, a
+	 * The method will create the basePanel which a textArea that displays the money to be payed by the player, a
 	 * TextArea where the user can type how much money he wants, a button to precede to the next stage of the trade
 	 * and a button to cancel the trade
 	 */
-	private void createFodder() {
-		fodderPanel = new JPanel();
-		fodderPanel.setLayout(new BoxLayout(fodderPanel, BoxLayout.PAGE_AXIS));
+	private void createBase() {
+		basePanel = new JPanel();
+		basePanel.setLayout(new BoxLayout(basePanel, BoxLayout.PAGE_AXIS));
 
 		JPanel layerWrapper = new JPanel(new GridLayout(2, 1));
 
@@ -455,6 +455,6 @@ public class HagglePanel extends JPanel {
 		layerWrapper.add(moneyTextWrapper);
 		layerWrapper.add(buttonWrapperWrapper);
 
-		fodderPanel.add(layerWrapper);
+		basePanel.add(layerWrapper);
 	}
 }
