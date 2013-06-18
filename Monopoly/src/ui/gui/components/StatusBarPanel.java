@@ -15,7 +15,6 @@ public class StatusBarPanel extends JPanel {
 	private final Model     model;
 	private final JTextPane moneyPane;
 	private final JTextPane positionPane;
-	private final JTextPane dicePane;
 
 	/**
 	 * @param model The value determines the model that the StatusBarPanel gets its information from
@@ -43,16 +42,6 @@ public class StatusBarPanel extends JPanel {
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.weightx = 0.5;
 		add(positionPane, gridBagConstraints);
-
-		SimpleAttributeSet right = new SimpleAttributeSet();
-		StyleConstants.setAlignment(right, StyleConstants.ALIGN_RIGHT);
-		dicePane = new JTextPane();
-		dicePane.setEditable(false);
-		dicePane.setPreferredSize(new Dimension(200, 20));
-		dicePane.setParagraphAttributes(right, true);
-		gridBagConstraints.gridx = 2;
-		gridBagConstraints.weightx = 0.25;
-		add(dicePane, gridBagConstraints);
 
 		registerModelListener();
 	}
@@ -160,25 +149,6 @@ public class StatusBarPanel extends JPanel {
 			}
 		};
 
-		ModelEventListener diceUpdate = new ModelEventListener() {
-			/**
-			 * The method will set the current dices
-			 * @param event the value determines the event source
-			 */
-			@Override public void actionPerformed(ModelEvent event) {
-				try {
-					StyledDocument doc = getDicePane().getStyledDocument();
-					doc.remove(0, doc.getLength());
-
-					doc.insertString(doc.getLength(),
-					                 "Wuerfel 1: " + model.getFirstDice() + "\tWuerfel 2: " + model.getSecondDice(),
-					                 null);
-				} catch(BadLocationException e) {
-					e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-				}
-			}
-		};
-
 		model.addModelEventListener(Model.ModelEventName.MONEY, moneyUpdate);
 
 		model.addModelEventListener(Model.ModelEventName.POSITION, positionUpdate);
@@ -186,8 +156,6 @@ public class StatusBarPanel extends JPanel {
 		model.addModelEventListener(Model.ModelEventName.PROPERTY, positionUpdate);
 
 		model.addModelEventListener(Model.ModelEventName.ISINJAIL, positionUpdate);
-
-		model.addModelEventListener(Model.ModelEventName.DICE, diceUpdate);
 	}
 
 	/**
@@ -202,12 +170,5 @@ public class StatusBarPanel extends JPanel {
 	 */
 	private JTextPane getPositionPane() {
 		return positionPane;
-	}
-
-	/**
-	 * @return The return value is the Pane of the dice
-	 */
-	private JTextPane getDicePane() {
-		return dicePane;
 	}
 }
