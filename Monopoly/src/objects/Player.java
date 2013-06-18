@@ -255,7 +255,7 @@ public class Player implements Serializable {
 			inJail = false;
 			move(dices[0] + dices[1], true);
 			position.action(this);
-		} else {                //TODO Check if this really works ...
+		} else {
 			timeInJail++;
 			if(timeInJail > 2) {
 				inJail = false;

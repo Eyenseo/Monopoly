@@ -23,11 +23,10 @@ public class GoToStation extends Card implements Serializable {
 	}
 
 	/**
-	 * --- TODO
+	 * The method will fire a CardEvent
 	 *
 	 * @param player The value determines the Player who caused the method call
 	 */
-	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
 		fireCardEvent(player.getName());

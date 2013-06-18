@@ -25,11 +25,10 @@ public class SpecialPayment extends Card implements Serializable {
 	}
 
 	/**
-	 * --- TODO
+	 * The method will fire a CardEvent
 	 *
 	 * @param player The value determines the Player who caused the method call
 	 */
-	//TODO Use th GUI / use a event
 	@Override
 	public void action(Player player) {
 		int amount = 0;

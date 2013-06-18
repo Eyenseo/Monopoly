@@ -78,7 +78,6 @@ public class Street extends PurchasableCircularList implements Serializable {
 	/**
 	 * This method checks if all group members are owned by the same owner and sets the upgradeable status.
 	 */
-	//TODO extend method to check if houses are equally split between the group members
 	@Override public void sameOwnerCheck() {
 		boolean sameOwner = true;
 		Street next = this;

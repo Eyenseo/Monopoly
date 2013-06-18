@@ -54,35 +54,32 @@ public class MapTest {
 class FieldCard extends JPanel {
 	public static final int width  = 175;
 	public static final int height = 220;
-	private final int           gapX;
-	private final int           gapY;
+	private final int                            gapX;
+	private final int                            gapY;
 	//Fonts
-	private final Font          normFont;
-	private final Font          headerFont;
+	private final Font                           normFont;
+	private final Font                           headerFont;
 	//Color
-	private       Color         streetColor;
-	private       Color         borderColor;
-	private       Color         backgroundColor;
+	private       Color                          streetColor;
+	private       Color                          borderColor;
+	private       Color                          backgroundColor;
 	//Image
-	private       BufferedImage image;
-
+	private       BufferedImage                  image;
 	//Header
-	private int    headerBackgroundWidth;
-	private int    headerBackgroundHeight;
-	private String headerName;
-	private int    headerNameX;
-	private int    headerNameY;
+	private       int                            headerBackgroundWidth;
+	private       int                            headerBackgroundHeight;
+	private       String                         headerName;
+	private       int                            headerNameX;
+	private       int                            headerNameY;
 	//Body
-	private int    bodyX;
-	private int    bodyY;
-
+	private       int                            bodyX;
+	private       int                            bodyY;
 	//Base
-	private String price;
-	private int    priceX;
-	private int    priceY;
-
+	private       String                         price;
+	private       int                            priceX;
+	private       int                            priceY;
 	//do playerHashMap
-	private HashMap<Integer, PlayerFigure> playerHashMap;
+	private       HashMap<Integer, PlayerFigure> playerHashMap;
 
 	FieldCard(String headerName, Color streetColor, int price) {
 		this.headerName = headerName;
@@ -254,14 +251,14 @@ class FieldCard extends JPanel {
 }
 
 class PlayerFigure extends JPanel {
+	public static int width  = 50;
+	public static int height = width;
 	private Color color;
 	private Color borderColor;
 	private char  name;
-	public static int width  = 50;
-	public static int height = width;
-	private Font font;
-	private int  nameX;
-	private int  nameY;
+	private Font  font;
+	private int   nameX;
+	private int   nameY;
 
 	PlayerFigure(Color color, char name) {
 		this.color = color;

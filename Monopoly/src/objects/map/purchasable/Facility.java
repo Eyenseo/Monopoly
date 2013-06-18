@@ -34,8 +34,6 @@ public class Facility extends PurchasableCircularList implements Serializable {
 		return INCOME[getStage()] * (player.getDices()[0] + player.getDices()[1]);
 	}
 
-	//TODO Change stage increasing for variable numbers of Facilities
-
 	/**
 	 * @return the return value is a new FieldData object of FacilityData with the current attributes of the
 	 *         PurchasableCircularList

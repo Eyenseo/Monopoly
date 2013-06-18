@@ -162,7 +162,6 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	/**
 	 * This method checks if all group members are owned by the same owner. If they are the stage is increased to 1.
 	 */
-	//TODO think of a way to keep the houses when trading
 	void sameOwnerCheck() {
 		boolean sameOwner = true;
 		PurchasableCircularList next = nextGroupElement;
