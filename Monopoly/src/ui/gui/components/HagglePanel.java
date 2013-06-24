@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 /**
@@ -69,9 +70,20 @@ public class HagglePanel extends JPanel {
 						// case ESTABLISH: //Will never happen - this state will just appear on the server
 						case ESTABLISHED:
 							if(haggleData.getPlayerId() == model.getClientPlayer().getId()) {
+								playerList.setEnabled(false);
 								accept.setEnabled(true);
+								tradePlayerMoney.setEditable(true);
 
 								setSeller(haggleData.getSellerId());
+							} else {
+								int sellerId = haggleData.getSellerId();
+								if(sellerId >= model.getClientPlayer().getId()) {
+									sellerId--;
+								}
+								playerList.setSelectedIndex(sellerId);
+								playerList.setEnabled(false);
+
+								accept.setText("Angebot");
 							}
 							break;
 
@@ -81,6 +93,7 @@ public class HagglePanel extends JPanel {
 
 								setSeller(haggleData.getPlayerId());
 								markPlayerPurchasable(haggleData.getPlayerFieldIds());
+								tradePlayerMoney.setEditable(true);
 
 								tradeSellerMoney.setText("" + haggleData.getPlayerMoney());
 								model.setCurrentMainPanelName(Model.CurrentMainPanelName.HAGGLE);
@@ -93,13 +106,18 @@ public class HagglePanel extends JPanel {
 
 								markPlayerPurchasable(haggleData.getSellerFieldIds());
 								tradeSellerMoney.setText("" + haggleData.getSellerMoney());
+
+								accept.setText("Akzeptieren");
 							}
 							break;
 
 						case ACCEPT:
 						case DECLINE:
 							accept.setEnabled(false);
+							accept.setText("Anfrage");
 							playerList.setEnabled(true);
+							tradePlayerMoney.setText("0");
+							tradeSellerMoney.setText("0");
 							sellerContent.removeAll();
 							unmarkPlayerPurchasable();
 							repaint();
@@ -157,14 +175,18 @@ public class HagglePanel extends JPanel {
 		playerList = new JComboBox<String>(playerNames);
 		playerList.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				JComboBox playerList = (JComboBox) e.getSource();
-				int index = playerList.getSelectedIndex();
-				if(index >= model.getClientPlayer().getId()) {
-					index++;
+				HaggleData haggleData = model.getHaggleData();
+				if(haggleData == null || haggleData.getHaggleState() == HaggleData.HaggleState.ACCEPT ||
+				   haggleData.getHaggleState() == HaggleData.HaggleState.DECLINE) {
+					JComboBox playerList = (JComboBox) e.getSource();
+					int index = playerList.getSelectedIndex();
+					if(index >= model.getClientPlayer().getId()) {
+						index++;
+					}
+					model.setHaggleData(new HaggleData(model.getClientPlayer().getId(), index));
+					clientOperator.sendActionData(model.getHaggleData());
+					playerList.setEnabled(false);
 				}
-				model.setHaggleData(new HaggleData(model.getClientPlayer().getId(), index));
-				clientOperator.sendActionData(model.getHaggleData());
-				playerList.setEnabled(false);
 			}
 		});
 
@@ -391,7 +413,9 @@ public class HagglePanel extends JPanel {
 		playerText.setEditable(false);
 		playerText.setBorder(null);
 
-		tradePlayerMoney = new JTextField("0");
+		tradePlayerMoney = new JFormattedTextField(NumberFormat.getInstance());
+		tradePlayerMoney.setText("0");
+		tradePlayerMoney.setEditable(false);
 
 		// place text fields in one line
 		JPanel moneyTextWrapper = new JPanel(new GridLayout(1, 4));
@@ -416,7 +440,6 @@ public class HagglePanel extends JPanel {
 			}
 		});
 
-		//TODO switch text by TradeState
 		accept = new JButton("Anfrage");
 		accept.setEnabled(false);
 		accept.addActionListener(new ActionListener() {
@@ -430,9 +453,11 @@ public class HagglePanel extends JPanel {
 					// case ESTABLISH:   //Will never happen - this state will just appear on the server
 					case ESTABLISHED:
 						haggleData.setHaggleState(HaggleData.HaggleState.REQUEST);
+						haggleData.setPlayerMoney(Integer.parseInt(tradePlayerMoney.getText()));
 						break;
 					case REQUEST:
 						haggleData.setHaggleState(HaggleData.HaggleState.OFFER);
+						haggleData.setSellerMoney(Integer.parseInt(tradePlayerMoney.getText()));
 						break;
 					case OFFER:
 						haggleData.setHaggleState(HaggleData.HaggleState.ACCEPT);
@@ -440,6 +465,7 @@ public class HagglePanel extends JPanel {
 					// case ACCEPT:    //Will never happen - this state will just appear on the server
 					// case DECLINE:   //Will never happen - this state will just appear on the server
 				}
+				tradePlayerMoney.setEditable(false);
 				accept.setEnabled(false);
 				clientOperator.sendActionData(model.getHaggleData());
 			}
