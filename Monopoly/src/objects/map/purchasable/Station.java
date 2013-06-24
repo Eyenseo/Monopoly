@@ -56,16 +56,14 @@ public class Station extends PurchasableCircularList implements Serializable {
 		firePurchasableEvent();
 	}
 
-	//TODO Change stage increasing for variable numbers of Stations
-
 	/**
 	 * The method will transfer the money the player has to pay to the owner
 	 *
 	 * @param player The value determines the Player who caused the method call
 	 */
-	//TODO Check if used
+	//JAVADOC
 	public void action(Player player, boolean doublePay) {
-		if(!player.equals(getOwner()) && doublePay && getOwner() != null && !isInMortgage()) {
+		if(getOwner() != null && !player.equals(getOwner()) && doublePay && !isInMortgage()) {
 			player.pay(getBill(player) * 2);
 			getOwner().addMoney(getBill(player) * 2);
 		} else {
