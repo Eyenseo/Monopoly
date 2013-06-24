@@ -101,8 +101,7 @@ public class MortgagePanel extends JPanel {
 					 */
 					@Override public void mouseClicked(MouseEvent e) {
 						PurchasableCardPanel panel = (PurchasableCardPanel) e.getSource();
-						MortgageData data =
-								new MortgageData(model.getClientPlayer().getId(), panel.getData().getFieldNumber());
+						MortgageData data = new MortgageData(model.getUser().getId(), panel.getData().getFieldNumber());
 						clientOperator.sendActionData(data);
 					}
 				});

@@ -261,12 +261,12 @@ class ControlPanel extends JPanel {
 	private void registerButtonListener() {
 		turnOption.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				clientOperator.sendActionData(new TurnData(model.getClientPlayer().getId(), model.isMoveAction()));
+				clientOperator.sendActionData(new TurnData(model.getUser().getId(), model.isMoveAction()));
 			}
 		});
 		buyOption.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				clientOperator.sendActionData(new BuyData(model.getClientPlayer().getId(),
+				clientOperator.sendActionData(new BuyData(model.getUser().getId(),
 				                                          model.getBuyOptionState() == Model.BuyOptionState.BUYHOTEL ||
 				                                          model.getBuyOptionState() == Model.BuyOptionState.BUYHOUSE));
 			}

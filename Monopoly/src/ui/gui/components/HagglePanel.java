@@ -28,7 +28,7 @@ public class HagglePanel extends JPanel {
 	private final Model             model;
 	private final ClientOperator    clientOperator;
 	private       JPanel            sellerContent;
-	private       JPanel            playerContent;
+	private       JPanel            userContent;
 	private       JSplitPane        hagglePane;
 	private       JPanel            headerPanel;
 	private       JPanel            basePanel;
@@ -69,7 +69,7 @@ public class HagglePanel extends JPanel {
 					switch(haggleData.getHaggleState()) {
 						// case ESTABLISH: //Will never happen - this state will just appear on the server
 						case ESTABLISHED:
-							if(haggleData.getPlayerId() == model.getClientPlayer().getId()) {
+							if(haggleData.getUserId() == model.getUser().getId()) {
 								playerList.setEnabled(false);
 								accept.setEnabled(true);
 								tradePlayerMoney.setEditable(true);
@@ -77,7 +77,7 @@ public class HagglePanel extends JPanel {
 								setSeller(haggleData.getSellerId());
 							} else {
 								int sellerId = haggleData.getSellerId();
-								if(sellerId >= model.getClientPlayer().getId()) {
+								if(sellerId >= model.getUser().getId()) {
 									sellerId--;
 								}
 								playerList.setSelectedIndex(sellerId);
@@ -88,20 +88,20 @@ public class HagglePanel extends JPanel {
 							break;
 
 						case REQUEST:
-							if(haggleData.getSellerId() == model.getClientPlayer().getId()) {
+							if(haggleData.getSellerId() == model.getUser().getId()) {
 								accept.setEnabled(true);
 
-								setSeller(haggleData.getPlayerId());
-								markPlayerPurchasable(haggleData.getPlayerFieldIds());
+								setSeller(haggleData.getUserId());
+								markPlayerPurchasable(haggleData.getUserFieldIds());
 								tradePlayerMoney.setEditable(true);
 
-								tradeSellerMoney.setText("" + haggleData.getPlayerMoney());
+								tradeSellerMoney.setText("" + haggleData.getUserMoney());
 								model.setCurrentMainPanelName(Model.CurrentMainPanelName.HAGGLE);
 							}
 							break;
 
 						case OFFER:
-							if(haggleData.getPlayerId() == model.getClientPlayer().getId()) {
+							if(haggleData.getUserId() == model.getUser().getId()) {
 								accept.setEnabled(true);
 
 								markPlayerPurchasable(haggleData.getSellerFieldIds());
@@ -129,10 +129,10 @@ public class HagglePanel extends JPanel {
 	}
 
 	/**
-	 * The method will remove the borders from the property from the client payer purchasables.
+	 * The method will remove the borders from the property from the user purchasables.
 	 */
 	private void unmarkPlayerPurchasable() {
-		for(Component panel : playerContent.getComponents()) {
+		for(Component panel : userContent.getComponents()) {
 			if(panel instanceof PurchasableCardPanel) {
 				((PurchasableCardPanel) panel).setBorder(null);
 			}
@@ -147,7 +147,7 @@ public class HagglePanel extends JPanel {
 	 */
 	private void markPlayerPurchasable(ArrayList<Integer> purchasableDataList) {
 		for(int id : purchasableDataList) {
-			for(Component panel : playerContent.getComponents()) {
+			for(Component panel : userContent.getComponents()) {
 				if(panel instanceof PurchasableCardPanel) {
 					if(((PurchasableCardPanel) panel).getData().getFieldNumber() == id) {
 						((PurchasableCardPanel) panel)
@@ -166,7 +166,7 @@ public class HagglePanel extends JPanel {
 		ArrayList<PlayerData> playerDataArrayList = model.getPlayerArrayList();
 		String[] playerNames = new String[playerDataArrayList.size() - 1];
 		for(int i = 0, j = 0; i < playerDataArrayList.size(); i++) {
-			if(i != model.getClientPlayer().getId()) {
+			if(i != model.getUser().getId()) {
 				playerNames[j] = playerDataArrayList.get(i).getName();
 				j++;
 			}
@@ -180,21 +180,21 @@ public class HagglePanel extends JPanel {
 				   haggleData.getHaggleState() == HaggleData.HaggleState.DECLINE) {
 					JComboBox playerList = (JComboBox) e.getSource();
 					int index = playerList.getSelectedIndex();
-					if(index >= model.getClientPlayer().getId()) {
+					if(index >= model.getUser().getId()) {
 						index++;
 					}
-					model.setHaggleData(new HaggleData(model.getClientPlayer().getId(), index));
+					model.setHaggleData(new HaggleData(model.getUser().getId(), index));
 					clientOperator.sendActionData(model.getHaggleData());
 					playerList.setEnabled(false);
 				}
 			}
 		});
 
-		JTextField playerIdentifier = new JTextField("Sie");
-		playerIdentifier.setEditable(false);
-		playerIdentifier.setBorder(null);
+		JTextField userIdentifier = new JTextField("Sie");
+		userIdentifier.setEditable(false);
+		userIdentifier.setBorder(null);
 
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, playerList, playerIdentifier);
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, playerList, userIdentifier);
 		splitPane.setResizeWeight(0.5);
 		splitPane.setEnabled(false);
 		splitPane.setDividerSize(0);
@@ -211,7 +211,7 @@ public class HagglePanel extends JPanel {
 		hagglePane.setDividerLocation(0.5);
 
 		hagglePane.validate();
-		playerContent.setSize(new Dimension(hagglePane.getRightComponent().getWidth(), playerContent.getHeight()));
+		userContent.setSize(new Dimension(hagglePane.getRightComponent().getWidth(), userContent.getHeight()));
 		hagglePane.validate();
 
 		super.paintComponent(g);
@@ -242,19 +242,19 @@ public class HagglePanel extends JPanel {
 						PurchasableCardPanel panel = (PurchasableCardPanel) e.getSource();
 						if(panel.getBorder() == null) {
 							panel.setBorder(BorderFactory.createLineBorder(new Color(0, 156, 0), 3));
-							if(haggleData.getPlayerId() == model.getClientPlayer().getId() &&
+							if(haggleData.getUserId() == model.getUser().getId() &&
 							   state == HaggleData.HaggleState.ESTABLISHED) {
-								haggleData.getPlayerFieldIds().add(panel.getData().getFieldNumber());
-							} else if(haggleData.getSellerId() == model.getClientPlayer().getId()) {
+								haggleData.getUserFieldIds().add(panel.getData().getFieldNumber());
+							} else if(haggleData.getSellerId() == model.getUser().getId()) {
 
 								haggleData.getSellerFieldIds().add(panel.getData().getFieldNumber());
 							}
 						} else {
 							panel.setBorder(null);
-							if(haggleData.getPlayerId() == model.getClientPlayer().getId() &&
+							if(haggleData.getUserId() == model.getUser().getId() &&
 							   state == HaggleData.HaggleState.ESTABLISHED) {
-								haggleData.getPlayerFieldIds().remove((Integer) panel.getData().getFieldNumber());
-							} else if(haggleData.getSellerId() == model.getClientPlayer().getId()) {
+								haggleData.getUserFieldIds().remove((Integer) panel.getData().getFieldNumber());
+							} else if(haggleData.getSellerId() == model.getUser().getId()) {
 
 								haggleData.getSellerFieldIds().remove((Integer) panel.getData().getFieldNumber());
 							}
@@ -293,7 +293,7 @@ public class HagglePanel extends JPanel {
 				//add new components
 				for(PurchasableData data : model.getClientPurchasable()) {
 					change = true;
-					for(Component panel : playerContent.getComponents()) {
+					for(Component panel : userContent.getComponents()) {
 						if(panel instanceof PurchasableCardPanel) {
 							if(((PurchasableCardPanel) panel).getData().equals(data)) {
 								change = false;
@@ -314,12 +314,12 @@ public class HagglePanel extends JPanel {
 						}
 						constraints.position = data.getFieldNumber();
 
-						playerContent.add(new PurchasableCardPanel(data), constraints);
+						userContent.add(new PurchasableCardPanel(data), constraints);
 					}
 				}
 
 				//remove new components
-				for(Component panel : playerContent.getComponents()) {
+				for(Component panel : userContent.getComponents()) {
 					if(panel instanceof PurchasableCardPanel) {
 						change = true;
 						for(PurchasableData data : model.getClientPurchasable()) {
@@ -329,7 +329,7 @@ public class HagglePanel extends JPanel {
 						}
 
 						if(change) {
-							playerContent.remove(panel);
+							userContent.remove(panel);
 						}
 					}
 				}
@@ -342,7 +342,7 @@ public class HagglePanel extends JPanel {
 	}
 
 	/**
-	 * The method will create the HagglePane which holds the sellerContentPanel and the playerContentPanel
+	 * The method will create the HagglePane which holds the sellerContentPanel and the userContentPanel
 	 */
 	private void createHagglePane() {
 		hagglePane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -352,7 +352,7 @@ public class HagglePanel extends JPanel {
 		hagglePane.setEnabled(false);
 
 		hagglePane.setLeftComponent(createSellerContentPanel());
-		hagglePane.setRightComponent(createPlayerContentPanel());
+		hagglePane.setRightComponent(createUserContentPanel());
 	}
 
 	/**
@@ -373,15 +373,15 @@ public class HagglePanel extends JPanel {
 	}
 
 	/**
-	 * The method will create a ScrollPane that holds the playerContentPanel
+	 * The method will create a ScrollPane that holds the userContentPanel
 	 *
-	 * @return The return value holds the playerContentPanel
+	 * @return The return value holds the userContentPanel
 	 */
-	private JScrollPane createPlayerContentPanel() {
-		playerContent = new JPanel();
-		playerContent.setLayout(new PurchasableCardLayout());
+	private JScrollPane createUserContentPanel() {
+		userContent = new JPanel();
+		userContent.setLayout(new PurchasableCardLayout());
 
-		JScrollPane scrollPane = new JScrollPane(playerContent);
+		JScrollPane scrollPane = new JScrollPane(userContent);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
@@ -390,7 +390,7 @@ public class HagglePanel extends JPanel {
 	}
 
 	/**
-	 * The method will create the basePanel which a textArea that displays the money to be payed by the player, a
+	 * The method will create the basePanel with a textArea that displays the money to be payed by the player, a
 	 * TextArea where the user can type how much money he wants, a button to precede to the next stage of the trade
 	 * and a button to cancel the trade
 	 */
@@ -409,9 +409,9 @@ public class HagglePanel extends JPanel {
 		tradeSellerMoney.setEditable(false);
 		tradeSellerMoney.setBorder(null);
 
-		JTextField playerText = new JTextField("Sie bekommen:");
-		playerText.setEditable(false);
-		playerText.setBorder(null);
+		JTextField userText = new JTextField("Sie bekommen:");
+		userText.setEditable(false);
+		userText.setBorder(null);
 
 		tradePlayerMoney = new JFormattedTextField(NumberFormat.getInstance());
 		tradePlayerMoney.setText("0");
@@ -421,7 +421,7 @@ public class HagglePanel extends JPanel {
 		JPanel moneyTextWrapper = new JPanel(new GridLayout(1, 4));
 		moneyTextWrapper.add(sellerText);
 		moneyTextWrapper.add(tradeSellerMoney);
-		moneyTextWrapper.add(playerText);
+		moneyTextWrapper.add(userText);
 		moneyTextWrapper.add(tradePlayerMoney);
 
 		//Buttons
@@ -453,7 +453,7 @@ public class HagglePanel extends JPanel {
 					// case ESTABLISH:   //Will never happen - this state will just appear on the server
 					case ESTABLISHED:
 						haggleData.setHaggleState(HaggleData.HaggleState.REQUEST);
-						haggleData.setPlayerMoney(Integer.parseInt(tradePlayerMoney.getText()));
+						haggleData.setUserMoney(Integer.parseInt(tradePlayerMoney.getText()));
 						break;
 					case REQUEST:
 						haggleData.setHaggleState(HaggleData.HaggleState.OFFER);

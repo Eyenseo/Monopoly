@@ -91,8 +91,8 @@ public class StatusBarPanel extends JPanel {
 
 		ModelEventListener positionUpdate = new ModelEventListener() {
 			/**
-			 * The method will set the current positionPane of the player with additional information if it's a
-			 * purchasable. If the player is in Jail the Jail will have a red color.
+			 * The method will set the current positionPane of the user with additional information if it's a
+			 * purchasable. If the user is in Jail the Jail will have a red color.
 			 * @param event the value determines the event source
 			 */
 			@Override public void actionPerformed(ModelEvent event) {
@@ -121,7 +121,7 @@ public class StatusBarPanel extends JPanel {
 
 						//Add the owner name
 						if(model.getPurchasableOwner() != null) {
-							if(model.getClientPlayer().getId() == model.getPurchasableOwnerId()) {
+							if(model.getUser().getId() == model.getPurchasableOwnerId()) {
 								doc.insertString(doc.getLength(), "Sie", style);
 							} else {
 								doc.insertString(doc.getLength(), model.getPurchasableOwner(), style);

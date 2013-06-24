@@ -7,11 +7,11 @@ public class BuyData extends ActionData {
 	private final boolean upgrade;
 
 	/**
-	 * @param playerId the value determines the player Id the data original from
-	 * @param upgrade  the value determines if a house/hotel will be bought or the field
+	 * @param userId  the value determines the player Id the data original from
+	 * @param upgrade the value determines if a house/hotel will be bought or the field
 	 */
-	public BuyData(int playerId, boolean upgrade) {
-		super(playerId);
+	public BuyData(int userId, boolean upgrade) {
+		super(userId);
 		this.upgrade = upgrade;
 	}
 

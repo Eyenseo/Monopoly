@@ -99,28 +99,28 @@ public class Monopoly {
 	//TODO chop the method down
 	public void doAction(ActionData actionData) {
 		synchronized(turnThread) {
-			Player player = playerArrayList.get(actionData.getPlayerId());
+			Player user = playerArrayList.get(actionData.getUserId());
 
 			if(actionData instanceof TurnData) {
 				if(((TurnData) actionData).isTurnAction()) {
-					if(player.getThrewDice() < 3) {
-						player.move();
+					if(user.getThrewDice() < 3) {
+						user.move();
 					} else {
-						player.setPosition(jail);
-						player.setInJail(true);
-						player.setTurnEnd(true);
+						user.setPosition(jail);
+						user.setInJail(true);
+						user.setTurnEnd(true);
 						turnThread.notify();
 					}
 				} else {
-					player.setTurnEnd(true);
+					user.setTurnEnd(true);
 					turnThread.notify();
 				}
 			} else if(actionData instanceof BuyData) {
-				if(player.getPosition() instanceof PurchasableCircularList) { //TODO check if this is enough
+				if(user.getPosition() instanceof PurchasableCircularList) { //TODO check if this is enough
 					if(((BuyData) actionData).isUpgrade()) {
-						((Street) player.getPosition()).nextStage();
+						((Street) user.getPosition()).nextStage();
 					} else {
-						player.buyPurchasable((PurchasableCircularList) player.getPosition());
+						user.buyPurchasable((PurchasableCircularList) user.getPosition());
 					}
 				}
 			} else {
@@ -133,9 +133,9 @@ public class Monopoly {
 					switch(haggleData.getHaggleState()) {
 						case ESTABLISH:
 							seller = playerArrayList.get(haggleData.getSellerId());
-							if(player.getTrading() == -1 && seller.getTrading() == -1) {
-								player.setTrading(seller.getPlayerId());
-								seller.setTrading(player.getPlayerId());
+							if(user.getTrading() == -1 && seller.getTrading() == -1) {
+								user.setTrading(seller.getPlayerId());
+								seller.setTrading(user.getPlayerId());
 								haggleData.setHaggleState(HaggleData.HaggleState.ESTABLISHED);
 							} else {
 								haggleData.setHaggleState(HaggleData.HaggleState.DECLINE);
@@ -157,36 +157,36 @@ public class Monopoly {
 						case ACCEPT:
 							seller = playerArrayList.get(haggleData.getSellerId());
 							// trade money
-							int playerPay = haggleData.getSellerMoney() - haggleData.getPlayerMoney();
+							int playerPay = haggleData.getSellerMoney() - haggleData.getUserMoney();
 							if(playerPay != 0) {
 								if(playerPay < 0) {
 									playerPay *= -1;
 									seller.pay(playerPay);
-									player.addMoney(playerPay);
+									user.addMoney(playerPay);
 								} else {
 									seller.addMoney(playerPay);
-									player.pay(playerPay);
+									user.pay(playerPay);
 								}
 							}
 							// trade purchasables
 							for(int id : haggleData.getSellerFieldIds()) {
-								for(PurchasableCircularList purchasable : player.getProperties()) {
+								for(PurchasableCircularList purchasable : user.getProperties()) {
 									if(purchasable.getFieldNumber() == id) {
 										purchasable.setOwner(seller);
 										break;
 									}
 								}
 							}
-							for(int id : haggleData.getPlayerFieldIds()) {
+							for(int id : haggleData.getUserFieldIds()) {
 								for(PurchasableCircularList purchasable : seller.getProperties()) {
 									if(purchasable.getFieldNumber() == id) {
-										purchasable.setOwner(player);
+										purchasable.setOwner(user);
 										break;
 									}
 								}
 							}
 							serverOperator.sendHaggleData(haggleData);
-							player.setTrading(-1);
+							user.setTrading(-1);
 							seller.setTrading(-1);
 
 							break;
@@ -194,14 +194,14 @@ public class Monopoly {
 						case DECLINE:
 							seller = playerArrayList.get(haggleData.getSellerId());
 
-							player.setTrading(-1);
+							user.setTrading(-1);
 							seller.setTrading(-1);
 
 							serverOperator.sendHaggleData(haggleData);
 							break;
 					}
 				} else if(actionData instanceof MortgageData) {
-					ArrayList<PurchasableCircularList> purchasableCircularListArrayList = player.getProperties();
+					ArrayList<PurchasableCircularList> purchasableCircularListArrayList = user.getProperties();
 					for(PurchasableCircularList purchasable : purchasableCircularListArrayList) {
 						if(purchasable.getFieldNumber() == ((MortgageData) actionData).getFieldId()) {
 							purchasable.setInMortgage(!purchasable.isInMortgage());

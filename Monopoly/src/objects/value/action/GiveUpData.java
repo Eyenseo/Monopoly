@@ -7,11 +7,11 @@ public class GiveUpData extends ActionData {
 	private final boolean giveUp;
 
 	/**
-	 * @param playerId the value determines the player Id the data original from
-	 * @param giveUp   the value determines if the player gives up or not
+	 * @param userId the value determines the player Id the data original from
+	 * @param giveUp the value determines if the player gives up or not
 	 */
-	public GiveUpData(int playerId, boolean giveUp) {
-		super(playerId);
+	public GiveUpData(int userId, boolean giveUp) {
+		super(userId);
 		this.giveUp = giveUp;
 	}
 
