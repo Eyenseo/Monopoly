@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 //JAVADOC
 public class CustomDialog extends JFrame {
 	public CustomDialog(final Model model, final CardData cardData) {
-		super(cardData.getUserName() + ": " + cardData.getTyp());
+		super(cardData.getPlayerName() + ": " + cardData.getTyp());
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
