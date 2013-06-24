@@ -22,8 +22,7 @@ public class Parking extends NotPurchasable implements Serializable {
 		if(justOneInstance) {
 			throw new MoreThanOneDataSetException(name);
 		}
-		//TODO right reference?
-		Parking.justOneInstance = true;
+		justOneInstance = true;
 	}
 
 	/**
