@@ -14,11 +14,7 @@ import ui.gui.layout_manager.PurchasableCardLayoutConstraints;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.text.NumberFormat;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
@@ -117,6 +113,7 @@ public class HagglePanel extends JPanel {
 							accept.setText("Anfrage");
 							playerList.setEnabled(true);
 							tradePlayerMoney.setText("0");
+							tradePlayerMoney.setEditable(false);
 							tradeSellerMoney.setText("0");
 							sellerContent.removeAll();
 							unmarkPlayerPurchasable();
@@ -413,7 +410,21 @@ public class HagglePanel extends JPanel {
 		userText.setEditable(false);
 		userText.setBorder(null);
 
-		tradePlayerMoney = new JFormattedTextField(NumberFormat.getInstance());
+		tradePlayerMoney = new JTextField();
+		tradePlayerMoney.setDocument(new IntegerDocument());
+		tradePlayerMoney.addFocusListener(new FocusListener() {
+			@Override public void focusGained(FocusEvent e) {
+				if(tradePlayerMoney.getText().equals("0")) {
+					tradePlayerMoney.setText("");
+				}
+			}
+
+			@Override public void focusLost(FocusEvent e) {
+				if(tradePlayerMoney.getText().equals("")) {
+					tradePlayerMoney.setText("0");
+				}
+			}
+		});
 		tradePlayerMoney.setText("0");
 		tradePlayerMoney.setEditable(false);
 
