@@ -19,12 +19,13 @@ class ControlPanel extends JPanel {
 	private ClientOperator clientOperator;
 	private Model          model;
 	//Components
+	private DiceImage      firstDice;
+	private DiceImage      secondDice;
 	private JButton        turnOption;
 	private JButton        buyOption;
 	private JButton        haggle;
 	private JButton        mortgage;
 	private JButton        giveUp;
-	private JButton        endApp;
 	private JTextArea      chatHistory;
 	private JTextArea      chatMessage;
 	//Text
@@ -58,6 +59,13 @@ class ControlPanel extends JPanel {
 		model.addModelEventListener(Model.ModelEventName.TURNOPTION, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
 				updateTurnOption();
+				if(ControlPanel.this.model.getTurnOptionState() == Model.TurnOptionState.DEACTIVATED) {
+					firstDice.setActive(false);
+					secondDice.setActive(false);
+				} else {
+					firstDice.setActive(true);
+					secondDice.setActive(true);
+				}
 			}
 		});
 		model.addModelEventListener(Model.ModelEventName.BUYOPTION, new ModelEventListener() {
@@ -71,7 +79,12 @@ class ControlPanel extends JPanel {
 				updateTurnOption();
 			}
 		});
-
+		model.addModelEventListener(Model.ModelEventName.DICE, new ModelEventListener() {
+			@Override public void actionPerformed(ModelEvent event) {
+				firstDice.setCurrentIndex(ControlPanel.this.model.getFirstDice());
+				secondDice.setCurrentIndex(ControlPanel.this.model.getSecondDice());
+			}
+		});
 		registerButtonListener();
 	}
 
@@ -93,38 +106,53 @@ class ControlPanel extends JPanel {
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 
+		//Add first dice
+		firstDice = new DiceImage();
+		gridBagConstraints.insets = new Insets(5, 5, 0, 8);
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 0;
+		panel.add(firstDice, gridBagConstraints);
+
+		//Add second dice
+		secondDice = new DiceImage();
+		gridBagConstraints.insets = new Insets(5, 0, 0, 5);
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 0;
+		panel.add(secondDice, gridBagConstraints);
+
 		// Button for throw dice, end turn, begin next turn
 		turnOption = new JButton();
 		turnOption.setText(turnOptionText);
-		gridBagConstraints.insets = new Insets(0, 5, 5, 0);
-		gridBagConstraints.gridx = 0;
+		gridBagConstraints.insets = new Insets(5, 5, 0, 5);
+		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 0;
 		panel.add(turnOption, gridBagConstraints);
 
 		// Button to buy a house, hotel, property
 		buyOption = new JButton();
 		buyOption.setText(buyOptionText);
-		gridBagConstraints.insets = new Insets(0, 5, 5, 5);
-		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 0;
+		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridwidth = 3;
 		panel.add(buyOption, gridBagConstraints);
 
 		// Button to haggle with a player
 		haggle = new JButton();
 		haggle.setText(haggleText);
-		gridBagConstraints.insets = new Insets(10, 5, 5, 5);
+		gridBagConstraints.insets = new Insets(20, 5, 5, 5);
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 1;
-		gridBagConstraints.gridwidth = 2;
+		gridBagConstraints.gridy = 2;
+		gridBagConstraints.gridwidth = 3;
 		panel.add(haggle, gridBagConstraints);
 
 		// Button to take a mortgage
 		mortgage = new JButton();
 		mortgage.setText(mortgageText);
-		gridBagConstraints.insets = new Insets(5, 5, 5, 0);
+		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 2;
-		gridBagConstraints.gridwidth = 2;
+		gridBagConstraints.gridy = 3;
+		gridBagConstraints.gridwidth = 3;
 		panel.add(mortgage, gridBagConstraints);
 
 		// Button to give up
@@ -133,18 +161,9 @@ class ControlPanel extends JPanel {
 		gridBagConstraints.insets = new Insets(20, 5, 5, 5);
 		gridBagConstraints.ipadx = 100;
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 3;
-		gridBagConstraints.gridwidth = 2;
-		panel.add(giveUp, gridBagConstraints);
-
-		// Button to end program
-		endApp = new JButton();
-		endApp.setText(endAppText);
-		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 4;
-		gridBagConstraints.gridwidth = 2;
-		panel.add(endApp, gridBagConstraints);
+		gridBagConstraints.gridwidth = 3;
+		panel.add(giveUp, gridBagConstraints);
 
 		return panel;
 	}
@@ -242,12 +261,12 @@ class ControlPanel extends JPanel {
 	private void registerButtonListener() {
 		turnOption.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				clientOperator.sendActionData(new TurnData(model.getClientPlayer().getId(), model.isMoveAction()));
+				clientOperator.sendActionData(new TurnData(model.getUser().getId(), model.isMoveAction()));
 			}
 		});
 		buyOption.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				clientOperator.sendActionData(new BuyData(model.getClientPlayer().getId(),
+				clientOperator.sendActionData(new BuyData(model.getUser().getId(),
 				                                          model.getBuyOptionState() == Model.BuyOptionState.BUYHOTEL ||
 				                                          model.getBuyOptionState() == Model.BuyOptionState.BUYHOUSE));
 			}
@@ -263,11 +282,6 @@ class ControlPanel extends JPanel {
 			}
 		});
 		giveUp.addActionListener(new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(new JFrame(), "Not yet implemented.");
-			}
-		});
-		endApp.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(new JFrame(), "Not yet implemented.");
 			}

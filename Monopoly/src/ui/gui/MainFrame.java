@@ -40,7 +40,7 @@ public class MainFrame extends JFrame {
 		mortgagePanel = new MortgagePanel(model, clientOperator);
 		hagglePanel = new HagglePanel(model, clientOperator);
 
-		setTitle("Monopoly - " + model.getClientPlayer().getName());
+		setTitle("Monopoly - " + model.getUser().getName());
 		setLocationRelativeTo(getRootPane());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLayout(new GridLayout());

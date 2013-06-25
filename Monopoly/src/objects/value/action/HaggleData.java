@@ -7,20 +7,20 @@ import java.util.ArrayList;
  */
 public class HaggleData extends ActionData {
 	private final int                sellerId;       // id from the Player that something is Requested from
-	private final ArrayList<Integer> playerFieldIds; // ids from Purchasables that the player wants
+	private final ArrayList<Integer> userFieldIds;   // ids from Purchasables that the player wants
 	private final ArrayList<Integer> sellerFieldIds; // ids from Purchasables that the seller wants
 	private       HaggleState        haggleState;    // state of the trade
-	private       int                playerMoney;    // money that the Player (who sends the request) wants
+	private       int                userMoney;      // money that the Player (who sends the request) wants
 	private       int                sellerMoney;    // money that the seller (who sends th offer) wants
 
 	/**
-	 * @param playerId the value determines the player Id the data original from
+	 * @param userId   the value determines the player Id the data original from
 	 * @param sellerId the value determines the id of the Player that something is Requested from
 	 */
-	public HaggleData(int playerId, int sellerId) {
-		super(playerId);
+	public HaggleData(int userId, int sellerId) {
+		super(userId);
 		this.sellerId = sellerId;
-		playerFieldIds = new ArrayList<Integer>();
+		userFieldIds = new ArrayList<Integer>();
 		sellerFieldIds = new ArrayList<Integer>();
 		haggleState = HaggleState.ESTABLISH;
 	}
@@ -31,12 +31,12 @@ public class HaggleData extends ActionData {
 	 * @param haggleData the value determines a HaggleData to copy
 	 */
 	@Deprecated public HaggleData(HaggleData haggleData) {
-		super(haggleData.getPlayerId());
+		super(haggleData.getUserId());
 		sellerId = haggleData.getSellerId();
-		playerFieldIds = new ArrayList<Integer>(haggleData.getPlayerFieldIds());
+		userFieldIds = new ArrayList<Integer>(haggleData.getUserFieldIds());
 		sellerFieldIds = new ArrayList<Integer>(haggleData.getSellerFieldIds());
 		haggleState = haggleData.getHaggleState();
-		playerMoney = haggleData.getPlayerMoney();
+		userMoney = haggleData.getUserMoney();
 		sellerMoney = haggleData.getSellerMoney();
 	}
 
@@ -50,8 +50,8 @@ public class HaggleData extends ActionData {
 	/**
 	 * @return the return value is the amount of money that the Player (who sends the request) wants
 	 */
-	public int getPlayerMoney() {
-		return playerMoney;
+	public int getUserMoney() {
+		return userMoney;
 	}
 
 	/**
@@ -64,8 +64,8 @@ public class HaggleData extends ActionData {
 	/**
 	 * @return the return value is a ArrayList of ids from Purchasables that the player wants
 	 */
-	public ArrayList<Integer> getPlayerFieldIds() {
-		return playerFieldIds;
+	public ArrayList<Integer> getUserFieldIds() {
+		return userFieldIds;
 	}
 
 	/**
@@ -90,11 +90,10 @@ public class HaggleData extends ActionData {
 	}
 
 	/**
-	 * @param playerMoney the value determines the amount of money that the Player (who sends the request) wants
+	 * @param userMoney the value determines the amount of money that the Player (who sends the request) wants
 	 */
-	//TODO implement
-	public void setPlayerMoney(int playerMoney) {
-		this.playerMoney = playerMoney;
+	public void setUserMoney(int userMoney) {
+		this.userMoney = userMoney;
 	}
 
 	/**

@@ -35,6 +35,6 @@ public class GoToStation extends Card implements Serializable {
 			field = field.getNext();
 		}
 		player.setPosition(field);
-		field.action(player);
+		((Station) field).action(player, true);
 	}
 }

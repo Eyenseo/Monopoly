@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class InitializePlayer {
 	private final ArrayList<PlayerData> playerData;
-	private final int                   playerId;
+	private final int                   userId;
 
 	/**
 	 * @param playerData the value determines the PlayerData of all players
-	 * @param playerId   the value determines the player id of the player of this client
+	 * @param userId     the value determines the player id of the player of this client
 	 */
-	public InitializePlayer(ArrayList<PlayerData> playerData, int playerId) {
+	public InitializePlayer(ArrayList<PlayerData> playerData, int userId) {
 		this.playerData = playerData;
-		this.playerId = playerId;
+		this.userId = userId;
 	}
 
 	/**
@@ -25,8 +25,8 @@ public class InitializePlayer {
 	/**
 	 * @return the return value is the player id of the player of this client
 	 */
-	public int getPlayerId() {
-		return playerId;
+	public int getUserId() {
+		return userId;
 	}
 }
 

@@ -49,6 +49,10 @@ public class PurchasableCardPanel extends JPanel {
 	private       int      upgradeTextY;
 	private       int      upgradeValueX;
 	private       int      upgradeValueY;
+	//Facility info
+	private       String[] facilityInfoText;
+	private       int[]    facilityInfoTextX;
+	private       int[]    facilityInfoTextY;
 	//Mortgage
 	private       String   mortgageText;
 	private       int      mortgageTextX;
@@ -72,6 +76,7 @@ public class PurchasableCardPanel extends JPanel {
 		normInfoFont = new Font(Font.SANS_SERIF, Font.BOLD, 12);
 		// Font.BOLD | Font.ITALIC <-- bold and italic via bit or-connection
 		normActiveFont = new Font(Font.SANS_SERIF, Font.BOLD | Font.ITALIC, 12);
+
 		setText();
 		calculateTextProperties();
 	}
@@ -82,6 +87,7 @@ public class PurchasableCardPanel extends JPanel {
 	private void setText() {
 		//Price
 		priceText = "Grundstueckswert";
+
 		//Income
 		incomeLeadingText = "Miete ";
 		if(data instanceof StreetData) {
@@ -92,8 +98,13 @@ public class PurchasableCardPanel extends JPanel {
 		} else {
 			incomeText = new String[]{"1 Bahnhof", "2 Bahnhoefe", "3 Bahnhoefe", "4 Bahnhoefe"};
 		}
+
 		//Upgrade
 		upgradeText = "Haus / Hotel Preis";
+
+		//Facility info
+		facilityInfoText = new String[]{"Die Miete ist der Preis mal", "der Anzahl der Augen,", "die der Mitspieler ",
+		                                "gewürfelt hat."};
 		//Mortgage
 		mortgageText = "Hypothekenwert";
 	}
@@ -136,6 +147,7 @@ public class PurchasableCardPanel extends JPanel {
 		incomeTextY = new int[incomeText.length];
 		incomeValueX = new int[incomeText.length];
 		incomeValueY = new int[incomeText.length];
+
 		for(int i = 0; i < incomeText.length; i++) {
 			incomeTextX[i] = gapX + fontMetrics.stringWidth(incomeLeadingText);
 			incomeTextY[i] = gapY + lineHeightAdjustment + lastLine;
@@ -153,6 +165,17 @@ public class PurchasableCardPanel extends JPanel {
 			upgradeValueX = -gapX + cardWidth - fontMetrics.stringWidth("" + ((StreetData) data).getUPGRADE());
 			upgradeValueY = upgradeTextY;
 			lastLine = upgradeTextY;
+		} else if(data instanceof FacilityData) {
+			//Facility info
+			facilityInfoTextX = new int[facilityInfoText.length];
+			facilityInfoTextY = new int[facilityInfoText.length];
+			facilityInfoTextY[0] = gap;
+
+			for(int i = 0; i < facilityInfoText.length; i++) {
+				facilityInfoTextX[i] += gapX;
+				facilityInfoTextY[i] += gapY + lineHeightAdjustment + lastLine;
+				lastLine = facilityInfoTextY[i];
+			}
 		}
 
 		//Mortgage
@@ -200,7 +223,6 @@ public class PurchasableCardPanel extends JPanel {
 		g.drawString("" + data.getPRICE(), priceValueX, priceValueY);
 
 		//Income
-		//TODO specify the income for facilities correctly
 		for(int i = 0; i < incomeText.length; i++) {
 			if(i == 0) {
 				g.drawString(incomeLeadingText, incomeLeadingTextX, incomeLeadingTextY);
@@ -222,12 +244,16 @@ public class PurchasableCardPanel extends JPanel {
 		}
 		g.setFont(normFont);
 
-		//Upgrade
 		if(data instanceof StreetData) {
 			//Upgrade - text
 			g.drawString(upgradeText, upgradeTextX, upgradeTextY);
 			//Upgrade - value
 			g.drawString("" + ((StreetData) data).getUPGRADE(), upgradeValueX, upgradeValueY);
+		} else if(data instanceof FacilityData) {
+			//Facility info
+			for(int i = 0; i < facilityInfoText.length; i++) {
+				g.drawString(facilityInfoText[i], facilityInfoTextX[i], facilityInfoTextY[i]);
+			}
 		}
 
 		if(!data.isInMortgage()) {
@@ -270,6 +296,7 @@ public class PurchasableCardPanel extends JPanel {
 	/**
 	 * @return The return value is the data the PurchasableCardPanel uses to draw itself
 	 */
+
 	public PurchasableData getData() {
 		return data;
 	}

@@ -67,8 +67,7 @@ public class ClientOperator {
 	 * @param haggleData the value determines the HaggleData to be checked
 	 */
 	public void updateHaggleData(HaggleData haggleData) {
-		if(haggleData.getPlayerId() == model.getClientPlayer().getId() ||
-		   haggleData.getSellerId() == model.getClientPlayer().getId()) {
+		if(haggleData.getUserId() == model.getUser().getId() || haggleData.getSellerId() == model.getUser().getId()) {
 			fireHaggleDataEvent(haggleData);
 		}
 	}
@@ -208,7 +207,7 @@ public class ClientOperator {
 	 * @param data the value determines the object that holds the PlayerDatas
 	 */
 	public void initializePlayer(InitializePlayer data) {
-		model.setPlayer(data.getPlayerData(), data.getPlayerId());
+		model.setPlayer(data.getPlayerData(), data.getUserId());
 		mainFrame = new MainFrame(model, this);
 		model.fireAllEvents();
 	}

@@ -40,7 +40,7 @@ public class Model {
 	private final ArrayList<FieldData>                                   map;
 	private       HashMap<Integer, ArrayList<PurchasableData>>           purchasableHashMap;
 	private       ArrayList<PlayerData>                                  playerArrayList;
-	private       PlayerData                                             clientPlayer; //TODO change to int
+	private       PlayerData                                             user; //TODO change to int
 	private       ArrayList<CardData>                                    cardDataArrayList;
 	private       int                                                    oldMoney;
 	//Action Data
@@ -103,9 +103,9 @@ public class Model {
 
 	/**
 	 * @param playerArrayList the value determines all players participate in the game
-	 * @param clientId        the value determines the id of the player of the model
+	 * @param userId          the value determines the id of the player of the model
 	 */
-	public void setPlayer(ArrayList<PlayerData> playerArrayList, int clientId) {
+	public void setPlayer(ArrayList<PlayerData> playerArrayList, int userId) {
 		//Initialise lists for each player's purchasables
 		purchasableHashMap = new HashMap<Integer, ArrayList<PurchasableData>>();
 		for(PlayerData player : playerArrayList) {
@@ -116,7 +116,7 @@ public class Model {
 		this.playerArrayList = playerArrayList;
 
 		//save player of this client
-		clientPlayer = playerArrayList.get(clientId);
+		user = playerArrayList.get(userId);
 	}
 
 	/**
@@ -155,36 +155,35 @@ public class Model {
 	 * @param playerData the value determines the PlayerData to be analysed
 	 */
 	private void analysePlayerData(PlayerData playerData) {
-		if(playerData.equals(clientPlayer)) {
-			if(clientPlayer.getFirstDice() != playerData.getFirstDice() ||
-			   clientPlayer.getSecondDice() != playerData.getSecondDice()) {
-				clientPlayer.setFirstDice(playerData.getFirstDice());
-				clientPlayer.setSecondDice(playerData.getSecondDice());
+		if(playerData.equals(user)) {
+			if(user.getFirstDice() != playerData.getFirstDice() || user.getSecondDice() != playerData.getSecondDice()) {
+				user.setFirstDice(playerData.getFirstDice());
+				user.setSecondDice(playerData.getSecondDice());
 				fireModelEvent(ModelEventName.DICE);
 			}
-			if(clientPlayer.isInJail() != playerData.isInJail()) {
-				clientPlayer.setInJail(playerData.isInJail());
+			if(user.isInJail() != playerData.isInJail()) {
+				user.setInJail(playerData.isInJail());
 				fireModelEvent(ModelEventName.ISINJAIL);
 			}
-			if(clientPlayer.getMoney() != playerData.getMoney()) {
-				oldMoney = clientPlayer.getMoney();
-				clientPlayer.setMoney(playerData.getMoney());
+			if(user.getMoney() != playerData.getMoney()) {
+				oldMoney = user.getMoney();
+				user.setMoney(playerData.getMoney());
 				fireModelEvent(ModelEventName.MONEY);
 			}
-			if(!clientPlayer.getPosition().equals(playerData.getPosition())) {
-				clientPlayer.setPosition(playerData.getPosition());
+			if(!user.getPosition().equals(playerData.getPosition())) {
+				user.setPosition(playerData.getPosition());
 
 				fireModelEvent(ModelEventName.POSITION);
 			}
-			if(clientPlayer.isTurnEnd() != playerData.isTurnEnd()) {
-				clientPlayer.setTurnEnd(playerData.isTurnEnd());
+			if(user.isTurnEnd() != playerData.isTurnEnd()) {
+				user.setTurnEnd(playerData.isTurnEnd());
 				fireModelEvent(ModelEventName.TURNSTATE);
 			}
-			if(clientPlayer.getThrewDice() != playerData.getThrewDice()) {
-				clientPlayer.setThrewDice(playerData.getThrewDice());
+			if(user.getThrewDice() != playerData.getThrewDice()) {
+				user.setThrewDice(playerData.getThrewDice());
 			}
-			if(clientPlayer.getTrading() != playerData.getTrading()) {
-				clientPlayer.setTrading(playerData.getTrading());
+			if(user.getTrading() != playerData.getTrading()) {
+				user.setTrading(playerData.getTrading());
 			}
 			updateTurnOption();
 			updateBuyOption();
@@ -214,7 +213,7 @@ public class Model {
 				if(list.contains(purchasableData) && i != purchasableData.getOwner().getId()) {
 					list.remove(list.indexOf(purchasableData));
 
-					if(i == clientPlayer.getId()) {
+					if(i == user.getId()) {
 						fireModelEvent(ModelEventName.PROPERTY);
 					}
 				}
@@ -222,15 +221,15 @@ public class Model {
 				if(!list.contains(purchasableData) && i == purchasableData.getOwner().getId()) {
 					list.add(purchasableData);
 
-					if(i == clientPlayer.getId()) {
+					if(i == user.getId()) {
 						fireModelEvent(ModelEventName.PROPERTY);
 					}
 				}
 			}
-		} else if(purchasableData.getOwner().getId() == clientPlayer.getId()) {
-			ArrayList<PurchasableData> clientPurchasable = purchasableHashMap.get(clientPlayer.getId());
+		} else if(purchasableData.getOwner().getId() == user.getId()) {
+			ArrayList<PurchasableData> userPurchasable = purchasableHashMap.get(user.getId());
 
-			PurchasableData property = clientPurchasable.get(clientPurchasable.indexOf(purchasableData));
+			PurchasableData property = userPurchasable.get(userPurchasable.indexOf(purchasableData));
 
 			if(property.isInMortgage() != purchasableData.isInMortgage()) {
 				property.setInMortgage(purchasableData.isInMortgage());
@@ -247,8 +246,8 @@ public class Model {
 			}
 		}
 
-		if(clientPlayer.getPosition().equals(purchasableData)) {
-			clientPlayer.setPosition(purchasableData);
+		if(user.getPosition().equals(purchasableData)) {
+			user.setPosition(purchasableData);
 			updateBuyOption();
 			fireModelEvent(ModelEventName.POSITION);
 		}
@@ -289,35 +288,35 @@ public class Model {
 	}
 
 	/**
-	 * @return the return value is the money of the client player
+	 * @return the return value is the money of the user
 	 */
 	public int getCurrentMoney() {
-		return clientPlayer.getMoney();
+		return user.getMoney();
 	}
 
 	/**
-	 * @return the return value is the name of the field the client player ist standing on
+	 * @return the return value is the name of the field the user ist standing on
 	 */
 	public String getFieldName() {
-		return clientPlayer.getPosition().getName();
+		return user.getPosition().getName();
 	}
 
 	/**
 	 * @return the return value is the first dice of the cleint player
 	 */
 	public int getFirstDice() {
-		return clientPlayer.getFirstDice();
+		return user.getFirstDice();
 	}
 
 	/**
-	 * @return the return value is the second dice of the client player
+	 * @return the return value is the second dice of the user
 	 */
 	public int getSecondDice() {
-		return clientPlayer.getSecondDice();
+		return user.getSecondDice();
 	}
 
 	/**
-	 * @return the return value is the previous amount of money from the client player
+	 * @return the return value is the previous amount of money from the user
 	 */
 	public int getOldMoney() {
 		return oldMoney;
@@ -327,9 +326,9 @@ public class Model {
 	 * @return the return value is null if the purchasable has no owner or is the name of the owner
 	 */
 	public String getPurchasableOwner() {
-		if(clientPlayer.getPosition() instanceof PurchasableData) {
-			if(((PurchasableData) clientPlayer.getPosition()).getOwner() != null) {
-				return ((PurchasableData) clientPlayer.getPosition()).getOwner().getName();
+		if(user.getPosition() instanceof PurchasableData) {
+			if(((PurchasableData) user.getPosition()).getOwner() != null) {
+				return ((PurchasableData) user.getPosition()).getOwner().getName();
 			}
 		}
 		return null;
@@ -339,32 +338,32 @@ public class Model {
 	 * @return the return value is null if the purchasable has no owner or is the id of the owner
 	 */
 	public int getPurchasableOwnerId() {
-		if(clientPlayer.getPosition() instanceof PurchasableData) {
-			if(((PurchasableData) clientPlayer.getPosition()).getOwner() != null) {
-				return ((PurchasableData) clientPlayer.getPosition()).getOwner().getId();
+		if(user.getPosition() instanceof PurchasableData) {
+			if(((PurchasableData) user.getPosition()).getOwner() != null) {
+				return ((PurchasableData) user.getPosition()).getOwner().getId();
 			}
 		}
 		return -1;
 	}
 
 	/**
-	 * @return the return value is -1 if the client player is not standing on a purchasable field or its price
+	 * @return the return value is -1 if the user is not standing on a purchasable field or its price
 	 */
 	public int getPurchasablePrice() {
-		if(clientPlayer.getPosition() instanceof PurchasableData) {
-			return ((PurchasableData) clientPlayer.getPosition()).getPRICE();
+		if(user.getPosition() instanceof PurchasableData) {
+			return ((PurchasableData) user.getPosition()).getPRICE();
 		} else {
 			return -1;
 		}
 	}
 
 	/**
-	 * @return the return value is the stage of the street the client player is currently standing on or if there is no
+	 * @return the return value is the stage of the street the user is currently standing on or if there is no
 	 *         stage -1
 	 */
 	public int getStreetStage() {
-		if(clientPlayer.getPosition() instanceof StreetData) {
-			return ((StreetData) clientPlayer.getPosition()).getStage();
+		if(user.getPosition() instanceof StreetData) {
+			return ((StreetData) user.getPosition()).getStage();
 		}
 		return -1;
 	}
@@ -373,8 +372,8 @@ public class Model {
 	 * @return the return value is the price of a upgrade (house/hotel) of street or if it is not a street -1
 	 */
 	public int getStreetUpgrade() {
-		if(clientPlayer.getPosition() instanceof StreetData) {
-			return ((StreetData) clientPlayer.getPosition()).getUPGRADE();
+		if(user.getPosition() instanceof StreetData) {
+			return ((StreetData) user.getPosition()).getUPGRADE();
 		} else {
 			return -1;
 		}
@@ -391,7 +390,7 @@ public class Model {
 	 * @return the return value is true if the cleint player is in jail
 	 */
 	public boolean isInJail() {
-		return clientPlayer.isInJail();
+		return user.isInJail();
 	}
 
 	/**
@@ -402,17 +401,17 @@ public class Model {
 	}
 
 	/**
-	 * @return the return value is true if the client player is standing on a purchasable field
+	 * @return the return value is true if the user is standing on a purchasable field
 	 */
 	public boolean isPurchasable() {
-		return clientPlayer.getPosition() instanceof PurchasableData;
+		return user.getPosition() instanceof PurchasableData;
 	}
 
 	/**
-	 * @return the return value is true if the client player is standing on a street field
+	 * @return the return value is true if the user is standing on a street field
 	 */
 	public boolean isStreet() {
-		return clientPlayer.getPosition() instanceof StreetData;
+		return user.getPosition() instanceof StreetData;
 	}
 
 	/**
@@ -429,13 +428,13 @@ public class Model {
 	 */
 	private void updateBuyOption() {
 		boolean active = false;
-		if(clientPlayer.getPosition() instanceof PurchasableData) {
-			if(((PurchasableData) clientPlayer.getPosition()).getOwner() == null) {
+		if(user.getPosition() instanceof PurchasableData) {
+			if(((PurchasableData) user.getPosition()).getOwner() == null) {
 				buyOptionState = BuyOptionState.PURCHASABLE;
 				active = true;
-			} else if(clientPlayer.getPosition() instanceof StreetData) {
-				StreetData street = (StreetData) clientPlayer.getPosition();
-				if(street.getOwner().getId() == clientPlayer.getId()) {
+			} else if(user.getPosition() instanceof StreetData) {
+				StreetData street = (StreetData) user.getPosition();
+				if(street.getOwner().getId() == user.getId()) {
 					if(street.isUpgradeable() && street.getStage() > 0) {
 						if(street.getStage() < street.getINCOME().length - 2) {
 							buyOptionState = BuyOptionState.BUYHOUSE;
@@ -460,10 +459,10 @@ public class Model {
 	 * double, to ENDTURN if he can only end his turn or deactivated if he cant do anything
 	 */
 	private void updateTurnOption() {
-		if(!clientPlayer.isTurnEnd()) {
-			if(clientPlayer.getThrewDice() == 0) {
+		if(!user.isTurnEnd()) {
+			if(user.getThrewDice() == 0) {
 				turnOptionState = TurnOptionState.THROWDICE;
-			} else if(clientPlayer.getFirstDice() == clientPlayer.getSecondDice()) {
+			} else if(user.getFirstDice() == user.getSecondDice()) {
 				turnOptionState = TurnOptionState.THROWDICEAGAIN;
 			} else {
 				turnOptionState = TurnOptionState.ENDTURN;
@@ -484,17 +483,17 @@ public class Model {
 	}
 
 	/**
-	 * @return the return value is the client player
+	 * @return the return value is the user
 	 */
-	public PlayerData getClientPlayer() {
-		return clientPlayer;
+	public PlayerData getUser() {
+		return user;
 	}
 
 	/**
-	 * @return the return value holds all purchaseables of the client player
+	 * @return the return value holds all purchaseables of the user
 	 */
 	public ArrayList<PurchasableData> getClientPurchasable() {
-		return purchasableHashMap.get(clientPlayer.getId());
+		return purchasableHashMap.get(user.getId());
 	}
 
 	/**
