@@ -30,7 +30,7 @@ public class HagglePanel extends JPanel {
 	private       JPanel            basePanel;
 	private       JButton           accept;
 	private       JTextField        tradeSellerMoney;
-	private       JTextField        tradePlayerMoney;
+	private       JTextField        tradeUserMoney;
 	private       JComboBox<String> playerList;
 
 	/**
@@ -68,7 +68,7 @@ public class HagglePanel extends JPanel {
 							if(haggleData.getUserId() == model.getUser().getId()) {
 								playerList.setEnabled(false);
 								accept.setEnabled(true);
-								tradePlayerMoney.setEditable(true);
+								tradeUserMoney.setEditable(true);
 
 								setSeller(haggleData.getSellerId());
 							} else {
@@ -89,7 +89,7 @@ public class HagglePanel extends JPanel {
 
 								setSeller(haggleData.getUserId());
 								markPlayerPurchasable(haggleData.getUserFieldIds());
-								tradePlayerMoney.setEditable(true);
+								tradeUserMoney.setEditable(true);
 
 								tradeSellerMoney.setText("" + haggleData.getUserMoney());
 								model.setCurrentMainPanelName(Model.CurrentMainPanelName.HAGGLE);
@@ -112,8 +112,8 @@ public class HagglePanel extends JPanel {
 							accept.setEnabled(false);
 							accept.setText("Anfrage");
 							playerList.setEnabled(true);
-							tradePlayerMoney.setText("0");
-							tradePlayerMoney.setEditable(false);
+							tradeUserMoney.setText("0");
+							tradeUserMoney.setEditable(false);
 							tradeSellerMoney.setText("0");
 							sellerContent.removeAll();
 							unmarkPlayerPurchasable();
@@ -410,30 +410,30 @@ public class HagglePanel extends JPanel {
 		userText.setEditable(false);
 		userText.setBorder(null);
 
-		tradePlayerMoney = new JTextField();
-		tradePlayerMoney.setDocument(new IntegerDocument());
-		tradePlayerMoney.addFocusListener(new FocusListener() {
+		tradeUserMoney = new JTextField();
+		tradeUserMoney.setDocument(new IntegerDocument());
+		tradeUserMoney.addFocusListener(new FocusListener() {
 			@Override public void focusGained(FocusEvent e) {
-				if(tradePlayerMoney.getText().equals("0")) {
-					tradePlayerMoney.setText("");
+				if(tradeUserMoney.getText().equals("0")) {
+					tradeUserMoney.setText("");
 				}
 			}
 
 			@Override public void focusLost(FocusEvent e) {
-				if(tradePlayerMoney.getText().equals("")) {
-					tradePlayerMoney.setText("0");
+				if(tradeUserMoney.getText().equals("")) {
+					tradeUserMoney.setText("0");
 				}
 			}
 		});
-		tradePlayerMoney.setText("0");
-		tradePlayerMoney.setEditable(false);
+		tradeUserMoney.setText("0");
+		tradeUserMoney.setEditable(false);
 
 		// place text fields in one line
 		JPanel moneyTextWrapper = new JPanel(new GridLayout(1, 4));
 		moneyTextWrapper.add(sellerText);
 		moneyTextWrapper.add(tradeSellerMoney);
 		moneyTextWrapper.add(userText);
-		moneyTextWrapper.add(tradePlayerMoney);
+		moneyTextWrapper.add(tradeUserMoney);
 
 		//Buttons
 		JButton back = new JButton("Abbrechen");
@@ -464,11 +464,11 @@ public class HagglePanel extends JPanel {
 					// case ESTABLISH:   //Will never happen - this state will just appear on the server
 					case ESTABLISHED:
 						haggleData.setHaggleState(HaggleData.HaggleState.REQUEST);
-						haggleData.setUserMoney(Integer.parseInt(tradePlayerMoney.getText()));
+						haggleData.setUserMoney(Integer.parseInt(tradeUserMoney.getText()));
 						break;
 					case REQUEST:
 						haggleData.setHaggleState(HaggleData.HaggleState.OFFER);
-						haggleData.setSellerMoney(Integer.parseInt(tradePlayerMoney.getText()));
+						haggleData.setSellerMoney(Integer.parseInt(tradeUserMoney.getText()));
 						break;
 					case OFFER:
 						haggleData.setHaggleState(HaggleData.HaggleState.ACCEPT);
@@ -476,7 +476,7 @@ public class HagglePanel extends JPanel {
 					// case ACCEPT:    //Will never happen - this state will just appear on the server
 					// case DECLINE:   //Will never happen - this state will just appear on the server
 				}
-				tradePlayerMoney.setEditable(false);
+				tradeUserMoney.setEditable(false);
 				accept.setEnabled(false);
 				clientOperator.sendActionData(model.getHaggleData());
 			}
