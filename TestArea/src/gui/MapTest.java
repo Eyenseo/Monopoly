@@ -14,6 +14,7 @@ public class MapTest {
 	public static void main(String[] args) {
 
 		FieldCard card = new FieldCard("Schlossallee", new Color(8, 0, 255), 7000);
+		card.changeFieldSize(323, 567);
 		card.updatePlayerPosition(0, 'H', new Color(255, 0, 199), true);
 		card.updatePlayerPosition(1, 'A', new Color(50, 255, 206), true);
 		card.updatePlayerPosition(2, 'L', new Color(252, 255, 66), true);
@@ -36,11 +37,11 @@ public class MapTest {
 		panel.add(card);
 		panel.add(card2);
 		panel.add(card3);
-		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/bahnhof.png"));
-		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/freiParken.png"));
-		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/gefaengnis.png"));
-		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/geheInsGefaengnis.png"));
-		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/los.png"));
+		//		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/bahnhof.png"));
+		//		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/freiParken.png"));
+		//		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/gefaengnis.png"));
+		//		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/geheInsGefaengnis.png"));
+		//		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/los.png"));
 
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -52,8 +53,10 @@ public class MapTest {
 }
 
 class FieldCard extends JPanel {
-	public static final int width  = 175;
-	public static final int height = 220;
+	public int width  = 175;
+	public int height = 220;
+	private       int                            widthSquare;
+	private       int                            heightSquare;
 	private final int                            gapX;
 	private final int                            gapY;
 	//Fonts
@@ -100,18 +103,7 @@ class FieldCard extends JPanel {
 
 		playerHashMap = new HashMap<Integer, PlayerFigure>();
 
-		//header calculation
-		FontMetrics fontMetrics = getFontMetrics(headerFont);
-		headerNameX = (width - fontMetrics.stringWidth("" + headerName)) / 2;
-		headerNameY = fontMetrics.getHeight();
-
-		bodyX = gapX;
-		bodyY = headerNameY + fontMetrics.getHeight() + gapY;
-
-		//base calculation
-		fontMetrics = getFontMetrics(normFont);
-		priceX = (width - fontMetrics.stringWidth(this.price)) / 2;
-		priceY = height - fontMetrics.getHeight();
+		changePurchasableTextPlacement();
 	}
 
 	FieldCard(String headerName, String image, int price) {
@@ -139,18 +131,7 @@ class FieldCard extends JPanel {
 
 		playerHashMap = new HashMap<Integer, PlayerFigure>();
 
-		//header calculation
-		FontMetrics fontMetrics = getFontMetrics(headerFont);
-		headerNameX = (width - fontMetrics.stringWidth("" + headerName)) / 2;
-		headerNameY = fontMetrics.getHeight();
-
-		bodyX = gapX;
-		bodyY = headerNameY + fontMetrics.getHeight() + gapY;
-
-		//base calculation
-		fontMetrics = getFontMetrics(normFont);
-		priceX = (width - fontMetrics.stringWidth(this.price)) / 2;
-		priceY = height - fontMetrics.getHeight();
+		changePurchasableTextPlacement();
 	}
 
 	FieldCard(String headerName, String image) {
@@ -179,12 +160,7 @@ class FieldCard extends JPanel {
 		playerHashMap = new HashMap<Integer, PlayerFigure>();
 
 		//header calculation
-		FontMetrics fontMetrics = getFontMetrics(headerFont);
-		headerNameX = (width - fontMetrics.stringWidth("" + headerName)) / 2;
-		headerNameY = fontMetrics.getHeight();
-
-		bodyX = gapX;
-		bodyY = headerNameY + fontMetrics.getHeight() + gapY;
+		changeTextPlacement();
 	}
 
 	public void updatePlayerPosition(int id, char playerName, Color playerColor, boolean add) {
@@ -233,6 +209,7 @@ class FieldCard extends JPanel {
 		int x = bodyX;
 		int y = bodyY;
 		y = 75;
+		x = (width - ((PlayerFigure.width * 3) + (gapX * 2))) / 2;
 		int player = 0;
 
 		for(PlayerFigure figure : playerHashMap.values()) {
@@ -240,13 +217,39 @@ class FieldCard extends JPanel {
 			figure.paintComponent(g);
 			if(player > 1) {
 				y = y + PlayerFigure.height + gapY;
-				x = gapX;
+				x = (width - ((PlayerFigure.width * 3) + (gapX * 2))) / 2;
 				player = -1;
 			} else {
 				x = x + PlayerFigure.width + gapX;
 			}
 			player++;
 		}
+	}
+
+	public void changeFieldSize(int width, int height) {
+		this.width = width;
+		this.height = height;
+		this.headerBackgroundWidth = width;
+		this.bodyX = width;
+		changePurchasableTextPlacement();
+	}
+
+	public void changeTextPlacement() {
+		//header calculation
+		FontMetrics fontMetrics = getFontMetrics(headerFont);
+		headerNameX = (width - fontMetrics.stringWidth("" + headerName)) / 2;
+		headerNameY = fontMetrics.getHeight();
+
+		bodyX = gapX;
+		bodyY = headerNameY + fontMetrics.getHeight() + gapY;
+	}
+
+	public void changePurchasableTextPlacement() {
+		FontMetrics fontMetrics = getFontMetrics(headerFont);
+		changeTextPlacement();
+		fontMetrics = getFontMetrics(normFont);
+		priceX = (width - fontMetrics.stringWidth(this.price)) / 2;
+		priceY = height - fontMetrics.getHeight();
 	}
 }
 
