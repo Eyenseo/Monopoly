@@ -3,6 +3,7 @@ package gui;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,35 +14,34 @@ public class MapTest {
 
 	public static void main(String[] args) {
 
-		FieldCard card = new FieldCard("Schlossallee", new Color(8, 0, 255), 7000);
-		card.changeFieldSize(323, 567);
-		card.updatePlayerPosition(0, 'H', new Color(255, 0, 199), true);
-		card.updatePlayerPosition(1, 'A', new Color(50, 255, 206), true);
-		card.updatePlayerPosition(2, 'L', new Color(252, 255, 66), true);
-		card.updatePlayerPosition(3, 'L', new Color(106, 255, 105), true);
-		card.updatePlayerPosition(4, 'O', new Color(255, 31, 72), true);
-		card.updatePlayerPosition(5, '!', new Color(24, 16, 255), true);
+		//JPanel panel = new JPanel(new GridLayout());
+		JPanel panel = new JPanel(new MapLayout());
+		FieldCard card;
 
-		FieldCard card2 = new FieldCard("Zusatzsteuer", "/storage/images/werk.png", 7000);
-		card2.updatePlayerPosition(0, 'M', new Color(255, 0, 199), true);
-		card2.updatePlayerPosition(1, 'O', new Color(115, 115, 115), true);
-		card2.updatePlayerPosition(2, 'I', new Color(255, 255, 255), true);
-		card2.updatePlayerPosition(3, 'N', new Color(217, 108, 199), true);
-
-		FieldCard card3 = new FieldCard("Gemeinschaftsfeld", "/storage/images/ereignesfeld.png");
-		card3.updatePlayerPosition(0, 'H', new Color(247, 255, 40), true);
-		card3.updatePlayerPosition(1, 'I', new Color(63, 83, 255), true);
-
-		JPanel panel = new JPanel(new GridLayout());
-		panel.setPreferredSize(new Dimension(600, 300));
+		card = new FieldCard("humdi", new Color(12, 128, 102), 1254);
 		panel.add(card);
-		panel.add(card2);
-		panel.add(card3);
-		//		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/bahnhof.png"));
-		//		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/freiParken.png"));
-		//		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/gefaengnis.png"));
-		//		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/geheInsGefaengnis.png"));
-		//		panel.add(new FieldCard("Gemeinschaftsfeld", "/storage/images/los.png"));
+		card = new FieldCard("humdi", new Color(12, 128, 102), 1254);
+		panel.add(card);
+		card = new FieldCard("humdi", new Color(12, 128, 102), 1254);
+		panel.add(card);
+		card = new FieldCard("humdi", new Color(128, 30, 24), 1254);
+		panel.add(card);
+		card = new FieldCard("humdi", new Color(128, 30, 24), 1254);
+		panel.add(card);
+		card = new FieldCard("humdi", new Color(128, 30, 24), 1254);
+		panel.add(card);
+		card = new FieldCard("humdi", new Color(28, 128, 14), 1254);
+		panel.add(card);
+		card = new FieldCard("humdi", new Color(28, 128, 14), 1254);
+		panel.add(card);
+		card = new FieldCard("humdi", new Color(28, 128, 14), 1254);
+		panel.add(card);
+		card = new FieldCard("humdi", new Color(108, 6, 128), 1254);
+		panel.add(card);
+		card = new FieldCard("humdi", new Color(108, 6, 128), 1254);
+		panel.add(card);
+		card = new FieldCard("humdi", new Color(108, 6, 128), 1254);
+		panel.add(card);
 
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -53,10 +53,13 @@ public class MapTest {
 }
 
 class FieldCard extends JPanel {
-	public int width  = 175;
-	public int height = 220;
-	private       int                            widthSquare;
-	private       int                            heightSquare;
+	public static int widthCard  = 175;
+	public static int heightCard = 220;
+	public int rotation;
+
+	int width;
+	int height;
+
 	private final int                            gapX;
 	private final int                            gapY;
 	//Fonts
@@ -75,7 +78,6 @@ class FieldCard extends JPanel {
 	private       int                            headerNameX;
 	private       int                            headerNameY;
 	//Body
-	private       int                            bodyX;
 	private       int                            bodyY;
 	//Base
 	private       String                         price;
@@ -89,8 +91,11 @@ class FieldCard extends JPanel {
 		this.streetColor = streetColor;
 		this.price = "" + price + " DM";
 
-		headerBackgroundWidth = width;
+		headerBackgroundWidth = widthCard;
 		headerBackgroundHeight = 40;
+
+		width = widthCard;
+		height = heightCard;
 
 		gapX = 6;
 		gapY = 2;
@@ -117,8 +122,11 @@ class FieldCard extends JPanel {
 		}
 		this.price = "" + price + " DM";
 
-		headerBackgroundWidth = width;
+		headerBackgroundWidth = widthCard;
 		headerBackgroundHeight = 40;
+
+		width = widthCard;
+		height = heightCard;
 
 		gapX = 6;
 		gapY = 2;
@@ -145,8 +153,11 @@ class FieldCard extends JPanel {
 		}
 		price = null;
 
-		headerBackgroundWidth = width;
+		headerBackgroundWidth = widthCard;
 		headerBackgroundHeight = 40;
+
+		width = widthCard;
+		height = heightCard;
 
 		gapX = 6;
 		gapY = 2;
@@ -171,9 +182,32 @@ class FieldCard extends JPanel {
 		}
 	}
 
-	@Override public void paintComponent(Graphics g) {
-		((Graphics2D) g)
-				.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+	@Override public void paintComponent(Graphics g1D) {
+		Graphics2D g = (Graphics2D) g1D;
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+		AffineTransform backUp = g.getTransform();
+
+		int widthBuffer;
+
+		switch(rotation) {
+			case 90:
+				widthBuffer = width;
+				width = height;
+				height = widthBuffer;
+				g.translate(width, 0);
+				break;
+			case 180:
+				g.translate(width, height);
+				break;
+			case 270:
+				widthBuffer = width;
+				width = height;
+				height = widthBuffer;
+				g.translate(0, height);
+		}
+
+		g.rotate(rotation * (Math.PI / 180));
+
 		int lastElementY = 0;
 
 		g.setColor(backgroundColor);
@@ -206,7 +240,7 @@ class FieldCard extends JPanel {
 			g.drawString(price, priceX, priceY);
 		}
 
-		int x = bodyX;
+		int x = 0;
 		int y = bodyY;
 		y = 75;
 		x = (width - ((PlayerFigure.width * 3) + (gapX * 2))) / 2;
@@ -224,14 +258,8 @@ class FieldCard extends JPanel {
 			}
 			player++;
 		}
-	}
 
-	public void changeFieldSize(int width, int height) {
-		this.width = width;
-		this.height = height;
-		this.headerBackgroundWidth = width;
-		this.bodyX = width;
-		changePurchasableTextPlacement();
+		g.setTransform(backUp);
 	}
 
 	public void changeTextPlacement() {
@@ -240,7 +268,6 @@ class FieldCard extends JPanel {
 		headerNameX = (width - fontMetrics.stringWidth("" + headerName)) / 2;
 		headerNameY = fontMetrics.getHeight();
 
-		bodyX = gapX;
 		bodyY = headerNameY + fontMetrics.getHeight() + gapY;
 	}
 
@@ -250,6 +277,45 @@ class FieldCard extends JPanel {
 		fontMetrics = getFontMetrics(normFont);
 		priceX = (width - fontMetrics.stringWidth(this.price)) / 2;
 		priceY = height - fontMetrics.getHeight();
+	}
+
+	public void setRotation(Rotation rotation) {
+		switch(rotation) {
+			case BOTTOM:
+				this.rotation = 0;
+				break;
+			case LEFT:
+				this.rotation = 90;
+				break;
+			case TOP:
+				this.rotation = 180;
+				break;
+			case RIGHT:
+				this.rotation = 270;
+				break;
+		}
+	}
+
+	@Override public void setBounds(int x, int y, int width, int height) {
+		super.setBounds(x, y, width, height);
+
+		if(this.rotation == 0 || this.rotation == 180) {
+			changeFieldSize(width, height);
+		} else {
+			changeFieldSize(height, width);
+		}
+	}
+
+	public void changeFieldSize(int width, int height) {
+		this.width = width;
+		this.height = height;
+
+		this.headerBackgroundWidth = width;
+		changePurchasableTextPlacement();
+	}
+
+	public enum Rotation {
+		BOTTOM, LEFT, TOP, RIGHT
 	}
 }
 
