@@ -43,6 +43,8 @@ public class MapTest {
 		card = new FieldCard("humdi", new Color(108, 6, 128), 1254);
 		panel.add(card);
 
+		panel.setPreferredSize(new Dimension(900, 900));
+
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.add(panel);
@@ -53,58 +55,44 @@ public class MapTest {
 }
 
 class FieldCard extends JPanel {
-	public static int widthCard  = 175;
-	public static int heightCard = 220;
+	public static final  int  widthCard  = 175;
+	public static final  int  heightCard = 220;
+	private static final int  gapX       = 6;
+	private static final int  gapY       = 2;
+	//Fonts
+	private static final Font normFont   = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+	private static final Font headerFont = new Font(Font.SANS_SERIF, Font.BOLD, 17);
+
 	public int rotation;
 
 	int width;
 	int height;
 
-	private final int                            gapX;
-	private final int                            gapY;
-	//Fonts
-	private final Font                           normFont;
-	private final Font                           headerFont;
 	//Color
-	private       Color                          streetColor;
-	private       Color                          borderColor;
-	private       Color                          backgroundColor;
+	private static final Color borderColor     = new Color(0, 0, 0);
+	private static final Color backgroundColor = new Color(192, 206, 155);
+	private Color         streetColor;
 	//Image
-	private       BufferedImage                  image;
+	private BufferedImage image;
 	//Header
-	private       int                            headerBackgroundWidth;
-	private       int                            headerBackgroundHeight;
-	private       String                         headerName;
-	private       int                            headerNameX;
-	private       int                            headerNameY;
-	//Body
-	private       int                            bodyY;
+	private static final int headerBackgroundHeight = 40;
+	private String                         headerName;
+	private int                            headerNameX;
+	private int                            headerNameY;
 	//Base
-	private       String                         price;
-	private       int                            priceX;
-	private       int                            priceY;
+	private String                         price;
+	private int                            priceX;
+	private int                            priceY;
 	//do playerHashMap
-	private       HashMap<Integer, PlayerFigure> playerHashMap;
+	private HashMap<Integer, PlayerFigure> playerHashMap;
 
 	FieldCard(String headerName, Color streetColor, int price) {
 		this.headerName = headerName;
 		this.streetColor = streetColor;
 		this.price = "" + price + " DM";
 
-		headerBackgroundWidth = widthCard;
-		headerBackgroundHeight = 40;
-
 		width = widthCard;
 		height = heightCard;
-
-		gapX = 6;
-		gapY = 2;
-
-		headerFont = new Font(Font.SANS_SERIF, Font.BOLD, 17);
-		normFont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
-
-		borderColor = new Color(0, 0, 0);
-		backgroundColor = new Color(192, 206, 155);
 
 		playerHashMap = new HashMap<Integer, PlayerFigure>();
 
@@ -116,26 +104,14 @@ class FieldCard extends JPanel {
 		try {
 			this.image = ImageIO.read(new File(getClass().getResource(image).toURI()));
 		} catch(IOException e) {
-			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			e.printStackTrace();
 		} catch(URISyntaxException e) {
-			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			e.printStackTrace();
 		}
 		this.price = "" + price + " DM";
 
-		headerBackgroundWidth = widthCard;
-		headerBackgroundHeight = 40;
-
 		width = widthCard;
 		height = heightCard;
-
-		gapX = 6;
-		gapY = 2;
-
-		headerFont = new Font(Font.SANS_SERIF, Font.BOLD, 17);
-		normFont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
-
-		borderColor = new Color(0, 0, 0);
-		backgroundColor = new Color(192, 206, 155);
 
 		playerHashMap = new HashMap<Integer, PlayerFigure>();
 
@@ -147,26 +123,14 @@ class FieldCard extends JPanel {
 		try {
 			this.image = ImageIO.read(new File(getClass().getResource(image).toURI()));
 		} catch(IOException e) {
-			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			e.printStackTrace();
 		} catch(URISyntaxException e) {
-			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			e.printStackTrace();
 		}
 		price = null;
 
-		headerBackgroundWidth = widthCard;
-		headerBackgroundHeight = 40;
-
 		width = widthCard;
 		height = heightCard;
-
-		gapX = 6;
-		gapY = 2;
-
-		headerFont = new Font(Font.SANS_SERIF, Font.BOLD, 17);
-		normFont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
-
-		borderColor = new Color(0, 0, 0);
-		backgroundColor = new Color(192, 206, 155);
 
 		playerHashMap = new HashMap<Integer, PlayerFigure>();
 
@@ -182,48 +146,42 @@ class FieldCard extends JPanel {
 		}
 	}
 
-	@Override public void paintComponent(Graphics g1D) {
-		Graphics2D g = (Graphics2D) g1D;
+	@Override public void paintComponent(Graphics graphics) {
+		Graphics2D g = (Graphics2D) graphics;
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 		AffineTransform backUp = g.getTransform();
 
-		int widthBuffer;
-
 		switch(rotation) {
 			case 90:
-				widthBuffer = width;
-				width = height;
-				height = widthBuffer;
-				g.translate(width, 0);
+				g.translate(height, 0);
 				break;
 			case 180:
 				g.translate(width, height);
 				break;
 			case 270:
-				widthBuffer = width;
-				width = height;
-				height = widthBuffer;
-				g.translate(0, height);
+				g.translate(0, width);
 		}
 
 		g.rotate(rotation * (Math.PI / 180));
 
-		int lastElementY = 0;
+		int lastElementY;
+
+		g.setColor(borderColor);
+		g.fillRect(0, 0, width, height);
 
 		g.setColor(backgroundColor);
-		g.fillRect(0, 0, width, height);
+		g.fillRect(1, 1, width - 2, height - 2);
 
 		//if it is a Street with a Color
 		if(streetColor != null) {
 			g.setColor(streetColor);
-			g.fillRect(0, 0, headerBackgroundWidth, headerBackgroundHeight);
+			g.fillRect(1, 1, width - 2, headerBackgroundHeight);
 			lastElementY = headerBackgroundHeight;
 		} else {
 			lastElementY = 9;
 		}
 
 		g.setColor(borderColor);
-		g.drawRect(0, 0, width, height);
 
 		g.setFont(headerFont);
 		g.drawString(headerName, headerNameX, lastElementY + headerNameY);
@@ -240,10 +198,8 @@ class FieldCard extends JPanel {
 			g.drawString(price, priceX, priceY);
 		}
 
-		int x = 0;
-		int y = bodyY;
-		y = 75;
-		x = (width - ((PlayerFigure.width * 3) + (gapX * 2))) / 2;
+		int x = (width - ((PlayerFigure.width * 3) + (gapX * 2))) / 2;
+		int y = 75;
 		int player = 0;
 
 		for(PlayerFigure figure : playerHashMap.values()) {
@@ -260,23 +216,6 @@ class FieldCard extends JPanel {
 		}
 
 		g.setTransform(backUp);
-	}
-
-	public void changeTextPlacement() {
-		//header calculation
-		FontMetrics fontMetrics = getFontMetrics(headerFont);
-		headerNameX = (width - fontMetrics.stringWidth("" + headerName)) / 2;
-		headerNameY = fontMetrics.getHeight();
-
-		bodyY = headerNameY + fontMetrics.getHeight() + gapY;
-	}
-
-	public void changePurchasableTextPlacement() {
-		FontMetrics fontMetrics = getFontMetrics(headerFont);
-		changeTextPlacement();
-		fontMetrics = getFontMetrics(normFont);
-		priceX = (width - fontMetrics.stringWidth(this.price)) / 2;
-		priceY = height - fontMetrics.getHeight();
 	}
 
 	public void setRotation(Rotation rotation) {
@@ -299,19 +238,32 @@ class FieldCard extends JPanel {
 	@Override public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
-		if(this.rotation == 0 || this.rotation == 180) {
-			changeFieldSize(width, height);
+		if(rotation == 0 || rotation == 180) {
+			setWidth(width);
 		} else {
-			changeFieldSize(height, width);
+			setWidth(height);
 		}
 	}
 
-	public void changeFieldSize(int width, int height) {
+	public void setWidth(int width) {
 		this.width = width;
-		this.height = height;
-
-		this.headerBackgroundWidth = width;
 		changePurchasableTextPlacement();
+	}
+
+	public void changePurchasableTextPlacement() {
+		changeTextPlacement();
+
+		FontMetrics fontMetrics = getFontMetrics(normFont);
+
+		priceX = (width - fontMetrics.stringWidth(price)) / 2;
+		priceY = height - fontMetrics.getHeight();
+	}
+
+	public void changeTextPlacement() {
+		//header calculation
+		FontMetrics fontMetrics = getFontMetrics(headerFont);
+		headerNameX = (width - fontMetrics.stringWidth("" + headerName)) / 2;
+		headerNameY = fontMetrics.getHeight();
 	}
 
 	public enum Rotation {

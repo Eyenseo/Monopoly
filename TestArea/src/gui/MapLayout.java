@@ -116,6 +116,7 @@ public class MapLayout implements LayoutManager2 {
 	public Dimension setBoundaries(int siteNumber, int currentSiteCard, Dimension point, int currentCardIndex,
 	                               int cardWidth, int cardsPerSite) {
 		FieldCard.Rotation angle = FieldCard.Rotation.BOTTOM;
+
 		switch(siteNumber) {
 			case 0:
 				angle = FieldCard.Rotation.BOTTOM;
@@ -130,13 +131,16 @@ public class MapLayout implements LayoutManager2 {
 				angle = FieldCard.Rotation.RIGHT;
 		}
 
+		fieldCardComponents.get(currentCardIndex).setRotation(angle);
+
+		if(currentSiteCard == 0) {
+			fieldCardComponents.get(currentCardIndex)
+			                   .setBounds(point.width, point.height, FieldCard.heightCard, FieldCard.heightCard);
+		}
+
 		switch(siteNumber) {
 			case 0:
-				if(currentSiteCard == 0) {
-					fieldCardComponents.get(currentCardIndex).setBounds(point.width, point.height,
-					                                                    FieldCard.heightCard,
-					                                                    FieldCard.heightCard);
-				} else {
+				if(currentSiteCard != 0) {
 					fieldCardComponents.get(currentCardIndex)
 					                   .setBounds(point.width, point.height, cardWidth, FieldCard.heightCard);
 				}
@@ -148,11 +152,7 @@ public class MapLayout implements LayoutManager2 {
 				}
 				break;
 			case 1:
-				if(currentSiteCard == 0) {
-					fieldCardComponents.get(currentCardIndex).setBounds(point.width, point.height,
-					                                                    FieldCard.heightCard,
-					                                                    FieldCard.heightCard);
-				} else {
+				if(currentSiteCard != 0) {
 					fieldCardComponents.get(currentCardIndex)
 					                   .setBounds(point.width, point.height, FieldCard.heightCard, cardWidth);
 				}
@@ -164,38 +164,28 @@ public class MapLayout implements LayoutManager2 {
 				}
 				break;
 			case 2:
-				if(currentSiteCard == 0) {
-					fieldCardComponents.get(currentCardIndex).setBounds(point.width, point.height,
-					                                                    FieldCard.heightCard,
-					                                                    FieldCard.heightCard);
-				} else {
+				if(currentSiteCard != 0) {
 					fieldCardComponents.get(currentCardIndex)
 					                   .setBounds(point.width, point.height, cardWidth, FieldCard.heightCard);
 				}
-
-				if(currentSiteCard == cardsPerSite - 1) {
+				if(currentSiteCard == 0) {
 					point.width = point.width + FieldCard.heightCard;
 				} else {
 					point.width = point.width + cardWidth;
 				}
 				break;
 			case 3:
-				if(currentSiteCard == 0) {
-					fieldCardComponents.get(currentCardIndex).setBounds(point.width, point.height,
-					                                                    FieldCard.heightCard,
-					                                                    FieldCard.heightCard);
-				} else {
+				if(currentSiteCard != 0) {
 					fieldCardComponents.get(currentCardIndex)
 					                   .setBounds(point.width, point.height, FieldCard.heightCard, cardWidth);
 				}
 
-				if(currentSiteCard == cardsPerSite - 1) {
+				if(currentSiteCard == 0) {
 					point.height = point.height + FieldCard.heightCard;
 				} else {
 					point.height = point.height + cardWidth;
 				}
 		}
-		fieldCardComponents.get(currentCardIndex).setRotation(angle);
 		return point;
 	}
 }
