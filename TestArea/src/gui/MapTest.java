@@ -10,12 +10,28 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 
+class Map extends JPanel {
+	Map(LayoutManager layout) {
+		super(layout);
+	}
+
+	@Override protected void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		AffineTransform transform = g2.getTransform();
+		//		transform.setToScale(getWidth(),getHeight());
+		g2.setTransform(transform);
+		super.paintComponent(g);    //To change body of overridden methods use File | Settings | File Templates.
+	}
+
+	//HashMap<playerData, FieldCard>
+}
+
 public class MapTest {
 
 	public static void main(String[] args) {
 
 		//JPanel panel = new JPanel(new GridLayout());
-		JPanel panel = new JPanel(new MapLayout());
+		Map panel = new Map(new MapLayout());
 		FieldCard card;
 
 		card = new FieldCard("humdi", new Color(12, 128, 102), 1254);
@@ -26,9 +42,15 @@ public class MapTest {
 		panel.add(card);
 		card = new FieldCard("humdi", new Color(128, 30, 24), 1254);
 		panel.add(card);
+		card = new FieldCard("humdi", new Color(12, 128, 102), 1254);
+		panel.add(card);
 		card = new FieldCard("humdi", new Color(128, 30, 24), 1254);
 		panel.add(card);
 		card = new FieldCard("humdi", new Color(128, 30, 24), 1254);
+		panel.add(card);
+		card = new FieldCard("humdi", new Color(128, 30, 24), 1254);
+		panel.add(card);
+		card = new FieldCard("humdi", new Color(28, 128, 14), 1254);
 		panel.add(card);
 		card = new FieldCard("humdi", new Color(28, 128, 14), 1254);
 		panel.add(card);
