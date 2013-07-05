@@ -1,0 +1,534 @@
+##	control words
+##		##	Comment
+##		#!	Object is finished
+##		#Street
+##			name                (The name shouldn't be longer than 14)
+##			color red
+##			color green
+##			color blue
+##          price
+##			income              (first income should be under 10k)
+##			income              (normally double of the first income)
+##			income
+##			income
+##			income
+##			income
+##			income
+##			upgrade             (house/hotel)
+##			mortgage
+##		#Station
+##			name                (The name shouldn't be longer than 14)
+##			price
+##			income              (first income should be under 10k)
+##			income
+##			income
+##			income
+##			mortgage
+##		#Facility
+##			name                (The name shouldn't be longer than 14)
+##			price
+##			income              (first income should be under 10k)
+##			income
+##			mortgage
+##		#Tax
+##			name                (The name shouldn't be longer than 14)
+##			amount
+##		#Chance
+##			name                (The name shouldn't be longer than 14)
+##		#Community
+##			name                (The name shouldn't be longer than 14)
+##		#Go
+##			name                (The name shouldn't be longer than 14)
+##			moneyByTurn
+##		#Jail
+##			name                (The name shouldn't be longer than 14)
+##		#Parking
+##			name                (The name shouldn't be longer than 14)
+##		#GoToJail
+##			name                (The name shouldn't be longer than 14)
+##
+##  Instruction:
+##      #Go	has to be the first data block!
+##      No parameter is optional!
+##
+
+#Go
+Los
+4000
+#!
+
+#Street
+Badstraße
+128
+51
+153
+1200
+40
+80
+200
+600
+1800
+3200
+5000
+1000
+600
+#!
+
+#Community
+Gemeinschaftsfeld
+#!
+
+#Street
+Turmstraße
+128
+51
+153
+1200
+80
+160
+400
+1200
+3600
+6400
+9000
+1000
+600
+#!
+
+#Tax
+Einkommenssteuer
+4000
+#!
+
+#Station
+Südbahnhof
+4000
+500
+1000
+2000
+4000
+2000
+#!
+
+#Street
+Chausseestraße
+128
+204
+255
+2000
+120
+240
+600
+1800
+5400
+8000
+11000
+1000
+1000
+#!
+
+#Chance
+Ereignisfeld
+#!
+
+#Street
+Elisenstraße
+128
+204
+255
+2000
+120
+240
+600
+1800
+5400
+8000
+11000
+1000
+1000
+#!
+
+#Street
+Poststraße
+128
+204
+255
+2400
+160
+320
+800
+2000
+6000
+9000
+12000
+1000
+1200
+#!
+
+#Jail
+Gefängnis
+#!
+
+#Street
+Seestraße
+204
+68
+204
+2800
+200
+400
+1000
+3000
+9000
+12500
+15000
+2000
+1400
+#!
+
+#Facility
+Elektrizitäts-Werk
+3000
+80
+200
+1500
+#!
+
+#Street
+Hafenstraße
+204
+68
+204
+2800
+200
+400
+1000
+3000
+9000
+12500
+15000
+2000
+1400
+#!
+
+#Street
+Neue Straße
+204
+68
+204
+3200
+240
+480
+1200
+3600
+10000
+14000
+18000
+2000
+1600
+#!
+
+#Station
+Westbahnhof
+4000
+500
+1000
+2000
+4000
+2000
+#!
+
+#Street
+Münchner Straße
+255
+128
+0
+3600
+280
+560
+1400
+4000
+11000
+15000
+19000
+2000
+1800
+#!
+
+#Community
+Gemeinschaftsfeld
+#!
+
+#Street
+Wiener Straße
+255
+128
+0
+3600
+280
+560
+1400
+4000
+11000
+15000
+19000
+2000
+1800
+#!
+
+#Street
+Berliner Straße
+255
+128
+0
+4000
+320
+640
+1600
+4400
+12000
+16000
+20000
+2000
+2000
+#!
+
+#Parking
+Frei Parken
+#!
+
+#Street
+Theaterstraße
+255
+0
+0
+4400
+360
+720
+1800
+5000
+140000
+175000
+210000
+3000
+2200
+#!
+
+#Chance
+Ereignisfeld
+#!
+
+#Street
+Museumstraße
+255
+0
+0
+4400
+360
+720
+1800
+5000
+14000
+17500
+21000
+3000
+2200
+#!
+
+#Street
+Opernplatz
+255
+0
+0
+4800
+400
+800
+2000
+6000
+150000
+185000
+220000
+3000
+2400
+#!
+
+#Station
+Nordbahnhof
+4000
+500
+1000
+2000
+4000
+2000
+#!
+
+#Street
+Lessingstraße
+255
+255
+0
+5200
+480
+960
+2200
+6600
+16000
+19500
+23000
+3000
+2600
+#!
+
+#Street
+Schillerstraße
+255
+255
+0
+5200
+480
+960
+2200
+6600
+16000
+19500
+23000
+3000
+2600
+#!
+
+#Facility
+Wasser-Werk
+3000
+80
+200
+1500
+#!
+
+#Street
+Goethestraße
+255
+255
+0
+5600
+580
+1160
+2400
+7200
+17000
+20500
+24000
+3000
+2800
+#!
+
+#GoToJail
+Geh in's Gefängnis
+#!
+
+#Street
+Rathausplatz
+51
+128
+51
+6000
+520
+1040
+2600
+7800
+18000
+22000
+25500
+4000
+3000
+#!
+
+#Street
+Hauptstraße
+51
+128
+51
+6000
+520
+1040
+2600
+7800
+18000
+22000
+25500
+4000
+3000
+#!
+
+#Community
+Gemeinschaftsfeld
+#!
+
+#Street
+Bahnhofstraße
+51
+128
+51
+6400
+560
+1120
+3000
+9000
+20000
+24000
+28000
+4000
+3200
+#!
+
+#Station
+Haptbahnhof
+4000
+500
+1000
+2000
+4000
+2000
+#!
+
+#Chance
+Ereignisfeld
+#!
+
+#Street
+Parkstraße
+32
+32
+204
+7000
+700
+1400
+3500
+10000
+22000
+26000
+30000
+4000
+3500
+#!
+
+#Tax
+Zusatzsteuer
+2000
+#!
+
+#Street
+Schlossallee
+32
+32
+204
+8000
+1000
+2000
+4000
+12000
+28000
+34000
+40000
+4000
+4000
+#!

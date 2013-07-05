@@ -1,0 +1,95 @@
+##	 	control words
+##	 	##			        Comment
+##	 	#! 			        means an object is finished
+##		#$			        means income or loss
+##	 	#jailbait	        means a jailbait card
+##	 	#jail		        means a card that sends a player directly into jail
+##	 	#goTo		        means a card that sends a player to a specific field with go-income
+##	 	#streetWork         means a card that requires you to spend money on existing houses or hotels
+##	 	#special$ 	        means a transaction that does not involve the bank (player based transactions)
+##	 	#gotostation        means a card that sends the player to a specific station with special conditions
+##	 	#back 		        means a card that sends a player backwards
+##      #payfinetakecard    means a card that has a special event (pay fine OR take a card)
+#jailbait
+Du kommst aus dem Gefängnis frei.\nDiese Karte kann später verwendet oder gehandelt werden.
+#!
+
+#back
+Gehe 3 Felder zurück.
+-3
+#!
+
+#gotostation
+Rücke vor bis zum nächsten Bahnhof.\nSollte der Bahnhof sich im Besitz eines Spielers befinden, \nerhält er die doppelte Miete, andernfalls kannst du den Bahnhof kaufen.
+#!
+
+#payfinetakecard
+Zahle eine Strafe von\n200 DM\noder nimm eine Gemeinschaftskarte.
+200
+#!
+
+#special$
+Du wurdest zum Vorstand gewählt.\nZahle jedem Spieler\n1000 DM.
+-1000
+#!
+
+#streetWork
+Lasse alle deine Häuser renovieren.\nZahle an die Bank\nfür jedes Haus 500 DM\nfür jedes Hotel 2000 DM.
+500
+1000
+#!
+
+#$
+Miete und Anleihezinsen werden fällig.\nDie Bank zahlt dir 3000 DM.
+3000
+#!
+
+#$
+Die Bank zahlt dir eine Dividende von\n1000 DM.
+1000
+#!
+
+#$
+Strafe für zu schnelles Fahren.\n 300 DM an die Bank.
+-300
+#!
+
+#goTo
+Gehe zurück zur Badstraße.
+Badstraße
+f
+#!
+
+#goTo
+Mache einen Ausflug zum Südbahnhof.\nKommst du über Los, ziehe 4000 DM ein.
+Südbahnhof
+t
+#!
+
+#jail
+Gehe in das Gefängnis.\n Kein Geld, nix über Los. Fresse halten.
+#!
+
+#goTo
+Rücke vor bis zur Schlossallee.
+Schlossallee
+t
+#!
+
+#goTo
+Rücke vor bis zum Opernplatz.
+Opernplatz
+t
+#!
+
+#goTo
+Rücke bis auf Los vor.
+Los
+t
+#!
+
+#goTo
+Rücke bis zur Seestraße vor.
+Seestraße
+t
+#!
