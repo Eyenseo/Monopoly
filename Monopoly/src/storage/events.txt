@@ -30,7 +30,7 @@ Zahle eine Strafe von\n200 DM\noder nimm eine Gemeinschaftskarte.
 
 #special$
 Du wurdest zum Vorstand gewählt.\nZahle jedem Spieler\n1000 DM.
-1000
+-1000
 #!
 
 #streetWork

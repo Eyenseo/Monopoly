@@ -20,12 +20,13 @@ import java.util.Vector;
 public class Player implements Serializable {
 	private static final long   serialVersionUID = 3764102750636389385L;
 	private static final Random random           = new Random();
-	private static       int    id               = 0;
+	private static       int    classId          = 0;
 	private final int                                playerId;
 	private final String                             NAME;
 	private final int[]                              dices;
 	private       boolean                            inJail;
 	private       int                                money;
+	private       int                                neededMoney;
 	private       int                                timeInJail;
 	private       FieldCircularList                  position;
 	private       boolean                            turnEnd;
@@ -35,17 +36,18 @@ public class Player implements Serializable {
 	private final Random                             randomGenerator;
 	private final Vector<Jailbait>                   jailbait;
 	private final ArrayList<PurchasableCircularList> property;
-	private final ArrayList<PlayerEventListener>     listener;
+	private final ArrayList<PlayerEventListener>     playerEventListeners;
 
 	/**
 	 * @param name  The value determines the name of the Player.
 	 * @param money The value determines the amount of money the Player has.
 	 */
 	public Player(String name, int money) {
-		playerId = id++;
+		playerId = classId++;
 		randomGenerator = random;
 		NAME = name;
 		this.money = money;
+		neededMoney = 0;
 		inJail = false;
 		dices = new int[2];
 		dices[0] = 4;
@@ -58,7 +60,7 @@ public class Player implements Serializable {
 
 		jailbait = new Vector<Jailbait>();
 		property = new ArrayList<PurchasableCircularList>();
-		listener = new ArrayList<PlayerEventListener>();
+		playerEventListeners = new ArrayList<PlayerEventListener>();
 	}
 
 	/**
@@ -83,7 +85,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * @return the return value is the id of the Player
+	 * @return the return value is the classId of the Player
 	 */
 	public int getPlayerId() {
 		return playerId;
@@ -111,7 +113,7 @@ public class Player implements Serializable {
 	 */
 	private void firePlayerEvent() {
 		PlayerEvent event = new PlayerEvent(this);
-		for(PlayerEventListener l : listener) {
+		for(PlayerEventListener l : playerEventListeners) {
 			l.actionPerformed(event);
 		}
 	}
@@ -138,14 +140,14 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * @return the return value is the id the Player the player is currently trading with
+	 * @return the return value is the classId the Player the player is currently trading with
 	 */
 	public int getTrading() {
 		return trading;
 	}
 
 	/**
-	 * @param trading the value determines the id the Player the player is currently trading with
+	 * @param trading the value determines the classId the Player the player is currently trading with
 	 */
 	public void setTrading(int trading) {
 		this.trading = trading;
@@ -156,6 +158,11 @@ public class Player implements Serializable {
 	 */
 	public boolean isGiveUp() {
 		return giveUp;
+	}
+
+	public void setGiveUp(boolean giveUp) {
+		this.giveUp = giveUp;
+		firePlayerEvent();
 	}
 
 	/**
@@ -186,8 +193,8 @@ public class Player implements Serializable {
 	/**
 	 * The method will fire a PlayerEvent.
 	 *
-	 * @param purchasable The value determines the PurchasableCircularList object the property that will be added to
-	 *                    the player.
+	 * @param purchasable The value determines the PurchasableCircularList object the property that will be added to the
+	 *                    player.
 	 */
 	public void addProperty(PurchasableCircularList purchasable) {
 		property.add(purchasable);
@@ -197,8 +204,8 @@ public class Player implements Serializable {
 	/**
 	 * The method will fire a PlayerEvent.
 	 *
-	 * @param purchasable The value determines the PurchasableCircularList object the property that will be removed to
-	 *                    the player.
+	 * @param purchasable The value determines the PurchasableCircularList object the property that will be removed to the
+	 *                    player.
 	 */
 	public void removeProperty(PurchasableCircularList purchasable) {
 		property.remove(purchasable);
@@ -211,6 +218,7 @@ public class Player implements Serializable {
 	 * @param amount The value determines the
 	 */
 	public void addMoney(int amount) {
+		updateNeededMoney(amount);
 		money += amount;
 		firePlayerEvent();
 	}
@@ -233,8 +241,8 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * The method will fire a PlayerEvent.
-	 * The method removes a jailbait Card from the Player and adds it back to its CardStack and sets the player free.
+	 * The method will fire a PlayerEvent. The method removes a jailbait Card from the Player and adds it back to its
+	 * CardStack and sets the player free.
 	 */
 	public void useJailbait() {
 		jailbait.firstElement().freePlayer(this);
@@ -244,7 +252,8 @@ public class Player implements Serializable {
 
 	/**
 	 * The method moves the Player to the new Field. It will move the player also if he is in jail but threw a double
-	 * or if he was already three turns in jail.
+	 * or if
+	 * he was already three turns in jail.
 	 *
 	 * @return The return value is true if the Player got doubles.
 	 */
@@ -307,17 +316,17 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * @param listener the value determines the listener to be added
+	 * @param listener the value determines the playerEventListeners to be added
 	 */
 	public void addPlayerEventListener(PlayerEventListener listener) {
-		this.listener.add(listener);
+		playerEventListeners.add(listener);
 	}
 
 	/**
-	 * @param listener the value determines the listener to be removed
+	 * @param listener the value determines the playerEventListeners to be removed
 	 */
 	public void removePlayerEventListener(PlayerEventListener listener) {
-		this.listener.remove(listener);
+		playerEventListeners.remove(listener);
 	}
 
 	/**
@@ -347,8 +356,38 @@ public class Player implements Serializable {
 	 * @param amount The value determines the money to be removed from the player.
 	 */
 	public void pay(int amount) {
+		updateNeededMoney(-amount);
+		while(neededMoney != 0) {
+
+			firePlayerEvent();
+			try {
+				synchronized(Thread.currentThread()) {
+					Thread.currentThread().wait();
+				}
+			} catch(InterruptedException e) {
+				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			}
+		}
 		money -= amount;
 		firePlayerEvent();
+	}
+
+	//JAVADOC
+	private void updateNeededMoney(int amount) {
+		int money = this.money + amount;
+
+		if(money < 0) {
+			neededMoney -= money;
+		} else if(neededMoney > 0) {
+			neededMoney -= money;
+			if(neededMoney < 0) {
+				neededMoney = 0;
+			}
+		}
+	}
+
+	public Vector<Jailbait> getJailbait() {
+		return jailbait;
 	}
 
 	/**
@@ -364,10 +403,11 @@ public class Player implements Serializable {
 	 */
 	public PlayerData toPlayerData(boolean withPosition) {
 		if(withPosition) {
-			return new PlayerData(playerId, NAME, dices[0], dices[1], inJail, money, position.toFieldData(), turnEnd,
-			                      threwDice, trading);
+			return new PlayerData(playerId, NAME, dices[0], dices[1], inJail, money, neededMoney,
+			                      position.toFieldData(), turnEnd, threwDice, trading, giveUp);
 		} else {
-			return new PlayerData(playerId, NAME, dices[0], dices[1], inJail, money, null, turnEnd, threwDice, trading);
+			return new PlayerData(playerId, NAME, dices[0], dices[1], inJail, money, neededMoney, null, turnEnd,
+			                      threwDice, trading, giveUp);
 		}
 	}
 }

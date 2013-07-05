@@ -3,24 +3,23 @@ package core;
 import objects.Player;
 import objects.exceptions.MessageStackException;
 import objects.map.FieldCircularList;
-import objects.map.purchasable.PurchasableCircularList;
-import objects.map.purchasable.Street;
-import objects.value.action.*;
+import objects.value.action.ActionData;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Monopoly is the main Class. It initialises the game and hold pieces of the mechanic.
  */
 //JAVADOC
 public class Monopoly {
-	private final int STARTMONEY = 30000;
-	private final Thread         turnThread;
-	private final ServerOperator serverOperator;
-	private final boolean gameOver = false;
-	private final FieldCircularList go;
-	private final FieldCircularList jail;
-	private final ArrayList<Player> playerArrayList;
+	private final int     STARTMONEY = 30000;
+	private final boolean gameOver   = false;
+	private final FieldCircularList                               go;
+	private final FieldCircularList                               jail;
+	private final HashMap<Integer, Player>                        playerHashMap;
+	private final ServerOperator                                  serverOperator;
+	private final Thread                                          turnThread;
+	private final HashMap<Integer, HashMap<String, ActionThread>> actions; //TODO better structure
 
 	/**
 	 * @param loader The value determines the loader that holds the information for the game
@@ -28,7 +27,7 @@ public class Monopoly {
 	private Monopoly(Loader loader) {
 		go = loader.getGo();
 		jail = loader.getJail();
-		playerArrayList = loader.getPlayerArrayList();
+		playerHashMap = loader.getPlayerHashMap();
 		serverOperator = new ServerOperator(this, loader);
 
 		//The thread will set the next player as active and will then wait for him to finish his turn and sets the
@@ -38,15 +37,10 @@ public class Monopoly {
 			@Override public void run() {
 				try {
 					synchronized(turnThread) {
-
 						while(!gameOver) {
-							for(Player player : playerArrayList) {
+							for(Player player : playerHashMap.values()) {
 								player.setTurnEnd(false);
 								turnThread.wait();  //TODO possible replace with "Condition"
-
-								if(player.isGiveUp()) {
-									break;
-								}
 							}
 						}
 					}
@@ -55,6 +49,9 @@ public class Monopoly {
 				}
 			}
 		});
+		turnThread.setName("Turn thread");
+
+		actions = new HashMap<Integer, HashMap<String, ActionThread>>();
 	}
 
 	public static void main(String[] args) {
@@ -65,12 +62,26 @@ public class Monopoly {
 			//			m.addPlayer(new Player(menu.getName(), m.STARTMONEY));
 			//		}
 
-			m.addPlayer(new Player("Julia", m.STARTMONEY));
+			m.addPlayer(new Player("Julia", 0));
 			m.addPlayer(new Player("Markus", m.STARTMONEY));
+			m.addPlayer(new Player("Herbert", m.STARTMONEY));
 			m.startMonopoly();
 		} catch(MessageStackException e) {
 			System.err.println(e.getMessageStack());
 		}
+	}
+
+	/**
+	 * @param player The value determines the player to be added to the game
+	 */
+	private void addPlayer(Player player) {
+		playerHashMap.put(player.getPlayerId(), player);
+		player.setPosition(go);
+
+		ClientOperator clientOperator = new ClientOperator(serverOperator);
+		serverOperator.addDestination(player, clientOperator);
+
+		actions.put(player.getPlayerId(), new HashMap<String, ActionThread>());
 	}
 
 	/**
@@ -83,136 +94,17 @@ public class Monopoly {
 	}
 
 	/**
-	 * @param player The value determines the player to be added to the game
-	 */
-	private void addPlayer(Player player) {
-		playerArrayList.add(player);
-		player.setPosition(go);
-		ClientOperator clientOperator = new ClientOperator(serverOperator);
-
-		serverOperator.addDestination(player, clientOperator);
-	}
-
-	/**
 	 * @param actionData The value determines the action to be done
 	 */
 	//TODO chop the method down
-	public void doAction(ActionData actionData) {
-		synchronized(turnThread) {
-			Player user = playerArrayList.get(actionData.getUserId());
-
-			if(actionData instanceof TurnData) {
-				if(((TurnData) actionData).isTurnAction()) {
-					if(user.getThrewDice() < 3) {
-						user.move();
-					} else {
-						user.setPosition(jail);
-						user.setInJail(true);
-						user.setTurnEnd(true);
-						turnThread.notify();
-					}
-				} else {
-					user.setTurnEnd(true);
-					turnThread.notify();
-				}
-			} else if(actionData instanceof BuyData) {
-				if(user.getPosition() instanceof PurchasableCircularList) { //TODO check if this is enough
-					if(((BuyData) actionData).isUpgrade()) {
-						((Street) user.getPosition()).nextStage();
-					} else {
-						user.buyPurchasable((PurchasableCircularList) user.getPosition());
-					}
-				}
-			} else {
-				if(actionData instanceof HaggleData) {
-					HaggleData haggleData = (HaggleData) actionData;
-
-					System.out.println(haggleData.getHaggleState());
-
-					Player seller;
-					switch(haggleData.getHaggleState()) {
-						case ESTABLISH:
-							seller = playerArrayList.get(haggleData.getSellerId());
-							if(user.getTrading() == -1 && seller.getTrading() == -1) {
-								user.setTrading(seller.getPlayerId());
-								seller.setTrading(user.getPlayerId());
-								haggleData.setHaggleState(HaggleData.HaggleState.ESTABLISHED);
-							} else {
-								haggleData.setHaggleState(HaggleData.HaggleState.DECLINE);
-							}
-							serverOperator.sendHaggleData(haggleData);
-							break;
-
-						// case ESTABLISHED: //Will never happen - this state will just appear on the client
-						// break;
-
-						case REQUEST:
-							serverOperator.sendHaggleData(haggleData);
-							break;
-
-						case OFFER:
-							serverOperator.sendHaggleData(haggleData);
-							break;
-
-						case ACCEPT:
-							seller = playerArrayList.get(haggleData.getSellerId());
-							// trade money
-							int playerPay = haggleData.getSellerMoney() - haggleData.getUserMoney();
-							if(playerPay != 0) {
-								if(playerPay < 0) {
-									playerPay *= -1;
-									seller.pay(playerPay);
-									user.addMoney(playerPay);
-								} else {
-									seller.addMoney(playerPay);
-									user.pay(playerPay);
-								}
-							}
-							// trade purchasables
-							for(int id : haggleData.getSellerFieldIds()) {
-								for(PurchasableCircularList purchasable : user.getProperties()) {
-									if(purchasable.getFieldNumber() == id) {
-										purchasable.setOwner(seller);
-										break;
-									}
-								}
-							}
-							for(int id : haggleData.getUserFieldIds()) {
-								for(PurchasableCircularList purchasable : seller.getProperties()) {
-									if(purchasable.getFieldNumber() == id) {
-										purchasable.setOwner(user);
-										break;
-									}
-								}
-							}
-							serverOperator.sendHaggleData(haggleData);
-							user.setTrading(-1);
-							seller.setTrading(-1);
-
-							break;
-
-						case DECLINE:
-							seller = playerArrayList.get(haggleData.getSellerId());
-
-							user.setTrading(-1);
-							seller.setTrading(-1);
-
-							serverOperator.sendHaggleData(haggleData);
-							break;
-					}
-				} else if(actionData instanceof MortgageData) {
-					ArrayList<PurchasableCircularList> purchasableCircularListArrayList = user.getProperties();
-					for(PurchasableCircularList purchasable : purchasableCircularListArrayList) {
-						if(purchasable.getFieldNumber() == ((MortgageData) actionData).getFieldId()) {
-							purchasable.setInMortgage(!purchasable.isInMortgage());
-							break;
-						}
-					}
-				} else if(actionData instanceof GiveUpData) {
-
-				}
-			}
-		}
+	public void doAction(final ActionData actionData) {
+		//TODO check what happens if a player doesn't have the money and decides to give up - is deleting the thread
+		// enough?
+		actions.get(actionData.getUserId()).put(actionData.getId(),
+		                                        new ActionThread(playerHashMap, actionData, serverOperator, jail,
+		                                                         turnThread, actions));
+		actions.get(actionData.getUserId()).get(actionData.getId()).setName(actionData.getId());
+		actions.get(actionData.getUserId()).get(actionData.getId()).start();
 	}
 
 	/**
@@ -223,9 +115,9 @@ public class Monopoly {
 	}
 
 	/**
-	 * @return the return value is the playerArrayList
+	 * @return the return value is the playerHashMap
 	 */
-	public ArrayList<Player> getPlayerArrayList() {
-		return playerArrayList;
+	public HashMap<Integer, Player> getPlayerHashMap() {
+		return playerHashMap;
 	}
 }

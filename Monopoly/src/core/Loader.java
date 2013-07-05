@@ -7,10 +7,13 @@ import objects.exceptions.MessageStackException;
 import objects.exceptions.core.LoaderException;
 import objects.map.FieldCircularList;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The loader is responsible for the persistence of the data.
@@ -21,27 +24,28 @@ class Loader {
 	private FieldCircularList jail;
 	private CardStack         event;
 	private CardStack         community;
-	private ArrayList<Player> playerArrayList = new ArrayList<Player>();
+	private HashMap<Integer, Player> playerHashMap = new HashMap<Integer, Player>();
 
 	/**
 	 * In the constructor the files that are not present will be copied to the execute location and if there isn't
 	 * serialized the file will be created.
 	 *
-	 * @throws MessageStackException the exception will be thrown if there was a problem while reading or writing from
-	 *                               the files
+	 * @throws MessageStackException the exception will be thrown if there was a problem while reading or writing from the
+	 *                               files
 	 */
 	public Loader() throws MessageStackException {
 		copyFile("map.txt");
 		copyFile("community.txt");
 		copyFile("events.txt");
-		if(isSerialized()) {
+		//		if(isSerialized()) {
+		if(false) {
 			try {
 				ObjectInputStream serializedFile = new ObjectInputStream(new FileInputStream("monopoly.ser"));
 				go = (FieldCircularList) serializedFile.readObject();
 				jail = (FieldCircularList) serializedFile.readObject();
 				event = (CardStack) serializedFile.readObject();
 				community = (CardStack) serializedFile.readObject();
-				playerArrayList = (ArrayList<Player>) serializedFile.readObject();
+				playerHashMap = (HashMap<Integer, Player>) serializedFile.readObject();
 			} catch(IOException e) {
 				new File("monopoly.ser").delete();
 				throw new LoaderException("The problem occurred while reading the file monopoly.ser.", e);
@@ -50,26 +54,26 @@ class Loader {
 				throw new LoaderException("The problem occurred while reading a class from the file monopoly.ser.", e);
 			}
 		} else {
-			try {
-				//TODO load files in three threads and check for a.join(), b.join() c.join()
-				MapArrayCreator mac = new MapArrayCreator();
-				event = new CardStack("events.txt", "Event Karte");
-				community = new CardStack("community.txt", "Gemeinschafts Karte");
-				new Connector().connect(mac.getMap(), event, community, playerArrayList);
-				go = mac.getGo();
-				jail = mac.getJail();
-				ObjectOutputStream serializedFile =
-						new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("monopoly.ser")));
-				serializedFile.writeObject(go);
-				serializedFile.writeObject(jail);
-				serializedFile.writeObject(event);
-				serializedFile.writeObject(community);
-				serializedFile.writeObject(playerArrayList);
-				serializedFile.close();
-			} catch(IOException e) {
-				new File("monopoly.ser").delete();
-				throw new LoaderException("The problem occurred while writing to the monopoly.ser file.", e);
-			}
+			//			try {
+			//TODO load files in three threads and check for a.join(), b.join() c.join()
+			MapArrayCreator mac = new MapArrayCreator();
+			event = new CardStack("events.txt", "Event Karte");
+			community = new CardStack("community.txt", "Gemeinschafts Karte");
+			new Connector().connect(mac.getMap(), event, community, playerHashMap);
+			go = mac.getGo();
+			jail = mac.getJail();
+			//				ObjectOutputStream serializedFile =
+			//						new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("monopoly.ser")));
+			//				serializedFile.writeObject(go);
+			//				serializedFile.writeObject(jail);
+			//				serializedFile.writeObject(event);
+			//				serializedFile.writeObject(community);
+			//				serializedFile.writeObject(playerHashMap);
+			//				serializedFile.close();
+			//			} catch(IOException e) {
+			//				new File("monopoly.ser").delete();
+			//				throw new LoaderException("The problem occurred while writing to the monopoly.ser file.", e);
+			//			}
 		}
 	}
 
@@ -120,8 +124,8 @@ class Loader {
 	/**
 	 * @return the return value is the Player ArrayList
 	 */
-	public ArrayList<Player> getPlayerArrayList() {
-		return playerArrayList;
+	public HashMap<Integer, Player> getPlayerHashMap() {
+		return playerHashMap;
 	}
 
 	CardStack getEvent() {

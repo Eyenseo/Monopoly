@@ -51,18 +51,31 @@ public class MortgagePanel extends JPanel {
 		back.setAlignmentX(JButton.RIGHT_ALIGNMENT);
 		back.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				MortgagePanel.this.model.setCurrentMainPanelName(Model.CurrentMainPanelName.GAME);
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						MortgagePanel.this.model
+								.setCurrentMainPanelName(MortgagePanel.this.model.getPreviousMainPanelName());
+					}
+				});
 			}
 		});
 
 		model.addModelEventListener(Model.ModelEventName.PROPERTY, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
-				checkPurchasableData();
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						checkPurchasableData();
+					}
+				});
 			}
 		});
 		model.addModelEventListener(Model.ModelEventName.INMORTAGE, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
-				updatePurchasableCards();
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						updatePurchasableCards();
+					}
+				});
 			}
 		});
 
@@ -99,10 +112,15 @@ public class MortgagePanel extends JPanel {
 					 * PurchasableCardPanel
 					 * @param e The value determines the event source
 					 */
-					@Override public void mouseClicked(MouseEvent e) {
-						PurchasableCardPanel panel = (PurchasableCardPanel) e.getSource();
-						MortgageData data = new MortgageData(model.getUser().getId(), panel.getData().getFieldNumber());
-						clientOperator.sendActionData(data);
+					@Override public void mouseClicked(final MouseEvent e) {
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override public void run() {
+								PurchasableCardPanel panel = (PurchasableCardPanel) e.getSource();
+								MortgageData data =
+										new MortgageData(model.getUser().getId(), panel.getData().getFieldNumber());
+								clientOperator.sendActionData(data);
+							}
+						});
 					}
 				});
 				if(data instanceof StreetData) {

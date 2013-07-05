@@ -16,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The HagglePanel provides the user with the options to trade with other players
@@ -29,6 +30,7 @@ public class HagglePanel extends JPanel {
 	private       JPanel            headerPanel;
 	private       JPanel            basePanel;
 	private       JButton           accept;
+	private       JButton           back;
 	private       JTextField        tradeSellerMoney;
 	private       JTextField        tradeUserMoney;
 	private       JComboBox<String> playerList;
@@ -51,76 +53,97 @@ public class HagglePanel extends JPanel {
 		add(basePanel, BorderLayout.SOUTH);
 
 		model.addModelEventListener(Model.ModelEventName.HAGGLE, haggleListener());
+		model.addModelEventListener(Model.ModelEventName.PLAYERREMOVED, new ModelEventListener() {
+			@Override public void actionPerformed(ModelEvent event) {
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						playerList.setModel(createPlayerNameModel());
+					}
+				});
+			}
+		});
 	}
 
 	/**
 	 * @return The return value is a listener that will update the HagglePanel accordingly to the HaggleData of the
-	 *         model.
+	 * model.
 	 */
 	private ModelEventListener haggleListener() {
 		return new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
-				HaggleData haggleData = model.getHaggleData();
-				if(haggleData != null) {
-					switch(haggleData.getHaggleState()) {
-						// case ESTABLISH: //Will never happen - this state will just appear on the server
-						case ESTABLISHED:
-							if(haggleData.getUserId() == model.getUser().getId()) {
-								playerList.setEnabled(false);
-								accept.setEnabled(true);
-								tradeUserMoney.setEditable(true);
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						HaggleData haggleData = model.getHaggleData();
+						if(haggleData != null) {
+							switch(haggleData.getHaggleState()) {
+								// case ESTABLISH: //Will never happen - this state will just appear on the server
+								case ESTABLISHED:
+									if(haggleData.getUserId() == model.getUser().getId()) {
+										playerList.setEnabled(false);
+										accept.setEnabled(true);
+										tradeUserMoney.setEditable(true);
+										setSeller(haggleData.getSellerId());
+									} else {
+										int index = 0;
+										int sellerId = haggleData.getUserId();
+										for(int id : model.getPlayerHashMap().keySet()) {
+											if(sellerId == id) {
+												break;
+											}
+											if(id != model.getUser().getId()) {
+												index++;
+											}
+										}
 
-								setSeller(haggleData.getSellerId());
-							} else {
-								int sellerId = haggleData.getSellerId();
-								if(sellerId >= model.getUser().getId()) {
-									sellerId--;
-								}
-								playerList.setSelectedIndex(sellerId);
-								playerList.setEnabled(false);
+										playerList.setSelectedIndex(index);
+										playerList.setEnabled(false);
 
-								accept.setText("Angebot");
+										accept.setText("Angebot");
+									}
+									back.setText("Abbrechen");
+									break;
+
+								case REQUEST:
+									if(haggleData.getSellerId() == model.getUser().getId()) {
+										accept.setEnabled(true);
+
+										setSeller(haggleData.getUserId());
+										markPlayerPurchasable(haggleData.getUserFieldIds());
+										tradeUserMoney.setEditable(true);
+
+										tradeSellerMoney.setText("" + haggleData.getUserMoney());
+										model.setCurrentMainPanelName(Model.MainPanelName.HAGGLE);
+									}
+									break;
+
+								case OFFER:
+									if(haggleData.getUserId() == model.getUser().getId()) {
+										accept.setEnabled(true);
+
+										markPlayerPurchasable(haggleData.getSellerFieldIds());
+										tradeSellerMoney.setText("" + haggleData.getSellerMoney());
+
+										accept.setText("Akzeptieren");
+									}
+									break;
+
+								case ACCEPT:
+								case DECLINE:
+									accept.setEnabled(false);
+									accept.setText("Anfrage");
+									back.setText("Zurueck");
+									playerList.setEnabled(true);
+									tradeUserMoney.setText("0");
+									tradeUserMoney.setEditable(false);
+									tradeSellerMoney.setText("0");
+									sellerContent.removeAll();
+									unmarkPlayerPurchasable();
+									repaint();
+									break;
 							}
-							break;
-
-						case REQUEST:
-							if(haggleData.getSellerId() == model.getUser().getId()) {
-								accept.setEnabled(true);
-
-								setSeller(haggleData.getUserId());
-								markPlayerPurchasable(haggleData.getUserFieldIds());
-								tradeUserMoney.setEditable(true);
-
-								tradeSellerMoney.setText("" + haggleData.getUserMoney());
-								model.setCurrentMainPanelName(Model.CurrentMainPanelName.HAGGLE);
-							}
-							break;
-
-						case OFFER:
-							if(haggleData.getUserId() == model.getUser().getId()) {
-								accept.setEnabled(true);
-
-								markPlayerPurchasable(haggleData.getSellerFieldIds());
-								tradeSellerMoney.setText("" + haggleData.getSellerMoney());
-
-								accept.setText("Akzeptieren");
-							}
-							break;
-
-						case ACCEPT:
-						case DECLINE:
-							accept.setEnabled(false);
-							accept.setText("Anfrage");
-							playerList.setEnabled(true);
-							tradeUserMoney.setText("0");
-							tradeUserMoney.setEditable(false);
-							tradeSellerMoney.setText("0");
-							sellerContent.removeAll();
-							unmarkPlayerPurchasable();
-							repaint();
-							break;
+						}
 					}
-				}
+				});
 			}
 		};
 	}
@@ -155,35 +178,57 @@ public class HagglePanel extends JPanel {
 		}
 	}
 
+	private ComboBoxModel<String> createPlayerNameModel() {
+		HashMap<Integer, PlayerData> playerDataHashMap = model.getPlayerHashMap();
+		String[] playerNames = new String[playerDataHashMap.size() - 1];
+		synchronized(model.getPlayerHashMap()) {
+			int i = 0;
+			for(int id : playerDataHashMap.keySet()) {
+				if(id != model.getUser().getId()) {
+					playerNames[i] = playerDataHashMap.get(id).getName();
+					i++;
+				}
+			}
+		}
+		return new DefaultComboBoxModel<String>(playerNames);
+	}
+
 	/**
 	 * The method will create a Panel with a drop down menu where the user can select a player to trade with and a
 	 * indication which side is his
 	 */
 	private void createHeader() {
-		ArrayList<PlayerData> playerDataArrayList = model.getPlayerArrayList();
-		String[] playerNames = new String[playerDataArrayList.size() - 1];
-		for(int i = 0, j = 0; i < playerDataArrayList.size(); i++) {
-			if(i != model.getUser().getId()) {
-				playerNames[j] = playerDataArrayList.get(i).getName();
-				j++;
-			}
-		}
-
-		playerList = new JComboBox<String>(playerNames);
+		playerList = new JComboBox<String>();
+		playerList.setModel(createPlayerNameModel());
 		playerList.addActionListener(new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {
-				HaggleData haggleData = model.getHaggleData();
-				if(haggleData == null || haggleData.getHaggleState() == HaggleData.HaggleState.ACCEPT ||
-				   haggleData.getHaggleState() == HaggleData.HaggleState.DECLINE) {
-					JComboBox playerList = (JComboBox) e.getSource();
-					int index = playerList.getSelectedIndex();
-					if(index >= model.getUser().getId()) {
-						index++;
+			@Override public void actionPerformed(final ActionEvent e) {
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						HaggleData haggleData = model.getHaggleData();
+						if(haggleData == null || haggleData.getHaggleState() == HaggleData.HaggleState.ACCEPT ||
+						   haggleData.getHaggleState() == HaggleData.HaggleState.DECLINE) {
+
+							JComboBox playerList = (JComboBox) e.getSource();
+							int index = playerList.getSelectedIndex();
+							int i = 0;
+							int sellerId = 0;
+
+							for(int id : model.getPlayerHashMap().keySet()) {
+								if(id != model.getUser().getId()) {
+									if(i == index) {
+										sellerId = id;
+										break;
+									}
+									i++;
+								}
+							}
+
+							model.setHaggleData(new HaggleData(model.getUser().getId(), sellerId));
+							clientOperator.sendActionData(model.getHaggleData());
+							playerList.setEnabled(false);
+						}
 					}
-					model.setHaggleData(new HaggleData(model.getUser().getId(), index));
-					clientOperator.sendActionData(model.getHaggleData());
-					playerList.setEnabled(false);
-				}
+				});
 			}
 		});
 
@@ -232,31 +277,38 @@ public class HagglePanel extends JPanel {
 				 * PurchasableCardPanel
 				 * @param e The value determines the event source
 				 */
-				@Override public void mouseClicked(MouseEvent e) {
-					HaggleData haggleData = model.getHaggleData();
-					HaggleData.HaggleState state = haggleData.getHaggleState();
-					if(state == HaggleData.HaggleState.ESTABLISHED || state == HaggleData.HaggleState.REQUEST) {
-						PurchasableCardPanel panel = (PurchasableCardPanel) e.getSource();
-						if(panel.getBorder() == null) {
-							panel.setBorder(BorderFactory.createLineBorder(new Color(0, 156, 0), 3));
-							if(haggleData.getUserId() == model.getUser().getId() &&
-							   state == HaggleData.HaggleState.ESTABLISHED) {
-								haggleData.getUserFieldIds().add(panel.getData().getFieldNumber());
-							} else if(haggleData.getSellerId() == model.getUser().getId()) {
+				@Override public void mouseClicked(final MouseEvent e) {
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override public void run() {
+							HaggleData haggleData = model.getHaggleData();
+							HaggleData.HaggleState state = haggleData.getHaggleState();
+							if(state == HaggleData.HaggleState.ESTABLISHED || state == HaggleData.HaggleState
+									.REQUEST) {
+								PurchasableCardPanel panel = (PurchasableCardPanel) e.getSource();
+								if(panel.getBorder() == null) {
+									panel.setBorder(BorderFactory.createLineBorder(new Color(0, 156, 0), 3));
+									if(haggleData.getUserId() == model.getUser().getId() &&
+									   state == HaggleData.HaggleState.ESTABLISHED) {
+										haggleData.getUserFieldIds().add(panel.getData().getFieldNumber());
+									} else if(haggleData.getSellerId() == model.getUser().getId()) {
 
-								haggleData.getSellerFieldIds().add(panel.getData().getFieldNumber());
-							}
-						} else {
-							panel.setBorder(null);
-							if(haggleData.getUserId() == model.getUser().getId() &&
-							   state == HaggleData.HaggleState.ESTABLISHED) {
-								haggleData.getUserFieldIds().remove((Integer) panel.getData().getFieldNumber());
-							} else if(haggleData.getSellerId() == model.getUser().getId()) {
+										haggleData.getSellerFieldIds().add(panel.getData().getFieldNumber());
+									}
+								} else {
+									panel.setBorder(null);
+									if(haggleData.getUserId() == model.getUser().getId() &&
+									   state == HaggleData.HaggleState.ESTABLISHED) {
+										haggleData.getUserFieldIds().remove((Integer) panel.getData().getFieldNumber
+												());
+									} else if(haggleData.getSellerId() == model.getUser().getId()) {
 
-								haggleData.getSellerFieldIds().remove((Integer) panel.getData().getFieldNumber());
+										haggleData.getSellerFieldIds()
+										          .remove((Integer) panel.getData().getFieldNumber());
+									}
+								}
 							}
 						}
-					}
+					});
 				}
 			});
 
@@ -284,52 +336,59 @@ public class HagglePanel extends JPanel {
 			 * @param event the value determines the event source
 			 */
 			@Override public void actionPerformed(ModelEvent event) {
-				PurchasableCardLayoutConstraints constraints = new PurchasableCardLayoutConstraints();
-				boolean change;
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						PurchasableCardLayoutConstraints constraints = new PurchasableCardLayoutConstraints();
+						boolean change;
 
-				//add new components
-				for(PurchasableData data : model.getClientPurchasable()) {
-					change = true;
-					for(Component panel : userContent.getComponents()) {
-						if(panel instanceof PurchasableCardPanel) {
-							if(((PurchasableCardPanel) panel).getData().equals(data)) {
-								change = false;
-							}
-						}
-					}
-
-					if(change) {
-						if(data instanceof StreetData) {
-							constraints.type =
-									PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.STREET;
-						} else if(data instanceof StationData) {
-							constraints.type =
-									PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.STATION;
-						} else {
-							constraints.type =
-									PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.FACILITY;
-						}
-						constraints.position = data.getFieldNumber();
-
-						userContent.add(new PurchasableCardPanel(data), constraints);
-					}
-				}
-
-				//remove new components
-				for(Component panel : userContent.getComponents()) {
-					if(panel instanceof PurchasableCardPanel) {
-						change = true;
+						//add new components
 						for(PurchasableData data : model.getClientPurchasable()) {
-							if(((PurchasableCardPanel) panel).getData().equals(data)) {
-								change = false;
+							change = true;
+							for(Component panel : userContent.getComponents()) {
+								if(panel instanceof PurchasableCardPanel) {
+									if(((PurchasableCardPanel) panel).getData().equals(data)) {
+										change = false;
+									}
+								}
+							}
+
+							if(change) {
+								if(data instanceof StreetData) {
+									constraints.type =
+											PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType
+													.STREET;
+								} else if(data instanceof StationData) {
+									constraints.type =
+											PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType
+													.STATION;
+								} else {
+									constraints.type =
+											PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType
+													.FACILITY;
+								}
+								constraints.position = data.getFieldNumber();
+
+								userContent.add(new PurchasableCardPanel(data), constraints);
 							}
 						}
 
-						if(change) {
-							userContent.remove(panel);
+						//remove new components
+						for(Component panel : userContent.getComponents()) {
+							if(panel instanceof PurchasableCardPanel) {
+								change = true;
+								for(PurchasableData data : model.getClientPurchasable()) {
+									if(((PurchasableCardPanel) panel).getData().equals(data)) {
+										change = false;
+									}
+								}
+
+								if(change) {
+									userContent.remove(panel);
+								}
+							}
 						}
 					}
-				}
+				});
 			}
 		};
 
@@ -387,9 +446,11 @@ public class HagglePanel extends JPanel {
 	}
 
 	/**
-	 * The method will create the basePanel with a textArea that displays the money to be payed by the player, a
-	 * TextArea where the user can type how much money he wants, a button to precede to the next stage of the trade
-	 * and a button to cancel the trade
+	 * The method will create the basePanel with a textArea that displays the money to be payed by the player,
+	 * a TextArea
+	 * where the user can type how much money he wants, a button to precede to the next stage of the trade and a
+	 * button to
+	 * cancel the trade
 	 */
 	private void createBase() {
 		basePanel = new JPanel();
@@ -414,15 +475,23 @@ public class HagglePanel extends JPanel {
 		tradeUserMoney.setDocument(new IntegerDocument());
 		tradeUserMoney.addFocusListener(new FocusListener() {
 			@Override public void focusGained(FocusEvent e) {
-				if(tradeUserMoney.getText().equals("0")) {
-					tradeUserMoney.setText("");
-				}
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						if(tradeUserMoney.isEditable() && tradeUserMoney.getText().equals("0")) {
+							tradeUserMoney.setText("");
+						}
+					}
+				});
 			}
 
 			@Override public void focusLost(FocusEvent e) {
-				if(tradeUserMoney.getText().equals("")) {
-					tradeUserMoney.setText("0");
-				}
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						if(tradeUserMoney.getText().equals("")) {
+							tradeUserMoney.setText("0");
+						}
+					}
+				});
 			}
 		});
 		tradeUserMoney.setText("0");
@@ -436,7 +505,7 @@ public class HagglePanel extends JPanel {
 		moneyTextWrapper.add(tradeUserMoney);
 
 		//Buttons
-		JButton back = new JButton("Abbrechen");
+		back = new JButton("Zurueck");
 		back.addActionListener(new ActionListener() {
 			/**
 			 *     The method will send the cancellation of the trade to the server
@@ -447,7 +516,7 @@ public class HagglePanel extends JPanel {
 					model.getHaggleData().setHaggleState(HaggleData.HaggleState.DECLINE);
 					clientOperator.sendActionData(model.getHaggleData());
 				}
-				model.setCurrentMainPanelName(Model.CurrentMainPanelName.GAME);
+				model.setCurrentMainPanelName(model.getPreviousMainPanelName());
 			}
 		});
 

@@ -32,18 +32,21 @@ public class Jailbait extends Card implements Serializable {
 	 * @param player The value determines the Player object which is to be freed from Jail.
 	 */
 	public void freePlayer(Player player) {
-		cardStack.addCard(this, index);
 		player.setInJail(false);
 	}
 
+	public void putBack() {
+		cardStack.addCard(this, index);
+	}
+
 	/**
-	 * The method will fire a CardEvent
+	 * The method will fire a MessageEvent
 	 *
 	 * @param player The value determines the Player who caused the method call
 	 */
 	@Override
 	public void action(Player player) {
-		fireCardEvent(player.getName());
+		fireMessageEvent(player.getPlayerId());
 		player.addJailbait(this);
 		cardStack.removeCard(index);
 	}

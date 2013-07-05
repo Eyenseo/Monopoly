@@ -58,46 +58,55 @@ class ControlPanel extends JPanel {
 
 		model.addModelEventListener(Model.ModelEventName.TURNOPTION, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
-				updateTurnOption();
-				if(ControlPanel.this.model.getTurnOptionState() == Model.TurnOptionState.DEACTIVATED) {
-					firstDice.setActive(false);
-					secondDice.setActive(false);
-				} else {
-					firstDice.setActive(true);
-					secondDice.setActive(true);
-				}
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						updateTurnOption();
+						if(ControlPanel.this.model.getTurnOptionState() == Model.TurnOptionState.DEACTIVATED) {
+							firstDice.setActive(false);
+							secondDice.setActive(false);
+						} else {
+							firstDice.setActive(true);
+							secondDice.setActive(true);
+						}
+					}
+				});
 			}
 		});
 		model.addModelEventListener(Model.ModelEventName.BUYOPTION, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
-				updateBuyOption();
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						updateBuyOption();
+					}
+				});
 			}
 		});
 		model.addModelEventListener(Model.ModelEventName.TURNSTATE, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
-				updateBuyOption();
-				updateTurnOption();
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						updateBuyOption();
+						updateTurnOption();
+					}
+				});
 			}
 		});
 		model.addModelEventListener(Model.ModelEventName.DICE, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
-				firstDice.setCurrentIndex(ControlPanel.this.model.getFirstDice());
-				secondDice.setCurrentIndex(ControlPanel.this.model.getSecondDice());
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						firstDice.setCurrentIndex(ControlPanel.this.model.getFirstDice());
+						secondDice.setCurrentIndex(ControlPanel.this.model.getSecondDice());
+					}
+				});
 			}
 		});
 		registerButtonListener();
 	}
 
 	/**
-	 * The method creates following buttons:
-	 * <ul>
-	 * <li>turnOption</li>
-	 * <li>buyOption</li>
-	 * <li>haggle</li>
-	 * <li>mortgage</li>
-	 * <li>giveUp</li>
-	 * <li>endApp</li>
-	 * </ul>
+	 * The method creates following buttons: <ul> <li>turnOption</li> <li>buyOption</li> <li>haggle</li> <li>mortgage</li>
+	 * <li>giveUp</li> <li>endApp</li> </ul>
 	 *
 	 * @return The return value is a Panel with all buttons of the ControlPanel
 	 */
@@ -171,8 +180,7 @@ class ControlPanel extends JPanel {
 	/**
 	 * The method creates the chatHistory and chatMassage Panel divided by a SplitPane
 	 *
-	 * @return The return value is a panel with a chat history TextArea and a chat massage TextArea divided by a
-	 *         SplitPane
+	 * @return The return value is a panel with a chat history TextArea and a chat massage TextArea divided by a SplitPane
 	 */
 	private JPanel buildChatPanel() {
 		chatHistory = new JTextArea("BALALALLLALALAALLALALALA");
@@ -261,29 +269,50 @@ class ControlPanel extends JPanel {
 	private void registerButtonListener() {
 		turnOption.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				clientOperator.sendActionData(new TurnData(model.getUser().getId(), model.isMoveAction()));
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						clientOperator.sendActionData(new TurnData(model.getUser().getId(), model.isMoveAction()));
+					}
+				});
 			}
 		});
 		buyOption.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				clientOperator.sendActionData(new BuyData(model.getUser().getId(),
-				                                          model.getBuyOptionState() == Model.BuyOptionState.BUYHOTEL ||
-				                                          model.getBuyOptionState() == Model.BuyOptionState.BUYHOUSE));
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						clientOperator.sendActionData(new BuyData(model.getUser().getId(), model.getBuyOptionState() ==
+						                                                                   Model.BuyOptionState.BUYHOTEL ||
+						                                                                   model.getBuyOptionState() ==
+						                                                                   Model.BuyOptionState.BUYHOUSE));
+					}
+				});
 			}
 		});
 		haggle.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				model.setCurrentMainPanelName(Model.CurrentMainPanelName.HAGGLE);
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						model.setCurrentMainPanelName(Model.MainPanelName.HAGGLE);
+					}
+				});
 			}
 		});
 		mortgage.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				model.setCurrentMainPanelName(Model.CurrentMainPanelName.MORTGAGE);
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						model.setCurrentMainPanelName(Model.MainPanelName.MORTGAGE);
+					}
+				});
 			}
 		});
 		giveUp.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(new JFrame(), "Not yet implemented.");
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						JOptionPane.showMessageDialog(new JFrame(), "Not yet implemented.");
+					}
+				});
 			}
 		});
 	}

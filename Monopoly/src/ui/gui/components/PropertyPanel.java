@@ -43,53 +43,56 @@ class PropertyPanel extends JPanel {
 			 */
 			//TODO check method
 			@Override public void actionPerformed(ModelEvent event) {
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						PurchasableCardLayoutConstraints constraints = new PurchasableCardLayoutConstraints();
+						boolean change;
 
-				PurchasableCardLayoutConstraints constraints = new PurchasableCardLayoutConstraints();
-				boolean change;
-
-				//add new components
-				for(PurchasableData data : PropertyPanel.this.model.getClientPurchasable()) {
-					change = true;
-					for(Component panel : content.getComponents()) {
-						if(panel instanceof PurchasableCardPanel) {
-							if(((PurchasableCardPanel) panel).getData().equals(data)) {
-								change = false;
-							}
-						}
-					}
-
-					if(change) {
-						if(data instanceof StreetData) {
-							constraints.type =
-									PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.STREET;
-						} else if(data instanceof StationData) {
-							constraints.type =
-									PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.STATION;
-						} else {
-							constraints.type =
-									PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.FACILITY;
-						}
-						constraints.position = data.getFieldNumber();
-						content.add(new PurchasableCardPanel(data), constraints);
-					}
-				}
-
-				//remove new components
-				for(Component panel : content.getComponents()) {
-					if(panel instanceof PurchasableCardPanel) {
-						change = true;
+						//add new components
 						for(PurchasableData data : PropertyPanel.this.model.getClientPurchasable()) {
-							if(((PurchasableCardPanel) panel).getData().equals(data)) {
-								change = false;
+							change = true;
+							for(Component panel : content.getComponents()) {
+								if(panel instanceof PurchasableCardPanel) {
+									if(((PurchasableCardPanel) panel).getData().equals(data)) {
+										change = false;
+									}
+								}
+							}
+
+							if(change) {
+								if(data instanceof StreetData) {
+									constraints.type =
+											PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.STREET;
+								} else if(data instanceof StationData) {
+									constraints.type =
+											PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.STATION;
+								} else {
+									constraints.type =
+											PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.FACILITY;
+								}
+								constraints.position = data.getFieldNumber();
+								content.add(new PurchasableCardPanel(data), constraints);
 							}
 						}
 
-						if(change) {
-							content.remove(panel);
+						//remove new components
+						for(Component panel : content.getComponents()) {
+							if(panel instanceof PurchasableCardPanel) {
+								change = true;
+								for(PurchasableData data : PropertyPanel.this.model.getClientPurchasable()) {
+									if(((PurchasableCardPanel) panel).getData().equals(data)) {
+										change = false;
+									}
+								}
+
+								if(change) {
+									content.remove(panel);
+								}
+							}
 						}
+						repaint();
 					}
-				}
-				repaint();
+				});
 			}
 		};
 

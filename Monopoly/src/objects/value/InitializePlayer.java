@@ -1,16 +1,16 @@
 package objects.value;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class InitializePlayer {
-	private final ArrayList<PlayerData> playerData;
-	private final int                   userId;
+	private final HashMap<Integer, PlayerData> playerData;
+	private final int                          userId;
 
 	/**
 	 * @param playerData the value determines the PlayerData of all players
 	 * @param userId     the value determines the player id of the player of this client
 	 */
-	public InitializePlayer(ArrayList<PlayerData> playerData, int userId) {
+	public InitializePlayer(HashMap<Integer, PlayerData> playerData, int userId) {
 		this.playerData = playerData;
 		this.userId = userId;
 	}
@@ -18,7 +18,7 @@ public class InitializePlayer {
 	/**
 	 * @return the return value is the PlayerData of all players
 	 */
-	public ArrayList<PlayerData> getPlayerData() {
+	public HashMap<Integer, PlayerData> getPlayerData() {
 		return playerData;
 	}
 

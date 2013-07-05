@@ -3,10 +3,7 @@ package ui.gui;
 import core.ClientOperator;
 import objects.events.ModelEvent;
 import objects.listeners.ModelEventListener;
-import ui.gui.components.GamePanel;
-import ui.gui.components.HagglePanel;
-import ui.gui.components.MortgagePanel;
-import ui.gui.components.StatusBarPanel;
+import ui.gui.components.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,14 +12,15 @@ import java.awt.*;
  * The MainFrame is the main Window of the program.
  */
 public class MainFrame extends JFrame {
-	private final Model          model;
+	private final Model                 model;
 	//Components - Statusbar
-	private final StatusBarPanel statusBarPanel;
+	private final StatusBarPanel        statusBarPanel;
 	//Components - MainPanels
-	private final JPanel         mainPanel;
-	private final GamePanel      gamePanel;
-	private final MortgagePanel  mortgagePanel;
-	private final HagglePanel    hagglePanel;
+	private final JPanel                mainPanel;
+	private final GamePanel             gamePanel;
+	private final MortgagePanel         mortgagePanel;
+	private final HagglePanel           hagglePanel;
+	private final FinancialProblemPanel financialPanel;
 
 	/**
 	 * @param model          The value determines the Model the ControlPanel will get its information from
@@ -39,6 +37,7 @@ public class MainFrame extends JFrame {
 		gamePanel = new GamePanel(model, clientOperator);
 		mortgagePanel = new MortgagePanel(model, clientOperator);
 		hagglePanel = new HagglePanel(model, clientOperator);
+		financialPanel = new FinancialProblemPanel(model, clientOperator);
 
 		setTitle("Monopoly - " + model.getUser().getName());
 		setLocationRelativeTo(getRootPane());
@@ -55,32 +54,57 @@ public class MainFrame extends JFrame {
 			 * @param event the value determines the event source
 			 */
 			@Override public void actionPerformed(ModelEvent event) {
-				mainPanel.removeAll();
-				mainPanel.add(statusBarPanel, BorderLayout.NORTH);
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						mainPanel.removeAll();
+						mainPanel.add(statusBarPanel, BorderLayout.NORTH);
 
-				switch(MainFrame.this.model.getCurrentMainPanelName()) {
-					case GAME:
-						mainPanel.add(gamePanel, BorderLayout.CENTER);
-						break;
-					case MORTGAGE:
-						mainPanel.add(mortgagePanel, BorderLayout.CENTER);
-						break;
-					case HAGGLE:
-						mainPanel.add(hagglePanel, BorderLayout.CENTER);
-				}
-				validate();
-				repaint();
+						switch(MainFrame.this.model.getCurrentMainPanelName()) {
+							case GAME:
+								mainPanel.add(gamePanel, BorderLayout.CENTER);
+								break;
+							case MORTGAGE:
+								mainPanel.add(mortgagePanel, BorderLayout.CENTER);
+								break;
+							case HAGGLE:
+								mainPanel.add(hagglePanel, BorderLayout.CENTER);
+								break;
+							case FINANCIAL:
+								mainPanel.add(financialPanel, BorderLayout.CENTER);
+						}
+						validate();
+						repaint();
+					}
+				});
 			}
 		});
 
 		model.addModelEventListener(Model.ModelEventName.CARD, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
-				int lastCardData = MainFrame.this.model.getCardDataArrayList().size() - 1;
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						int lastCardData = MainFrame.this.model.getMassageDataArrayList().size() - 1;
 
-				if(lastCardData >= 0) {
-					new CustomDialog(MainFrame.this.model,
-					                 MainFrame.this.model.getCardDataArrayList().get(lastCardData));
-				}
+						if(lastCardData >= 0) {
+							new CustomDialog(MainFrame.this.model,
+							                 MainFrame.this.model.getMassageDataArrayList().get(lastCardData));
+						}
+					}
+				});
+			}
+		});
+
+		model.addModelEventListener(Model.ModelEventName.PLAYERREMOVED, new ModelEventListener() {
+			@Override public void actionPerformed(ModelEvent event) {
+
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						if(MainFrame.this.model.getUser().isGiveUp()) {
+							setVisible(false);
+							dispose();
+						}
+					}
+				});
 			}
 		});
 

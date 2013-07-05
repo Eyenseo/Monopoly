@@ -19,6 +19,7 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	final int   MORTGAGE;   //Hypothek
 	final int   PRICE;
 	PurchasableCircularList nextGroupElement;
+	boolean                 changeMortgage;
 	boolean                 inMortgage;
 	int                     stage;
 	Player                  owner;
@@ -38,6 +39,7 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 		owner = null;
 		stage = 0;
 		inMortgage = false;
+		changeMortgage = false;
 		nextGroupElement = this;
 		listener = new ArrayList<PurchasableEventListener>();
 	}
@@ -85,18 +87,21 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	}
 
 	/**
-	 * The method removes or adds the mortgage amount to the owner.
-	 * The method will fire PurchasableEvent
+	 * The method removes or adds the mortgage amount to the owner. The method will fire PurchasableEvent
 	 *
 	 * @param inMortgage The value determines the mortgage stage.
 	 */
 	public void setInMortgage(boolean inMortgage) {
-		this.inMortgage = inMortgage;
-		firePurchasableEvent();
-		if(inMortgage) {
-			owner.addMoney(MORTGAGE);
-		} else {
-			owner.pay(MORTGAGE);
+		if(!changeMortgage) { //TODO find a better way to prevent double access
+			changeMortgage = true;
+			if(inMortgage) {
+				owner.addMoney(MORTGAGE);
+			} else {
+				owner.pay(MORTGAGE);
+			}
+			this.inMortgage = inMortgage;
+			firePurchasableEvent();
+			changeMortgage = false;
 		}
 	}
 
@@ -144,8 +149,7 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	}
 
 	/**
-	 * The method adds this object to the new owner and removes it from the old one.
-	 * The method will fire PurchasableEvent
+	 * The method adds this object to the new owner and removes it from the old one. The method will fire PurchasableEvent
 	 *
 	 * @param owner The value determines the owner.
 	 */
@@ -155,7 +159,9 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 		}
 		this.owner = owner;
 		firePurchasableEvent();
-		owner.addProperty(this);
+		if(owner != null) {
+			owner.addProperty(this);
+		}
 		sameOwnerCheck();
 	}
 

@@ -12,10 +12,12 @@ public class PlayerData {
 	private       int       secondDice;
 	private       boolean   inJail;
 	private       int       money;
+	private       int       neededMoney;
 	private       FieldData position;
 	private       boolean   turnEnd;
 	private       int       threwDice;
 	private       int       trading;
+	private       boolean   giveUp;
 
 	/**
 	 * @param id         the value determines the id of the player
@@ -29,18 +31,28 @@ public class PlayerData {
 	 * @param threwDice  the value determines the amount of times the player threw the dice
 	 * @param trading    the value determines the id of the Player the player is currently trading with
 	 */
-	public PlayerData(int id, String name, int firstDice, int secondDice, boolean inJail, int money, FieldData position,
-	                  boolean turnEnd, int threwDice, int trading) {
+	public PlayerData(int id, String name, int firstDice, int secondDice, boolean inJail, int money, int neededMoney,
+	                  FieldData position, boolean turnEnd, int threwDice, int trading, boolean giveUp) {
 		this.id = id;
 		this.name = name;
 		this.firstDice = firstDice;
 		this.secondDice = secondDice;
 		this.inJail = inJail;
+		this.neededMoney = neededMoney;
 		this.money = money;
 		this.position = position;
 		this.turnEnd = turnEnd;
 		this.threwDice = threwDice;
 		this.trading = trading;
+		this.giveUp = giveUp;
+	}
+
+	public boolean isGiveUp() {
+		return giveUp;
+	}
+
+	public void setGiveUp(boolean giveUp) {
+		this.giveUp = giveUp;
 	}
 
 	/**
@@ -167,6 +179,16 @@ public class PlayerData {
 	 */
 	public void setTrading(int trading) {
 		this.trading = trading;
+	}
+
+	//JAVADOC
+	public int getNeededMoney() {
+		return neededMoney;
+	}
+
+	//JAVADOC
+	public void setNeededMoney(int neededMoney) {
+		this.neededMoney = neededMoney;
 	}
 
 	/**

@@ -3,8 +3,8 @@ package ui.gui;
 import core.ClientOperator;
 import objects.events.*;
 import objects.listeners.*;
-import objects.value.CardData;
 import objects.value.InitializeMapData;
+import objects.value.MassageData;
 import objects.value.PlayerData;
 import objects.value.action.HaggleData;
 import objects.value.map.FieldData;
@@ -15,23 +15,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * The Model holds all information that any ui will need.
- * It will fire following Model events:
- * <ul>
- * <li>DICE</li>
- * <li>ISINJAIL</li>
- * <li>MONEY</li>
- * <li>POSITION</li>
- * <li>TURNSTATE</li>
- * <li>THREWDICE</li>
- * <li>INMORTAGE</li>
- * <li>STAGE</li>
- * <li>PROPERTY</li>
- * <li>TURNOPTION</li>
- * <li>BUYOPTION</li>
- * <li>MAINPANEL</li>
- * <li>HAGGLE</li>
- * </ul>
+ * The Model holds all information that any ui will need. It will fire following Model events: <ul> <li>DICE</li>
+ * <li>ISINJAIL</li> <li>MONEY</li> <li>POSITION</li> <li>TURNSTATE</li> <li>THREWDICE</li> <li>INMORTAGE</li>
+ * <li>STAGE</li> <li>PROPERTY</li> <li>TURNOPTION</li> <li>BUYOPTION</li> <li>MAINPANEL</li> <li>HAGGLE</li> </ul>
  */
 public class Model {
 	//Event listeners
@@ -39,14 +25,15 @@ public class Model {
 	//Data
 	private final ArrayList<FieldData>                                   map;
 	private       HashMap<Integer, ArrayList<PurchasableData>>           purchasableHashMap;
-	private       ArrayList<PlayerData>                                  playerArrayList;
+	private       HashMap<Integer, PlayerData>                           playerHashMap;
 	private       PlayerData                                             user; //TODO change to int
-	private       ArrayList<CardData>                                    cardDataArrayList;
+	private       ArrayList<MassageData>                                 massageDataArrayList; // Todo is this needed?
 	private       int                                                    oldMoney;
 	//Action Data
 	private       HaggleData                                             haggleData;
 	//States
-	private       CurrentMainPanelName                                   currentMainPanelName;
+	private       MainPanelName                                          currentMainPanelName;
+	private       MainPanelName                                          previousMainPanelName;
 	private       TurnOptionState                                        turnOptionState;
 	private       BuyOptionState                                         buyOptionState;
 
@@ -61,14 +48,14 @@ public class Model {
 			listener.put(eventName, new ArrayList<ModelEventListener>());
 		}
 
-		//CardData
-		cardDataArrayList = new ArrayList<CardData>();
+		//MassageData
+		massageDataArrayList = new ArrayList<MassageData>();
 
 		//Map
 		map = initializeMapData.getMap();
 
 		//States
-		currentMainPanelName = CurrentMainPanelName.GAME;
+		currentMainPanelName = MainPanelName.GAME;
 		turnOptionState = TurnOptionState.DEACTIVATED;
 		buyOptionState = BuyOptionState.DEACTIVATED;
 
@@ -88,35 +75,46 @@ public class Model {
 		//The listener will set the new HaggleData and fire a haggle ModelEvent
 		clientOperator.addHaggleDataEventListener(new ClientOperatorHaggleDataEventListener() {
 			@Override public void actionPerformed(ClientOperatorHaggleDataEvent event) {
-				haggleData = new HaggleData(event.getHaggleData());
+				if(haggleData == null || haggleData.getId().equals(event.getHaggleData().getId()) ||
+				   haggleData.getHaggleState() == HaggleData.HaggleState.DECLINE ||
+				   haggleData.getHaggleState() == HaggleData.HaggleState.ACCEPT) {
+					haggleData = new HaggleData(event.getHaggleData());
+				}
 				fireModelEvent(ModelEventName.HAGGLE);
 			}
 		});
 
-		clientOperator.addCardDataEventListener(new ClientOperatorCardDataEventListener() {
-			@Override public void actionPerformed(ClientOperatorCardDataEvent event) {
-				cardDataArrayList.add(event.getCardData());
-				fireModelEvent(ModelEventName.CARD);
+		clientOperator.addMessageDataEventListener(new ClientOperatorMessageDataEventListener() {
+			@Override public void actionPerformed(ClientOperatorMessageDataEvent event) {
+				switch(event.getMassageData().getTyp()) {
+					case COMMUNITY:
+					case EVENT:
+						massageDataArrayList.add(event.getMassageData());
+						fireModelEvent(ModelEventName.CARD);
+						break;
+					case CHAT://TODO implement chat
+						break;
+				}
 			}
 		});
 	}
 
 	/**
-	 * @param playerArrayList the value determines all players participate in the game
-	 * @param userId          the value determines the id of the player of the model
+	 * @param playerHashMap the value determines all players participate in the game
+	 * @param userId        the value determines the id of the player of the model
 	 */
-	public void setPlayer(ArrayList<PlayerData> playerArrayList, int userId) {
+	public void setPlayer(HashMap<Integer, PlayerData> playerHashMap, int userId) {
 		//Initialise lists for each player's purchasables
 		purchasableHashMap = new HashMap<Integer, ArrayList<PurchasableData>>();
-		for(PlayerData player : playerArrayList) {
+		for(PlayerData player : playerHashMap.values()) {
 			purchasableHashMap.put(player.getId(), new ArrayList<PurchasableData>());
 		}
 
 		//player
-		this.playerArrayList = playerArrayList;
+		this.playerHashMap = playerHashMap;
 
 		//save player of this client
-		user = playerArrayList.get(userId);
+		user = playerHashMap.get(userId);
 	}
 
 	/**
@@ -141,22 +139,16 @@ public class Model {
 	}
 
 	/**
-	 * If it is the player of the model the method will update the PlayerData  fire following ModelEvents:
-	 * <ul>
-	 * <li>DICE</li>
-	 * <li>ISINJAIL</li>
-	 * <li>MONEY</li>
-	 * <li>POSITION</li>
-	 * <li>TURNSTATE</li>
-	 * <li>TURNOPTION</li>
-	 * <li>BUYOPTION</li>
-	 * </ul>
+	 * If it is the player of the model the method will update the PlayerData  fire following ModelEvents: <ul>
+	 * <li>DICE</li> <li>ISINJAIL</li> <li>MONEY</li> <li>POSITION</li> <li>TURNSTATE</li> <li>TURNOPTION</li>
+	 * <li>BUYOPTION</li> </ul>
 	 *
 	 * @param playerData the value determines the PlayerData to be analysed
 	 */
 	private void analysePlayerData(PlayerData playerData) {
 		if(playerData.equals(user)) {
-			if(user.getFirstDice() != playerData.getFirstDice() || user.getSecondDice() != playerData.getSecondDice()) {
+			if(user.getFirstDice() != playerData.getFirstDice() || user.getSecondDice() != playerData.getSecondDice
+					()) {
 				user.setFirstDice(playerData.getFirstDice());
 				user.setSecondDice(playerData.getSecondDice());
 				fireModelEvent(ModelEventName.DICE);
@@ -185,20 +177,31 @@ public class Model {
 			if(user.getTrading() != playerData.getTrading()) {
 				user.setTrading(playerData.getTrading());
 			}
+			if(user.getNeededMoney() != playerData.getNeededMoney()) {
+				if(playerData.getNeededMoney() > 0) {
+					setCurrentMainPanelName(MainPanelName.FINANCIAL);
+				}
+				user.setNeededMoney(playerData.getNeededMoney());
+				fireModelEvent(ModelEventName.FINANCIAL);
+			}
+			if(playerData.isGiveUp()) {
+				user.setGiveUp(true);
+				fireModelEvent(ModelEventName.PLAYERREMOVED);
+			}
 			updateTurnOption();
 			updateBuyOption();
+		} else {
+			if(playerData.isGiveUp()) {
+				playerHashMap.remove(playerData.getId());
+				fireModelEvent(ModelEventName.PLAYERREMOVED);
+			}
 		}
 	}
 
 	/**
 	 * the method will update the purchasable data and if the purchasable is or was owned by the player, or it is the
-	 * current position of the player of the model it will fire either ModelEvent:
-	 * <ul>
-	 * <li>PROPERTY</li>
-	 * <li>INMORTAGE</li>
-	 * <li>STAGE</li>
-	 * <li>POSITION</li>
-	 * </ul>
+	 * current position of the player of the model it will fire either ModelEvent: <ul> <li>PROPERTY</li>
+	 * <li>INMORTAGE</li> <li>STAGE</li> <li>POSITION</li> </ul>
 	 *
 	 * @param purchasableData the value determines the PurchasableData to be analysed
 	 */
@@ -253,6 +256,11 @@ public class Model {
 		}
 	}
 
+	//JAVADOC
+	public MainPanelName getPreviousMainPanelName() {
+		return previousMainPanelName;
+	}
+
 	/**
 	 * @return the return value is the state of the buy option
 	 */
@@ -263,14 +271,17 @@ public class Model {
 	/**
 	 * @return the return value is the "name" of the current main panel
 	 */
-	public CurrentMainPanelName getCurrentMainPanelName() {
+	public MainPanelName getCurrentMainPanelName() {
 		return currentMainPanelName;
 	}
 
 	/**
 	 * @param currentMainPanelName the value determines the "name" of the current main panel
 	 */
-	public void setCurrentMainPanelName(CurrentMainPanelName currentMainPanelName) {
+	public void setCurrentMainPanelName(MainPanelName currentMainPanelName) {
+		if(this.currentMainPanelName != currentMainPanelName) {
+			previousMainPanelName = this.currentMainPanelName;
+		}
 		this.currentMainPanelName = currentMainPanelName;
 		fireModelEvent(ModelEventName.MAINPANEL);
 	}
@@ -358,8 +369,7 @@ public class Model {
 	}
 
 	/**
-	 * @return the return value is the stage of the street the user is currently standing on or if there is no
-	 *         stage -1
+	 * @return the return value is the stage of the street the user is currently standing on or if there is no stage -1
 	 */
 	public int getStreetStage() {
 		if(user.getPosition() instanceof StreetData) {
@@ -423,8 +433,8 @@ public class Model {
 
 	/**
 	 * The method changes the buyOptionState to PURCHASABLE if the player can buy the field,
-	 * to BUYHOUSE if he can buy a house, to BUYHOTEL if he can buy a hotel or DEACTIVATED if he can't buy anything.
-	 * Will fire a ModelEvent
+	 * to BUYHOUSE if he can buy a
+	 * house, to BUYHOTEL if he can buy a hotel or DEACTIVATED if he can't buy anything. Will fire a ModelEvent
 	 */
 	private void updateBuyOption() {
 		boolean active = false;
@@ -506,34 +516,29 @@ public class Model {
 	/**
 	 * @return the return value holds all player participating player
 	 */
-	public ArrayList<PlayerData> getPlayerArrayList() {
-		return playerArrayList;
+	public HashMap<Integer, PlayerData> getPlayerHashMap() {
+		return playerHashMap;
 	}
 
 	//JAVADOC
-	public ArrayList<CardData> getCardDataArrayList() {
-		return cardDataArrayList;
+	public ArrayList<MassageData> getMassageDataArrayList() {
+		return massageDataArrayList;
 	}
 
 	/**
-	 * <ul>
-	 * <li>THROWDICE: the player can throw the dice for the first time</li>
-	 * <li>THROWDICEAGAIN: the player can throw the dice again</li>
-	 * <li>ENDTURN: the player can only end the turn</li>
-	 * <li>DEACTIVATED: the player can't do anything</li>
-	 * </ul>
+	 * <ul> <li>THROWDICE: the player can throw the dice for the first time</li> <li>THROWDICEAGAIN: the player can
+	 * throw
+	 * the dice again</li> <li>ENDTURN: the player can only end the turn</li> <li>DEACTIVATED: the player can't do
+	 * anything</li> </ul>
 	 */
 	public enum TurnOptionState {
 		THROWDICE, THROWDICEAGAIN, ENDTURN, DEACTIVATED
 	}
 
 	/**
-	 * <ul>
-	 * <li>PURCHASABLE: option to buy purchasable field</li>
-	 * <li>BUYHOUSE: option to buy a house</li>
-	 * <li>BUYHOTEL: option to buy a hotel</li>
-	 * <li>DEACTIVATED: no option at all</li>
-	 * </ul>
+	 * <ul> <li>PURCHASABLE: option to buy purchasable field</li> <li>BUYHOUSE: option to buy a house</li>
+	 * <li>BUYHOTEL:
+	 * option to buy a hotel</li> <li>DEACTIVATED: no option at all</li> </ul>
 	 */
 	public enum BuyOptionState {
 		PURCHASABLE, BUYHOUSE, BUYHOTEL, DEACTIVATED
@@ -544,13 +549,13 @@ public class Model {
 	 */
 	public enum ModelEventName {
 		DICE, ISINJAIL, MONEY, POSITION, TURNSTATE, THREWDICE, INMORTAGE, STAGE, PROPERTY, TURNOPTION, BUYOPTION,
-		MAINPANEL, HAGGLE, CARD
+		MAINPANEL, HAGGLE, CARD, FINANCIAL, PLAYERREMOVED
 	}
 
 	/**
 	 * "name" of the current main panel
 	 */
-	public enum CurrentMainPanelName {
-		GAME, MORTGAGE, HAGGLE
+	public enum MainPanelName {
+		GAME, MORTGAGE, HAGGLE, FINANCIAL
 	}
 }

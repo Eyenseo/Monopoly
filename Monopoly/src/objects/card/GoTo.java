@@ -51,17 +51,17 @@ public class GoTo extends Card implements Serializable {
 	}
 
 	/**
-	 * The method will fire a CardEvent
+	 * The method will fire a MessageEvent
 	 *
 	 * @param player The value determines the Player who caused the method call
 	 */
 	@Override
 	public void action(Player player) {
-		fireCardEvent(player.getName());
+		fireMessageEvent(player.getPlayerId());
 		if(OVERGO && field.getFieldNumber() < player.getPosition().getFieldNumber()) {
 			go.action(player);
 		}
 		player.setPosition(field);
-		player.getPosition().action(player);
+		field.action(player);
 	}
 }

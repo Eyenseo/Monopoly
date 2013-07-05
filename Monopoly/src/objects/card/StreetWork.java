@@ -38,7 +38,7 @@ public class StreetWork extends Card implements Serializable {
 	}
 
 	/**
-	 * The method will fire a CardEvent
+	 * The method will fire a MessageEvent
 	 *
 	 * @param player The value determines the Player who caused the method call
 	 */
@@ -46,7 +46,7 @@ public class StreetWork extends Card implements Serializable {
 	public void action(Player player) {
 		int amount = 0;
 		ArrayList<PurchasableCircularList> property = player.getProperties();
-		fireCardEvent(player.getName());
+		fireMessageEvent(player.getPlayerId());
 		for(PurchasableCircularList p : property) {
 			if(p.getStage() < p.getMaxStage()) {
 				amount += p.getStage() * dmHouse;

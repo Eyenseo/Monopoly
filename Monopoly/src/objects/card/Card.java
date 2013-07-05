@@ -1,10 +1,9 @@
 package objects.card;
 
-import core.ServerOperator;
 import objects.Player;
-import objects.events.CardEvent;
-import objects.listeners.CardEventListener;
-import objects.value.CardData;
+import objects.events.MessageEvent;
+import objects.listeners.MessageEventListener;
+import objects.value.MassageData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,11 +13,10 @@ import java.util.ArrayList;
  */
 public abstract class Card implements Serializable {
 	private static final long serialVersionUID = 4057299799394754933L;
-	private final String                       NAME;
-	private final String                       TEXT;
-	private       ArrayList<CardEventListener> listener;
-	int            index;
-	ServerOperator serverOperator;
+	private final String                          NAME;
+	private final String                          TEXT;
+	private       ArrayList<MessageEventListener> listener;
+	int index;
 
 	/**
 	 * @param name The value determines the name of the Card.
@@ -27,20 +25,31 @@ public abstract class Card implements Serializable {
 	Card(String name, String text) {
 		NAME = name;
 		TEXT = text;
-		listener = new ArrayList<CardEventListener>();
+		listener = new ArrayList<MessageEventListener>();
 	}
 
-	public void addCardEventListener(CardEventListener listener) {
+	//JAVADOC
+	public void addMessageEventListener(MessageEventListener listener) {
 		this.listener.add(listener);
 	}
 
-	public void removeCardEventListener(CardEventListener listener) {
+	//JAVADOC
+	public void removeMessageEventListener(MessageEventListener listener) {
 		this.listener.remove(listener);
 	}
 
-	public void fireCardEvent(String playerName) {
-		CardEvent event = new CardEvent(this, new CardData(playerName, NAME, TEXT));
-		for(CardEventListener listener : this.listener) {
+	//JAVADOC
+	public void fireMessageEvent(int playerid) {
+		MassageData.MassageType type;
+		//TODO better implementation
+		if(NAME.equals("Event Karte")) {
+			type = MassageData.MassageType.EVENT;
+		} else {
+			type = MassageData.MassageType.COMMUNITY;
+		}
+
+		MessageEvent event = new MessageEvent(this, new MassageData(playerid, type, TEXT));
+		for(MessageEventListener listener : this.listener) {
 			listener.actionPerformed(event);
 		}
 	}

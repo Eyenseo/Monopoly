@@ -50,13 +50,13 @@ public class PayFineTakeCard extends Card implements Serializable {
 	}
 
 	/**
-	 * The method will fire a CardEvent
+	 * The method will fire a MessageEvent
 	 *
 	 * @param player The value determines the Player who caused the method call
 	 */
 	@Override
 	public void action(Player player) {
-		fireCardEvent(player.getName());
+		fireMessageEvent(player.getPlayerId());
 		community.nextCard().action(player);
 		//TODO wait for the player to return a choice  - whether to take a community card or to pay a fine.
 	}

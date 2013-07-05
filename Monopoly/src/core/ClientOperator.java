@@ -1,16 +1,16 @@
 package core;
 
-import objects.events.ClientOperatorCardDataEvent;
 import objects.events.ClientOperatorHaggleDataEvent;
+import objects.events.ClientOperatorMessageDataEvent;
 import objects.events.ClientOperatorPlayerDataEvent;
 import objects.events.ClientOperatorPurchasableDataEvent;
-import objects.listeners.ClientOperatorCardDataEventListener;
 import objects.listeners.ClientOperatorHaggleDataEventListener;
+import objects.listeners.ClientOperatorMessageDataEventListener;
 import objects.listeners.ClientOperatorPlayerDataEventListener;
 import objects.listeners.ClientOperatorPurchasableDataEventListener;
-import objects.value.CardData;
 import objects.value.InitializeMapData;
 import objects.value.InitializePlayer;
+import objects.value.MassageData;
 import objects.value.PlayerData;
 import objects.value.action.ActionData;
 import objects.value.action.HaggleData;
@@ -22,13 +22,9 @@ import ui.gui.Model;
 import java.util.ArrayList;
 
 /**
- * The ClientOperator is the class that communicates with the server. It provides three listeners
- * <ol>
- * <li>PlayerData</li>
- * <li>FieldData</li>
- * <li>HaggleData</li>
- * </ol>
- * these are fired if the client receives new data from the server
+ * The ClientOperator is the class that communicates with the server. It provides three listeners <ol>
+ * <li>PlayerData</li> <li>FieldData</li> <li>HaggleData</li> </ol> these are fired if the client receives new data from
+ * the server
  */
 public class ClientOperator {
 	private final ServerOperator                                        server;
@@ -38,7 +34,7 @@ public class ClientOperator {
 	private final ArrayList<ClientOperatorPlayerDataEventListener>      playerDataEventListeners;
 	private final ArrayList<ClientOperatorPurchasableDataEventListener> fieldDataEventListeners;
 	private final ArrayList<ClientOperatorHaggleDataEventListener>      haggleDataEventListeners;
-	private final ArrayList<ClientOperatorCardDataEventListener>        cardDataEventListeners;
+	private final ArrayList<ClientOperatorMessageDataEventListener>     messageDataEventListeners;
 
 	/**
 	 * @param server the value determines the server to communicate with
@@ -48,7 +44,7 @@ public class ClientOperator {
 		playerDataEventListeners = new ArrayList<ClientOperatorPlayerDataEventListener>();
 		fieldDataEventListeners = new ArrayList<ClientOperatorPurchasableDataEventListener>();
 		haggleDataEventListeners = new ArrayList<ClientOperatorHaggleDataEventListener>();
-		cardDataEventListeners = new ArrayList<ClientOperatorCardDataEventListener>();
+		messageDataEventListeners = new ArrayList<ClientOperatorMessageDataEventListener>();
 	}
 
 	/**
@@ -62,7 +58,8 @@ public class ClientOperator {
 
 	/**
 	 * The method is called if the client receives new HaggleData and will fire a ClientOperatorHaggleDataEvent if
-	 * either the HaggleData playerId or sellerId equals the clientPlayerId.
+	 * either
+	 * the HaggleData playerId or sellerId equals the clientPlayerId.
 	 *
 	 * @param haggleData the value determines the HaggleData to be checked
 	 */
@@ -116,8 +113,8 @@ public class ClientOperator {
 	}
 
 	//JAVADOC
-	public void updateCardData(CardData cardData) {
-		fireCardDataEvent(cardData);
+	public void updateMessageData(MassageData massageData) {
+		fireMessageDataEvent(massageData);
 	}
 
 	/**
@@ -133,9 +130,9 @@ public class ClientOperator {
 	}
 
 	//JAVADOC
-	private void fireCardDataEvent(CardData cardData) {
-		ClientOperatorCardDataEvent event = new ClientOperatorCardDataEvent(this, cardData);
-		for(ClientOperatorCardDataEventListener l : cardDataEventListeners) {
+	private void fireMessageDataEvent(MassageData massageData) {
+		ClientOperatorMessageDataEvent event = new ClientOperatorMessageDataEvent(this, massageData);
+		for(ClientOperatorMessageDataEventListener l : messageDataEventListeners) {
 			l.actionPerformed(event);
 		}
 	}
@@ -183,13 +180,13 @@ public class ClientOperator {
 	}
 
 	//JAVADOC
-	public void addCardDataEventListener(ClientOperatorCardDataEventListener listener) {
-		cardDataEventListeners.add(listener);
+	public void addMessageDataEventListener(ClientOperatorMessageDataEventListener listener) {
+		messageDataEventListeners.add(listener);
 	}
 
 	//JAVADOC
-	public void removeCardEventListener(ClientOperatorCardDataEventListener listener) {
-		cardDataEventListeners.remove(listener);
+	public void removeMessageEventListener(ClientOperatorMessageDataEventListener listener) {
+		messageDataEventListeners.remove(listener);
 	}
 
 	/**
@@ -209,6 +206,6 @@ public class ClientOperator {
 	public void initializePlayer(InitializePlayer data) {
 		model.setPlayer(data.getPlayerData(), data.getUserId());
 		mainFrame = new MainFrame(model, this);
-		model.fireAllEvents();
+		model.fireAllEvents(); //TODO that can be done better
 	}
 }

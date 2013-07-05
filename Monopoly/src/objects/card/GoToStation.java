@@ -23,13 +23,13 @@ public class GoToStation extends Card implements Serializable {
 	}
 
 	/**
-	 * The method will fire a CardEvent
+	 * The method will fire a MessageEvent
 	 *
 	 * @param player The value determines the Player who caused the method call
 	 */
 	@Override
 	public void action(Player player) {
-		fireCardEvent(player.getName());
+		fireMessageEvent(player.getPlayerId());
 		FieldCircularList field = player.getPosition();
 		while(!(field instanceof Station)) {
 			field = field.getNext();

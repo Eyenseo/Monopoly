@@ -3,7 +3,7 @@ package objects.card;
 import objects.Player;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * SpecialPayment is a special transaction card (player based transactions).
@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class SpecialPayment extends Card implements Serializable {
 	private static final long serialVersionUID = 4614526083952983870L;
-	private final int               dm;
-	private       ArrayList<Player> playerArrayList;
+	private final int                      dm;
+	private       HashMap<Integer, Player> playerHashMap;
 
 	/**
 	 * @param name The value determines the name of the Card.
@@ -25,27 +25,38 @@ public class SpecialPayment extends Card implements Serializable {
 	}
 
 	/**
-	 * The method will fire a CardEvent
+	 * The method will fire a MessageEvent
 	 *
 	 * @param player The value determines the Player who caused the method call
 	 */
 	@Override
 	public void action(Player player) {
 		int amount = 0;
-		fireCardEvent(player.getName());
-		for(Player p : playerArrayList) {
-			if(!player.equals(p)) {
-				p.addMoney(dm);
-				amount += dm;
+		fireMessageEvent(player.getPlayerId());
+		if(dm < 0) {
+			int positive = dm * -1;
+			for(Player p : playerHashMap.values()) {
+				if(!player.equals(p)) {
+					p.addMoney(positive);
+					amount += positive;
+				}
 			}
+			player.pay(amount);
+		} else {
+			for(Player p : playerHashMap.values()) {
+				if(!player.equals(p)) {
+					p.pay(dm);
+					amount += dm;
+				}
+			}
+			player.addMoney(amount);
 		}
-		player.pay(amount);
 	}
 
 	/**
-	 * @param playerArrayList the value determines the array list where all player are stored
+	 * @param playerHashMap the value determines the array list where all player are stored
 	 */
-	public void setPlayerArrayList(ArrayList<Player> playerArrayList) {
-		this.playerArrayList = playerArrayList;
+	public void setPlayerHashMap(HashMap<Integer, Player> playerHashMap) {
+		this.playerHashMap = playerHashMap;
 	}
 }

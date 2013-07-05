@@ -36,7 +36,7 @@ public class Arrest extends Card implements Serializable {
 	 */
 	@Override
 	public void action(Player player) {
-		fireCardEvent(player.getName());
+		fireMessageEvent(player.getPlayerId());
 		player.setPosition(jail);
 		player.setInJail(true);
 	}

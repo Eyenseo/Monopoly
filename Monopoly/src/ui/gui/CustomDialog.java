@@ -1,6 +1,6 @@
 package ui.gui;
 
-import objects.value.CardData;
+import objects.value.MassageData;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
 
 //JAVADOC
 public class CustomDialog extends JFrame {
-	public CustomDialog(final Model model, final CardData cardData) {
-		super(cardData.getPlayerName() + ": " + cardData.getTyp());
+	public CustomDialog(final Model model, final MassageData massageData) {
+		super(massageData.getUserId() + ": " + massageData.getTyp());
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
@@ -26,12 +26,12 @@ public class CustomDialog extends JFrame {
 			//			Style style = textPane.addStyle("Style", null);
 			//			StyleConstants.setAlignment(style, StyleConstants.ALIGN_CENTER);
 			//			StyleConstants.setForeground(style, new Color(0, 0, 0));
-			//			doc.insertString(0, "\n\n" + cardData.getText(), doc.getStyle("Style"));
+			//			doc.insertString(0, "\n\n" + massageData.getText(), doc.getStyle("Style"));
 
 			StyledDocument document = new DefaultStyledDocument();
 			Style defaultStyle = document.getStyle(StyleContext.DEFAULT_STYLE);
 			StyleConstants.setAlignment(defaultStyle, StyleConstants.ALIGN_CENTER);
-			document.insertString(0, "\n\n" + cardData.getText(), null);
+			document.insertString(0, "\n\n" + massageData.getText(), null);
 			textPane = new JTextPane(document);
 			textPane.setEditable(false);
 		} catch(BadLocationException e) {
@@ -43,10 +43,14 @@ public class CustomDialog extends JFrame {
 		JButton button = new JButton("OK");
 		button.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				model.getCardDataArrayList().remove(cardData);
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						model.getMassageDataArrayList().remove(massageData);
 
-				setVisible(false);
-				dispose();
+						setVisible(false);
+						dispose();
+					}
+				});
 			}
 		});
 		button.setAlignmentX(CENTER_ALIGNMENT);

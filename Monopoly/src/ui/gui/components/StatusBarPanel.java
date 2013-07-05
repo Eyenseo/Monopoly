@@ -15,6 +15,7 @@ public class StatusBarPanel extends JPanel {
 	private final Model     model;
 	private final JTextPane moneyPane;
 	private final JTextPane positionPane;
+	//TODO save Colors as Attribute
 
 	/**
 	 * @param model The value determines the model that the StatusBarPanel gets its information from
@@ -58,34 +59,39 @@ public class StatusBarPanel extends JPanel {
 			 * @param event the value determines the event source
 			 */
 			@Override public void actionPerformed(ModelEvent event) {
-				int currentMoney = model.getCurrentMoney();
-				int oldMoney = model.getOldMoney();
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						int currentMoney = model.getCurrentMoney();
+						int oldMoney = model.getOldMoney();
 
-				try {
-					StyledDocument doc = getMoneyPane().getStyledDocument();
-					doc.remove(0, doc.getLength());
-					Style style = getMoneyPane().addStyle("Style", null);
-					StyleConstants.setAlignment(style, StyleConstants.ALIGN_LEFT);
-					StyleConstants.setForeground(style, new Color(0, 0, 0));
+						try {
+							StyledDocument doc = getMoneyPane().getStyledDocument();
+							doc.remove(0, doc.getLength());
+							Style style = getMoneyPane().addStyle("Style", null);
+							StyleConstants.setAlignment(style, StyleConstants.ALIGN_LEFT);
+							StyleConstants.setForeground(style, new Color(0, 0, 0));
 
-					if(currentMoney == oldMoney) {
-						doc.insertString(doc.getLength(), "Geld: " + currentMoney, style);
-					} else {
-						doc.insertString(doc.getLength(), "Geld: " + currentMoney + " (", style);
+							if(currentMoney == oldMoney) {
+								doc.insertString(doc.getLength(), "Geld: " + currentMoney, style);
+							} else {
+								doc.insertString(doc.getLength(), "Geld: " + currentMoney + " (", style);
 
-						if(currentMoney < oldMoney) {
-							StyleConstants.setForeground(style, new Color(255, 0, 0));
-							doc.insertString(doc.getLength(), "-" + (oldMoney - currentMoney), style);
-						} else if(currentMoney > oldMoney) {
-							StyleConstants.setForeground(style, new Color(0, 198, 0));
-							doc.insertString(doc.getLength(), "+" + (currentMoney - oldMoney), style);
+								if(currentMoney < oldMoney) {
+									StyleConstants.setForeground(style, new Color(255, 0, 0));
+									doc.insertString(doc.getLength(), "-" + (oldMoney - currentMoney), style);
+								} else if(currentMoney > oldMoney) {
+									StyleConstants.setForeground(style, new Color(0, 198, 0));
+									doc.insertString(doc.getLength(), "+" + (currentMoney - oldMoney), style);
+								}
+								StyleConstants.setForeground(style, new Color(0, 0, 0));
+								doc.insertString(doc.getLength(), ")", style);
+							}
+						} catch(BadLocationException e1) {
+							e1.printStackTrace();  //To change body of catch statement use File | Settings | File
+							// Templates.
 						}
-						StyleConstants.setForeground(style, new Color(0, 0, 0));
-						doc.insertString(doc.getLength(), ")", style);
 					}
-				} catch(BadLocationException e1) {
-					e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-				}
+				});
 			}
 		};
 
@@ -96,56 +102,61 @@ public class StatusBarPanel extends JPanel {
 			 * @param event the value determines the event source
 			 */
 			@Override public void actionPerformed(ModelEvent event) {
-				try {
-					StyledDocument doc = getPositionPane().getStyledDocument();
-					doc.remove(0, doc.getLength());
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						try {
+							StyledDocument doc = getPositionPane().getStyledDocument();
+							doc.remove(0, doc.getLength());
 
-					Style style = getPositionPane().addStyle("Style", null);
-					StyleConstants.setAlignment(style, StyleConstants.ALIGN_CENTER);
-					StyleConstants.setForeground(style, new Color(0, 0, 0));
+							Style style = getPositionPane().addStyle("Style", null);
+							StyleConstants.setAlignment(style, StyleConstants.ALIGN_CENTER);
+							StyleConstants.setForeground(style, new Color(0, 0, 0));
 
-					doc.insertString(doc.getLength(), "Position: ", style);
+							doc.insertString(doc.getLength(), "Position: ", style);
 
-					//Set the Field name red if in jail - the Field should be the Jail
-					if(model.isInJail()) {
-						StyleConstants.setForeground(style, new Color(255, 0, 0));
-						doc.insertString(doc.getLength(), model.getFieldName(), style);
-						StyleConstants.setForeground(style, new Color(0, 0, 0));
-					} else {
-						doc.insertString(doc.getLength(), model.getFieldName(), style);
-					}
-
-					//If there is a Owner add additional information
-					if(model.isPurchasable()) {
-						doc.insertString(doc.getLength(), "\tBesitzer: ", style);
-
-						//Add the owner name
-						if(model.getPurchasableOwner() != null) {
-							if(model.getUser().getId() == model.getPurchasableOwnerId()) {
-								doc.insertString(doc.getLength(), "Sie", style);
+							//Set the Field name red if in jail - the Field should be the Jail
+							if(model.isInJail()) {
+								StyleConstants.setForeground(style, new Color(255, 0, 0));
+								doc.insertString(doc.getLength(), model.getFieldName(), style);
+								StyleConstants.setForeground(style, new Color(0, 0, 0));
 							} else {
-								doc.insertString(doc.getLength(), model.getPurchasableOwner(), style);
+								doc.insertString(doc.getLength(), model.getFieldName(), style);
 							}
-						} else {
-							doc.insertString(doc.getLength(), "-", style);
-						}
 
-						//Add the amount of Houses of a Street
-						if(model.isStreet()) {
-							int stage = model.getStreetStage();
+							//If there is a Owner add additional information
+							if(model.isPurchasable()) {
+								doc.insertString(doc.getLength(), "\tBesitzer: ", style);
 
-							if(6 == stage) {
-								doc.insertString(doc.getLength(), "\tHotel: 1", style);
-							} else if(stage > 1) {
-								doc.insertString(doc.getLength(), "\tHaeuser: " + (stage - 1), style);
-							} else {
-								doc.insertString(doc.getLength(), "\tHaeuser: -", style);
+								//Add the owner name
+								if(model.getPurchasableOwner() != null) {
+									if(model.getUser().getId() == model.getPurchasableOwnerId()) {
+										doc.insertString(doc.getLength(), "Sie", style);
+									} else {
+										doc.insertString(doc.getLength(), model.getPurchasableOwner(), style);
+									}
+								} else {
+									doc.insertString(doc.getLength(), "-", style);
+								}
+
+								//Add the amount of Houses of a Street
+								if(model.isStreet()) {
+									int stage = model.getStreetStage();
+
+									if(6 == stage) {
+										doc.insertString(doc.getLength(), "\tHotel: 1", style);
+									} else if(stage > 1) {
+										doc.insertString(doc.getLength(), "\tHaeuser: " + (stage - 1), style);
+									} else {
+										doc.insertString(doc.getLength(), "\tHaeuser: -", style);
+									}
+								}
 							}
+						} catch(BadLocationException e) {
+							e.printStackTrace();  //To change body of catch statement use File | Settings | File
+							// Templates.
 						}
 					}
-				} catch(BadLocationException e) {
-					e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-				}
+				});
 			}
 		};
 

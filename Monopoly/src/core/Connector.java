@@ -13,6 +13,7 @@ import objects.map.purchasable.Street;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * The Connector class connects the FieldCircularList objects and the CardStack objects.
@@ -27,7 +28,7 @@ public class Connector {
 	 * @throws CardConnectionException The Exception is thrown if the Street for the GoTo Card is not found.
 	 */
 	public void connect(FieldCircularList[] map, CardStack chance, CardStack community,
-	                    ArrayList<Player> playerArrayList) throws NoInstanceException, CardConnectionException {
+	                    HashMap<Integer, Player> playerArrayList) throws NoInstanceException, CardConnectionException {
 		makeCircularFieldList(map);
 		connectMatching(arrayToArrayList(map), chance, community);
 		setDiceArray(map);
@@ -79,16 +80,11 @@ public class Connector {
 	}
 
 	/**
-	 * The method connects the
-	 * <ul>
-	 * <li>Street objects of one color</li>
-	 * <li>Station objects</li>
-	 * <li>Facility objects</li>
-	 * <li>Chance objects with the chance CardStack</li>
-	 * <li>Community objects with the community CardStack</li>
-	 * <li>Tax objects with Parking object</li>
-	 * <li>GoToJail objects with Jail object</li>
-	 * <li>Jail object with Parking object</li>
+	 * The method connects the <ul> <li>Street objects of one color</li> <li>Station objects</li> <li>Facility
+	 * objects</li>
+	 * <li>Chance objects with the chance CardStack</li> <li>Community objects with the community CardStack</li> <li>Tax
+	 * objects with Parking object</li> <li>GoToJail objects with Jail object</li> <li>Jail object with Parking
+	 * object</li>
 	 * </ul>
 	 *
 	 * @param fieldArrayList The value determines the ArrayList of FieldCircularList objects that shall be connected.
@@ -272,7 +268,7 @@ public class Connector {
 	 * @throws CardConnectionException The Exception is thrown if the Street for the GoTo Card is not found.
 	 */
 	private void connectCards(CardStack current, FieldCircularList[] map, CardStack community,
-	                          ArrayList<Player> playerArrayList) throws CardConnectionException {
+	                          HashMap<Integer, Player> playerArrayList) throws CardConnectionException {
 		boolean found;
 
 		for(Card card : current.getStack()) {
@@ -326,7 +322,7 @@ public class Connector {
 				}
 			} else if(card instanceof SpecialPayment) {
 				//SpecialPayment needs a reference to the Players
-				((SpecialPayment) card).setPlayerArrayList(playerArrayList);
+				((SpecialPayment) card).setPlayerHashMap(playerArrayList);
 			}
 		}
 	}
