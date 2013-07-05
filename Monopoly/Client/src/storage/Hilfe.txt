@@ -1,0 +1,68 @@
+Spiel�bersicht
+In Monopoly geht es darum, Eigentum zu erwerben und es m�glichst gewinnbringed zu vermieten oder zu verkaufen, um so der reichste Spieler zu werden. Die Spieler starten auf dem "Los"-Feld und wandern durch W�rfeln im Uhrzeigersinn um das Spielfeld. Landet ein Spieler auf einem kaufbaren Feld, kann er dieses erwerben.
+Spieler die Grundst�cke besitzen, erhalten Miete von allen anderen Mitspielern die auf das entsprechende Feld kommen. Der Bau von H�usern und Hotels erh�ht die Miete betr�chtlich, also sollte man m�glichst schnell m�glichst viele Immobilien bauen. 
+Sollte man einmal in Geldmangel geraten, kann man die Grundst�cke beleihen und daf�r Geld von der Bank erhalten.
+Anweisungen von Ereignis- oder Gemeinschaftskarten m�ssen stets befolgt werden. 
+Unter Umst�nden k�nnen Spieler auch im Gef�ngnis setzen, wo sie einige Runden aussetzen m�ssen.
+
+Ziel des Spiels
+Der reichste Spieler zu werden. Alle anderen Mitspieler m�ssen dazu in den Bankrott getrieben werden.
+
+Spielablauf
+Der Spieler der an der Reihe ist muss w�rfeln. Die Spielfigur wird um die Summe der gew�rftelten Augen bewegt. Es k�nnen mehrere Figuren auf einem Spielfeld stehen.
+Je nachdem auf welchem Feld ein Spieler landet stehen verschiedene Aktionen zur Auswahl:
+Grundst�ck kaufen
+Miete bezahlen
+eine Ereignnis- oder Gemeinschaftskarte ziehen
+ins Gef�ngnis gehen
+Gehalt von 4000 DM einziehen ("Los"-Feld)
+
+Pasch
+W�rfelt ein Spieler einen Pasch  (beide W�rfeln zeigen die gleiche Augenzahl), muss er erneut w�rfeln. Ist der erneute Wurf erneut ein Pasch, wird ein drittes Mal gew�rfelt. Sollte es sich wieder um einen Pasch handeln,  muss der Spieler ins Gef�ngnis ohne seinen Zug auszuf�hren.
+
+�ber "Los" gehen
+Jedesmal wenn ein Spieler mit seiner Figur das Feld "Los" erreicht oder passiert, wird ihm ein Gehalt von 4000 DM gezahlt.
+Sollte eine Figur durch zb. Ein Ereignisfeld zweimal das "Los"-Feld passieren, zieht er zweimal das Gehalt ein.
+
+Landen auf einem Grundst�ck mit Besitzer
+Erreicht ein Spieler mit seiner Spielfigur ein Grundst�ck welches von einem anderen Spieler besessen wird, bezahlt er automatisch die aktuelle Miete. Diese variert je nach H�useranzahl. Sollte ein Spieler alle Stra�en einer Farbe besitzen verdoppelt sich die Miete. Dies gilt auch f�r Felder die mit einer Hypothek belastet sind.
+
+Ereignis- oder Gemeinschaftsfelder
+Landet man auf einem dieser Felder, wird die oberste Karte des entsprechenden Stapels gezogen. Diese Karten k�nnen unter anderem verlangen, dass:
+Die Spielfigur bewegt wird
+Geld bezahlt werden muss
+Geld erhalten wird
+man ins Gef�ngnis muss
+man aus dem Gef�ngnis freikommt.
+Eine Gef�ngnisfreikarte kann f�r sp�teren Gebrauch aufgehoben werden.
+Sollte die Spielfigur �ber das "Los"-Feld kommen, erh�lt man normal sein Gehalt, es sei denn man wandert ins Gef�ngnis.
+
+Steuerfelder
+landet man auf einem dieser Felder, wird der abgezogenen Betrag unter das "Frei Parken"-Feld geschoben. 
+
+Frei Parken
+Auf diesem Feld passiert nichts. Landet ein Spieler auf diesem Feld, kassiert er allerdings alles durch Steuern angeh�ufte Geld.
+
+H�user bauen
+Ein Spieler kann nur dann H�user auf Stra�en bauen, wenn er alle Stra�en dieser Farbgrupe besitzt und auf dem Feld steht. H�user erh�hen die Miete erheblich; der Preis f�r die H�user und die entsprechende Miete stehen auf den Besitzkarten der Stra�en. Stra�en m�ssen nicht gleichm��ig bebaut werden, eine Stra�e kann ein Hotel besitzen ohne dass die anderen Stra�en der Farbgruppe bebaut wurden.
+
+Hypothek
+Wer kein Geld mehr besitzt, aber zb. Miete bezahlen muss, kann sich durch die Aufnahme von Hypotheken Geld beschaffen. 
+
+Bankrott
+Sollte ein Spieler in den Ruin getrieben werden, erh�lt der daf�r verantwortliche Spieler alle Besitzt�mer des Spielers. Der bankrott getriebene Spieler scheidet aus dem Spiel aus und hat verloren.
+
+Ende des Spiels
+Das Spiel endet wenn alle bis auf einen Spieler bankrott gegangen sind.
+
+
+
+
+
+
+
+
+
+
+
+
