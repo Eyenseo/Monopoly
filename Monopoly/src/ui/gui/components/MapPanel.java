@@ -1,23 +1,21 @@
 package ui.gui.components;
 
+import ui.gui.Model;
+
 import javax.swing.*;
 import java.awt.*;
 
 //JAVADOC
 class MapPanel extends JPanel {
-	private final JTextArea main;
+	private final Map map;
 
 	//JAVADOC
-	public MapPanel() {
-		super(new GridLayout());
+	public MapPanel(Model model) {
+		//		setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
+		setLayout(new GridLayout());
 
-		main = new JTextArea("BALALALLLALALAALLALALALA");
-		main.setEditable(false);
+		map = new Map(new MapLayout(), model);
 
-		JScrollPane scrollPane = new JScrollPane(main);
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-		add(scrollPane);
+		add(map);
 	}
 }

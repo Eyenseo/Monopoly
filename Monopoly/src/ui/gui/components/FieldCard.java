@@ -1,4 +1,4 @@
-package gui;
+package ui.gui.components;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,90 +10,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 
-class Map extends JPanel {
-	Map(LayoutManager layout) {
-		super(layout);
-	}
-
-	@Override protected void paintComponent(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g;
-		AffineTransform transform = g2.getTransform();
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		Dimension preferredSize = getLayout().preferredLayoutSize(this);
-		double scaleX = (double) getWidth() / preferredSize.width;
-		double scaleY = (double) getHeight() / preferredSize.height;
-		double scale = 1;
-		if(scaleX > scaleY) {
-			scale = scaleY;
-		} else {
-			scale = scaleX;
-		}
-		transform.setToScale(scale, scale);
-		g2.setTransform(transform);
-		super.paintComponent(g);    //To change body of overridden methods use File | Settings | File Templates.
-	}
-
-	//HashMap<playerData, FieldCard>
-}
-
-public class MapTest {
-
-	public static void main(String[] args) {
-
-		//JPanel panel = new JPanel(new GridLayout());
-		Map panel = new Map(new MapLayout());
-		FieldCard card;
-
-		for(int i = 0; i < 40; i++) {
-			card = new FieldCard("humdi", new Color(12, 128, 102), 1254);
-			panel.add(card);
-		}
-
-		//		card = new FieldCard("humdi", new Color(12, 128, 102), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(12, 128, 102), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(12, 128, 102), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(128, 30, 24), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(12, 128, 102), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(128, 30, 24), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(128, 30, 24), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(128, 30, 24), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(28, 128, 14), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(28, 128, 14), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(28, 128, 14), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(28, 128, 14), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(108, 6, 128), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(108, 6, 128), 1254);
-		//		panel.add(card);
-		//		card = new FieldCard("humdi", new Color(108, 6, 128), 1254);
-		//		panel.add(card);
-
-		//		panel.setPreferredSize(new Dimension(900, 900));
-
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.add(panel);
-
-		frame.pack();
-		frame.setVisible(true);
-	}
-}
-
-class FieldCard extends JPanel {
-	public static final  int  widthCard  = 150;
-	public static final  int  heightCard = 190;
+public class FieldCard extends JPanel {
+	public static final  int  widthCard  = 175;
+	public static final  int  heightCard = 220;
 	private static final int  gapX       = 6;
 	private static final int  gapY       = 2;
 	//Fonts
@@ -113,13 +32,14 @@ class FieldCard extends JPanel {
 	private BufferedImage image;
 	//Header
 	private static final int headerBackgroundHeight = 40;
-	private String                         headerName;
-	private int                            headerNameX;
-	private int                            headerNameY;
+	private String headerName;
+	private int    headerNameX;
+	private int    headerNameY;
 	//Base
-	private String                         price;
-	private int                            priceX;
-	private int                            priceY;
+	private String price;
+	private int    priceX;
+	private int    priceY;
+
 	//do playerHashMap
 	private HashMap<Integer, PlayerFigure> playerHashMap;
 
@@ -186,6 +106,8 @@ class FieldCard extends JPanel {
 	@Override public void paintComponent(Graphics graphics) {
 		Graphics2D g = (Graphics2D) graphics;
 		AffineTransform backUp = g.getTransform();
+
+		//		System.out.println(getBounds());
 
 		switch(rotation) {
 			case 90:
@@ -304,44 +226,5 @@ class FieldCard extends JPanel {
 
 	public enum Rotation {
 		BOTTOM, LEFT, TOP, RIGHT
-	}
-}
-
-class PlayerFigure extends JPanel {
-	public static int width  = 50;
-	public static int height = width;
-	private Color color;
-	private Color borderColor;
-	private char  name;
-	private Font  font;
-	private int   nameX;
-	private int   nameY;
-
-	PlayerFigure(Color color, char name) {
-		this.color = color;
-		this.name = name;
-
-		borderColor = new Color(0, 0, 0);
-		font = new Font(Font.SANS_SERIF, Font.BOLD, 17);
-
-		FontMetrics fontMetrics = getFontMetrics(font);
-		int lineHeightAdjustment = fontMetrics.getHeight() / 2 - fontMetrics.getDescent();
-		nameX = (width - fontMetrics.stringWidth("" + name)) / 2;
-		nameY = height / 2 + lineHeightAdjustment;
-	}
-
-	@Override public void paintComponent(Graphics g) {
-		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		//Border
-		g.setColor(borderColor);
-		g.fillOval(getBounds().x, getBounds().y, width, height);
-		//Color
-		g.setColor(color);
-		g.fillOval(getBounds().x + 2, getBounds().y + 2, width - 4, height - 4);
-		//Name
-		g.setColor(borderColor);
-		g.setFont(font);
-		g.drawString("" + name, getBounds().x + nameX, getBounds().y + nameY);
 	}
 }

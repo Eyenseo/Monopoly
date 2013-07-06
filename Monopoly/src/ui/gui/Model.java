@@ -147,8 +147,7 @@ public class Model {
 	 */
 	private void analysePlayerData(PlayerData playerData) {
 		if(playerData.equals(user)) {
-			if(user.getFirstDice() != playerData.getFirstDice() || user.getSecondDice() != playerData.getSecondDice
-					()) {
+			if(user.getFirstDice() != playerData.getFirstDice() || user.getSecondDice() != playerData.getSecondDice()) {
 				user.setFirstDice(playerData.getFirstDice());
 				user.setSecondDice(playerData.getSecondDice());
 				fireModelEvent(ModelEventName.DICE);
@@ -523,6 +522,10 @@ public class Model {
 	//JAVADOC
 	public ArrayList<MassageData> getMassageDataArrayList() {
 		return massageDataArrayList;
+	}
+
+	public ArrayList<FieldData> getFieldDataArrayList() {
+		return map;
 	}
 
 	/**

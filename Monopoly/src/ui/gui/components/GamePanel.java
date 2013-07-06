@@ -23,7 +23,7 @@ public class GamePanel extends JPanel {
 
 		controlPanel = new ControlPanel(model, clientOperator);
 		propertyPanel = new PropertyPanel(model);
-		mapPanel = new MapPanel();
+		mapPanel = new MapPanel(model);
 
 		add(propertyPanel, BorderLayout.WEST);
 		add(mapPanel, BorderLayout.CENTER);
