@@ -1,4 +1,6 @@
-package ui.gui.components;
+package ui.gui.layout_manager;
+
+import ui.gui.components.FieldCard;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -46,6 +48,10 @@ public class MapLayout implements LayoutManager2 {
 	}
 
 	@Override public Dimension preferredLayoutSize(Container parent) {
+		return parent.getParent().getSize();
+	}
+
+	private Dimension realSize() {
 		int mapSize = fieldCardComponents.size();
 		Dimension dimension = new Dimension(0, 0);
 		//rounds up the map size if the amount of cards is divisible by four
@@ -63,7 +69,7 @@ public class MapLayout implements LayoutManager2 {
 			}
 		}
 		//calculates the total x and y of the map
-		dimension.width = ((mapSize / 4) - 1) * FieldCard.widthCard + 2 * FieldCard.heightCard;
+		dimension.width = (((mapSize / 4) - 1) * FieldCard.widthCard + 2 * FieldCard.heightCard);
 		dimension.height = dimension.width;
 
 		return dimension;
@@ -79,6 +85,16 @@ public class MapLayout implements LayoutManager2 {
 		boolean even = true;
 		Point point = new Point();
 
+		Dimension preferredSize = realSize();
+		double scaleX = (double) parent.getParent().getSize().width / (double) preferredSize.width;
+		double scaleY = (double) parent.getParent().getSize().height / (double) preferredSize.height;
+		double scale = 1;
+		if(scaleX > scaleY) {
+			scale = scaleY;
+		} else {
+			scale = scaleX;
+		}
+
 		//calculates where to start drawing the the field cards
 		if(cardOverflow != 0) {
 			point.x = cardsPerSide * FieldCard.widthCard + FieldCard.heightCard;
@@ -86,22 +102,27 @@ public class MapLayout implements LayoutManager2 {
 		} else {
 			point.x = (cardsPerSide - 1) * FieldCard.widthCard + FieldCard.heightCard;
 		}
+		point.x = (int) (point.x * scale);
 		point.y = point.x;
 
 		int currentCardIndex = 0;
 		for(int i = 0; i < 4; i++) {
 			if(cardOverflow > 0) {
 				for(int j = 0; j < (cardsPerSide + 1); j++, currentCardIndex++) {
-					setBoundaries(i, j, point, currentCardIndex, FieldCard.widthCard, cardsPerSide + 1);
+					setBoundaries(scale, i, j, point, currentCardIndex, (int) (FieldCard.widthCard * scale),
+					              (int) (FieldCard.heightCard * scale), cardsPerSide + 1);
 				}
 			} else {
 				for(int j = 0; j < cardsPerSide; j++, currentCardIndex++) {
 					if(even) {
-						setBoundaries(i, j, point, currentCardIndex, FieldCard.widthCard, cardsPerSide);
+						setBoundaries(scale, i, j, point, currentCardIndex, (int) (FieldCard.widthCard * scale),
+						              (int) (FieldCard.heightCard * scale), cardsPerSide);
 					} else {
 						//calculates the x of the card when it is needed to stretch it
-						int widthCard = (FieldCard.widthCard * cardsPerSide - 1) / (cardsPerSide - 1);
-						setBoundaries(i, j, point, currentCardIndex, widthCard, cardsPerSide);
+						int widthCard = (int) (((FieldCard.widthCard * cardsPerSide - 1) / (cardsPerSide - 1)) *
+						                       scale);
+						setBoundaries(scale, i, j, point, currentCardIndex, widthCard,
+						              (int) (FieldCard.heightCard * scale), cardsPerSide);
 					}
 				}
 			}
@@ -111,9 +132,11 @@ public class MapLayout implements LayoutManager2 {
 		}
 	}
 
-	public void setBoundaries(int siteNumber, int currentSiteCard, Point point, int currentCardIndex, int cardWidth,
-	                          int cardsPerSide) {
+	public void setBoundaries(double scale, int siteNumber, int currentSiteCard, Point point, int currentCardIndex,
+	                          int cardWidth, int cardHeight, int cardsPerSide) {
 		FieldCard.Rotation angle = FieldCard.Rotation.BOTTOM;
+
+		fieldCardComponents.get(currentCardIndex).setScale(scale);
 
 		//rotates the drawing direction of the cards
 		switch(siteNumber) {
@@ -134,21 +157,19 @@ public class MapLayout implements LayoutManager2 {
 
 		//sets the right size for the first card in the corner
 		if(currentSiteCard == 0) {
-			fieldCardComponents.get(currentCardIndex)
-			                   .setBounds(point.x, point.y, FieldCard.heightCard, FieldCard.heightCard);
+			fieldCardComponents.get(currentCardIndex).setBounds(point.x, point.y, cardHeight, cardHeight);
 		}
 
 		//sets the right size for the current card and the position for the next card
 		switch(siteNumber) {
 			case 0:
 				if(currentSiteCard != 0) {
-					fieldCardComponents.get(currentCardIndex)
-					                   .setBounds(point.x, point.y, cardWidth, FieldCard.heightCard);
+					fieldCardComponents.get(currentCardIndex).setBounds(point.x, point.y, cardWidth, cardHeight);
 				}
 
 				//sets the position for the next card in the corner
 				if(currentSiteCard == cardsPerSide - 1) {
-					point.x = point.x - FieldCard.heightCard;
+					point.x = point.x - cardHeight;
 					//sets the position for the next normal card
 				} else {
 					point.x = point.x - cardWidth;
@@ -156,36 +177,33 @@ public class MapLayout implements LayoutManager2 {
 				break;
 			case 1:
 				if(currentSiteCard != 0) {
-					fieldCardComponents.get(currentCardIndex)
-					                   .setBounds(point.x, point.y, FieldCard.heightCard, cardWidth);
+					fieldCardComponents.get(currentCardIndex).setBounds(point.x, point.y, cardHeight, cardWidth);
 				}
 
 				if(currentSiteCard == cardsPerSide - 1) {
-					point.y = point.y - FieldCard.heightCard;
+					point.y = point.y - cardHeight;
 				} else {
 					point.y = point.y - cardWidth;
 				}
 				break;
 			case 2:
 				if(currentSiteCard != 0) {
-					fieldCardComponents.get(currentCardIndex)
-					                   .setBounds(point.x, point.y, cardWidth, FieldCard.heightCard);
+					fieldCardComponents.get(currentCardIndex).setBounds(point.x, point.y, cardWidth, cardHeight);
 				}
 
 				if(currentSiteCard == 0) {
-					point.x = point.x + FieldCard.heightCard;
+					point.x = point.x + cardHeight;
 				} else {
 					point.x = point.x + cardWidth;
 				}
 				break;
 			case 3:
 				if(currentSiteCard != 0) {
-					fieldCardComponents.get(currentCardIndex)
-					                   .setBounds(point.x, point.y, FieldCard.heightCard, cardWidth);
+					fieldCardComponents.get(currentCardIndex).setBounds(point.x, point.y, cardHeight, cardWidth);
 				}
 
 				if(currentSiteCard == 0) {
-					point.y = point.y + FieldCard.heightCard;
+					point.y = point.y + cardHeight;
 				} else {
 					point.y = point.y + cardWidth;
 				}

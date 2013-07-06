@@ -1,9 +1,9 @@
 package ui.gui.components;
 
 import ui.gui.Model;
+import ui.gui.layout_manager.MapLayout;
 
 import javax.swing.*;
-import java.awt.*;
 
 //JAVADOC
 class MapPanel extends JPanel {
@@ -11,8 +11,8 @@ class MapPanel extends JPanel {
 
 	//JAVADOC
 	public MapPanel(Model model) {
-		//		setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
-		setLayout(new GridLayout());
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		//		setLayout(new GridLayout());
 
 		map = new Map(new MapLayout(), model);
 

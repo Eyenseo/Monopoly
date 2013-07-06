@@ -40,6 +40,8 @@ public class FieldCard extends JPanel {
 	private int    priceX;
 	private int    priceY;
 
+	double scale;
+
 	//do playerHashMap
 	private HashMap<Integer, PlayerFigure> playerHashMap;
 
@@ -47,7 +49,7 @@ public class FieldCard extends JPanel {
 		this.headerName = headerName;
 		this.streetColor = streetColor;
 		this.price = "" + price + " DM";
-
+		scale = 1;
 		width = widthCard;
 		height = heightCard;
 
@@ -107,7 +109,7 @@ public class FieldCard extends JPanel {
 		Graphics2D g = (Graphics2D) graphics;
 		AffineTransform backUp = g.getTransform();
 
-		//		System.out.println(getBounds());
+		g.scale(scale, scale);
 
 		switch(rotation) {
 			case 90:
@@ -196,15 +198,11 @@ public class FieldCard extends JPanel {
 	@Override public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
-		if(rotation == 0 || rotation == 180) {
-			setWidth(width);
+		if(width == height) {
+			this.width = heightCard;
 		} else {
-			setWidth(height);
+			this.width = widthCard;
 		}
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
 		changePurchasableTextPlacement();
 	}
 
@@ -222,6 +220,10 @@ public class FieldCard extends JPanel {
 		FontMetrics fontMetrics = getFontMetrics(headerFont);
 		headerNameX = (width - fontMetrics.stringWidth("" + headerName)) / 2;
 		headerNameY = fontMetrics.getHeight();
+	}
+
+	public void setScale(double scale) {
+		this.scale = scale;
 	}
 
 	public enum Rotation {
