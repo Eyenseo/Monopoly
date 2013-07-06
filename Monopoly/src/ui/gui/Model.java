@@ -193,10 +193,10 @@ public class Model {
 		} else {
 			if(playerData.isGiveUp()) {
 				playerHashMap.remove(playerData.getId());
+				purchasableHashMap.remove(playerData.getId());
 				fireModelEvent(ModelEventName.PLAYERREMOVED);
-			}
-			if(!(playerData.getPosition().equals(playerHashMap.get(playerData.getId()).getPosition()))) {
-				//				playerHashMap.get(playerData.getId()).setPosition(playerData.getPosition());
+			} else if((playerData.getPosition().equals(playerHashMap.get(playerData.getId()).getPosition()))) {
+				playerHashMap.get(playerData.getId()).setPosition(playerData.getPosition());
 				fireModelEvent(ModelEventName.POSITION);
 			}
 		}
@@ -211,45 +211,48 @@ public class Model {
 	 */
 	//TODO check method
 	private void analysePurchasableData(PurchasableData purchasableData) {
+		if(purchasableData.getOwner() != null) {
+			int purchasableOwnerId = purchasableData.getOwner().getId();
 
-		if(!purchasableHashMap.get(purchasableData.getOwner().getId()).contains(purchasableData)) {
-			//TODO check if the for loop is needed
-			for(int i = 0; i < purchasableHashMap.size(); i++) {
-				ArrayList<PurchasableData> list = purchasableHashMap.get(i);
+			if(!purchasableHashMap.get(purchasableOwnerId).contains(purchasableData)) {
+				//TODO check if the for loop is needed
+				for(int playerId : purchasableHashMap.keySet()) {
+					ArrayList<PurchasableData> list = purchasableHashMap.get(playerId);
 
-				if(list.contains(purchasableData) && i != purchasableData.getOwner().getId()) {
-					list.remove(list.indexOf(purchasableData));
+					if(list.contains(purchasableData) && playerId != purchasableOwnerId) {
+						list.remove(list.indexOf(purchasableData));
 
-					if(i == user.getId()) {
-						fireModelEvent(ModelEventName.PROPERTY);
+						if(playerId == user.getId()) {
+							fireModelEvent(ModelEventName.PROPERTY);
+						}
+					}
+
+					if(!list.contains(purchasableData) && playerId == purchasableOwnerId) {
+						list.add(purchasableData);
+
+						if(playerId == user.getId()) {
+							fireModelEvent(ModelEventName.PROPERTY);
+						}
 					}
 				}
+			} else if(purchasableData.getOwner().getId() == user.getId()) {
+				ArrayList<PurchasableData> userPurchasable = purchasableHashMap.get(user.getId());
 
-				if(!list.contains(purchasableData) && i == purchasableData.getOwner().getId()) {
-					list.add(purchasableData);
+				PurchasableData property = userPurchasable.get(userPurchasable.indexOf(purchasableData));
 
-					if(i == user.getId()) {
-						fireModelEvent(ModelEventName.PROPERTY);
-					}
+				if(property.isInMortgage() != purchasableData.isInMortgage()) {
+					property.setInMortgage(purchasableData.isInMortgage());
+					fireModelEvent(ModelEventName.INMORTAGE);
 				}
-			}
-		} else if(purchasableData.getOwner().getId() == user.getId()) {
-			ArrayList<PurchasableData> userPurchasable = purchasableHashMap.get(user.getId());
 
-			PurchasableData property = userPurchasable.get(userPurchasable.indexOf(purchasableData));
+				if(property.getStage() != purchasableData.getStage()) {
+					property.setStage(purchasableData.getStage());
+					fireModelEvent(ModelEventName.STAGE);
+				}
 
-			if(property.isInMortgage() != purchasableData.isInMortgage()) {
-				property.setInMortgage(purchasableData.isInMortgage());
-				fireModelEvent(ModelEventName.INMORTAGE);
-			}
-
-			if(property.getStage() != purchasableData.getStage()) {
-				property.setStage(purchasableData.getStage());
-				fireModelEvent(ModelEventName.STAGE);
-			}
-
-			if(purchasableData instanceof StreetData) {
-				((StreetData) property).setUpgradeable(((StreetData) purchasableData).isUpgradeable());
+				if(purchasableData instanceof StreetData) {
+					((StreetData) property).setUpgradeable(((StreetData) purchasableData).isUpgradeable());
+				}
 			}
 		}
 

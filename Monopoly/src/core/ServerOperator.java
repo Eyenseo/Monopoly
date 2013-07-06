@@ -96,7 +96,9 @@ public class ServerOperator {
 	 */
 	public void sendHaggleData(HaggleData haggleData) {
 		destination.get(haggleData.getUserId()).updateHaggleData(haggleData);
-		destination.get(haggleData.getSellerId()).updateHaggleData(haggleData);
+		if(destination.containsKey(haggleData.getSellerId())) {
+			destination.get(haggleData.getSellerId()).updateHaggleData(haggleData);
+		}
 	}
 
 	/**
@@ -152,7 +154,7 @@ public class ServerOperator {
 		}
 
 		for(int i = 0; i < destination.size(); i++) {
-			destination.get(i).initializePlayer(new InitializePlayer(playerData, i));
+			destination.get(i).initializePlayer(new InitializePlayer(new HashMap<Integer, PlayerData>(playerData), i));
 		}
 	}
 

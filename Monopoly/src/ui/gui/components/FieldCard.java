@@ -97,12 +97,12 @@ public class FieldCard extends JPanel {
 		changeTextPlacement();
 	}
 
-	public void updatePlayerPosition(int id, char playerName, Color playerColor, boolean add) {
-		if(add) {
-			playerHashMap.put(id, new PlayerFigure(playerColor, playerName));
-		} else {
-			playerHashMap.remove(id);
-		}
+	public void updatePlayerPosition(int id, char playerName, Color playerColor) {
+		playerHashMap.put(id, new PlayerFigure(playerColor, playerName));
+	}
+
+	public void removeAll() {
+		playerHashMap = new HashMap<Integer, PlayerFigure>();
 	}
 
 	@Override public void paintComponent(Graphics graphics) {

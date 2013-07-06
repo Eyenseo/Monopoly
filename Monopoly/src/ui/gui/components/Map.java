@@ -54,18 +54,18 @@ public class Map extends JPanel {
 			add(card);
 			fieldCardArrayList.add(card);
 		}
-		model.addModelEventListener(Model.ModelEventName.POSITION, new ModelEventListener() {
+
+		ModelEventListener playerUpdate = new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override public void run() {
 						for(int i = 0; i < fieldCardArrayList.size(); i++) {
 							FieldCard fieldCard = fieldCardArrayList.get(i);
 							for(PlayerData playerData : model.getPlayerHashMap().values()) {
-								fieldCard.updatePlayerPosition(playerData.getId(), playerData.getName().charAt(0),
-								                               playerData.getColor(), false);
+								fieldCard.removeAll();
 								if(playerData.getPosition().getFieldNumber() == i) {
 									fieldCard.updatePlayerPosition(playerData.getId(), playerData.getName().charAt(0),
-									                               playerData.getColor(), true);
+									                               playerData.getColor());
 								}
 							}
 						}
@@ -73,7 +73,8 @@ public class Map extends JPanel {
 					}
 				});
 			}
-		});
+		};
+		model.addModelEventListener(Model.ModelEventName.POSITION, playerUpdate);
+		model.addModelEventListener(Model.ModelEventName.PLAYERREMOVED, playerUpdate);
 	}
-	//HashMap<playerData, FieldCard>
 }

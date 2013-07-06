@@ -5,7 +5,9 @@ import objects.exceptions.MessageStackException;
 import objects.map.FieldCircularList;
 import objects.value.action.ActionData;
 
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Monopoly is the main Class. It initialises the game and hold pieces of the mechanic.
@@ -20,6 +22,7 @@ public class Monopoly {
 	private final ServerOperator                                  serverOperator;
 	private final Thread                                          turnThread;
 	private final HashMap<Integer, HashMap<String, ActionThread>> actions; //TODO better structure
+	private       Player                                          currentPlayer;
 
 	/**
 	 * @param loader The value determines the loader that holds the information for the game
@@ -35,12 +38,32 @@ public class Monopoly {
 		//TODO Specify a timeout for a turn
 		turnThread = new Thread(new Runnable() {
 			@Override public void run() {
+				Player lastPreviousPlayer = null;
+				boolean nextRound;
+
 				try {
 					synchronized(turnThread) {
 						while(!gameOver) {
-							for(Player player : playerHashMap.values()) {
-								player.setTurnEnd(false);
-								turnThread.wait();  //TODO possible replace with "Condition"
+							Iterator<Player> iterator = playerHashMap.values().iterator();
+							nextRound = false;
+							while(iterator.hasNext() && !nextRound) {
+								try {
+									currentPlayer = iterator.next();
+									currentPlayer.setTurnEnd(false);
+									turnThread.wait();  //TODO possible replace with "Condition"
+									lastPreviousPlayer = currentPlayer;
+								} catch(ConcurrentModificationException e) {
+									System.out.println("bang!");
+									iterator = playerHashMap.values().iterator();
+									while(iterator.hasNext()) {
+										if(iterator.next().equals(lastPreviousPlayer)) {
+											break;
+										}
+									}
+									if(!iterator.hasNext()) {
+										nextRound = true;
+									}
+								}
 							}
 						}
 					}
@@ -100,11 +123,18 @@ public class Monopoly {
 	public void doAction(final ActionData actionData) {
 		//TODO check what happens if a player doesn't have the money and decides to give up - is deleting the thread
 		// enough?
-		actions.get(actionData.getUserId()).put(actionData.getId(),
-		                                        new ActionThread(playerHashMap, actionData, serverOperator, jail,
-		                                                         turnThread, actions));
-		actions.get(actionData.getUserId()).get(actionData.getId()).setName(actionData.getId());
-		actions.get(actionData.getUserId()).get(actionData.getId()).start();
+
+		if(actions.containsKey(actionData.getUserId())) {
+			ActionThread job =
+					new ActionThread(playerHashMap, currentPlayer, actionData, serverOperator, jail, turnThread,
+					                 actions);
+
+			actions.get(actionData.getUserId()).put(actionData.getId(), job);
+			job.setName(actionData.getId());
+			job.start();
+		} else {
+			System.out.println(actionData.getUserId());
+		}
 	}
 
 	/**

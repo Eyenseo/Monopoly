@@ -402,6 +402,10 @@ public class Player implements Serializable {
 		return toPlayerData(true);
 	}
 
+	public boolean isTurnEnd() {
+		return turnEnd;
+	}
+
 	/**
 	 * @param withPosition the value determines if the position information will be included
 	 * @return the return value is a PlayerData object with all information included
