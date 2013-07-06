@@ -210,9 +210,10 @@ public class FieldCard extends JPanel {
 		changeTextPlacement();
 
 		FontMetrics fontMetrics = getFontMetrics(normFont);
-
-		priceX = (width - fontMetrics.stringWidth(price)) / 2;
-		priceY = height - fontMetrics.getHeight();
+		if(price != null) {
+			priceX = (width - fontMetrics.stringWidth(price)) / 2;
+			priceY = height - fontMetrics.getHeight();
+		}
 	}
 
 	public void changeTextPlacement() {

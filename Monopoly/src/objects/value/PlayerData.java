@@ -2,12 +2,15 @@ package objects.value;
 
 import objects.value.map.FieldData;
 
+import java.awt.*;
+
 /**
  * The PlayerData is a class for the network communication that holds all needed information
  */
 public class PlayerData {
 	private final int       id;
 	private final String    name;
+	private final Color     color;
 	private       int       firstDice;
 	private       int       secondDice;
 	private       boolean   inJail;
@@ -22,6 +25,7 @@ public class PlayerData {
 	/**
 	 * @param id         the value determines the id of the player
 	 * @param name       the value determines the name of the player
+	 * @param color
 	 * @param firstDice  the value determines the first dice
 	 * @param secondDice the value determines the second dice
 	 * @param inJail     the value determines if the player is in jail
@@ -31,10 +35,12 @@ public class PlayerData {
 	 * @param threwDice  the value determines the amount of times the player threw the dice
 	 * @param trading    the value determines the id of the Player the player is currently trading with
 	 */
-	public PlayerData(int id, String name, int firstDice, int secondDice, boolean inJail, int money, int neededMoney,
-	                  FieldData position, boolean turnEnd, int threwDice, int trading, boolean giveUp) {
+	public PlayerData(int id, String name, Color color, int firstDice, int secondDice, boolean inJail, int money,
+	                  int neededMoney, FieldData position, boolean turnEnd, int threwDice, int trading,
+	                  boolean giveUp) {
 		this.id = id;
 		this.name = name;
+		this.color = color;
 		this.firstDice = firstDice;
 		this.secondDice = secondDice;
 		this.inJail = inJail;
@@ -189,6 +195,10 @@ public class PlayerData {
 	//JAVADOC
 	public void setNeededMoney(int neededMoney) {
 		this.neededMoney = neededMoney;
+	}
+
+	public Color getColor() {
+		return color;
 	}
 
 	/**

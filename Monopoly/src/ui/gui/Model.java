@@ -147,7 +147,8 @@ public class Model {
 	 */
 	private void analysePlayerData(PlayerData playerData) {
 		if(playerData.equals(user)) {
-			if(user.getFirstDice() != playerData.getFirstDice() || user.getSecondDice() != playerData.getSecondDice()) {
+			if(user.getFirstDice() != playerData.getFirstDice() || user.getSecondDice() != playerData.getSecondDice
+					()) {
 				user.setFirstDice(playerData.getFirstDice());
 				user.setSecondDice(playerData.getSecondDice());
 				fireModelEvent(ModelEventName.DICE);
@@ -193,6 +194,10 @@ public class Model {
 			if(playerData.isGiveUp()) {
 				playerHashMap.remove(playerData.getId());
 				fireModelEvent(ModelEventName.PLAYERREMOVED);
+			}
+			if(!(playerData.getPosition().equals(playerHashMap.get(playerData.getId()).getPosition()))) {
+				//				playerHashMap.get(playerData.getId()).setPosition(playerData.getPosition());
+				fireModelEvent(ModelEventName.POSITION);
 			}
 		}
 	}

@@ -15,7 +15,9 @@ public class DiceImage extends JPanel {
 	int currentIndex = 0;
 	boolean active;
 
-	//JAVADOC
+	/**
+	 *
+	 */
 	public DiceImage() {
 		setPreferredSize(new Dimension(32, 32));
 		try {
@@ -27,9 +29,9 @@ public class DiceImage extends JPanel {
 						new File(getClass().getResource("/storage/images/dice/" + (i + 1) + "g.png").toURI()));
 			}
 		} catch(IOException e) {
-			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			e.printStackTrace();
 		} catch(URISyntaxException e) {
-			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			e.printStackTrace();
 		}
 		current = inactiveDiceImage[0];
 		active = false;

@@ -1,17 +1,24 @@
 package ui.gui.components;
 
+import objects.events.ModelEvent;
+import objects.listeners.ModelEventListener;
+import objects.value.PlayerData;
 import objects.value.map.*;
 import ui.gui.Model;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Map extends JPanel {
-	Map(LayoutManager layout, Model model) {
+	ArrayList<FieldCard> fieldCardArrayList;
+
+	Map(LayoutManager layout, final Model model) {
 		super(layout);
 		FieldCard card = null;
 		int[] colorData;
 		Color color;
+		fieldCardArrayList = new ArrayList<FieldCard>();
 
 		for(FieldData fieldData : model.getFieldDataArrayList()) {
 			if(fieldData instanceof StreetData) {
@@ -45,7 +52,28 @@ public class Map extends JPanel {
 			}
 
 			add(card);
+			fieldCardArrayList.add(card);
 		}
+		model.addModelEventListener(Model.ModelEventName.POSITION, new ModelEventListener() {
+			@Override public void actionPerformed(ModelEvent event) {
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						for(int i = 0; i < fieldCardArrayList.size(); i++) {
+							FieldCard fieldCard = fieldCardArrayList.get(i);
+							for(PlayerData playerData : model.getPlayerHashMap().values()) {
+								fieldCard.updatePlayerPosition(playerData.getId(), playerData.getName().charAt(0),
+								                               playerData.getColor(), false);
+								if(playerData.getPosition().getFieldNumber() == i) {
+									fieldCard.updatePlayerPosition(playerData.getId(), playerData.getName().charAt(0),
+									                               playerData.getColor(), true);
+								}
+							}
+						}
+						repaint();
+					}
+				});
+			}
+		});
 	}
 	//HashMap<playerData, FieldCard>
 }

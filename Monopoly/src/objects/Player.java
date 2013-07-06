@@ -8,6 +8,7 @@ import objects.map.notPurchasable.Go;
 import objects.map.purchasable.PurchasableCircularList;
 import objects.value.PlayerData;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,6 +25,7 @@ public class Player implements Serializable {
 	private final int                                playerId;
 	private final String                             NAME;
 	private final int[]                              dices;
+	private final Color                              color;
 	private       boolean                            inJail;
 	private       int                                money;
 	private       int                                neededMoney;
@@ -40,6 +42,7 @@ public class Player implements Serializable {
 
 	/**
 	 * @param name  The value determines the name of the Player.
+	 * @param color
 	 * @param money The value determines the amount of money the Player has.
 	 */
 	public Player(String name, int money) {
@@ -57,6 +60,8 @@ public class Player implements Serializable {
 		threwDice = 0;
 		timeInJail = 0;
 		trading = -1;
+
+		color = new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
 
 		jailbait = new Vector<Jailbait>();
 		property = new ArrayList<PurchasableCircularList>();
@@ -403,10 +408,10 @@ public class Player implements Serializable {
 	 */
 	public PlayerData toPlayerData(boolean withPosition) {
 		if(withPosition) {
-			return new PlayerData(playerId, NAME, dices[0], dices[1], inJail, money, neededMoney,
+			return new PlayerData(playerId, NAME, color, dices[0], dices[1], inJail, money, neededMoney,
 			                      position.toFieldData(), turnEnd, threwDice, trading, giveUp);
 		} else {
-			return new PlayerData(playerId, NAME, dices[0], dices[1], inJail, money, neededMoney, null, turnEnd,
+			return new PlayerData(playerId, NAME, color, dices[0], dices[1], inJail, money, neededMoney, null, turnEnd,
 			                      threwDice, trading, giveUp);
 		}
 	}
