@@ -1,5 +1,8 @@
 package objects.map.notPurchasable;
 
+import objects.value.map.ChanceData;
+import objects.value.map.FieldData;
+
 import java.io.Serializable;
 
 /**
@@ -13,5 +16,12 @@ public class Chance extends CardField implements Serializable {
 	 */
 	public Chance(String name) {
 		super(name);
+	}
+
+	/**
+	 * @return The return value is the FieldData of The field with its current attributes
+	 */
+	@Override public FieldData toFieldData() {
+		return new ChanceData(FIELDNUMBER, NAME);
 	}
 }

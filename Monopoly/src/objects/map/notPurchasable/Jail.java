@@ -2,6 +2,8 @@ package objects.map.notPurchasable;
 
 import objects.Player;
 import objects.exceptions.data.MoreThanOneDataSetException;
+import objects.value.map.FieldData;
+import objects.value.map.JailData;
 
 import java.io.Serializable;
 
@@ -49,5 +51,12 @@ public class Jail extends NotPurchasable implements Serializable {
 	 * @param player The value determines the Player who caused the method call
 	 */
 	@Override public void action(Player player) {
+	}
+
+	/**
+	 * @return The return value is the FieldData of The field with its current attributes
+	 */
+	@Override public FieldData toFieldData() {
+		return new JailData(FIELDNUMBER, NAME);
 	}
 }

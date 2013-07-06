@@ -1,6 +1,8 @@
 package objects.map.notPurchasable;
 
 import objects.Player;
+import objects.value.map.FieldData;
+import objects.value.map.TaxData;
 
 import java.io.Serializable;
 
@@ -36,5 +38,12 @@ public class Tax extends NotPurchasable implements Serializable {
 	@Override public void action(Player player) {
 		player.pay(bill);
 		parking.addMoney(bill);
+	}
+
+	/**
+	 * @return The return value is the FieldData of The field with its current attributes
+	 */
+	@Override public FieldData toFieldData() {
+		return new TaxData(FIELDNUMBER, NAME);
 	}
 }

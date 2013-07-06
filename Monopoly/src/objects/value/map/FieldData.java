@@ -4,8 +4,8 @@ package objects.value.map;
  * The FieldData is a class for the network communication that holds all needed information
  */
 public abstract class FieldData {
-	private final int    fieldNumber;
-	private final String name;
+	final int    fieldNumber;
+	final String name;
 
 	/**
 	 * @param fieldNumber the value determines the id

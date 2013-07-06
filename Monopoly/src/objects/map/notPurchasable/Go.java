@@ -2,6 +2,8 @@ package objects.map.notPurchasable;
 
 import objects.Player;
 import objects.exceptions.data.MoreThanOneDataSetException;
+import objects.value.map.FieldData;
+import objects.value.map.GoData;
 
 import java.io.Serializable;
 
@@ -36,5 +38,12 @@ public class Go extends NotPurchasable implements Serializable {
 	@Override
 	public void action(Player player) {
 		player.addMoney(TURNMONEY);
+	}
+
+	/**
+	 * @return The return value is the FieldData of The field with its current attributes
+	 */
+	@Override public FieldData toFieldData() {
+		return new GoData(FIELDNUMBER, NAME);
 	}
 }
