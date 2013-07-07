@@ -78,16 +78,21 @@ public class Monopoly {
 
 	public static void main(String[] args) {
 		try {
-			Monopoly m = new Monopoly(new Loader());
+			if(args.length > 2) {
+				if(args.length < 6) {
+					Monopoly m = new Monopoly(new Loader());
 
-			//		for(int i = menu.playerAmount(); i > 0; i--) {
-			//			m.addPlayer(new Player(menu.getName(), m.STARTMONEY));
-			//		}
+					for(String name : args) {
+						m.addPlayer(new Player(name, m.STARTMONEY));
+					}
 
-			m.addPlayer(new Player("Julia", 0));
-			m.addPlayer(new Player("Markus", m.STARTMONEY));
-			m.addPlayer(new Player("Herbert", m.STARTMONEY));
-			m.startMonopoly();
+					m.startMonopoly();
+				} else {
+					throw new IllegalArgumentException("You can only play with up to 6 player!");
+				}
+			} else {
+				throw new IllegalArgumentException("Please specify at least two player names!");
+			}
 		} catch(MessageStackException e) {
 			System.err.println(e.getMessageStack());
 		}
