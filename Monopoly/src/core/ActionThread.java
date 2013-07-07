@@ -1,7 +1,7 @@
 package core;
 
 import objects.Player;
-import objects.card.Jailbreake;
+import objects.card.Jailbreak;
 import objects.map.FieldCircularList;
 import objects.map.purchasable.PurchasableCircularList;
 import objects.map.purchasable.Street;
@@ -275,7 +275,7 @@ public class ActionThread extends Thread {
 		}
 
 		//Put all cards back on the Cardstack
-		for(Jailbreake card : user.getJailbreake()) {
+		for(Jailbreak card : user.getJailbreak()) {
 			card.putBack();
 		}
 
