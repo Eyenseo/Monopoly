@@ -15,9 +15,8 @@ import java.util.Random;
 import java.util.Vector;
 
 /**
- * The Player class represents the player.
+ * The Player class represents the player. A object will fire a PlayerEvent.
  */
-//JAVADOC
 public class Player implements Serializable {
 	private static final long   serialVersionUID = 3764102750636389385L;
 	private static final Random random           = new Random();
@@ -165,6 +164,11 @@ public class Player implements Serializable {
 		return giveUp;
 	}
 
+	/**
+	 * Will fire a PlayerEvent
+	 *
+	 * @param giveUp The value determines the state the give up attribute will be set
+	 */
 	public void setGiveUp(boolean giveUp) {
 		this.giveUp = giveUp;
 		firePlayerEvent();
@@ -198,7 +202,8 @@ public class Player implements Serializable {
 	/**
 	 * The method will fire a PlayerEvent.
 	 *
-	 * @param purchasable The value determines the PurchasableCircularList object the property that will be added to the
+	 * @param purchasable The value determines the PurchasableCircularList object the property that will be added to
+	 *                       the
 	 *                    player.
 	 */
 	public void addProperty(PurchasableCircularList purchasable) {
@@ -209,7 +214,8 @@ public class Player implements Serializable {
 	/**
 	 * The method will fire a PlayerEvent.
 	 *
-	 * @param purchasable The value determines the PurchasableCircularList object the property that will be removed to the
+	 * @param purchasable The value determines the PurchasableCircularList object the property that will be removed to
+	 *                       the
 	 *                    player.
 	 */
 	public void removeProperty(PurchasableCircularList purchasable) {
@@ -377,7 +383,11 @@ public class Player implements Serializable {
 		firePlayerEvent();
 	}
 
-	//JAVADOC
+	/**
+	 * The method will update the needed money - neededMoney is Money the player doesn't have currently
+	 *
+	 * @param amount The value determines the amount of money to be taken or added to the player account
+	 */
 	private void updateNeededMoney(int amount) {
 		int money = this.money + amount;
 
@@ -391,6 +401,9 @@ public class Player implements Serializable {
 		}
 	}
 
+	/**
+	 * @return The return value is a Vector of JailbaitCards
+	 */
 	public Vector<Jailbait> getJailbait() {
 		return jailbait;
 	}
@@ -402,6 +415,10 @@ public class Player implements Serializable {
 		return toPlayerData(true);
 	}
 
+	/**
+	 *
+	 * @return The value determines the true if the player is currently at turn
+	 */
 	public boolean isTurnEnd() {
 		return turnEnd;
 	}

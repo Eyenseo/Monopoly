@@ -13,7 +13,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//JAVADOC
+/**
+ * The FinancialProblemPanel presents the panel that will be schown if a player is in need of money, he can either haggle set mortgage or give up
+ */
 public class FinancialProblemPanel extends JPanel {
 	private Model          model;
 	private ClientOperator clientOperator;
@@ -23,7 +25,11 @@ public class FinancialProblemPanel extends JPanel {
 	private JButton        mortgage;
 	private JButton        resolve;
 
-	//JAVADOC
+	/**
+	 *
+	 * @param model The value determines the Model to use to obtain information
+	 * @param clientOperator The value determines the clientOperator
+	 */
 	public FinancialProblemPanel(Model model, ClientOperator clientOperator) {
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.model = model;
@@ -63,6 +69,10 @@ public class FinancialProblemPanel extends JPanel {
 		});
 	}
 
+	/**
+	 * The method will disable the haggel button if the financial problems where caused by a haggle
+	 */
+	//TODO allow multiply trades per player
 	private void updateHaggleButton() {
 		if(model.getHaggleData() != null && model.getHaggleData().getHaggleState() != HaggleData.HaggleState.ACCEPT &&
 		   model.getHaggleData().getHaggleState() != HaggleData.HaggleState.DECLINE) {
@@ -72,6 +82,9 @@ public class FinancialProblemPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * The method will change the text to ok if the financial problems are resolved
+	 */
 	private void updateResolveText() {
 		if(model.getUser().getNeededMoney() != 0) {
 			resolve.setText("Aufgeben");
@@ -80,6 +93,9 @@ public class FinancialProblemPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * The method will update the displayed text, more specific the amount of money that the user has to obtain at least do not lose the game
+	 */
 	private void updateHeaderText() {
 		try {
 			StyledDocument doc = header.getStyledDocument();
@@ -99,7 +115,9 @@ public class FinancialProblemPanel extends JPanel {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method will create all components of the FinancialProblemPanel
+	 */
 	private void buildLayout() {
 		JPanel wrapper = new JPanel(new GridLayout());
 		wrapper.add(header);
@@ -125,7 +143,9 @@ public class FinancialProblemPanel extends JPanel {
 		add(buttons);
 	}
 
-	//JAVADOC
+	/**
+	 * The method will create the HeaderPane
+	 */
 	private void createHeaderPane() {
 		//TODO create a costume JPanel/JTextPane that adjusts its height to minimal so there isn't a **** gap and is
 		// still able to lay out text
@@ -144,7 +164,9 @@ public class FinancialProblemPanel extends JPanel {
 		header.setBackground(new Color(236, 236, 236));
 	}
 
-	//JAVADOC
+	/**
+	 * The method will create the haggle button
+	 */
 	private void createHaggleButton() {
 		haggle = new JButton("Handeln");
 		haggle.addActionListener(new ActionListener() {
@@ -158,7 +180,9 @@ public class FinancialProblemPanel extends JPanel {
 		});
 	}
 
-	//JAVADOC
+	/**
+	 * The method will create the mortage button
+	 */
 	private void createMortgageButton() {
 		mortgage = new JButton("Hypothek");
 		mortgage.addActionListener(new ActionListener() {
@@ -172,7 +196,9 @@ public class FinancialProblemPanel extends JPanel {
 		});
 	}
 
-	//JAVADOC
+	/**
+	 * The method will create the give up / resolve button
+	 */
 	private void createResolveButton() {
 		resolve = new JButton("Aufgeben");
 		resolve.setAlignmentX(CENTER_ALIGNMENT);

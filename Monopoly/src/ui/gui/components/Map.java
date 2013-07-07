@@ -10,9 +10,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * The Map class will create all FieldCards, based on the model and displays them.
+ */
 public class Map extends JPanel {
 	ArrayList<FieldCard> fieldCardArrayList;
 
+	/**
+	 * @param layout The value determines the layout manager to be used - preferred the MapLayout
+	 * @param model  The value determines the model to obtain the information from
+	 */
 	Map(LayoutManager layout, final Model model) {
 		super(layout);
 		FieldCard card = null;
@@ -20,7 +27,7 @@ public class Map extends JPanel {
 		Color color;
 		fieldCardArrayList = new ArrayList<FieldCard>();
 
-		for(FieldData fieldData : model.getFieldDataArrayList()) {
+		for(FieldData fieldData : model.getMapData()) {
 			if(fieldData instanceof StreetData) {
 				StreetData data = (StreetData) fieldData;
 				colorData = data.getCOLOR();
@@ -64,8 +71,8 @@ public class Map extends JPanel {
 							fieldCard.removeAll();
 							for(PlayerData playerData : model.getPlayerHashMap().values()) {
 								if(playerData.getPosition().getFieldNumber() == i) {
-									fieldCard.updatePlayerPosition(playerData.getId(), playerData.getName().charAt(0),
-									                               playerData.getColor());
+									fieldCard.addPlayerPosition(playerData.getId(), playerData.getName().charAt(0),
+									                            playerData.getColor());
 								}
 							}
 						}

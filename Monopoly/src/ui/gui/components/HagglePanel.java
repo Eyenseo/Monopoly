@@ -178,6 +178,9 @@ public class HagglePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * @return The return value is a ComboBoxModel with all player names
+	 */
 	private ComboBoxModel<String> createPlayerNameModel() {
 		HashMap<Integer, PlayerData> playerDataHashMap = model.getPlayerHashMap();
 		String[] playerNames = new String[playerDataHashMap.size() - 1];

@@ -112,7 +112,10 @@ public class ClientOperator {
 		firePurchasableDataEvent((PurchasableData) fieldData);
 	}
 
-	//JAVADOC
+	/**
+	 * The method is called if the client receives new MessageData anf will fire a new ClientMessageDataEvent
+	 * @param massageData
+	 */
 	public void updateMessageData(MassageData massageData) {
 		fireMessageDataEvent(massageData);
 	}
@@ -129,7 +132,10 @@ public class ClientOperator {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method will fire a ClientMessageDataEvent with the messageData as the attribute of the event.
+	 * @param massageData The value determines the MessageData to be set as attribute of the event
+	 */
 	private void fireMessageDataEvent(MassageData massageData) {
 		ClientOperatorMessageDataEvent event = new ClientOperatorMessageDataEvent(this, massageData);
 		for(ClientOperatorMessageDataEventListener l : messageDataEventListeners) {
@@ -179,12 +185,18 @@ public class ClientOperator {
 		fieldDataEventListeners.remove(listener);
 	}
 
-	//JAVADOC
+	/**
+	 *
+	 * @param listener The value determines the listener to be added
+	 */
 	public void addMessageDataEventListener(ClientOperatorMessageDataEventListener listener) {
 		messageDataEventListeners.add(listener);
 	}
 
-	//JAVADOC
+	/**
+	 *
+	 * @param listener The value determines the listener to be removed
+	 */
 	public void removeMessageEventListener(ClientOperatorMessageDataEventListener listener) {
 		messageDataEventListeners.remove(listener);
 	}

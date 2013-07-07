@@ -19,6 +19,9 @@ public class PurchasableCardLayoutConstraints {
 		STREET, STATION, FACILITY
 	}
 
+	/**
+	 * The default constructor has position -1 and type null
+	 */
 	public PurchasableCardLayoutConstraints() {
 		position = -1;
 		type = null;

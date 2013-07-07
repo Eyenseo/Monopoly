@@ -133,7 +133,7 @@ public class PurchasableCardLayout implements LayoutManager2 {
 
 	/**
 	 * @param parent The value determines the parent component
-	 * @return The return value is the preferred layout sSize
+	 * @return The return value is the preferred layout size
 	 */
 	@Override public Dimension preferredLayoutSize(Container parent) {
 		return getLayoutSize(parent, true);

@@ -8,8 +8,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//JAVADOC
+/**
+ * The Custom Dialog is a class to be used to display card text
+ */
+//TODO replace with a panel on the MapPanel
 public class CustomDialog extends JFrame {
+	/**
+	 * @param model       The value determines the Model to obtain information from
+	 * @param massageData The value determines the messageDate that contains all information that is needed to display the CustomDialog
+	 */
 	public CustomDialog(final Model model, final MassageData massageData) {
 		super(model.getPlayerHashMap().get(massageData.getUserId()).getName() + ": " + massageData.getTyp());
 		JPanel panel = new JPanel();

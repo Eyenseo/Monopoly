@@ -28,22 +28,30 @@ public abstract class Card implements Serializable {
 		listener = new ArrayList<MessageEventListener>();
 	}
 
-	//JAVADOC
+	/**
+	 * @param listener the value determines the messageEventListener to be added
+	 */
 	public void addMessageEventListener(MessageEventListener listener) {
 		this.listener.add(listener);
 	}
 
-	//JAVADOC
+	/**
+	 * @param listener the value determines the messageEventListener to be removed
+	 */
 	public void removeMessageEventListener(MessageEventListener listener) {
 		this.listener.remove(listener);
 	}
 
-	//JAVADOC
+	/**
+	 * The method will fire a MessageDataEvent for all listeners.
+	 * If the Name of the CardStack is "Event Karte" the type of the MessageData is CHANCE
+	 */
+	//TODO replace the String comparison with a enum value
 	public void fireMessageEvent(int playerid) {
 		MassageData.MassageType type;
 		//TODO better implementation
 		if(NAME.equals("Event Karte")) {
-			type = MassageData.MassageType.EVENT;
+			type = MassageData.MassageType.CHANCE;
 		} else {
 			type = MassageData.MassageType.COMMUNITY;
 		}

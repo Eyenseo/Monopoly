@@ -22,7 +22,10 @@ public abstract class ActionData {
 		return userId;
 	}
 
-	//JAVADOC
+	/**
+	 *
+	 * @return The return value is the id of the ActionData + the ClassName + the user id
+	 */
 	public String getId() {
 		String name = getClass().getName();
 		return "No: " + id + " " + name.substring(name.lastIndexOf(".") + 1, name.length()) + " from user: " + userId;

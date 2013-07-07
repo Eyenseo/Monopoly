@@ -1,10 +1,14 @@
 package objects.value.map;
 
+
 /**
- * Created with IntelliJ IDEA. User: eyenseo Date: 7/6/13 Time: 8:19 PM To change this template use File | Settings |
- * File Templates.
+ * The GoData is a class for the network communication that holds all needed information
  */
 public class GoData extends NotPurchasableData {
+	/**
+	 * @param fieldNumber the value determines the id
+	 * @param name        the value determines the name
+	 */
 	public GoData(int fieldNumber, String name) {
 		super(fieldNumber, name);
 	}

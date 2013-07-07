@@ -57,11 +57,11 @@ public class Station extends PurchasableCircularList implements Serializable {
 	}
 
 	/**
-	 * The method will transfer the money the player has to pay to the owner
+	 * The method will transfer twice of the money if doublePay is true the money the player has to pay to the owner
 	 *
 	 * @param player The value determines the Player who caused the method call
+	 * @param doublePay The value determines if the player has to pay double
 	 */
-	//JAVADOC
 	public void action(Player player, boolean doublePay) {
 		if(getOwner() != null && !player.equals(getOwner()) && doublePay && !isInMortgage()) {
 			player.pay(getBill(player) * 2);

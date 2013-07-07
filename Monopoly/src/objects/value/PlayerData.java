@@ -4,9 +4,7 @@ import objects.value.map.FieldData;
 
 import java.awt.*;
 
-/**
- * The PlayerData is a class for the network communication that holds all needed information
- */
+
 public class PlayerData {
 	private final int       id;
 	private final String    name;
@@ -53,10 +51,18 @@ public class PlayerData {
 		this.giveUp = giveUp;
 	}
 
+	/**
+	 *
+	 * @return The return value is true if the player gave up
+	 */
 	public boolean isGiveUp() {
 		return giveUp;
 	}
 
+	/**
+	 *
+	 * @param giveUp The value determines if the player gave up or not
+	 */
 	public void setGiveUp(boolean giveUp) {
 		this.giveUp = giveUp;
 	}
@@ -187,16 +193,26 @@ public class PlayerData {
 		this.trading = trading;
 	}
 
-	//JAVADOC
+	/**
+	 *
+	 * @return the return value is the neededMoney (money that the player has to obtain)
+	 */
 	public int getNeededMoney() {
 		return neededMoney;
 	}
 
-	//JAVADOC
+	/**
+	 *
+	 * @param neededMoney  The value determines the amount of needed money of the player
+	 */
 	public void setNeededMoney(int neededMoney) {
 		this.neededMoney = neededMoney;
 	}
 
+	/**
+	 *
+	 * @return the value determines the color of the player
+	 */
 	public Color getColor() {
 		return color;
 	}

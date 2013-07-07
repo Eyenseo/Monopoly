@@ -2,6 +2,9 @@ package objects.value;
 
 import java.util.HashMap;
 
+/**
+ * The class is used to send all Player's playerData to the clients
+ */
 public class InitializePlayer {
 	private final HashMap<Integer, PlayerData> playerData;
 	private final int                          userId;

@@ -88,7 +88,7 @@ public class ServerOperator {
 	/**
 	 * the methods sends a message data object to each client.
 	 *
-	 * @param massageData the value determines either the MessageType COMMUNITY or EVENT and the text of the card.
+	 * @param massageData the value determines either the MessageType COMMUNITY or CHANCE and the text of the card.
 	 */
 	public void sendCardData(MassageData massageData) {
 		for(ClientOperator client : destination.values()) {
@@ -127,7 +127,7 @@ public class ServerOperator {
 			}
 		});
 	}
-
+	
 	/**
 	 * Removes a player from the destination HashMap.
 	 *

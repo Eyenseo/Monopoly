@@ -3,6 +3,9 @@ package ui.gui.components;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The PlayerFigure class is used to display a player figure on a FieldCard
+ */
 public class PlayerFigure extends JPanel {
 	public static int width  = 50;
 	public static int height = width;
@@ -13,6 +16,10 @@ public class PlayerFigure extends JPanel {
 	private int   nameX;
 	private int   nameY;
 
+	/**
+	 * @param color The value determines the color of the player that shall be used to display the player figure
+	 * @param name  The value determines the first character of the player name
+	 */
 	PlayerFigure(Color color, char name) {
 		this.color = color;
 		this.name = name;
@@ -26,6 +33,11 @@ public class PlayerFigure extends JPanel {
 		nameY = height / 2 + lineHeightAdjustment;
 	}
 
+	/**
+	 * The method will paint hte player figure
+	 *
+	 * @param g The value determines the graphics object to be used
+	 */
 	@Override public void paintComponent(Graphics g) {
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 

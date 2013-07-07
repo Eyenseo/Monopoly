@@ -51,7 +51,7 @@ class ControlPanel extends JPanel {
 		mortgageText = "Hypothek";
 		giveUpText = "Aufgeben";
 		endAppText = "Beenden";
-		chatHistoryText = "BALALALLLALALAALLALALALA";
+		chatHistoryText = "Hier sollte ein Chat hin";
 
 		add(buildButtonPanel(), BorderLayout.NORTH);
 		add(buildChatPanel(), BorderLayout.CENTER);
@@ -183,7 +183,7 @@ class ControlPanel extends JPanel {
 	 * @return The return value is a panel with a chat history TextArea and a chat massage TextArea divided by a SplitPane
 	 */
 	private JPanel buildChatPanel() {
-		chatHistory = new JTextArea("BALALALLLALALAALLALALALA");
+		chatHistory = new JTextArea(chatHistoryText);
 		chatHistory.setEditable(false);
 
 		JScrollPane seeScrollPane = new JScrollPane(chatHistory);
@@ -191,7 +191,7 @@ class ControlPanel extends JPanel {
 		seeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		seeScrollPane.setPreferredSize(new Dimension(100, 150));
 
-		chatMessage = new JTextArea("BALALALLLALALAALLALALALA");
+		chatMessage = new JTextArea("ier sollte ihre Nachtricht eingegeben werden");
 		JScrollPane writeScrollPane = new JScrollPane(chatMessage);
 		writeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		writeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

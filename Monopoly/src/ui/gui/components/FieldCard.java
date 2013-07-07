@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 
+/**
+ * The FieldCard class is a JPanel that displays a pice of the Map of the game
+ */
 public class FieldCard extends JPanel {
 	public static final  int  widthCard  = 175;
 	public static final  int  heightCard = 220;
@@ -45,6 +48,11 @@ public class FieldCard extends JPanel {
 	//do playerHashMap
 	private HashMap<Integer, PlayerFigure> playerHashMap;
 
+	/**
+	 * @param headerName  The value determines the name of the field
+	 * @param streetColor The value determines the the color of the header (used for Streets)
+	 * @param price       The value determines the price of the field
+	 */
 	FieldCard(String headerName, Color streetColor, int price) {
 		this.headerName = headerName;
 		this.streetColor = streetColor;
@@ -58,6 +66,11 @@ public class FieldCard extends JPanel {
 		changePurchasableTextPlacement();
 	}
 
+	/**
+	 * @param headerName The value determines the name of the field
+	 * @param image      The value determines the path to the image that shall be displayed - eg. for a facility field
+	 * @param price      The value determines the price of the field
+	 */
 	FieldCard(String headerName, String image, int price) {
 		this.headerName = headerName;
 		try {
@@ -77,6 +90,10 @@ public class FieldCard extends JPanel {
 		changePurchasableTextPlacement();
 	}
 
+	/**
+	 * @param headerName The value determines the name of the field
+	 * @param image      The value determines the image that shall be displayed - eg. for the go field
+	 */
 	FieldCard(String headerName, String image) {
 		this.headerName = headerName;
 		try {
@@ -97,14 +114,27 @@ public class FieldCard extends JPanel {
 		changeTextPlacement();
 	}
 
-	public void updatePlayerPosition(int id, char playerName, Color playerColor) {
+	/**
+	 * @param id          The value determines the id of the Player to display
+	 * @param playerName  The value determines the first char of the name of the player
+	 * @param playerColor The value determines the color of the player
+	 */
+	public void addPlayerPosition(int id, char playerName, Color playerColor) {
 		playerHashMap.put(id, new PlayerFigure(playerColor, playerName));
 	}
 
+	/**
+	 * The method will remove all PlayerFigures
+	 */
 	public void removeAll() {
 		playerHashMap = new HashMap<Integer, PlayerFigure>();
 	}
 
+	/**
+	 * The method will paint the card, the scale and rotation will be used
+	 *
+	 * @param graphics The value determines the graphics object that shall be used
+	 */
 	@Override public void paintComponent(Graphics graphics) {
 		Graphics2D g = (Graphics2D) graphics;
 		AffineTransform backUp = g.getTransform();
@@ -178,6 +208,10 @@ public class FieldCard extends JPanel {
 		g.setTransform(backUp);
 	}
 
+	/**
+	 * @param rotation The value determines the rotation the Card shall be drawn with <ul> <li>BOTTOM: 0 Degrees</li>
+	 *                 <li>LEFT: 90 Degrees</li> <li>TOP: 180 Degrees</li> <li>BOTTOM: 270 Degrees</li> </ul>
+	 */
 	public void setRotation(Rotation rotation) {
 		switch(rotation) {
 			case BOTTOM:
@@ -195,6 +229,14 @@ public class FieldCard extends JPanel {
 		}
 	}
 
+	/**
+	 * The method will set the bounds of the card and will recalculate the positions of all things to be drawn
+	 *
+	 * @param x      The value determines the x position
+	 * @param y      The value determines the y position
+	 * @param width  The value determines the width
+	 * @param height The value determines the height
+	 */
 	@Override public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
@@ -206,6 +248,9 @@ public class FieldCard extends JPanel {
 		changePurchasableTextPlacement();
 	}
 
+	/**
+	 * The method will calculate the position of the price Text if a price is set
+	 */
 	public void changePurchasableTextPlacement() {
 		changeTextPlacement();
 
@@ -216,6 +261,9 @@ public class FieldCard extends JPanel {
 		}
 	}
 
+	/**
+	 * The method will calculate the position of the name of the feld
+	 */
 	public void changeTextPlacement() {
 		//header calculation
 		FontMetrics fontMetrics = getFontMetrics(headerFont);
@@ -223,10 +271,16 @@ public class FieldCard extends JPanel {
 		headerNameY = fontMetrics.getHeight();
 	}
 
+	/**
+	 * @param scale The value determines the scale the card shall be drawn with
+	 */
 	public void setScale(double scale) {
 		this.scale = scale;
 	}
 
+	/**
+	 * The enum field is used to select the rotation of a FieldCard
+	 */
 	public enum Rotation {
 		BOTTOM, LEFT, TOP, RIGHT
 	}

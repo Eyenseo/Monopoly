@@ -5,6 +5,9 @@ import ui.gui.components.FieldCard;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * The MapLayout is used to lay out FieldCards in a rectangle starting in the bottom right hand corner
+ */
 public class MapLayout implements LayoutManager2 {
 	private final ArrayList<FieldCard> fieldCardComponents;
 
@@ -12,6 +15,11 @@ public class MapLayout implements LayoutManager2 {
 		fieldCardComponents = new ArrayList<FieldCard>();
 	}
 
+	/**
+	 * @param comp        The value determines the component o be added to the Layout
+	 * @param constraints The value determines the constraints to be used - ADD WITH null !!
+	 */
+	//TODO get the components from the parent
 	@Override public void addLayoutComponent(Component comp, Object constraints) {
 		//checks if added component is of correct type
 		if(comp instanceof FieldCard) {
@@ -25,32 +33,66 @@ public class MapLayout implements LayoutManager2 {
 		}
 	}
 
+	/**
+	 * @param target not needed for this layoutManager;
+	 * @return the return value is a Dimension with <code>Integer.MAX_VALUE</code> size
+	 */
 	@Override public Dimension maximumLayoutSize(Container target) {
 		return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
 	}
 
+	/**
+	 * @param target not needed for this layoutManager;
+	 * @return The return value is <code>0.5f</code>
+	 */
 	@Override public float getLayoutAlignmentX(Container target) {
 		return 0.5f;
 	}
 
+	/**
+	 * @param target not needed for this layoutManager;
+	 * @return The return value is <code>0.5f</code>
+	 */
 	@Override public float getLayoutAlignmentY(Container target) {
 		return 0.5f;
 	}
 
+	/**
+	 * Not implemented / needed
+	 *
+	 * @param target not needed for this layoutManager;
+	 */
 	@Override public void invalidateLayout(Container target) {
 	}
 
+	/**
+	 * The layout manager doesn't associate strings with components
+	 *
+	 * @param name not needed for this layoutManager;
+	 * @param comp not needed for this layoutManager;
+	 */
 	@Override public void addLayoutComponent(String name, Component comp) {
+		//Empty since the layout manager doesn't associate strings with components
 	}
 
+	/**
+	 * @param comp The value determines the component to be removed
+	 */
 	@Override public void removeLayoutComponent(Component comp) {
 		fieldCardComponents.remove(comp);
 	}
 
+	/**
+	 * @param parent The value determines the parent component
+	 * @return The return value is the preferred layout size - the size is the size of the parent
+	 */
 	@Override public Dimension preferredLayoutSize(Container parent) {
 		return parent.getParent().getSize();
 	}
 
+	/**
+	 * @return The return value is the real size that the component needs
+	 */
 	private Dimension realSize() {
 		int mapSize = fieldCardComponents.size();
 		Dimension dimension = new Dimension(0, 0);
@@ -75,10 +117,21 @@ public class MapLayout implements LayoutManager2 {
 		return dimension;
 	}
 
+	/**
+	 * @param parent The value determines the parent component
+	 * @return The return value is the minimum layout size - the size is the size of the parent
+	 */
 	@Override public Dimension minimumLayoutSize(Container parent) {
 		return preferredLayoutSize(parent);
 	}
 
+	/**
+	 * The method will lay out all components, if the amount of components is not dividable by 4 the components will
+	 * get
+	 * stretched
+	 *
+	 * @param parent The value determines the parent component
+	 */
 	@Override public void layoutContainer(Container parent) {
 		int cardOverflow = fieldCardComponents.size() % 4;
 		int cardsPerSide = fieldCardComponents.size() / 4;
@@ -132,6 +185,19 @@ public class MapLayout implements LayoutManager2 {
 		}
 	}
 
+	/**
+	 * The method will set the boundary of the component
+	 *
+	 * @param scale            The value determines the scale of the component
+	 * @param siteNumber       The value determines site <ul></ul> <li>0: bottom</li> <li>1: left</li> <li>2: top</li>
+	 *                         <li>3: right</li>
+	 * @param currentSiteCard  The value determines the index from the site
+	 * @param point            The value determines the point at which the card has to be drawn
+	 * @param currentCardIndex The value determines the the index of the card from all cards
+	 * @param cardWidth        The value determines the card width
+	 * @param cardHeight       The value determines the card height
+	 * @param cardsPerSide     The value determines the how many cards will be placed on the side
+	 */
 	public void setBoundaries(double scale, int siteNumber, int currentSiteCard, Point point, int currentCardIndex,
 	                          int cardWidth, int cardHeight, int cardsPerSide) {
 		FieldCard.Rotation angle = FieldCard.Rotation.BOTTOM;

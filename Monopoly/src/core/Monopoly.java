@@ -12,7 +12,6 @@ import java.util.Iterator;
 /**
  * Monopoly is the main Class. It initialises the game and hold pieces of the mechanic.
  */
-//JAVADOC
 public class Monopoly {
 	private final int     STARTMONEY = 30000;
 	private final boolean gameOver   = false;

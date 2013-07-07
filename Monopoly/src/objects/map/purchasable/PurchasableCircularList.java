@@ -137,6 +137,9 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	}
 
 	@Override
+	/**
+	 * The method will return the name of the purchasable and if there is a Owner the name will be added in braces
+	 */
 	public String toString() {
 		return getName() + ((getOwner() != null) ? " (" + getOwner() + ")" : "");
 	}
@@ -149,7 +152,8 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	}
 
 	/**
-	 * The method adds this object to the new owner and removes it from the old one. The method will fire PurchasableEvent
+	 * The method adds this object to the new owner and removes it from the old one. The method will fire
+	 * PurchasableEvent
 	 *
 	 * @param owner The value determines the owner.
 	 */
@@ -212,6 +216,9 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 		}
 	}
 
+	/**
+	 * @return The return value is a FieldData object with all attribute values of the purchasable
+	 */
 	@Override public abstract FieldData toFieldData();
 
 	/**

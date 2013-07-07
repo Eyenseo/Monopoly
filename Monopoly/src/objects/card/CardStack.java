@@ -27,17 +27,18 @@ public class CardStack implements Serializable {
 	public CardStack(String file, String name) throws StorageReaderException {
 		stack = new ArrayList<Card>();
 		top = 0;
-		ArrayList<Card> temp;
 		Random random = new Random();
+
 		int index;
-		temp = new CardCreator(file, name).cardArray();
+		ArrayList<Card> temp = new CardCreator(file, name).cardArray();
+
 		while(!temp.isEmpty()) {
 			index = random.nextInt(temp.size());
 			index = index - (index == 0 ? 0 : 1);
 			stack.add(temp.get(index));
 			temp.remove(index);
 		}
-		//TODO Check for notOneInstance
+
 		for(int i = 0; i < stack.size(); i++) {
 			stack.get(i).setIndex(i);
 		}

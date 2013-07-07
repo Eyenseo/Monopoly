@@ -23,7 +23,7 @@ public class Model {
 	//Event listeners
 	private final HashMap<ModelEventName, ArrayList<ModelEventListener>> listener;
 	//Data
-	private final ArrayList<FieldData>                                   map;
+	private final ArrayList<FieldData>                                   mapData;
 	private       HashMap<Integer, ArrayList<PurchasableData>>           purchasableHashMap;
 	private       HashMap<Integer, PlayerData>                           playerHashMap;
 	private       PlayerData                                             user; //TODO change to int
@@ -39,7 +39,7 @@ public class Model {
 
 	/**
 	 * @param clientOperator    the value determines the client operator of the Model
-	 * @param initializeMapData the value determines the map data to be displayed
+	 * @param initializeMapData the value determines the mapData data to be displayed
 	 */
 	public Model(ClientOperator clientOperator, InitializeMapData initializeMapData) {
 		//Event listener
@@ -52,7 +52,7 @@ public class Model {
 		massageDataArrayList = new ArrayList<MassageData>();
 
 		//Map
-		map = initializeMapData.getMap();
+		mapData = initializeMapData.getMap();
 
 		//States
 		currentMainPanelName = MainPanelName.GAME;
@@ -88,7 +88,7 @@ public class Model {
 			@Override public void actionPerformed(ClientOperatorMessageDataEvent event) {
 				switch(event.getMassageData().getTyp()) {
 					case COMMUNITY:
-					case EVENT:
+					case CHANCE:
 						massageDataArrayList.add(event.getMassageData());
 						fireModelEvent(ModelEventName.CARD);
 						break;
@@ -263,7 +263,9 @@ public class Model {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the previous MainPanelName
+	 */
 	public MainPanelName getPreviousMainPanelName() {
 		return previousMainPanelName;
 	}
@@ -527,13 +529,18 @@ public class Model {
 		return playerHashMap;
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the messageDataArrayList with all not processed messages
+	 */
 	public ArrayList<MassageData> getMassageDataArrayList() {
 		return massageDataArrayList;
 	}
 
-	public ArrayList<FieldData> getFieldDataArrayList() {
-		return map;
+	/**
+	 * @return The return value is the mapData
+	 */
+	public ArrayList<FieldData> getMapData() {
+		return mapData;
 	}
 
 	/**

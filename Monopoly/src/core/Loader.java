@@ -7,10 +7,7 @@ import objects.exceptions.MessageStackException;
 import objects.exceptions.core.LoaderException;
 import objects.map.FieldCircularList;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -37,8 +34,7 @@ class Loader {
 		copyFile("map.txt");
 		copyFile("community.txt");
 		copyFile("events.txt");
-		//		if(isSerialized()) {
-		if(false) {
+		if(isSerialized()) {
 			try {
 				//reads serialized data from monopoly.ser to get every map data and player data
 				ObjectInputStream serializedFile = new ObjectInputStream(new FileInputStream("monopoly.ser"));
@@ -57,26 +53,26 @@ class Loader {
 		} else {
 			//creates a new MapArrayCreator, gets every map data and creates/connects a new map.
 			//newly created data is serialized and stored in monopoly.ser
-			//			try {
-			//TODO load files in three threads and check for a.join(), b.join() c.join()
-			MapArrayCreator mac = new MapArrayCreator();
-			event = new CardStack("events.txt", "Event Karte");
-			community = new CardStack("community.txt", "Gemeinschafts Karte");
-			new Connector().connect(mac.getMap(), event, community, playerHashMap);
-			go = mac.getGo();
-			jail = mac.getJail();
-			//				ObjectOutputStream serializedFile =
-			//						new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("monopoly.ser")));
-			//				serializedFile.writeObject(go);
-			//				serializedFile.writeObject(jail);
-			//				serializedFile.writeObject(event);
-			//				serializedFile.writeObject(community);
-			//				serializedFile.writeObject(playerHashMap);
-			//				serializedFile.close();
-			//			} catch(IOException e) {
-			//				new File("monopoly.ser").delete();
-			//				throw new LoaderException("The problem occurred while writing to the monopoly.ser file.", e);
-			//			}
+			try {
+				//TODO load files in three threads and check for a.join(), b.join() c.join()
+				MapArrayCreator mac = new MapArrayCreator();
+				event = new CardStack("events.txt", "Event Karte");
+				community = new CardStack("community.txt", "Gemeinschafts Karte");
+				new Connector().connect(mac.getMap(), event, community, playerHashMap);
+				go = mac.getGo();
+				jail = mac.getJail();
+				ObjectOutputStream serializedFile =
+						new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("monopoly.ser")));
+				serializedFile.writeObject(go);
+				serializedFile.writeObject(jail);
+				serializedFile.writeObject(event);
+				serializedFile.writeObject(community);
+				serializedFile.writeObject(playerHashMap);
+				serializedFile.close();
+			} catch(IOException e) {
+				new File("monopoly.ser").delete();
+				throw new LoaderException("The problem occurred while writing to the monopoly.ser file.", e);
+			}
 		}
 	}
 
@@ -132,10 +128,18 @@ class Loader {
 		return playerHashMap;
 	}
 
+	/**
+	 *
+	 * @return The return is the event CardStack
+	 */
 	CardStack getEvent() {
 		return event;
 	}
 
+	/**
+	 *
+	 * @return The return value is the community CardStack
+	 */
 	CardStack getCommunity() {
 		return community;
 	}
