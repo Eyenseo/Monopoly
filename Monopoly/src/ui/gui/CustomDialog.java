@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 //JAVADOC
 public class CustomDialog extends JFrame {
 	public CustomDialog(final Model model, final MassageData massageData) {
-		super(massageData.getUserId() + ": " + massageData.getTyp());
+		super(model.getPlayerHashMap().get(massageData.getUserId()).getName() + ": " + massageData.getTyp());
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
