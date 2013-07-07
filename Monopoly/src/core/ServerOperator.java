@@ -39,10 +39,12 @@ public class ServerOperator {
 		FieldCircularList go = monopoly.getGo();
 		FieldCircularList currentField = go;
 		do {
+			//adds eventlisteners to every purchasable field and performs actions if needed
 			if(currentField instanceof PurchasableCircularList) {
 				final PurchasableCircularList purchasable = (PurchasableCircularList) currentField;
 				purchasable.addPurchasableEventListener(new PurchasableEventListener() {
 					@Override public void actionPerformed(PurchasableEvent event) {
+						//synchronizes new purchasable data with every client
 						for(ClientOperator client : destination.values()) {
 							client.updateFieldData(purchasable.toFieldData());
 						}
@@ -83,6 +85,11 @@ public class ServerOperator {
 		} while(!start.equals(currentCard));
 	}
 
+	/**
+	 * the methods sends a message data object to each client.
+	 *
+	 * @param massageData the value determines either the MessageType COMMUNITY or EVENT and the text of the card.
+	 */
 	public void sendCardData(MassageData massageData) {
 		for(ClientOperator client : destination.values()) {
 			client.updateMessageData(massageData);
@@ -121,6 +128,11 @@ public class ServerOperator {
 		});
 	}
 
+	/**
+	 * Removes a player from the destination HashMap.
+	 *
+	 * @param playerId The value determines the ID of the player to be removed
+	 */
 	public void removeDestination(int playerId) {
 		destination.remove(playerId);
 	}

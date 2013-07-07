@@ -40,6 +40,7 @@ class Loader {
 		//		if(isSerialized()) {
 		if(false) {
 			try {
+				//reads serialized data from monopoly.ser to get every map data and player data
 				ObjectInputStream serializedFile = new ObjectInputStream(new FileInputStream("monopoly.ser"));
 				go = (FieldCircularList) serializedFile.readObject();
 				jail = (FieldCircularList) serializedFile.readObject();
@@ -54,6 +55,8 @@ class Loader {
 				throw new LoaderException("The problem occurred while reading a class from the file monopoly.ser.", e);
 			}
 		} else {
+			//creates a new MapArrayCreator, gets every map data and creates/connects a new map.
+			//newly created data is serialized and stored in monopoly.ser
 			//			try {
 			//TODO load files in three threads and check for a.join(), b.join() c.join()
 			MapArrayCreator mac = new MapArrayCreator();
@@ -85,6 +88,7 @@ class Loader {
 	 */
 	private void copyFile(String file) throws LoaderException {
 		try {
+			//copies files from storage to executing directory
 			File out = new File(file);
 			if(!out.exists()) {
 				File original = new File(getClass().getResource(path + file).toURI());
