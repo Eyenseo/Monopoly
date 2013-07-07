@@ -10,8 +10,10 @@ import objects.value.action.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//JAVADOC
-//TODO find a better / less costly way to have "something like" a Thread
+/**
+ * The ActionThread class will execute the given request, in form of a ActionData object from a client
+ */
+//TODO replace / use with with threadpools
 public class ActionThread extends Thread {
 	private final Player                                          currentPlayer;
 	private       HashMap<Integer, Player>                        playerHashMap;
@@ -21,7 +23,16 @@ public class ActionThread extends Thread {
 	private       Thread                                          turnThread;
 	private       HashMap<Integer, HashMap<String, ActionThread>> actions;
 
-	//JAVADOC
+	/**
+	 * @param playerHashMap  The value determines the HashMap from Monopoly where all players are stored
+	 * @param currentPlayer  The value determines the player who is currently at turn
+	 * @param actionData     The value determines the actionData that contain the request, that shall be done by the
+	 *                       server
+	 * @param serverOperator The value determines the ServerOperator, that is connected with all clients
+	 * @param jail           The value determines the jail field
+	 * @param turnThread     The value determines the turnThread, that sets the active player
+	 * @param actions        The value determines the HashMap in which all running threads are stored in
+	 */
 	public ActionThread(HashMap<Integer, Player> playerHashMap, Player currentPlayer, ActionData actionData,
 	                    ServerOperator serverOperator, FieldCircularList jail, Thread turnThread,
 	                    HashMap<Integer, HashMap<String, ActionThread>> actions) {
@@ -34,6 +45,11 @@ public class ActionThread extends Thread {
 		this.actions = actions;
 	}
 
+	/**
+	 * The method is executed by the thread upon start. Based on the type of the ActionData the respective method
+	 * will be
+	 * called
+	 */
 	@Override public void run() {
 		Player user = playerHashMap.get(actionData.getUserId());
 
@@ -54,7 +70,12 @@ public class ActionThread extends Thread {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method will check if the player has stopped the turn or can still move forward
+	 *
+	 * @param user The value determines the Player the TurnData is from
+	 * @param data The value determines the TurnData that needs to be processed
+	 */
 	private void turnAction(Player user, TurnData data) {
 		synchronized(turnThread) {
 			if(data.isTurnAction()) {
@@ -73,7 +94,12 @@ public class ActionThread extends Thread {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method will check if the player wants to update a Street or if he wants to buy a purchasable and executes the request
+	 *
+	 * @param user       The value determines the Player the BuyData is from
+	 * @param actionData The value determines the BuyData that needs to be processed
+	 */
 	private void buyAction(Player user, BuyData actionData) {
 		if(user.getPosition() instanceof PurchasableCircularList) { //TODO check if this is enough
 			if(actionData.isUpgrade()) {
@@ -84,11 +110,22 @@ public class ActionThread extends Thread {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method will check at which state the trade is at, if at:
+	 * <ul>
+	 *     <li>ESTABLISH: Will check if one of the Player are currently trading and will send the HaggleData back with<br>ESTABLISHED if they are not trading (and sets the Player to be trading</br><br>DECLINE if one of them is trading</br></li>
+	 *     <li>ESTABLISHED: Will never happen since that state is only set at the server</li>
+	 *     <li>REQUEST: Will forward the HaggleData to all clients</li>
+	 *     <li>OFFER: Will forward the HaggleData to all clients</li>
+	 *     <li>ACCEPT: Will execute the trade eg. move the purchasable to its new respective owner and transfers the money between them and sets the player to be not trading</li>
+	 *     <li>DECLINE: Will set the two player to be not trading</li>
+	 * </ul>
+	 *
+	 * @param user
+	 * @param actionData
+	 */
 	private void haggleAction(Player user, HaggleData actionData) {
 		Player seller;
-
-		System.out.println("User Id: " + actionData.getUserId() + " with Seller Id: " + actionData.getSellerId());
 
 		switch(actionData.getHaggleState()) {
 			case ESTABLISH:
@@ -162,7 +199,11 @@ public class ActionThread extends Thread {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method call the right purchasable of the player to change its mortgage state
+	 * @param user The value determines the Player the MortgageData is from
+	 * @param actionData The value determines the MortgageData that needs to be processed
+	 */
 	private void mortgageAction(Player user, MortgageData actionData) {
 		ArrayList<PurchasableCircularList> purchasableCircularListArrayList = user.getProperties();
 		for(PurchasableCircularList purchasable : purchasableCircularListArrayList) {
@@ -173,7 +214,11 @@ public class ActionThread extends Thread {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method will check if the player wants to give up or wants to resolve a financial problem if a financial problem is said to be resolved all waiting threads are notified, if the player gives up he will be removed from the game
+	 * @param user The value determines the Player the PlayerStatusData is from
+	 * @param actionData The value determines the PlayerStatusData
+	 */
 	private void playerStatusAction(Player user, PlayerStatusData actionData) {
 		switch(actionData.getStatus()) {
 			case GIVEUP:
@@ -191,7 +236,11 @@ public class ActionThread extends Thread {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * The method will remove the player from the game
+	 * @param user The value determines the Player the PlayerStatusData is from
+	 * @param actionData The value determines the PlayerStatusData to be processed
+	 */
 	private void removePlayer(Player user, PlayerStatusData actionData) {
 		//Cancel all trades that the player had - upon receiving player give up the client will remove the player
 		// anyway
@@ -234,7 +283,9 @@ public class ActionThread extends Thread {
 		}
 	}
 
-	//JAVADOC
+	/**
+	 * @return The return value is the ActionData the ActionThread was initialised with
+	 */
 	public ActionData getActionData() {
 		return actionData;
 	}
