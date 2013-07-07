@@ -129,7 +129,6 @@ class Loader {
 	}
 
 	/**
-	 *
 	 * @return The return is the event CardStack
 	 */
 	CardStack getEvent() {
@@ -137,7 +136,6 @@ class Loader {
 	}
 
 	/**
-	 *
 	 * @return The return value is the community CardStack
 	 */
 	CardStack getCommunity() {

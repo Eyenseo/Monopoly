@@ -22,10 +22,10 @@ public class FieldCard extends JPanel {
 	private static final Font normFont   = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
 	private static final Font headerFont = new Font(Font.SANS_SERIF, Font.BOLD, 17);
 
-	public int rotation;
+	private int rotation;
 
-	int width;
-	int height;
+	private       int width;
+	private final int height;
 
 	//Color
 	private static final Color borderColor     = new Color(0, 0, 0);
@@ -35,15 +35,15 @@ public class FieldCard extends JPanel {
 	private BufferedImage image;
 	//Header
 	private static final int headerBackgroundHeight = 40;
-	private String headerName;
-	private int    headerNameX;
-	private int    headerNameY;
+	private final String headerName;
+	private       int    headerNameX;
+	private       int    headerNameY;
 	//Base
-	private String price;
-	private int    priceX;
-	private int    priceY;
+	private final String price;
+	private       int    priceX;
+	private       int    priceY;
 
-	double scale;
+	private double scale;
 
 	//do playerHashMap
 	private HashMap<Integer, PlayerFigure> playerHashMap;
@@ -251,7 +251,7 @@ public class FieldCard extends JPanel {
 	/**
 	 * The method will calculate the position of the price Text if a price is set
 	 */
-	public void changePurchasableTextPlacement() {
+	void changePurchasableTextPlacement() {
 		changeTextPlacement();
 
 		FontMetrics fontMetrics = getFontMetrics(normFont);
@@ -264,7 +264,7 @@ public class FieldCard extends JPanel {
 	/**
 	 * The method will calculate the position of the name of the feld
 	 */
-	public void changeTextPlacement() {
+	void changeTextPlacement() {
 		//header calculation
 		FontMetrics fontMetrics = getFontMetrics(headerFont);
 		headerNameX = (width - fontMetrics.stringWidth("" + headerName)) / 2;

@@ -104,14 +104,10 @@ public class HaggleData extends ActionData {
 	}
 
 	/**
-	 * <ul>
-	 * <li>ESTABLISH: request for the server to allow the trade</li>
-	 * <li>ESTABLISHED: answer of the server to a request (ESTABLISH) if successful</li>
-	 * <li>REQUEST: request to the seller </li>
-	 * <li>OFFER: offer from the seller to the player </li>
-	 * <li>ACCEPT: request for the server to execute the trade</li>
-	 * <li>DECLINE: request to the server to end the trade without doing anything</li>
-	 * </ul>
+	 * <ul> <li>ESTABLISH: request for the server to allow the trade</li> <li>ESTABLISHED: answer of the server to a
+	 * request (ESTABLISH) if successful</li> <li>REQUEST: request to the seller </li> <li>OFFER: offer from the seller to
+	 * the player </li> <li>ACCEPT: request for the server to execute the trade</li> <li>DECLINE: request to the server to
+	 * end the trade without doing anything</li> </ul>
 	 */
 	public enum HaggleState {
 		ESTABLISH, ESTABLISHED, REQUEST, OFFER, ACCEPT, DECLINE

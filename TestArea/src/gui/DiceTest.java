@@ -34,10 +34,10 @@ public class DiceTest {
 }
 
 class DiceImage extends JPanel {
-	Image[] activeDiceImage   = new Image[6];
-	Image[] inactiveDiceImage = new Image[6];
-	Image current;
-	int currentIndex = 0;
+	private final Image[] activeDiceImage   = new Image[6];
+	private final Image[] inactiveDiceImage = new Image[6];
+	private Image current;
+	private int currentIndex = 0;
 
 	public DiceImage() {
 		try {
@@ -63,7 +63,7 @@ class DiceImage extends JPanel {
 		});
 	}
 
-	public void setImage(int dice, boolean active) {
+	void setImage(int dice, boolean active) {
 		if(active) {
 			current = activeDiceImage[dice - 1];
 		} else {

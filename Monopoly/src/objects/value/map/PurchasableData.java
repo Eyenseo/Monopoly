@@ -11,7 +11,7 @@ public abstract class PurchasableData extends FieldData {
 	private final int        PRICE;
 	private       boolean    inMortgage;
 	private       int        stage;
-	private       PlayerData owner;
+	private final PlayerData owner;
 
 	/**
 	 * @param fieldNumber the value determines the id

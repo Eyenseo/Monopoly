@@ -15,8 +15,8 @@ public class FinancialProblemTest {
 }
 
 class FinancialProblemPanel extends JPanel {
-	String    headerText;
-	JTextPane header;
+	private final String    headerText;
+	private final JTextPane header;
 
 	FinancialProblemPanel() {
 		headerText = "Sie sind kurz davor bankrott zu sein!\n" +

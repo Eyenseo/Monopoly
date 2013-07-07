@@ -100,10 +100,10 @@ class FieldCard extends JPanel {
 	private static final Font normFont   = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
 	private static final Font headerFont = new Font(Font.SANS_SERIF, Font.BOLD, 17);
 
-	public int rotation;
+	private int rotation;
 
-	int width;
-	int height;
+	private       int width;
+	private final int height;
 
 	//Color
 	private static final Color borderColor     = new Color(0, 0, 0);
@@ -113,15 +113,15 @@ class FieldCard extends JPanel {
 	private BufferedImage image;
 	//Header
 	private static final int headerBackgroundHeight = 40;
-	private String                         headerName;
-	private int                            headerNameX;
-	private int                            headerNameY;
+	private final String                         headerName;
+	private       int                            headerNameX;
+	private       int                            headerNameY;
 	//Base
-	private String                         price;
-	private int                            priceX;
-	private int                            priceY;
+	private final String                         price;
+	private       int                            priceX;
+	private       int                            priceY;
 	//do playerHashMap
-	private HashMap<Integer, PlayerFigure> playerHashMap;
+	private final HashMap<Integer, PlayerFigure> playerHashMap;
 
 	FieldCard(String headerName, Color streetColor, int price) {
 		this.headerName = headerName;
@@ -281,12 +281,12 @@ class FieldCard extends JPanel {
 		}
 	}
 
-	public void setWidth(int width) {
+	void setWidth(int width) {
 		this.width = width;
 		changePurchasableTextPlacement();
 	}
 
-	public void changePurchasableTextPlacement() {
+	void changePurchasableTextPlacement() {
 		changeTextPlacement();
 
 		FontMetrics fontMetrics = getFontMetrics(normFont);
@@ -295,7 +295,7 @@ class FieldCard extends JPanel {
 		priceY = height - fontMetrics.getHeight();
 	}
 
-	public void changeTextPlacement() {
+	void changeTextPlacement() {
 		//header calculation
 		FontMetrics fontMetrics = getFontMetrics(headerFont);
 		headerNameX = (width - fontMetrics.stringWidth("" + headerName)) / 2;
@@ -308,14 +308,14 @@ class FieldCard extends JPanel {
 }
 
 class PlayerFigure extends JPanel {
-	public static int width  = 50;
-	public static int height = width;
-	private Color color;
-	private Color borderColor;
-	private char  name;
-	private Font  font;
-	private int   nameX;
-	private int   nameY;
+	public static final int width  = 50;
+	public static final int height = width;
+	private final Color color;
+	private final Color borderColor;
+	private final char  name;
+	private final Font  font;
+	private final int   nameX;
+	private final int   nameY;
 
 	PlayerFigure(Color color, char name) {
 		this.color = color;

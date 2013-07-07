@@ -19,44 +19,44 @@ public class DrawData {
 }
 
 class PurchasableCard extends JPanel {
-	Data     data;
-	int      width;
-	int      height;
-	int      gap;
-	int      gapX;
-	int      gapY;
-	Font     headerFont;
-	Font     normFont;
+	private final Data     data;
+	private final int      width;
+	private final int      height;
+	private final int      gap;
+	private final int      gapX;
+	private final int      gapY;
+	private final Font     headerFont;
+	private final Font     normFont;
 	//Header
-	int      nameBackgroundWidth;
-	int      nameBackgroundHeight;
-	int      nameX;
-	int      nameY;
+	private       int      nameBackgroundWidth;
+	private       int      nameBackgroundHeight;
+	private       int      nameX;
+	private       int      nameY;
 	//Price
-	String   priceText;
-	int      priceTextX;
-	int      priceTextY;
-	int      priceValueX;
-	int      priceValueY;
+	private       String   priceText;
+	private       int      priceTextX;
+	private       int      priceTextY;
+	private       int      priceValueX;
+	private       int      priceValueY;
 	//Income
-	String   incomeLeadingText;
-	String[] incomeText;
-	int[]    incomeTextX;
-	int[]    incomeTextY;
-	int[]    incomeValueX;
-	int[]    incomeValueY;
+	private       String   incomeLeadingText;
+	private       String[] incomeText;
+	private       int[]    incomeTextX;
+	private       int[]    incomeTextY;
+	private       int[]    incomeValueX;
+	private       int[]    incomeValueY;
 	//Upgrade
-	String   upgradeText;
-	int      upgradeTextX;
-	int      upgradeTextY;
-	int      upgradeValueX;
-	int      upgradeValueY;
+	private       String   upgradeText;
+	private       int      upgradeTextX;
+	private       int      upgradeTextY;
+	private       int      upgradeValueX;
+	private       int      upgradeValueY;
 	//Mortgage
-	String   mortgageText;
-	int      mortgageTextX;
-	int      mortgageTextY;
-	int      mortgageValueX;
-	int      mortgageValueY;
+	private       String   mortgageText;
+	private       int      mortgageTextX;
+	private       int      mortgageTextY;
+	private       int      mortgageValueX;
+	private       int      mortgageValueY;
 
 	PurchasableCard(Data data) {
 		this.data = data;
@@ -190,16 +190,16 @@ class PurchasableCard extends JPanel {
 }
 
 class Data {
-	String  className;
-	int     fieldNumber;
-	String  name;
-	int[]   INCOME;
-	int     MORTGAGE;
-	int     PRICE;
-	boolean inMortgage;
-	int     stage;
-	int[]   COLOR;
-	int     UPGRADE;
+	private final String  className;
+	private final int     fieldNumber;
+	final         String  name;
+	final         int[]   INCOME;
+	final         int     MORTGAGE;
+	final         int     PRICE;
+	private final boolean inMortgage;
+	private final int     stage;
+	final         int[]   COLOR;
+	final         int     UPGRADE;
 
 	Data() {
 		className = "test";

@@ -20,18 +20,11 @@ public class Street extends PurchasableCircularList implements Serializable {
 	/**
 	 * @param name     The value determines the name of the object.
 	 * @param price    The value determines the price that the player has to pay to buy it.
-	 * @param income   The values of the array determine the income at the different stages.
-	 *                 <ol start="0">
-	 *                 <li>Color  not complete</li>
-	 *                 <li>Color complete</li>
-	 *                 <li>1 house</li>
-	 *                 <li>2 houses</li>
-	 *                 <li>...</li>
-	 *                 </ol>
+	 * @param income   The values of the array determine the income at the different stages. <ol start="0"> <li>Color  not
+	 *                 complete</li> <li>Color complete</li> <li>1 house</li> <li>2 houses</li> <li>...</li> </ol>
 	 * @param mortgage The value determines the amount of the mortgage.
 	 * @param upgrade  The value determines how much the owner has to pay for a house or hotel.
-	 * @param color    The values of the array determine the color of the Street object. The Array has to be three
-	 *                 long,
+	 * @param color    The values of the array determine the color of the Street object. The Array has to be three long,
 	 *                 each of the places represent one color {R,G,B}.
 	 */
 	public Street(String name, int price, int[] income, int mortgage, int upgrade, int[] color) {
@@ -111,7 +104,7 @@ public class Street extends PurchasableCircularList implements Serializable {
 	/**
 	 * @return The return value is true if the Street is upgradeable
 	 */
-	public boolean isUpgradeable() {
+	boolean isUpgradeable() {
 		if(inMortgage) {
 			return false;
 		}

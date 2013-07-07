@@ -126,8 +126,7 @@ public class MapLayout implements LayoutManager2 {
 	}
 
 	/**
-	 * The method will lay out all components, if the amount of components is not dividable by 4 the components will
-	 * get
+	 * The method will lay out all components, if the amount of components is not dividable by 4 the components will get
 	 * stretched
 	 *
 	 * @param parent The value determines the parent component
@@ -197,8 +196,8 @@ public class MapLayout implements LayoutManager2 {
 	 * @param cardHeight       The value determines the card height
 	 * @param cardsPerSide     The value determines the how many cards will be placed on the side
 	 */
-	public void setBoundaries(double scale, int sideNumber, int currentSideCard, Point point, int currentCardIndex,
-	                          int cardWidth, int cardHeight, int cardsPerSide) {
+	void setBoundaries(double scale, int sideNumber, int currentSideCard, Point point, int currentCardIndex,
+	                   int cardWidth, int cardHeight, int cardsPerSide) {
 		FieldCard.Rotation angle = FieldCard.Rotation.BOTTOM;
 
 		fieldCardComponents.get(currentCardIndex).setScale(scale);

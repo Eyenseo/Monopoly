@@ -4,7 +4,6 @@ import objects.value.map.FieldData;
 
 import java.awt.*;
 
-
 public class PlayerData {
 	private final int       id;
 	private final String    name;
@@ -52,7 +51,6 @@ public class PlayerData {
 	}
 
 	/**
-	 *
 	 * @return The return value is true if the player gave up
 	 */
 	public boolean isGiveUp() {
@@ -60,7 +58,6 @@ public class PlayerData {
 	}
 
 	/**
-	 *
 	 * @param giveUp The value determines if the player gave up or not
 	 */
 	public void setGiveUp(boolean giveUp) {
@@ -194,7 +191,6 @@ public class PlayerData {
 	}
 
 	/**
-	 *
 	 * @return the return value is the neededMoney (money that the player has to obtain)
 	 */
 	public int getNeededMoney() {
@@ -202,15 +198,13 @@ public class PlayerData {
 	}
 
 	/**
-	 *
-	 * @param neededMoney  The value determines the amount of needed money of the player
+	 * @param neededMoney The value determines the amount of needed money of the player
 	 */
 	public void setNeededMoney(int neededMoney) {
 		this.neededMoney = neededMoney;
 	}
 
 	/**
-	 *
 	 * @return the value determines the color of the player
 	 */
 	public Color getColor() {

@@ -5,7 +5,7 @@ package objects.value.action;
  * the player has resolved a financial problem or has decided to give up.
  */
 public class PlayerStatusData extends ActionData {
-	private PlayerStatus status;
+	private final PlayerStatus status;
 
 	/**
 	 * @param userId The value determines the player the PlayerStatusData is from

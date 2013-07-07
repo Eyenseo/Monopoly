@@ -10,12 +10,12 @@ import java.net.URISyntaxException;
 /**
  * The DiceImage is a class to display the numbers from 1 to 6 as a image that represents a dice.
  */
-public class DiceImage extends JPanel {
-	Image[] activeDiceImage   = new Image[6];
-	Image[] inactiveDiceImage = new Image[6];
-	Image current;
-	int currentIndex = 0;
-	boolean active;
+class DiceImage extends JPanel {
+	private final Image[] activeDiceImage   = new Image[6];
+	private final Image[] inactiveDiceImage = new Image[6];
+	private Image current;
+	private int currentIndex = 0;
+	private boolean active;
 
 	/**
 	 * The constructor loads all images
@@ -46,7 +46,7 @@ public class DiceImage extends JPanel {
 	 * @param active The value determines if the image should be displayed gray or white
 	 */
 	// TODO use the set enabled method to set the image gray?
-	public void setImage(int dice, boolean active) {
+	void setImage(int dice, boolean active) {
 		if(dice > 0 && dice < 7) {
 			if(active) {
 				current = activeDiceImage[dice - 1];

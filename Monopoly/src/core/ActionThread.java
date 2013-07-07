@@ -14,14 +14,14 @@ import java.util.HashMap;
  * The ActionThread class will execute the given request, in form of a ActionData object from a client
  */
 //TODO replace / use with with threadpools
-public class ActionThread extends Thread {
+class ActionThread extends Thread {
 	private final Player                                          currentPlayer;
-	private       HashMap<Integer, Player>                        playerHashMap;
-	private       ActionData                                      actionData;
-	private       ServerOperator                                  serverOperator;
-	private       FieldCircularList                               jail;
-	private       Thread                                          turnThread;
-	private       HashMap<Integer, HashMap<String, ActionThread>> actions;
+	private final HashMap<Integer, Player>                        playerHashMap;
+	private final ActionData                                      actionData;
+	private final ServerOperator                                  serverOperator;
+	private final FieldCircularList                               jail;
+	private final Thread                                          turnThread;
+	private final HashMap<Integer, HashMap<String, ActionThread>> actions;
 
 	/**
 	 * @param playerHashMap  The value determines the HashMap from Monopoly where all players are stored
@@ -46,8 +46,7 @@ public class ActionThread extends Thread {
 	}
 
 	/**
-	 * The method is executed by the thread upon start. Based on the type of the ActionData the respective method
-	 * will be
+	 * The method is executed by the thread upon start. Based on the type of the ActionData the respective method will be
 	 * called
 	 */
 	@Override public void run() {
@@ -95,8 +94,7 @@ public class ActionThread extends Thread {
 	}
 
 	/**
-	 * The method will check if the player wants to update a Street or if he wants to buy a purchasable and executes
-	 * the
+	 * The method will check if the player wants to update a Street or if he wants to buy a purchasable and executes the
 	 * request
 	 *
 	 * @param user       The value determines the Player the BuyData is from
@@ -113,17 +111,14 @@ public class ActionThread extends Thread {
 	}
 
 	/**
-	 * The method will check at which state the trade is at, if at: <ul> <li>ESTABLISH: Will check if one of the
-	 * Player are
+	 * The method will check at which state the trade is at, if at: <ul> <li>ESTABLISH: Will check if one of the Player
+	 * are
 	 * currently trading and will send the HaggleData back with<br>ESTABLISHED if they are not trading (and sets the
 	 * Player
 	 * to be trading</br><br>DECLINE if one of them is trading</br></li> <li>ESTABLISHED: Will never happen since that
-	 * state is only set at the server</li> <li>REQUEST: Will forward the HaggleData to all clients</li> <li>OFFER:
-	 * Will
-	 * forward the HaggleData to all clients</li> <li>ACCEPT: Will execute the trade eg. move the purchasable to its
-	 * new
-	 * respective owner and transfers the money between them and sets the player to be not trading</li> <li>DECLINE:
-	 * Will
+	 * state is only set at the server</li> <li>REQUEST: Will forward the HaggleData to all clients</li> <li>OFFER: Will
+	 * forward the HaggleData to all clients</li> <li>ACCEPT: Will execute the trade eg. move the purchasable to its new
+	 * respective owner and transfers the money between them and sets the player to be not trading</li> <li>DECLINE: Will
 	 * set the two player to be not trading</li> </ul>
 	 *
 	 * @param user       The value determines the Player the HaggleData is from
@@ -221,8 +216,7 @@ public class ActionThread extends Thread {
 	}
 
 	/**
-	 * The method will check if the player wants to give up or wants to resolve a financial problem if a financial
-	 * problem
+	 * The method will check if the player wants to give up or wants to resolve a financial problem if a financial problem
 	 * is said to be resolved all waiting threads are notified, if the player gives up he will be removed from the game
 	 *
 	 * @param user       The value determines the Player the PlayerStatusData is from
@@ -296,7 +290,7 @@ public class ActionThread extends Thread {
 	/**
 	 * @return The return value is the ActionData the ActionThread was initialised with
 	 */
-	public ActionData getActionData() {
+	ActionData getActionData() {
 		return actionData;
 	}
 }

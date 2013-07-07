@@ -8,8 +8,8 @@ enum XyzEventName {
 
 }
 
-public class XyzEventSource {
-	private HashMap<XyzEventName, ArrayList<XyzEventListener>> listener =
+class XyzEventSource {
+	private final HashMap<XyzEventName, ArrayList<XyzEventListener>> listener =
 			new HashMap<XyzEventName, ArrayList<XyzEventListener>>();
 
 	XyzEventSource() {
@@ -18,7 +18,7 @@ public class XyzEventSource {
 		}
 	}
 
-	int bla = 0;
+	private int bla = 0;
 
 	public void setBla(int bla) {
 		this.bla = bla;

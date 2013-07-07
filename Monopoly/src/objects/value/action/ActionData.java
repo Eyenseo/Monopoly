@@ -23,7 +23,6 @@ public abstract class ActionData {
 	}
 
 	/**
-	 *
 	 * @return The return value is the id of the ActionData + the ClassName + the user id
 	 */
 	public String getId() {

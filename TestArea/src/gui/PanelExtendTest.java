@@ -3,7 +3,7 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class PanelExtendTest extends JPanel {
+class PanelExtendTest extends JPanel {
 	public PanelExtendTest() {
 		super(new GridBagLayout());
 

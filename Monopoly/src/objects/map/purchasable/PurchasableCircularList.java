@@ -19,10 +19,10 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	final int   MORTGAGE;   //Hypothek
 	final int   PRICE;
 	PurchasableCircularList nextGroupElement;
-	boolean                 changeMortgage;
-	boolean                 inMortgage;
-	int                     stage;
-	Player                  owner;
+	private boolean changeMortgage;
+	boolean inMortgage;
+	int     stage;
+	Player  owner;
 	private final ArrayList<PurchasableEventListener> listener;
 
 	/**
@@ -119,7 +119,7 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	 * @param player The value determines the the player who has to pay the bill (can be null).
 	 * @return The return value is the current income.
 	 */
-	public int getBill(Player player) {
+	int getBill(Player player) {
 		return INCOME[stage];
 	}
 
@@ -147,13 +147,12 @@ public abstract class PurchasableCircularList extends FieldCircularList implemen
 	/**
 	 * @return The return value is the owner.
 	 */
-	public Player getOwner() {
+	Player getOwner() {
 		return owner;
 	}
 
 	/**
-	 * The method adds this object to the new owner and removes it from the old one. The method will fire
-	 * PurchasableEvent
+	 * The method adds this object to the new owner and removes it from the old one. The method will fire PurchasableEvent
 	 *
 	 * @param owner The value determines the owner.
 	 */

@@ -15,14 +15,14 @@ import java.util.Random;
  */
 public class CardStack implements Serializable {
 	private static final long serialVersionUID = 5367102863013409270L;
-	private ArrayList<Card> stack;
-	private int             top;
+	private final ArrayList<Card> stack;
+	private       int             top;
 
 	/**
 	 * @param file The value determines the file located in the storage package to be read of.
 	 * @param name The value determines the name of the Card objects.
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	public CardStack(String file, String name) throws StorageReaderException {
 		stack = new ArrayList<Card>();

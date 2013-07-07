@@ -13,8 +13,8 @@ import java.util.ArrayList;
 /**
  * The Map class will create all FieldCards, based on the model and displays them.
  */
-public class Map extends JPanel {
-	ArrayList<FieldCard> fieldCardArrayList;
+class Map extends JPanel {
+	private final ArrayList<FieldCard> fieldCardArrayList;
 
 	/**
 	 * @param layout The value determines the layout manager to be used - preferred the MapLayout

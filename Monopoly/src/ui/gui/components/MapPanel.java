@@ -12,7 +12,6 @@ class MapPanel extends JPanel {
 	private final Map map;
 
 	/**
-	 *
 	 * @param model The value determines the Model to obtain information from
 	 */
 	public MapPanel(Model model) {

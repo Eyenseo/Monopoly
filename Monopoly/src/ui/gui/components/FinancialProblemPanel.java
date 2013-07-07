@@ -14,20 +14,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The FinancialProblemPanel presents the panel that will be schown if a player is in need of money, he can either haggle set mortgage or give up
+ * The FinancialProblemPanel presents the panel that will be schown if a player is in need of money, he can either
+ * haggle set mortgage or give up
  */
 public class FinancialProblemPanel extends JPanel {
-	private Model          model;
-	private ClientOperator clientOperator;
-	private String         headerText;
-	private JTextPane      header;
-	private JButton        haggle;
-	private JButton        mortgage;
-	private JButton        resolve;
+	private final Model          model;
+	private final ClientOperator clientOperator;
+	private final String         headerText;
+	private       JTextPane      header;
+	private       JButton        haggle;
+	private       JButton        mortgage;
+	private       JButton        resolve;
 
 	/**
-	 *
-	 * @param model The value determines the Model to use to obtain information
+	 * @param model          The value determines the Model to use to obtain information
 	 * @param clientOperator The value determines the clientOperator
 	 */
 	public FinancialProblemPanel(Model model, ClientOperator clientOperator) {
@@ -94,7 +94,9 @@ public class FinancialProblemPanel extends JPanel {
 	}
 
 	/**
-	 * The method will update the displayed text, more specific the amount of money that the user has to obtain at least do not lose the game
+	 * The method will update the displayed text, more specific the amount of money that the user has to obtain at
+	 * least do
+	 * not lose the game
 	 */
 	private void updateHeaderText() {
 		try {

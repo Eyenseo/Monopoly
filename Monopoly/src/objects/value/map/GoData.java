@@ -1,6 +1,5 @@
 package objects.value.map;
 
-
 /**
  * The GoData is a class for the network communication that holds all needed information
  */

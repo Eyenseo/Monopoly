@@ -12,10 +12,11 @@ import java.awt.event.ActionListener;
  * The Custom Dialog is a class to be used to display card text
  */
 //TODO replace with a panel on the MapPanel
-public class CustomDialog extends JFrame {
+class CustomDialog extends JFrame {
 	/**
 	 * @param model       The value determines the Model to obtain information from
-	 * @param messageData The value determines the messageDate that contains all information that is needed to display the CustomDialog
+	 * @param messageData The value determines the messageDate that contains all information that is needed to display the
+	 *                    CustomDialog
 	 */
 	public CustomDialog(final Model model, final MessageData messageData) {
 		super(model.getPlayerHashMap().get(messageData.getUserId()).getName() + ": " + messageData.getTyp());

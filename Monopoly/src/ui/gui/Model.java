@@ -27,7 +27,7 @@ public class Model {
 	private       HashMap<Integer, ArrayList<PurchasableData>>           purchasableHashMap;
 	private       HashMap<Integer, PlayerData>                           playerHashMap;
 	private       PlayerData                                             user; //TODO change to int
-	private       ArrayList<MessageData>                                 messageDataArrayList; // Todo is this needed?
+	private final ArrayList<MessageData>                                 messageDataArrayList; // Todo is this needed?
 	private       int                                                    oldMoney;
 	//Action Data
 	private       HaggleData                                             haggleData;

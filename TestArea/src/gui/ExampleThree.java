@@ -4,13 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ExampleThree {
-	private JFrame       frame      = new JFrame();
-	private JLayeredPane lpane      = new JLayeredPane();
-	private JPanel       panelBlue  = new JPanel();
-	private JPanel       panelGreen = new JPanel();
+	private final JFrame       frame      = new JFrame();
+	private final JLayeredPane lpane      = new JLayeredPane();
+	private final JPanel       panelBlue  = new JPanel();
+	private final JPanel       panelGreen = new JPanel();
 
 	//Example for Layered panel
-	public ExampleThree() {
+	private ExampleThree() {
 		frame.setPreferredSize(new Dimension(600, 400));
 		frame.setLayout(new BorderLayout());
 		frame.add(lpane, BorderLayout.CENTER);

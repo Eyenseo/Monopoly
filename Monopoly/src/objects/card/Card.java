@@ -15,7 +15,7 @@ public abstract class Card implements Serializable {
 	private static final long serialVersionUID = 4057299799394754933L;
 	private final String                          NAME;
 	private final String                          TEXT;
-	private       ArrayList<MessageEventListener> listener;
+	private final ArrayList<MessageEventListener> listener;
 	int index;
 
 	/**
@@ -43,11 +43,12 @@ public abstract class Card implements Serializable {
 	}
 
 	/**
-	 * The method will fire a MessageDataEvent for all listeners.
-	 * If the Name of the CardStack is "Event Karte" the type of the MessageData is CHANCE
+	 * The method will fire a MessageDataEvent for all listeners. If the Name of the CardStack is "Event Karte" the
+	 * type of
+	 * the MessageData is CHANCE
 	 */
 	//TODO replace the String comparison with a enum value
-	public void fireMessageEvent(int playerid) {
+	void fireMessageEvent(int playerid) {
 		MessageData.MessageType type;
 		//TODO better implementation
 		if(NAME.equals("Event Karte")) {

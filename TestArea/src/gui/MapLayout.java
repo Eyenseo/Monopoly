@@ -3,7 +3,7 @@ package gui;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MapLayout implements LayoutManager2 {
+class MapLayout implements LayoutManager2 {
 	private final ArrayList<FieldCard> fieldCardComponents;
 
 	public MapLayout() {
@@ -111,8 +111,8 @@ public class MapLayout implements LayoutManager2 {
 		}
 	}
 
-	public Dimension setBoundaries(int siteNumber, int currentSiteCard, Dimension point, int currentCardIndex,
-	                               int cardWidth, int cardsPerSide) {
+	Dimension setBoundaries(int siteNumber, int currentSiteCard, Dimension point, int currentCardIndex, int cardWidth,
+	                        int cardsPerSide) {
 		FieldCard.Rotation angle = FieldCard.Rotation.BOTTOM;
 
 		//rotates the drawing direction of the cards

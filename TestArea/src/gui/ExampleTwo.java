@@ -7,12 +7,13 @@ import java.awt.event.ActionListener;
 
 public class ExampleTwo extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -4115832675025600775L;
-	JPanel panel;
-	Timer  timer;
-	int    x, y;
+	private       JPanel panel;
+	private final Timer  timer;
+	private       int    x;
+	private       int    y;
 
 	//Example for animation
-	public ExampleTwo() {
+	private ExampleTwo() {
 		super();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		timer = new Timer(15, this);
@@ -20,7 +21,7 @@ public class ExampleTwo extends JFrame implements ActionListener {
 		//This class iplements ActionListener, and that is where the animation variables are updated. Timer passes an ActionEvent after each 15 ms.
 	}
 
-	public void run() {
+	void run() {
 		panel = new JPanel() {
 			private static final long serialVersionUID = -2427325676289115775L;
 

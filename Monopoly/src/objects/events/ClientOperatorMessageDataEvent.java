@@ -8,7 +8,7 @@ import java.util.EventObject;
  * The ClientOperatorMessageDataEvent is thrown at the client if there is new MessageData
  */
 public class ClientOperatorMessageDataEvent extends EventObject {
-	MessageData messageData;
+	private final MessageData messageData;
 
 	/**
 	 * @param source      the value determines the source of the event

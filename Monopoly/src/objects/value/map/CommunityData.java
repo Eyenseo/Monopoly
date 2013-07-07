@@ -1,4 +1,5 @@
 package objects.value.map;
+
 /**
  * The CommunityData is a class for the network communication that holds all needed information
  */

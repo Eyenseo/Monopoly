@@ -6,15 +6,15 @@ import java.awt.*;
 /**
  * The PlayerFigure class is used to display a player figure on a FieldCard
  */
-public class PlayerFigure extends JPanel {
-	public static int width  = 50;
-	public static int height = width;
-	private Color color;
-	private Color borderColor;
-	private char  name;
-	private Font  font;
-	private int   nameX;
-	private int   nameY;
+class PlayerFigure extends JPanel {
+	public static final int width  = 50;
+	public static final int height = width;
+	private final Color color;
+	private final Color borderColor;
+	private final char  name;
+	private final Font  font;
+	private final int   nameX;
+	private final int   nameY;
 
 	/**
 	 * @param color The value determines the color of the player that shall be used to display the player figure

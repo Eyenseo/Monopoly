@@ -9,7 +9,7 @@ import java.util.EventObject;
  * transferred
  */
 public class MessageEvent extends EventObject {
-	MessageData messageData;
+	private final MessageData messageData;
 
 	/**
 	 * @param source      the value determines the source of the event

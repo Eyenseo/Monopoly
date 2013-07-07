@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SecondTest {
-	static SpringLayout layout = new SpringLayout();
-	static Dimension    d      = new Dimension(130, 70);
+	private static final SpringLayout layout = new SpringLayout();
+	private static final Dimension    d      = new Dimension(130, 70);
 
 	public static void main(String[] args) {
 		JFrame frame = createJFrame();

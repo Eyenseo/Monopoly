@@ -18,13 +18,8 @@ public class Station extends PurchasableCircularList implements Serializable {
 	/**
 	 * @param name     The value determines the name of the object.
 	 * @param price    The value determines the price that the player has to pay to buy it.
-	 * @param income   The values of the array determine the income at the different stages.
-	 *                 <ol start="0">
-	 *                 <li>1Station</li>
-	 *                 <li>2 Stations</li>
-	 *                 <li>3 Stations</li>
-	 *                 <li>4 Stations</li>
-	 *                 </ol>
+	 * @param income   The values of the array determine the income at the different stages. <ol start="0">
+	 *                 <li>1Station</li> <li>2 Stations</li> <li>3 Stations</li> <li>4 Stations</li> </ol>
 	 * @param mortgage The value determines the amount of the mortgage.
 	 */
 	public Station(String name, int price, int[] income, int mortgage) {
@@ -59,7 +54,7 @@ public class Station extends PurchasableCircularList implements Serializable {
 	/**
 	 * The method will transfer twice of the money if doublePay is true the money the player has to pay to the owner
 	 *
-	 * @param player The value determines the Player who caused the method call
+	 * @param player    The value determines the Player who caused the method call
 	 * @param doublePay The value determines if the player has to pay double
 	 */
 	public void action(Player player, boolean doublePay) {
@@ -84,8 +79,7 @@ public class Station extends PurchasableCircularList implements Serializable {
 	}
 
 	/**
-	 * The method adds this object to the new owner and removes it from the old one.
-	 * The method will fire PurchasableEvent
+	 * The method adds this object to the new owner and removes it from the old one. The method will fire PurchasableEvent
 	 * The method will check if the stage is right on all its group members
 	 *
 	 * @param owner The value determines the owner.

@@ -7,18 +7,18 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 
 public class ExampleOne extends JPanel {
-	public static final  int    MAX_COUNTER      = 20;
+	private static final int    MAX_COUNTER      = 20;
 	private static final int    SIDE             = 600;
 	private static final int    TIMER_DELAY      = 400;
 	private static final int    MAX_RAND         = 220;
 	private static final long   serialVersionUID = 173392568530000155L;
 	private              int    counter          = 0;
-	private              JLabel label            = new JLabel(String.valueOf(counter));
-	private              Random gen              = new Random();
-	private              int[]  randNumb         = new int[3];
+	private final        JLabel label            = new JLabel(String.valueOf(counter));
+	private final        Random gen              = new Random();
+	private final        int[]  randNumb         = new int[3];
 
 	//Example for animation
-	public ExampleOne() {
+	private ExampleOne() {
 		setPreferredSize(new Dimension(SIDE, SIDE));
 		setLayout(null);
 		add(label);

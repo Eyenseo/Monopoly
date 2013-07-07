@@ -65,8 +65,7 @@ public class HagglePanel extends JPanel {
 	}
 
 	/**
-	 * @return The return value is a listener that will update the HagglePanel accordingly to the HaggleData of the
-	 * model.
+	 * @return The return value is a listener that will update the HagglePanel accordingly to the HaggleData of the model.
 	 */
 	private ModelEventListener haggleListener() {
 		return new ModelEventListener() {
@@ -285,8 +284,7 @@ public class HagglePanel extends JPanel {
 						@Override public void run() {
 							HaggleData haggleData = model.getHaggleData();
 							HaggleData.HaggleState state = haggleData.getHaggleState();
-							if(state == HaggleData.HaggleState.ESTABLISHED || state == HaggleData.HaggleState
-									.REQUEST) {
+							if(state == HaggleData.HaggleState.ESTABLISHED || state == HaggleData.HaggleState.REQUEST) {
 								PurchasableCardPanel panel = (PurchasableCardPanel) e.getSource();
 								if(panel.getBorder() == null) {
 									panel.setBorder(BorderFactory.createLineBorder(new Color(0, 156, 0), 3));
@@ -301,8 +299,7 @@ public class HagglePanel extends JPanel {
 									panel.setBorder(null);
 									if(haggleData.getUserId() == model.getUser().getId() &&
 									   state == HaggleData.HaggleState.ESTABLISHED) {
-										haggleData.getUserFieldIds().remove((Integer) panel.getData().getFieldNumber
-												());
+										haggleData.getUserFieldIds().remove((Integer) panel.getData().getFieldNumber());
 									} else if(haggleData.getSellerId() == model.getUser().getId()) {
 
 										haggleData.getSellerFieldIds()
@@ -358,16 +355,13 @@ public class HagglePanel extends JPanel {
 							if(change) {
 								if(data instanceof StreetData) {
 									constraints.type =
-											PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType
-													.STREET;
+											PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.STREET;
 								} else if(data instanceof StationData) {
 									constraints.type =
-											PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType
-													.STATION;
+											PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.STATION;
 								} else {
 									constraints.type =
-											PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType
-													.FACILITY;
+											PurchasableCardLayoutConstraints.PurchasableCardLayoutConstraintType.FACILITY;
 								}
 								constraints.position = data.getFieldNumber();
 
@@ -449,10 +443,8 @@ public class HagglePanel extends JPanel {
 	}
 
 	/**
-	 * The method will create the basePanel with a textArea that displays the money to be payed by the player,
-	 * a TextArea
-	 * where the user can type how much money he wants, a button to precede to the next stage of the trade and a
-	 * button to
+	 * The method will create the basePanel with a textArea that displays the money to be payed by the player, a TextArea
+	 * where the user can type how much money he wants, a button to precede to the next stage of the trade and a button to
 	 * cancel the trade
 	 */
 	private void createBase() {

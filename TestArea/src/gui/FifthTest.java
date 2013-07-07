@@ -18,7 +18,7 @@ public class FifthTest extends JPanel {
 	private JTextPane position;
 	private JTextPane dice;
 
-	public FifthTest() {
+	private FifthTest() {
 		super(new GridBagLayout());
 		setBackground(new Color(0, 255, 255)); //DEBUG
 

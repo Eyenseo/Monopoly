@@ -16,7 +16,7 @@ public class StringCompare {
 		}
 	}
 
-	public static boolean stringCompare(String first, String second) {
+	private static boolean stringCompare(String first, String second) {
 		char[] one = first.toCharArray();
 		char[] two = second.toCharArray();
 		int length = one.length < two.length ? one.length : two.length;

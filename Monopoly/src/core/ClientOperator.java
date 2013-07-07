@@ -57,8 +57,7 @@ public class ClientOperator {
 	}
 
 	/**
-	 * The method is called if the client receives new HaggleData and will fire a ClientOperatorHaggleDataEvent if
-	 * either
+	 * The method is called if the client receives new HaggleData and will fire a ClientOperatorHaggleDataEvent if either
 	 * the HaggleData playerId or sellerId equals the clientPlayerId.
 	 *
 	 * @param haggleData the value determines the HaggleData to be checked
@@ -103,8 +102,7 @@ public class ClientOperator {
 	}
 
 	/**
-	 * The method is called if the client receives new FieldData and will fire a new
-	 * ClientOperatorPurchasableDataEvent.
+	 * The method is called if the client receives new FieldData and will fire a new ClientOperatorPurchasableDataEvent.
 	 *
 	 * @param fieldData the value determines the PlayData to be checked
 	 */
@@ -114,6 +112,7 @@ public class ClientOperator {
 
 	/**
 	 * The method is called if the client receives new MessageData anf will fire a new ClientMessageDataEvent
+	 *
 	 * @param messageData
 	 */
 	public void updateMessageData(MessageData messageData) {
@@ -134,6 +133,7 @@ public class ClientOperator {
 
 	/**
 	 * The method will fire a ClientMessageDataEvent with the messageData as the attribute of the event.
+	 *
 	 * @param messageData The value determines the MessageData to be set as attribute of the event
 	 */
 	private void fireMessageDataEvent(MessageData messageData) {
@@ -186,7 +186,6 @@ public class ClientOperator {
 	}
 
 	/**
-	 *
 	 * @param listener The value determines the listener to be added
 	 */
 	public void addMessageDataEventListener(ClientOperatorMessageDataEventListener listener) {
@@ -194,7 +193,6 @@ public class ClientOperator {
 	}
 
 	/**
-	 *
 	 * @param listener The value determines the listener to be removed
 	 */
 	public void removeMessageEventListener(ClientOperatorMessageDataEventListener listener) {

@@ -25,7 +25,7 @@ import java.util.HashMap;
 /**
  * The ServerOperator is the class that communicates with the clients
  */
-public class ServerOperator {
+class ServerOperator {
 	private final HashMap<Integer, ClientOperator> destination;
 	private final Monopoly                         monopoly;
 
@@ -90,7 +90,7 @@ public class ServerOperator {
 	 *
 	 * @param messageData the value determines either the MessageType COMMUNITY or CHANCE and the text of the card.
 	 */
-	public void sendCardData(MessageData messageData) {
+	void sendCardData(MessageData messageData) {
 		for(ClientOperator client : destination.values()) {
 			client.updateMessageData(messageData);
 		}
@@ -127,7 +127,7 @@ public class ServerOperator {
 			}
 		});
 	}
-	
+
 	/**
 	 * Removes a player from the destination HashMap.
 	 *

@@ -142,8 +142,8 @@ public class PurchasableCardLayout implements LayoutManager2 {
 	/**
 	 * @param parent    The value determines the parent component
 	 * @param preferred The value determines if the preferred layout size shall be calculated or the minimal
-	 * @return The return value is based on the value of <code>preferred</code> either the minimal,
-	 *         or preferred size of the layout
+	 * @return The return value is based on the value of <code>preferred</code> either the minimal, or preferred size of
+	 *         the layout
 	 */
 	private Dimension getLayoutSize(Container parent, boolean preferred) {
 		Dimension dimension = new Dimension(0, 0);

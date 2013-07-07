@@ -7,8 +7,8 @@ import javax.swing.text.PlainDocument;
 /**
  * The iNtegerDocument is a Document that just allows only integers as input
  */
-public class IntegerDocument extends PlainDocument {
-	private int maxLength;
+class IntegerDocument extends PlainDocument {
+	private final int maxLength;
 
 	/**
 	 * The default constructor allows only 9 digits to be put in

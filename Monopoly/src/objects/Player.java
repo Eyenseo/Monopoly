@@ -224,8 +224,7 @@ public class Player implements Serializable {
 	/**
 	 * The method will fire a PlayerEvent.
 	 *
-	 * @param purchasable The value determines the PurchasableCircularList object the property that will be added to
-	 *                    the
+	 * @param purchasable The value determines the PurchasableCircularList object the property that will be added to the
 	 *                    player.
 	 */
 	public void addProperty(PurchasableCircularList purchasable) {
@@ -236,8 +235,7 @@ public class Player implements Serializable {
 	/**
 	 * The method will fire a PlayerEvent.
 	 *
-	 * @param purchasable The value determines the PurchasableCircularList object the property that will be removed to
-	 *                    the
+	 * @param purchasable The value determines the PurchasableCircularList object the property that will be removed to the
 	 *                    player.
 	 */
 	public void removeProperty(PurchasableCircularList purchasable) {

@@ -17,26 +17,26 @@ import java.awt.event.ActionListener;
  * The ControlPanel presents the buttons the user can interact with and also the chat the users can communicate over
  */
 class ControlPanel extends JPanel {
-	private ClientOperator clientOperator;
-	private Model          model;
+	private final ClientOperator clientOperator;
+	private final Model          model;
 	//Components
-	private DiceImage      firstDice;
-	private DiceImage      secondDice;
-	private JButton        turnOption;
-	private JButton        buyOption;
-	private JButton        haggle;
-	private JButton        mortgage;
-	private JButton        giveUp;
-	private JTextArea      chatHistory;
-	private JTextArea      chatMessage;
+	private       DiceImage      firstDice;
+	private       DiceImage      secondDice;
+	private       JButton        turnOption;
+	private       JButton        buyOption;
+	private       JButton        haggle;
+	private       JButton        mortgage;
+	private       JButton        giveUp;
+	private       JTextArea      chatHistory;
+	private       JTextArea      chatMessage;
 	//Text
-	private String         turnOptionText;
-	private String         buyOptionText;
-	private String         haggleText;
-	private String         mortgageText;
-	private String         giveUpText;
-	private String         endAppText;
-	private String         chatHistoryText;
+	private       String         turnOptionText;
+	private       String         buyOptionText;
+	private final String         haggleText;
+	private final String         mortgageText;
+	private final String         giveUpText;
+	private final String         endAppText;
+	private final String         chatHistoryText;
 
 	/**
 	 * @param model          The value determines the Model the ControlPanel will get its information from
@@ -106,8 +106,7 @@ class ControlPanel extends JPanel {
 	}
 
 	/**
-	 * The method creates following buttons: <ul> <li>turnOption</li> <li>buyOption</li> <li>haggle</li>
-	 * <li>mortgage</li>
+	 * The method creates following buttons: <ul> <li>turnOption</li> <li>buyOption</li> <li>haggle</li> <li>mortgage</li>
 	 * <li>giveUp</li> <li>endApp</li> </ul>
 	 *
 	 * @return The return value is a Panel with all buttons of the ControlPanel
@@ -182,8 +181,7 @@ class ControlPanel extends JPanel {
 	/**
 	 * The method creates the chatHistory and chatMessage Panel divided by a SplitPane
 	 *
-	 * @return The return value is a panel with a chat history TextArea and a chat message TextArea divided by a
-	 * SplitPane
+	 * @return The return value is a panel with a chat history TextArea and a chat message TextArea divided by a SplitPane
 	 */
 	private JPanel buildChatPanel() {
 		chatHistory = new JTextArea(chatHistoryText);
@@ -288,11 +286,9 @@ class ControlPanel extends JPanel {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override public void run() {
 						clientOperator.sendActionData(new BuyData(model.getUser().getId(), model.getBuyOptionState() ==
-						                                                                   Model.BuyOptionState
-								                                                                   .BUYHOTEL || model
-										                                                                                .getBuyOptionState() ==
-						                                                                   Model.BuyOptionState
-								                                                                   .BUYHOUSE));
+						                                                                   Model.BuyOptionState.BUYHOTEL ||
+						                                                                   model.getBuyOptionState() ==
+						                                                                   Model.BuyOptionState.BUYHOUSE));
 					}
 				});
 			}

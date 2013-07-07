@@ -25,8 +25,7 @@ public class MapArrayCreator extends StorageReader {
 	private FieldCircularList   go;
 
 	/**
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	public MapArrayCreator() throws StorageReaderException {
@@ -58,8 +57,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return The return value is an Array containing FieldCircularList objects.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private FieldCircularList[] createMapArray() throws StorageReaderException {
@@ -84,8 +82,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return The return value is the next FieldCircularList, if the end of the file is reached it returns null.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private FieldCircularList nextField() throws StorageReaderException {
@@ -129,8 +126,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return the return value is a Street Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Street createStreet() throws StorageReaderException {
@@ -160,8 +156,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return the return value is a Station Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Station createStation() throws StorageReaderException {
@@ -186,8 +181,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return the return value is a Facility Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Facility createFacility() throws StorageReaderException {
@@ -209,8 +203,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return the return value is a Tax Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Tax createTax() throws StorageReaderException {
@@ -230,8 +223,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return the return value is a Chance Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Chance createChance() throws StorageReaderException {
@@ -250,8 +242,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return the return value is a Community Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Community createCommunity() throws StorageReaderException {
@@ -270,8 +261,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return the return value is a Go Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Go createGo() throws StorageReaderException {
@@ -291,8 +281,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return the return value is a Jail Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Jail createJail() throws StorageReaderException {
@@ -311,8 +300,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return the return value is a Parking Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Parking createParking() throws StorageReaderException {
@@ -331,8 +319,7 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return the return value is a GoToJail Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 * should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private GoToJail createGoToJail() throws StorageReaderException {

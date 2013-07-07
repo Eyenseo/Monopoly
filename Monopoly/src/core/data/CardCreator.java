@@ -20,8 +20,7 @@ public class CardCreator extends StorageReader {
 	/**
 	 * @param file The value determines which file will be loaded.
 	 * @param name The value determines the name of the Cards
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	public CardCreator(String file, String name) throws StorageReaderException {
@@ -32,8 +31,7 @@ public class CardCreator extends StorageReader {
 	/**
 	 * @return The return value is a Vector with Card objects fom the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	public ArrayList<Card> cardArray() throws StorageReaderException {
@@ -55,8 +53,7 @@ public class CardCreator extends StorageReader {
 	/**
 	 * @return The return value is the next Card, if the end of the file is reached it returns null.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Card nextCard() throws StorageReaderException {
@@ -97,8 +94,7 @@ public class CardCreator extends StorageReader {
 	/**
 	 * @return the return value is a GoBack Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private GoBack createGoBack() throws StorageReaderException {
@@ -118,8 +114,7 @@ public class CardCreator extends StorageReader {
 	/**
 	 * @return the return value is a GoTo Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private GoTo createGoTo() throws StorageReaderException {
@@ -140,8 +135,7 @@ public class CardCreator extends StorageReader {
 	/**
 	 * @return the return value is a GoToStation Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private GoToStation createGoToStation() throws StorageReaderException {
@@ -160,8 +154,7 @@ public class CardCreator extends StorageReader {
 	/**
 	 * @return the return value is a Arrest Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Arrest createArrest() throws StorageReaderException {
@@ -180,8 +173,7 @@ public class CardCreator extends StorageReader {
 	/**
 	 * @return the return value is a Jailbreak Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Jailbreak createJailbreak() throws StorageReaderException {
@@ -200,8 +192,7 @@ public class CardCreator extends StorageReader {
 	/**
 	 * @return the return value is a PayFineTakeCard Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private PayFineTakeCard createPayFineTakeCard() throws StorageReaderException {
@@ -221,8 +212,7 @@ public class CardCreator extends StorageReader {
 	/**
 	 * @return the return value is a Payment Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private Payment createPayment() throws StorageReaderException {
@@ -242,8 +232,7 @@ public class CardCreator extends StorageReader {
 	/**
 	 * @return the return value is a SpecialPayment Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private SpecialPayment createSpecialPayment() throws StorageReaderException {
@@ -263,8 +252,7 @@ public class CardCreator extends StorageReader {
 	/**
 	 * @return the return value is a StreetWork Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
-	 *                                should be
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
 	 *                                read out with getMessageStack.
 	 */
 	private StreetWork createStreetWork() throws StorageReaderException {

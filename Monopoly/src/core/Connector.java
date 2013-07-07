@@ -18,7 +18,7 @@ import java.util.HashMap;
 /**
  * The Connector class connects the FieldCircularList objects and the CardStack objects.
  */
-public class Connector {
+class Connector {
 	/**
 	 * @param map             The value determines the Array of FieldCircularList objects that shall be connected.
 	 * @param chance          The value determines the CardStack which has the Card objects from the chance file.
