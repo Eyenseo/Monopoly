@@ -178,9 +178,9 @@ class ControlPanel extends JPanel {
 	}
 
 	/**
-	 * The method creates the chatHistory and chatMassage Panel divided by a SplitPane
+	 * The method creates the chatHistory and chatMessage Panel divided by a SplitPane
 	 *
-	 * @return The return value is a panel with a chat history TextArea and a chat massage TextArea divided by a SplitPane
+	 * @return The return value is a panel with a chat history TextArea and a chat message TextArea divided by a SplitPane
 	 */
 	private JPanel buildChatPanel() {
 		chatHistory = new JTextArea(chatHistoryText);

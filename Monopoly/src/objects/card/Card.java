@@ -48,12 +48,12 @@ public abstract class Card implements Serializable {
 	 */
 	//TODO replace the String comparison with a enum value
 	public void fireMessageEvent(int playerid) {
-		MessageData.MassageType type;
+		MessageData.MessageType type;
 		//TODO better implementation
 		if(NAME.equals("Event Karte")) {
-			type = MessageData.MassageType.CHANCE;
+			type = MessageData.MessageType.CHANCE;
 		} else {
-			type = MessageData.MassageType.COMMUNITY;
+			type = MessageData.MessageType.COMMUNITY;
 		}
 
 		MessageEvent event = new MessageEvent(this, new MessageData(playerid, type, TEXT));

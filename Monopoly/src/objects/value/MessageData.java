@@ -6,7 +6,7 @@ package objects.value;
 public class MessageData {
 	private int         userId;
 	private String      text;
-	private MassageType typ;
+	private MessageType typ;
 
 	/**
 	 *
@@ -14,7 +14,7 @@ public class MessageData {
 	 * @param typ  The value determines the type of the MessageData either COMMUNITY, CHANCE, CHAT
 	 * @param text The value determines the text of the message
 	 */
-	public MessageData(int userId, MassageType typ, String text) {
+	public MessageData(int userId, MessageType typ, String text) {
 		this.userId = userId;
 		this.typ = typ;
 		this.text = text;
@@ -40,14 +40,14 @@ public class MessageData {
 	 *
 	 * @return the return value is the type of the message
 	 */
-	public MassageType getTyp() {
+	public MessageType getTyp() {
 		return typ;
 	}
 
 	/**
 	 * the enum field is used to specify the typ of a MessageData
 	 */
-	public enum MassageType {
+	public enum MessageType {
 		COMMUNITY, CHANCE, CHAT
 	}
 }
