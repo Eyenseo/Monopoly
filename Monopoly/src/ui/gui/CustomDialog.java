@@ -1,6 +1,6 @@
 package ui.gui;
 
-import objects.value.MassageData;
+import objects.value.MessageData;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -15,10 +15,10 @@ import java.awt.event.ActionListener;
 public class CustomDialog extends JFrame {
 	/**
 	 * @param model       The value determines the Model to obtain information from
-	 * @param massageData The value determines the messageDate that contains all information that is needed to display the CustomDialog
+	 * @param messageData The value determines the messageDate that contains all information that is needed to display the CustomDialog
 	 */
-	public CustomDialog(final Model model, final MassageData massageData) {
-		super(model.getPlayerHashMap().get(massageData.getUserId()).getName() + ": " + massageData.getTyp());
+	public CustomDialog(final Model model, final MessageData messageData) {
+		super(model.getPlayerHashMap().get(messageData.getUserId()).getName() + ": " + messageData.getTyp());
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
@@ -33,12 +33,12 @@ public class CustomDialog extends JFrame {
 			//			Style style = textPane.addStyle("Style", null);
 			//			StyleConstants.setAlignment(style, StyleConstants.ALIGN_CENTER);
 			//			StyleConstants.setForeground(style, new Color(0, 0, 0));
-			//			doc.insertString(0, "\n\n" + massageData.getText(), doc.getStyle("Style"));
+			//			doc.insertString(0, "\n\n" + messageData.getText(), doc.getStyle("Style"));
 
 			StyledDocument document = new DefaultStyledDocument();
 			Style defaultStyle = document.getStyle(StyleContext.DEFAULT_STYLE);
 			StyleConstants.setAlignment(defaultStyle, StyleConstants.ALIGN_CENTER);
-			document.insertString(0, "\n\n" + massageData.getText(), null);
+			document.insertString(0, "\n\n" + messageData.getText(), null);
 			textPane = new JTextPane(document);
 			textPane.setEditable(false);
 		} catch(BadLocationException e) {
@@ -52,7 +52,7 @@ public class CustomDialog extends JFrame {
 			@Override public void actionPerformed(ActionEvent e) {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override public void run() {
-						model.getMassageDataArrayList().remove(massageData);
+						model.getMessageDataArrayList().remove(messageData);
 
 						setVisible(false);
 						dispose();

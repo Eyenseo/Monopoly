@@ -3,7 +3,7 @@ package objects.card;
 import objects.Player;
 import objects.events.MessageEvent;
 import objects.listeners.MessageEventListener;
-import objects.value.MassageData;
+import objects.value.MessageData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -48,15 +48,15 @@ public abstract class Card implements Serializable {
 	 */
 	//TODO replace the String comparison with a enum value
 	public void fireMessageEvent(int playerid) {
-		MassageData.MassageType type;
+		MessageData.MassageType type;
 		//TODO better implementation
 		if(NAME.equals("Event Karte")) {
-			type = MassageData.MassageType.CHANCE;
+			type = MessageData.MassageType.CHANCE;
 		} else {
-			type = MassageData.MassageType.COMMUNITY;
+			type = MessageData.MassageType.COMMUNITY;
 		}
 
-		MessageEvent event = new MessageEvent(this, new MassageData(playerid, type, TEXT));
+		MessageEvent event = new MessageEvent(this, new MessageData(playerid, type, TEXT));
 		for(MessageEventListener listener : this.listener) {
 			listener.actionPerformed(event);
 		}

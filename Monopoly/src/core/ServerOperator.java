@@ -13,7 +13,7 @@ import objects.map.FieldCircularList;
 import objects.map.purchasable.PurchasableCircularList;
 import objects.value.InitializeMapData;
 import objects.value.InitializePlayer;
-import objects.value.MassageData;
+import objects.value.MessageData;
 import objects.value.PlayerData;
 import objects.value.action.ActionData;
 import objects.value.action.HaggleData;
@@ -65,7 +65,7 @@ public class ServerOperator {
 		do {
 			currentCard.addMessageEventListener(new MessageEventListener() {
 				@Override public void actionPerformed(MessageEvent event) {
-					sendCardData(event.getMassageData());
+					sendCardData(event.getMessageData());
 				}
 			});
 			currentCard = stack.nextCard();
@@ -78,7 +78,7 @@ public class ServerOperator {
 		do {
 			currentCard.addMessageEventListener(new MessageEventListener() {
 				@Override public void actionPerformed(MessageEvent event) {
-					sendCardData(event.getMassageData());
+					sendCardData(event.getMessageData());
 				}
 			});
 			currentCard = stack.nextCard();
@@ -88,11 +88,11 @@ public class ServerOperator {
 	/**
 	 * the methods sends a message data object to each client.
 	 *
-	 * @param massageData the value determines either the MessageType COMMUNITY or CHANCE and the text of the card.
+	 * @param messageData the value determines either the MessageType COMMUNITY or CHANCE and the text of the card.
 	 */
-	public void sendCardData(MassageData massageData) {
+	public void sendCardData(MessageData messageData) {
 		for(ClientOperator client : destination.values()) {
-			client.updateMessageData(massageData);
+			client.updateMessageData(messageData);
 		}
 	}
 

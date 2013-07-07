@@ -1,9 +1,9 @@
 package objects.value;
 
 /**
- * MassageData is a class for the network communication that is intended to transfer Text from a card or a new chat message
+ * MessageData is a class for the network communication that is intended to transfer Text from a card or a new chat message
  */
-public class MassageData {
+public class MessageData {
 	private int         userId;
 	private String      text;
 	private MassageType typ;
@@ -14,7 +14,7 @@ public class MassageData {
 	 * @param typ  The value determines the type of the MessageData either COMMUNITY, CHANCE, CHAT
 	 * @param text The value determines the text of the message
 	 */
-	public MassageData(int userId, MassageType typ, String text) {
+	public MessageData(int userId, MassageType typ, String text) {
 		this.userId = userId;
 		this.typ = typ;
 		this.text = text;

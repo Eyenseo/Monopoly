@@ -4,7 +4,7 @@ import core.ClientOperator;
 import objects.events.*;
 import objects.listeners.*;
 import objects.value.InitializeMapData;
-import objects.value.MassageData;
+import objects.value.MessageData;
 import objects.value.PlayerData;
 import objects.value.action.HaggleData;
 import objects.value.map.FieldData;
@@ -27,7 +27,7 @@ public class Model {
 	private       HashMap<Integer, ArrayList<PurchasableData>>           purchasableHashMap;
 	private       HashMap<Integer, PlayerData>                           playerHashMap;
 	private       PlayerData                                             user; //TODO change to int
-	private       ArrayList<MassageData>                                 massageDataArrayList; // Todo is this needed?
+	private       ArrayList<MessageData>                                 messageDataArrayList; // Todo is this needed?
 	private       int                                                    oldMoney;
 	//Action Data
 	private       HaggleData                                             haggleData;
@@ -48,8 +48,8 @@ public class Model {
 			listener.put(eventName, new ArrayList<ModelEventListener>());
 		}
 
-		//MassageData
-		massageDataArrayList = new ArrayList<MassageData>();
+		//MessageData
+		messageDataArrayList = new ArrayList<MessageData>();
 
 		//Map
 		mapData = initializeMapData.getMap();
@@ -86,10 +86,10 @@ public class Model {
 
 		clientOperator.addMessageDataEventListener(new ClientOperatorMessageDataEventListener() {
 			@Override public void actionPerformed(ClientOperatorMessageDataEvent event) {
-				switch(event.getMassageData().getTyp()) {
+				switch(event.getMessageData().getTyp()) {
 					case COMMUNITY:
 					case CHANCE:
-						massageDataArrayList.add(event.getMassageData());
+						messageDataArrayList.add(event.getMessageData());
 						fireModelEvent(ModelEventName.CARD);
 						break;
 					case CHAT://TODO implement chat
@@ -532,8 +532,8 @@ public class Model {
 	/**
 	 * @return The return value is the messageDataArrayList with all not processed messages
 	 */
-	public ArrayList<MassageData> getMassageDataArrayList() {
-		return massageDataArrayList;
+	public ArrayList<MessageData> getMessageDataArrayList() {
+		return messageDataArrayList;
 	}
 
 	/**

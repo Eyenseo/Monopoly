@@ -83,11 +83,11 @@ public class MainFrame extends JFrame {
 			@Override public void actionPerformed(ModelEvent event) {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override public void run() {
-						int lastCardData = MainFrame.this.model.getMassageDataArrayList().size() - 1;
+						int lastCardData = MainFrame.this.model.getMessageDataArrayList().size() - 1;
 
 						if(lastCardData >= 0) {
 							new CustomDialog(MainFrame.this.model,
-							                 MainFrame.this.model.getMassageDataArrayList().get(lastCardData));
+							                 MainFrame.this.model.getMessageDataArrayList().get(lastCardData));
 						}
 					}
 				});

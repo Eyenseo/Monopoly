@@ -10,7 +10,7 @@ import objects.listeners.ClientOperatorPlayerDataEventListener;
 import objects.listeners.ClientOperatorPurchasableDataEventListener;
 import objects.value.InitializeMapData;
 import objects.value.InitializePlayer;
-import objects.value.MassageData;
+import objects.value.MessageData;
 import objects.value.PlayerData;
 import objects.value.action.ActionData;
 import objects.value.action.HaggleData;
@@ -114,10 +114,10 @@ public class ClientOperator {
 
 	/**
 	 * The method is called if the client receives new MessageData anf will fire a new ClientMessageDataEvent
-	 * @param massageData
+	 * @param messageData
 	 */
-	public void updateMessageData(MassageData massageData) {
-		fireMessageDataEvent(massageData);
+	public void updateMessageData(MessageData messageData) {
+		fireMessageDataEvent(messageData);
 	}
 
 	/**
@@ -134,10 +134,10 @@ public class ClientOperator {
 
 	/**
 	 * The method will fire a ClientMessageDataEvent with the messageData as the attribute of the event.
-	 * @param massageData The value determines the MessageData to be set as attribute of the event
+	 * @param messageData The value determines the MessageData to be set as attribute of the event
 	 */
-	private void fireMessageDataEvent(MassageData massageData) {
-		ClientOperatorMessageDataEvent event = new ClientOperatorMessageDataEvent(this, massageData);
+	private void fireMessageDataEvent(MessageData messageData) {
+		ClientOperatorMessageDataEvent event = new ClientOperatorMessageDataEvent(this, messageData);
 		for(ClientOperatorMessageDataEventListener l : messageDataEventListeners) {
 			l.actionPerformed(event);
 		}

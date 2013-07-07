@@ -1,6 +1,6 @@
 package objects.events;
 
-import objects.value.MassageData;
+import objects.value.MessageData;
 
 import java.util.EventObject;
 
@@ -8,21 +8,21 @@ import java.util.EventObject;
  * The ClientOperatorMessageDataEvent is thrown at the client if there is new MessageData
  */
 public class ClientOperatorMessageDataEvent extends EventObject {
-	MassageData massageData;
+	MessageData messageData;
 
 	/**
 	 * @param source      the value determines the source of the event
-	 * @param massageData the value determines the MassageData of the event
+	 * @param messageData the value determines the MessageData of the event
 	 */
-	public ClientOperatorMessageDataEvent(Object source, MassageData massageData) {
+	public ClientOperatorMessageDataEvent(Object source, MessageData messageData) {
 		super(source);
-		this.massageData = massageData;
+		this.messageData = messageData;
 	}
 
 	/**
-	 * @return the return value is the MassageData of the event
+	 * @return the return value is the MessageData of the event
 	 */
-	public MassageData getMassageData() {
-		return massageData;
+	public MessageData getMessageData() {
+		return messageData;
 	}
 }
