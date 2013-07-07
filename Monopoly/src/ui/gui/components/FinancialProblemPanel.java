@@ -35,7 +35,7 @@ public class FinancialProblemPanel extends JPanel {
 		this.model = model;
 		this.clientOperator = clientOperator;
 		headerText = "Sie sind kurz davor bankrott zu sein!\n" +
-		             "Sollten Sie nicht in der Lage sein sich das nötiege Geld zu beschaffen, " +
+		             "Sollten Sie nicht in der Lage sein sich das noetiege Geld zu beschaffen, " +
 		             "scheiden sie aus dem Spiel aus.\n" +
 		             "Geld zu erreichen:\n";
 

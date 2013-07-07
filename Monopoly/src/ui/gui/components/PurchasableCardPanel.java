@@ -104,7 +104,7 @@ public class PurchasableCardPanel extends JPanel {
 
 		//Facility info
 		facilityInfoText = new String[]{"Die Miete ist der Preis mal", "der Anzahl der Augen,", "die der Mitspieler ",
-		                                "gewürfelt hat."};
+		                                "gewurfelt hat."};
 		//Mortgage
 		mortgageText = "Hypothekenwert";
 	}
