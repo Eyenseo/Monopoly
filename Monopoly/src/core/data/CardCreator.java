@@ -46,7 +46,7 @@ public class CardCreator extends StorageReader {
 		try {
 			file.close();
 		} catch(IOException e) {
-			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			e.printStackTrace();
 		}
 
 		return cardVector;

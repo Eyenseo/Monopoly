@@ -92,6 +92,9 @@ public abstract class FieldCircularList implements Serializable {
 	 *         the return value is null.
 	 */
 	public FieldCircularList getDiceNext(int index) {
+		//TODO check if the last condition is needed
+		//checks if the dices aren't 0, if the next field's number is smaller than the current field's and if the next
+		//field's number is not 0
 		index -= 2;
 		if(index >= 0 && FIELDNUMBER < diceArray[index].getFieldNumber() && diceArray[index].getFieldNumber() != 0) {
 			return diceArray[index];
