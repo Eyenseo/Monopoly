@@ -2,13 +2,13 @@
 ##	 	##			Comment
 ##	 	#! 			means an object is finished
 ##		#$			means income or loss
-##	 	#jailbreake	means a jailbreake card
+##	 	#jailbreak	means a jailbreak card
 ##	 	#jail		means a card that sends a player directly into jail
 ##	 	#goTo		means a card that sends a player to a specific field with go-income
 ##	 	#streetWork means a card that requires you to spend money on existing houses or hotels
 ##	 	#special$ 	means a transaction that does not involve the bank (player based transactions)
 
-#jailbreake
+#jailbreak
 Du kommst aus dem Gefängnis frei.\nDiese Karte kann später verwendet oder gehandelt werden.
 #!
 
