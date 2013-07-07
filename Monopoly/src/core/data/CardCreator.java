@@ -74,8 +74,8 @@ public class CardCreator extends StorageReader {
 			if(line.equals("#jail")) {
 				return createArrest();
 			}
-			if(line.equals("#jailbrake")) {
-				return createJailbrake();
+			if(line.equals("#jailbreake")) {
+				return createJailbreake();
 			}
 			if(line.equals("#payfinetakecard")) {
 				return createPayFineTakeCard();
@@ -178,22 +178,22 @@ public class CardCreator extends StorageReader {
 	}
 
 	/**
-	 * @return the return value is a Jailbrake Object based on the data in the file.
+	 * @return the return value is a Jailbreake Object based on the data in the file.
 	 *
 	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It
 	 *                                should be
 	 *                                read out with getMessageStack.
 	 */
-	private Jailbrake createJailbrake() throws StorageReaderException {
+	private Jailbreake createJailbreake() throws StorageReaderException {
 		String text = null;
 		try {
 			text = nextString();
 			if(!isEndOfBlock()) {
 				throw new EndOfBlockException(fileName);
 			}
-			return new Jailbrake(NAME, text);
+			return new Jailbreake(NAME, text);
 		} catch(Exception e) {
-			throw new CreationException(NAME + ": " + text, "Jailbrake", e);
+			throw new CreationException(NAME + ": " + text, "Jailbreake", e);
 		}
 	}
 

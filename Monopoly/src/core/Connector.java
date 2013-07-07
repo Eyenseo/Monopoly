@@ -303,9 +303,9 @@ public class Connector {
 						((PayFineTakeCard) card).setParking((Parking) field);
 					}
 				}
-			} else if(card instanceof Jailbrake) {
-				//Jailbrake needs a reference to its CardStack
-				((Jailbrake) card).setCardStack(current);
+			} else if(card instanceof Jailbreake) {
+				//Jailbreake needs a reference to its CardStack
+				((Jailbreake) card).setCardStack(current);
 			} else if(card instanceof Payment) {
 				//Payment needs a reference to Parking
 				for(FieldCircularList field : map) {

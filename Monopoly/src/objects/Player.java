@@ -1,6 +1,6 @@
 package objects;
 
-import objects.card.Jailbrake;
+import objects.card.Jailbreake;
 import objects.events.PlayerEvent;
 import objects.listeners.PlayerEventListener;
 import objects.map.FieldCircularList;
@@ -35,7 +35,7 @@ public class Player implements Serializable {
 	private       boolean                            giveUp;
 	private       int                                trading;
 	private final Random                             randomGenerator;
-	private final Vector<Jailbrake>                  jailbrake;
+	private final Vector<Jailbreake>                 jailbreake;
 	private final ArrayList<PurchasableCircularList> property;
 	private final ArrayList<PlayerEventListener>     playerEventListeners;
 
@@ -62,7 +62,7 @@ public class Player implements Serializable {
 
 		color = new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
 
-		jailbrake = new Vector<Jailbrake>();
+		jailbreake = new Vector<Jailbreake>();
 		property = new ArrayList<PurchasableCircularList>();
 		playerEventListeners = new ArrayList<PlayerEventListener>();
 	}
@@ -235,29 +235,29 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * @return The return value is true if the player has a Jailbrake Card.
+	 * @return The return value is true if the player has a Jailbreake Card.
 	 */
-	public boolean hasJailbrake() {
-		return !jailbrake.isEmpty();
+	public boolean hasJailbreake() {
+		return !jailbreake.isEmpty();
 	}
 
 	/**
 	 * The method will fire a PlayerEvent.
 	 *
-	 * @param jailbrake The value determines a Jailbrake car to be added to the Player.
+	 * @param jailbreake The value determines a Jailbreake car to be added to the Player.
 	 */
-	public void addJailbrake(Jailbrake jailbrake) {
-		this.jailbrake.add(jailbrake);
+	public void addJailbreake(Jailbreake jailbreake) {
+		this.jailbreake.add(jailbreake);
 		firePlayerEvent();
 	}
 
 	/**
-	 * The method will fire a PlayerEvent. The method removes a jailbrake Card from the Player and adds it back to its
+	 * The method will fire a PlayerEvent. The method removes a jailbreake Card from the Player and adds it back to its
 	 * CardStack and sets the player free.
 	 */
-	public void useJailbrake() {
-		jailbrake.firstElement().freePlayer(this);
-		jailbrake.remove(jailbrake.firstElement());
+	public void useJailbreake() {
+		jailbreake.firstElement().freePlayer(this);
+		jailbreake.remove(jailbreake.firstElement());
 		firePlayerEvent();
 	}
 
@@ -402,10 +402,10 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * @return The return value is a Vector of JailbrakeCards
+	 * @return The return value is a Vector of JailbreakeCards
 	 */
-	public Vector<Jailbrake> getJailbrake() {
-		return jailbrake;
+	public Vector<Jailbreake> getJailbreake() {
+		return jailbreake;
 	}
 
 	/**

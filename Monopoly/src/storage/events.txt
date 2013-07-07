@@ -2,7 +2,7 @@
 ##	 	##			        Comment
 ##	 	#! 			        means an object is finished
 ##		#$			        means income or loss
-##	 	#jailbrake	        means a jailbrake card
+##	 	#jailbreake	        means a jailbreake card
 ##	 	#jail		        means a card that sends a player directly into jail
 ##	 	#goTo		        means a card that sends a player to a specific field with go-income
 ##	 	#streetWork         means a card that requires you to spend money on existing houses or hotels
@@ -10,7 +10,7 @@
 ##	 	#gotostation        means a card that sends the player to a specific station with special conditions
 ##	 	#back 		        means a card that sends a player backwards
 ##      #payfinetakecard    means a card that has a special event (pay fine OR take a card)
-#jailbrake
+#jailbreake
 Du kommst aus dem Gefängnis frei.\nDiese Karte kann später verwendet oder gehandelt werden.
 #!
 
