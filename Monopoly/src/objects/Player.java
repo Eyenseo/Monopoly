@@ -1,6 +1,6 @@
 package objects;
 
-import objects.card.Jailbait;
+import objects.card.Jailbrake;
 import objects.events.PlayerEvent;
 import objects.listeners.PlayerEventListener;
 import objects.map.FieldCircularList;
@@ -35,7 +35,7 @@ public class Player implements Serializable {
 	private       boolean                            giveUp;
 	private       int                                trading;
 	private final Random                             randomGenerator;
-	private final Vector<Jailbait>                   jailbait;
+	private final Vector<Jailbrake>                  jailbrake;
 	private final ArrayList<PurchasableCircularList> property;
 	private final ArrayList<PlayerEventListener>     playerEventListeners;
 
@@ -62,7 +62,7 @@ public class Player implements Serializable {
 
 		color = new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
 
-		jailbait = new Vector<Jailbait>();
+		jailbrake = new Vector<Jailbrake>();
 		property = new ArrayList<PurchasableCircularList>();
 		playerEventListeners = new ArrayList<PlayerEventListener>();
 	}
@@ -235,29 +235,29 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * @return The return value is true if the player has a Jailbait Card.
+	 * @return The return value is true if the player has a Jailbrake Card.
 	 */
-	public boolean isJailbait() {
-		return !jailbait.isEmpty();
+	public boolean hasJailbrake() {
+		return !jailbrake.isEmpty();
 	}
 
 	/**
 	 * The method will fire a PlayerEvent.
 	 *
-	 * @param jailbait The value determines a Jailbait car to be added to the Player.
+	 * @param jailbrake The value determines a Jailbrake car to be added to the Player.
 	 */
-	public void addJailbait(Jailbait jailbait) {
-		this.jailbait.add(jailbait);
+	public void addJailbrake(Jailbrake jailbrake) {
+		this.jailbrake.add(jailbrake);
 		firePlayerEvent();
 	}
 
 	/**
-	 * The method will fire a PlayerEvent. The method removes a jailbait Card from the Player and adds it back to its
+	 * The method will fire a PlayerEvent. The method removes a jailbrake Card from the Player and adds it back to its
 	 * CardStack and sets the player free.
 	 */
-	public void useJailbait() {
-		jailbait.firstElement().freePlayer(this);
-		jailbait.remove(jailbait.firstElement());
+	public void useJailbrake() {
+		jailbrake.firstElement().freePlayer(this);
+		jailbrake.remove(jailbrake.firstElement());
 		firePlayerEvent();
 	}
 
@@ -402,10 +402,10 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * @return The return value is a Vector of JailbaitCards
+	 * @return The return value is a Vector of JailbrakeCards
 	 */
-	public Vector<Jailbait> getJailbait() {
-		return jailbait;
+	public Vector<Jailbrake> getJailbrake() {
+		return jailbrake;
 	}
 
 	/**

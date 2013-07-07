@@ -5,11 +5,11 @@ import objects.Player;
 import java.io.Serializable;
 
 /**
- * Jailbait is the jailbait card.
+ * Jailbrake is the jailbreak card.
  *
  * @version 0.1
  */
-public class Jailbait extends Card implements Serializable {
+public class Jailbrake extends Card implements Serializable {
 	private static final long serialVersionUID = 1422468157314847166L;
 	private CardStack cardStack;
 
@@ -17,7 +17,7 @@ public class Jailbait extends Card implements Serializable {
 	 * @param name The value determines the name of the Card.
 	 * @param text The value determines the text of the Card.
 	 */
-	public Jailbait(String name, String text) {
+	public Jailbrake(String name, String text) {
 		super(name, text);
 	}
 
@@ -47,7 +47,7 @@ public class Jailbait extends Card implements Serializable {
 	@Override
 	public void action(Player player) {
 		fireMessageEvent(player.getPlayerId());
-		player.addJailbait(this);
+		player.addJailbrake(this);
 		cardStack.removeCard(index);
 	}
 }

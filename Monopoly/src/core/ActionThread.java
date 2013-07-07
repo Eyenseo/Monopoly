@@ -1,7 +1,7 @@
 package core;
 
 import objects.Player;
-import objects.card.Jailbait;
+import objects.card.Jailbrake;
 import objects.map.FieldCircularList;
 import objects.map.purchasable.PurchasableCircularList;
 import objects.map.purchasable.Street;
@@ -265,7 +265,7 @@ public class ActionThread extends Thread {
 		}
 
 		//Put all cards back on the Cardstack
-		for(Jailbait card : user.getJailbait()) {
+		for(Jailbrake card : user.getJailbrake()) {
 			card.putBack();
 		}
 
