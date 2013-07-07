@@ -147,8 +147,7 @@ public class Model {
 	 */
 	private void analysePlayerData(PlayerData playerData) {
 		if(playerData.equals(user)) {
-			if(user.getFirstDice() != playerData.getFirstDice() || user.getSecondDice() != playerData.getSecondDice
-					()) {
+			if(user.getFirstDice() != playerData.getFirstDice() || user.getSecondDice() != playerData.getSecondDice()) {
 				user.setFirstDice(playerData.getFirstDice());
 				user.setSecondDice(playerData.getSecondDice());
 				fireModelEvent(ModelEventName.DICE);
@@ -406,7 +405,7 @@ public class Model {
 	}
 
 	/**
-	 * @return the return value is true if the cleint player is in jail
+	 * @return the return value is true if the client player is in jail
 	 */
 	public boolean isInJail() {
 		return user.isInJail();
