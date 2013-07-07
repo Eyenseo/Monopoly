@@ -61,8 +61,8 @@ public class Map extends JPanel {
 					@Override public void run() {
 						for(int i = 0; i < fieldCardArrayList.size(); i++) {
 							FieldCard fieldCard = fieldCardArrayList.get(i);
+							fieldCard.removeAll();
 							for(PlayerData playerData : model.getPlayerHashMap().values()) {
-								fieldCard.removeAll();
 								if(playerData.getPosition().getFieldNumber() == i) {
 									fieldCard.updatePlayerPosition(playerData.getId(), playerData.getName().charAt(0),
 									                               playerData.getColor());
