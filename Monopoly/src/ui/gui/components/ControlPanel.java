@@ -4,6 +4,7 @@ import core.ClientOperator;
 import objects.events.ModelEvent;
 import objects.listeners.ModelEventListener;
 import objects.value.action.BuyData;
+import objects.value.action.PlayerStatusData;
 import objects.value.action.TurnData;
 import ui.gui.Model;
 
@@ -105,7 +106,8 @@ class ControlPanel extends JPanel {
 	}
 
 	/**
-	 * The method creates following buttons: <ul> <li>turnOption</li> <li>buyOption</li> <li>haggle</li> <li>mortgage</li>
+	 * The method creates following buttons: <ul> <li>turnOption</li> <li>buyOption</li> <li>haggle</li>
+	 * <li>mortgage</li>
 	 * <li>giveUp</li> <li>endApp</li> </ul>
 	 *
 	 * @return The return value is a Panel with all buttons of the ControlPanel
@@ -180,10 +182,13 @@ class ControlPanel extends JPanel {
 	/**
 	 * The method creates the chatHistory and chatMessage Panel divided by a SplitPane
 	 *
-	 * @return The return value is a panel with a chat history TextArea and a chat message TextArea divided by a SplitPane
+	 * @return The return value is a panel with a chat history TextArea and a chat message TextArea divided by a
+	 * SplitPane
 	 */
 	private JPanel buildChatPanel() {
 		chatHistory = new JTextArea(chatHistoryText);
+		chatHistory.setWrapStyleWord(true);
+		chatHistory.setLineWrap(true);
 		chatHistory.setEditable(false);
 
 		JScrollPane seeScrollPane = new JScrollPane(chatHistory);
@@ -191,7 +196,9 @@ class ControlPanel extends JPanel {
 		seeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		seeScrollPane.setPreferredSize(new Dimension(100, 150));
 
-		chatMessage = new JTextArea("ier sollte ihre Nachtricht eingegeben werden");
+		chatMessage = new JTextArea("Hier sollte ihre Nachtricht eingegeben werden");
+		chatMessage.setWrapStyleWord(true);
+		chatMessage.setLineWrap(true);
 		JScrollPane writeScrollPane = new JScrollPane(chatMessage);
 		writeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		writeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -281,9 +288,11 @@ class ControlPanel extends JPanel {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override public void run() {
 						clientOperator.sendActionData(new BuyData(model.getUser().getId(), model.getBuyOptionState() ==
-						                                                                   Model.BuyOptionState.BUYHOTEL ||
-						                                                                   model.getBuyOptionState() ==
-						                                                                   Model.BuyOptionState.BUYHOUSE));
+						                                                                   Model.BuyOptionState
+								                                                                   .BUYHOTEL || model
+										                                                                                .getBuyOptionState() ==
+						                                                                   Model.BuyOptionState
+								                                                                   .BUYHOUSE));
 					}
 				});
 			}
@@ -310,7 +319,8 @@ class ControlPanel extends JPanel {
 			@Override public void actionPerformed(ActionEvent e) {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override public void run() {
-						JOptionPane.showMessageDialog(new JFrame(), "Not yet implemented.");
+						clientOperator.sendActionData(
+								new PlayerStatusData(model.getUser().getId(), PlayerStatusData.PlayerStatus.GIVEUP));
 					}
 				});
 			}
