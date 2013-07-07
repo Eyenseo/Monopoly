@@ -95,7 +95,9 @@ public class ActionThread extends Thread {
 	}
 
 	/**
-	 * The method will check if the player wants to update a Street or if he wants to buy a purchasable and executes the request
+	 * The method will check if the player wants to update a Street or if he wants to buy a purchasable and executes
+	 * the
+	 * request
 	 *
 	 * @param user       The value determines the Player the BuyData is from
 	 * @param actionData The value determines the BuyData that needs to be processed
@@ -111,18 +113,21 @@ public class ActionThread extends Thread {
 	}
 
 	/**
-	 * The method will check at which state the trade is at, if at:
-	 * <ul>
-	 *     <li>ESTABLISH: Will check if one of the Player are currently trading and will send the HaggleData back with<br>ESTABLISHED if they are not trading (and sets the Player to be trading</br><br>DECLINE if one of them is trading</br></li>
-	 *     <li>ESTABLISHED: Will never happen since that state is only set at the server</li>
-	 *     <li>REQUEST: Will forward the HaggleData to all clients</li>
-	 *     <li>OFFER: Will forward the HaggleData to all clients</li>
-	 *     <li>ACCEPT: Will execute the trade eg. move the purchasable to its new respective owner and transfers the money between them and sets the player to be not trading</li>
-	 *     <li>DECLINE: Will set the two player to be not trading</li>
-	 * </ul>
+	 * The method will check at which state the trade is at, if at: <ul> <li>ESTABLISH: Will check if one of the
+	 * Player are
+	 * currently trading and will send the HaggleData back with<br>ESTABLISHED if they are not trading (and sets the
+	 * Player
+	 * to be trading</br><br>DECLINE if one of them is trading</br></li> <li>ESTABLISHED: Will never happen since that
+	 * state is only set at the server</li> <li>REQUEST: Will forward the HaggleData to all clients</li> <li>OFFER:
+	 * Will
+	 * forward the HaggleData to all clients</li> <li>ACCEPT: Will execute the trade eg. move the purchasable to its
+	 * new
+	 * respective owner and transfers the money between them and sets the player to be not trading</li> <li>DECLINE:
+	 * Will
+	 * set the two player to be not trading</li> </ul>
 	 *
-	 * @param user
-	 * @param actionData
+	 * @param user       The value determines the Player the HaggleData is from
+	 * @param actionData The value determines the HaggleData that needs to be processed
 	 */
 	private void haggleAction(Player user, HaggleData actionData) {
 		Player seller;
@@ -201,7 +206,8 @@ public class ActionThread extends Thread {
 
 	/**
 	 * The method call the right purchasable of the player to change its mortgage state
-	 * @param user The value determines the Player the MortgageData is from
+	 *
+	 * @param user       The value determines the Player the MortgageData is from
 	 * @param actionData The value determines the MortgageData that needs to be processed
 	 */
 	private void mortgageAction(Player user, MortgageData actionData) {
@@ -215,8 +221,11 @@ public class ActionThread extends Thread {
 	}
 
 	/**
-	 * The method will check if the player wants to give up or wants to resolve a financial problem if a financial problem is said to be resolved all waiting threads are notified, if the player gives up he will be removed from the game
-	 * @param user The value determines the Player the PlayerStatusData is from
+	 * The method will check if the player wants to give up or wants to resolve a financial problem if a financial
+	 * problem
+	 * is said to be resolved all waiting threads are notified, if the player gives up he will be removed from the game
+	 *
+	 * @param user       The value determines the Player the PlayerStatusData is from
 	 * @param actionData The value determines the PlayerStatusData
 	 */
 	private void playerStatusAction(Player user, PlayerStatusData actionData) {
@@ -238,7 +247,8 @@ public class ActionThread extends Thread {
 
 	/**
 	 * The method will remove the player from the game
-	 * @param user The value determines the Player the PlayerStatusData is from
+	 *
+	 * @param user       The value determines the Player the PlayerStatusData is from
 	 * @param actionData The value determines the PlayerStatusData to be processed
 	 */
 	private void removePlayer(Player user, PlayerStatusData actionData) {
