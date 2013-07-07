@@ -44,6 +44,7 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLayout(new GridLayout());
 		getContentPane().add(mainPanel);
+		mainPanel.setPreferredSize(new Dimension(822, 437));
 
 		mainPanel.add(statusBarPanel, BorderLayout.NORTH);
 		mainPanel.add(gamePanel, BorderLayout.CENTER);

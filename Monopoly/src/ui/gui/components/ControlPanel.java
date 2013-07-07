@@ -106,7 +106,8 @@ class ControlPanel extends JPanel {
 	}
 
 	/**
-	 * The method creates following buttons: <ul> <li>turnOption</li> <li>buyOption</li> <li>haggle</li> <li>mortgage</li>
+	 * The method creates following buttons: <ul> <li>turnOption</li> <li>buyOption</li> <li>haggle</li>
+	 * <li>mortgage</li>
 	 * <li>giveUp</li> <li>endApp</li> </ul>
 	 *
 	 * @return The return value is a Panel with all buttons of the ControlPanel
@@ -181,7 +182,8 @@ class ControlPanel extends JPanel {
 	/**
 	 * The method creates the chatHistory and chatMessage Panel divided by a SplitPane
 	 *
-	 * @return The return value is a panel with a chat history TextArea and a chat message TextArea divided by a SplitPane
+	 * @return The return value is a panel with a chat history TextArea and a chat message TextArea divided by a
+	 * SplitPane
 	 */
 	private JPanel buildChatPanel() {
 		chatHistory = new JTextArea(chatHistoryText);
@@ -194,7 +196,7 @@ class ControlPanel extends JPanel {
 		seeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		seeScrollPane.setPreferredSize(new Dimension(100, 150));
 
-		chatMessage = new JTextArea("Hier sollte ihre Nachtricht eingegeben werden");
+		chatMessage = new JTextArea("Hier sollte ihre Nachricht eingegeben werden");
 		chatMessage.setWrapStyleWord(true);
 		chatMessage.setLineWrap(true);
 		JScrollPane writeScrollPane = new JScrollPane(chatMessage);
@@ -286,9 +288,11 @@ class ControlPanel extends JPanel {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override public void run() {
 						clientOperator.sendActionData(new BuyData(model.getUser().getId(), model.getBuyOptionState() ==
-						                                                                   Model.BuyOptionState.BUYHOTEL ||
-						                                                                   model.getBuyOptionState() ==
-						                                                                   Model.BuyOptionState.BUYHOUSE));
+						                                                                   Model.BuyOptionState
+								                                                                   .BUYHOTEL || model
+										                                                                                .getBuyOptionState() ==
+						                                                                   Model.BuyOptionState
+								                                                                   .BUYHOUSE));
 					}
 				});
 			}

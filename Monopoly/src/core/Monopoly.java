@@ -78,7 +78,7 @@ public class Monopoly {
 
 	public static void main(String[] args) {
 		try {
-			if(args.length > 2) {
+			if(args.length > 1) {
 				if(args.length < 6) {
 					Monopoly m = new Monopoly(new Loader());
 
