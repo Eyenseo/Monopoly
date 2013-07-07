@@ -38,14 +38,12 @@ public class Monopoly {
 		turnThread = new Thread(new Runnable() {
 			@Override public void run() {
 				Player previousPlayer = null;
-				boolean nextRound;
 
 				try {
 					synchronized(turnThread) {
 						while(!gameOver) {
 							Iterator<Player> iterator = playerHashMap.values().iterator();
-							nextRound = false;
-							while(iterator.hasNext() && !nextRound) {
+							while(iterator.hasNext()) {
 								try {
 									currentPlayer = iterator.next();
 									currentPlayer.setTurnEnd(false);
@@ -58,9 +56,6 @@ public class Monopoly {
 										if(iterator.next().equals(previousPlayer)) {
 											break;
 										}
-									}
-									if(!iterator.hasNext()) {
-										nextRound = true;
 									}
 								}
 							}
