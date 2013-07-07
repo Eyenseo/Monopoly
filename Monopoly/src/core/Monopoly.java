@@ -37,7 +37,7 @@ public class Monopoly {
 		//TODO Specify a timeout for a turn
 		turnThread = new Thread(new Runnable() {
 			@Override public void run() {
-				Player lastPreviousPlayer = null;
+				Player previousPlayer = null;
 				boolean nextRound;
 
 				try {
@@ -50,12 +50,12 @@ public class Monopoly {
 									currentPlayer = iterator.next();
 									currentPlayer.setTurnEnd(false);
 									turnThread.wait();  //TODO possible replace with "Condition"
-									lastPreviousPlayer = currentPlayer;
+									previousPlayer = currentPlayer;
 								} catch(ConcurrentModificationException e) {
 									System.out.println("bang!");
 									iterator = playerHashMap.values().iterator();
 									while(iterator.hasNext()) {
-										if(iterator.next().equals(lastPreviousPlayer)) {
+										if(iterator.next().equals(previousPlayer)) {
 											break;
 										}
 									}
@@ -67,7 +67,7 @@ public class Monopoly {
 						}
 					}
 				} catch(InterruptedException e) {
-					e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+					e.printStackTrace();
 				}
 			}
 		});

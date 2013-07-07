@@ -60,7 +60,29 @@ public class Player implements Serializable {
 		timeInJail = 0;
 		trading = -1;
 
-		color = new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+		//sets the color for the first six players and for the others a random one
+		switch(playerId) {
+			case 0:
+				color = new Color(217, 94, 217);
+				break;
+			case 1:
+				color = new Color(0, 171, 209);
+				break;
+			case 2:
+				color = new Color(234, 130, 0);
+				break;
+			case 3:
+				color = new Color(0, 192, 137);
+				break;
+			case 4:
+				color = new Color(207, 0, 4);
+				break;
+			case 5:
+				color = new Color(255, 235, 18);
+				break;
+			default:
+				color = new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+		}
 
 		jailbreak = new Vector<Jailbreak>();
 		property = new ArrayList<PurchasableCircularList>();
@@ -203,7 +225,7 @@ public class Player implements Serializable {
 	 * The method will fire a PlayerEvent.
 	 *
 	 * @param purchasable The value determines the PurchasableCircularList object the property that will be added to
-	 *                       the
+	 *                    the
 	 *                    player.
 	 */
 	public void addProperty(PurchasableCircularList purchasable) {
@@ -215,7 +237,7 @@ public class Player implements Serializable {
 	 * The method will fire a PlayerEvent.
 	 *
 	 * @param purchasable The value determines the PurchasableCircularList object the property that will be removed to
-	 *                       the
+	 *                    the
 	 *                    player.
 	 */
 	public void removeProperty(PurchasableCircularList purchasable) {
@@ -416,7 +438,6 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 *
 	 * @return The value determines the true if the player is currently at turn
 	 */
 	public boolean isTurnEnd() {
