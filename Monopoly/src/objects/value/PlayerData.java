@@ -18,11 +18,12 @@ public class PlayerData {
 	private       int       threwDice;
 	private       int       trading;
 	private       boolean   giveUp;
+	private       boolean   jailbreak;
 
 	/**
 	 * @param id         the value determines the id of the player
 	 * @param name       the value determines the name of the player
-	 * @param color
+	 * @param color      the value determines the color of the player
 	 * @param firstDice  the value determines the first dice
 	 * @param secondDice the value determines the second dice
 	 * @param inJail     the value determines if the player is in jail
@@ -31,10 +32,11 @@ public class PlayerData {
 	 * @param turnEnd    the value determines if the player is currently at turn
 	 * @param threwDice  the value determines the amount of times the player threw the dice
 	 * @param trading    the value determines the id of the Player the player is currently trading with
+	 * @param jailbreak  the value determines if the player has a jailbreak card or not
 	 */
 	public PlayerData(int id, String name, Color color, int firstDice, int secondDice, boolean inJail, int money,
-	                  int neededMoney, FieldData position, boolean turnEnd, int threwDice, int trading,
-	                  boolean giveUp) {
+	                  int neededMoney, FieldData position, boolean turnEnd, int threwDice, int trading, boolean giveUp,
+	                  boolean jailbreak) {
 		this.id = id;
 		this.name = name;
 		this.color = color;
@@ -48,6 +50,7 @@ public class PlayerData {
 		this.threwDice = threwDice;
 		this.trading = trading;
 		this.giveUp = giveUp;
+		this.jailbreak = jailbreak;
 	}
 
 	/**
@@ -209,6 +212,13 @@ public class PlayerData {
 	 */
 	public Color getColor() {
 		return color;
+	}
+
+	/**
+	 * @return the return value is true if the player has a jailbreak card
+	 */
+	public boolean hasJailbreak() {
+		return jailbreak;
 	}
 
 	/**

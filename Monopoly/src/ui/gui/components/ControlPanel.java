@@ -4,6 +4,7 @@ import core.ClientOperator;
 import objects.events.ModelEvent;
 import objects.listeners.ModelEventListener;
 import objects.value.action.BuyData;
+import objects.value.action.FreePlayerData;
 import objects.value.action.PlayerStatusData;
 import objects.value.action.TurnData;
 import ui.gui.Model;
@@ -23,6 +24,7 @@ class ControlPanel extends JPanel {
 	private       DiceImage      firstDice;
 	private       DiceImage      secondDice;
 	private       JButton        turnOption;
+	private       JButton        jailOption;
 	private       JButton        buyOption;
 	private       JButton        haggle;
 	private       JButton        mortgage;
@@ -31,6 +33,7 @@ class ControlPanel extends JPanel {
 	private       JTextArea      chatMessage;
 	//Text
 	private       String         turnOptionText;
+	private       String         jailOptionText;
 	private       String         buyOptionText;
 	private final String         haggleText;
 	private final String         mortgageText;
@@ -82,6 +85,15 @@ class ControlPanel extends JPanel {
 				});
 			}
 		});
+		model.addModelEventListener(Model.ModelEventName.JAILOPTION, new ModelEventListener() {
+			@Override public void actionPerformed(ModelEvent event) {
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						updateJailOption();
+					}
+				});
+			}
+		});
 		model.addModelEventListener(Model.ModelEventName.TURNSTATE, new ModelEventListener() {
 			@Override public void actionPerformed(ModelEvent event) {
 				SwingUtilities.invokeLater(new Runnable() {
@@ -100,6 +112,11 @@ class ControlPanel extends JPanel {
 						secondDice.setCurrentIndex(ControlPanel.this.model.getSecondDice());
 					}
 				});
+			}
+		});
+		model.addModelEventListener(Model.ModelEventName.ISINJAIL, new ModelEventListener() {
+			@Override public void actionPerformed(ModelEvent event) {
+				updateJailOption();
 			}
 		});
 		registerButtonListener();
@@ -139,12 +156,20 @@ class ControlPanel extends JPanel {
 		gridBagConstraints.gridy = 0;
 		panel.add(turnOption, gridBagConstraints);
 
+		// Button to get free from jail
+		jailOption = new JButton();
+		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 2;
+		gridBagConstraints.gridwidth = 3;
+		panel.add(jailOption, gridBagConstraints);
+
 		// Button to buy a house, hotel, property
 		buyOption = new JButton();
 		buyOption.setText(buyOptionText);
 		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridy = 3;
 		gridBagConstraints.gridwidth = 3;
 		panel.add(buyOption, gridBagConstraints);
 
@@ -153,7 +178,7 @@ class ControlPanel extends JPanel {
 		haggle.setText(haggleText);
 		gridBagConstraints.insets = new Insets(20, 5, 5, 5);
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 2;
+		gridBagConstraints.gridy = 4;
 		gridBagConstraints.gridwidth = 3;
 		panel.add(haggle, gridBagConstraints);
 
@@ -162,7 +187,7 @@ class ControlPanel extends JPanel {
 		mortgage.setText(mortgageText);
 		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 3;
+		gridBagConstraints.gridy = 5;
 		gridBagConstraints.gridwidth = 3;
 		panel.add(mortgage, gridBagConstraints);
 
@@ -172,7 +197,7 @@ class ControlPanel extends JPanel {
 		gridBagConstraints.insets = new Insets(20, 5, 5, 5);
 		gridBagConstraints.ipadx = 100;
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 4;
+		gridBagConstraints.gridy = 6;
 		gridBagConstraints.gridwidth = 3;
 		panel.add(giveUp, gridBagConstraints);
 
@@ -183,7 +208,7 @@ class ControlPanel extends JPanel {
 	 * The method creates the chatHistory and chatMessage Panel divided by a SplitPane
 	 *
 	 * @return The return value is a panel with a chat history TextArea and a chat message TextArea divided by a
-	 * SplitPane
+	 *         SplitPane
 	 */
 	private JPanel buildChatPanel() {
 		chatHistory = new JTextArea(chatHistoryText);
@@ -243,6 +268,28 @@ class ControlPanel extends JPanel {
 	}
 
 	/**
+	 * The method will set the jail button text and state accordingly to the jailOptionState set in the model
+	 */
+	private void updateJailOption() {
+		switch(model.getJailOptionState()) {
+			case JAILBREAK:
+				jailOptionText = "Gefaengnisausbruch";
+				jailOption.setEnabled(true);
+				break;
+			case PAYFINE:
+				jailOptionText = "Frei kaufen";
+				jailOption.setEnabled(true);
+				break;
+			case DEACTIVATED:
+				jailOptionText ="Nichts zu tun";
+				jailOption.setEnabled(false);
+				break;
+		}
+
+		jailOption.setText(jailOptionText);
+	}
+
+	/**
 	 * The method will set the buy button text and state accordingly to the buyOptionState set in the model
 	 */
 	private void updateBuyOption() {
@@ -283,16 +330,24 @@ class ControlPanel extends JPanel {
 				});
 			}
 		});
+		jailOption.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override public void run() {
+						clientOperator.sendActionData(
+								new FreePlayerData(model.getUser().getId(), model.getUser().hasJailbreak()));
+					}
+				});
+			}
+		});
 		buyOption.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override public void run() {
 						clientOperator.sendActionData(new BuyData(model.getUser().getId(), model.getBuyOptionState() ==
-						                                                                   Model.BuyOptionState
-								                                                                   .BUYHOTEL || model
-										                                                                                .getBuyOptionState() ==
-						                                                                   Model.BuyOptionState
-								                                                                   .BUYHOUSE));
+						                                                                   Model.BuyOptionState.BUYHOTEL ||
+						                                                                   model.getBuyOptionState() ==
+						                                                                   Model.BuyOptionState.BUYHOUSE));
 					}
 				});
 			}

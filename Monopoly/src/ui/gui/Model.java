@@ -35,6 +35,7 @@ public class Model {
 	private       MainPanelName                                          currentMainPanelName;
 	private       MainPanelName                                          previousMainPanelName;
 	private       TurnOptionState                                        turnOptionState;
+	private       JailOptionState                                        jailOptionState;
 	private       BuyOptionState                                         buyOptionState;
 
 	/**
@@ -57,6 +58,7 @@ public class Model {
 		//States
 		currentMainPanelName = MainPanelName.GAME;
 		turnOptionState = TurnOptionState.DEACTIVATED;
+		jailOptionState = JailOptionState.DEACTIVATED;
 		buyOptionState = BuyOptionState.DEACTIVATED;
 
 		//Register EventListeners
@@ -188,6 +190,7 @@ public class Model {
 				fireModelEvent(ModelEventName.PLAYERREMOVED);
 			}
 			updateTurnOption();
+			updateJailOption();
 			updateBuyOption();
 		} else {
 			if(playerData.isGiveUp()) {
@@ -267,6 +270,13 @@ public class Model {
 	 */
 	public MainPanelName getPreviousMainPanelName() {
 		return previousMainPanelName;
+	}
+
+	/**
+	 * @return the return value is the jail option state
+	 */
+	public JailOptionState getJailOptionState() {
+		return jailOptionState;
 	}
 
 	/**
@@ -440,8 +450,7 @@ public class Model {
 	}
 
 	/**
-	 * The method changes the buyOptionState to PURCHASABLE if the player can buy the field,
-	 * to BUYHOUSE if he can buy a
+	 * The method changes the buyOptionState to PURCHASABLE if the player can buy the field, to BUYHOUSE if he can buy a
 	 * house, to BUYHOTEL if he can buy a hotel or DEACTIVATED if he can't buy anything. Will fire a ModelEvent
 	 */
 	private void updateBuyOption() {
@@ -470,6 +479,28 @@ public class Model {
 			buyOptionState = BuyOptionState.DEACTIVATED;
 		}
 		fireModelEvent(ModelEventName.BUYOPTION);
+	}
+
+	/**
+	 * The method changes the jailOptionState to JAILBREAK if the player has a jailbreak card, to PAYFINE if not und if
+	 * either the turnOptionState is DEACTIVATED or the palyer is not in jail
+	 */
+	private void updateJailOption() {
+		boolean active = false;
+		if(user.isInJail()) {
+			if(user.hasJailbreak()) {
+				jailOptionState = JailOptionState.JAILBREAK;
+				active = true;
+			} else {
+				jailOptionState = JailOptionState.PAYFINE;
+				active = true;
+			}
+		}
+
+		if(!active || turnOptionState == TurnOptionState.DEACTIVATED) {
+			jailOptionState = JailOptionState.DEACTIVATED;
+		}
+		fireModelEvent(ModelEventName.JAILOPTION);
 	}
 
 	/**
@@ -544,8 +575,7 @@ public class Model {
 
 	/**
 	 * <ul> <li>THROWDICE: the player can throw the dice for the first time</li> <li>THROWDICEAGAIN: the player can
-	 * throw
-	 * the dice again</li> <li>ENDTURN: the player can only end the turn</li> <li>DEACTIVATED: the player can't do
+	 * throw the dice again</li> <li>ENDTURN: the player can only end the turn</li> <li>DEACTIVATED: the player can't do
 	 * anything</li> </ul>
 	 */
 	public enum TurnOptionState {
@@ -553,9 +583,19 @@ public class Model {
 	}
 
 	/**
+	 * <ul>
+	 * <li>JAILBREAK: the player uses a Jailbreak card</li>
+	 * <li>PAYFINE: the player has to pay a fine to get free</li>
+	 * <li>DEACTIVATED: the player can't do anything</li>
+	 * </ul>
+	 */
+	public enum JailOptionState {
+		JAILBREAK, PAYFINE, DEACTIVATED
+	}
+
+	/**
 	 * <ul> <li>PURCHASABLE: option to buy purchasable field</li> <li>BUYHOUSE: option to buy a house</li>
-	 * <li>BUYHOTEL:
-	 * option to buy a hotel</li> <li>DEACTIVATED: no option at all</li> </ul>
+	 * <li>BUYHOTEL: option to buy a hotel</li> <li>DEACTIVATED: no option at all</li> </ul>
 	 */
 	public enum BuyOptionState {
 		PURCHASABLE, BUYHOUSE, BUYHOTEL, DEACTIVATED
@@ -566,7 +606,7 @@ public class Model {
 	 */
 	public enum ModelEventName {
 		DICE, ISINJAIL, MONEY, POSITION, TURNSTATE, THREWDICE, INMORTAGE, STAGE, PROPERTY, TURNOPTION, BUYOPTION,
-		MAINPANEL, HAGGLE, CARD, FINANCIAL, PLAYERREMOVED
+		MAINPANEL, HAGGLE, CARD, FINANCIAL, JAILOPTION, PLAYERREMOVED
 	}
 
 	/**

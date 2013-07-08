@@ -31,6 +31,7 @@ public class Monopoly {
 		jail = loader.getJail();
 		playerHashMap = loader.getPlayerHashMap();
 		serverOperator = new ServerOperator(this, loader);
+		actions = new HashMap<Integer, HashMap<String, ActionThread>>();
 
 		//The thread will set the next player as active and will then wait for him to finish his turn and sets the
 		//next player active and waits ...
@@ -50,7 +51,6 @@ public class Monopoly {
 									turnThread.wait();  //TODO possible replace with "Condition"
 									previousPlayer = currentPlayer;
 								} catch(ConcurrentModificationException e) {
-									System.out.println("bang!");
 									iterator = playerHashMap.values().iterator();
 									while(iterator.hasNext()) {
 										if(iterator.next().equals(previousPlayer)) {
@@ -67,8 +67,6 @@ public class Monopoly {
 			}
 		});
 		turnThread.setName("Turn thread");
-
-		actions = new HashMap<Integer, HashMap<String, ActionThread>>();
 	}
 
 	public static void main(String[] args) {
@@ -118,7 +116,6 @@ public class Monopoly {
 	/**
 	 * @param actionData The value determines the action to be done
 	 */
-	//TODO chop the method down
 	public void doAction(final ActionData actionData) {
 		//TODO check what happens if a player doesn't have the money and decides to give up - is deleting the thread
 		// enough?

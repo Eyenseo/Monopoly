@@ -3,6 +3,7 @@ package core;
 import objects.Player;
 import objects.card.Jailbreak;
 import objects.map.FieldCircularList;
+import objects.map.notPurchasable.Jail;
 import objects.map.purchasable.PurchasableCircularList;
 import objects.map.purchasable.Street;
 import objects.value.action.*;
@@ -62,10 +63,28 @@ class ActionThread extends Thread {
 			mortgageAction(user, (MortgageData) actionData);
 		} else if(actionData instanceof PlayerStatusData) {
 			playerStatusAction(user, (PlayerStatusData) actionData);
+		} else if(actionData instanceof FreePlayerData) {
+			freePlayerAction(user, (FreePlayerData) actionData);
 		}
 
 		if(actions.containsKey(actionData.getUserId())) {
 			actions.get(actionData.getUserId()).remove(actionData.getId());
+		}
+	}
+
+	/**
+	 * The method will check if a player can get freed from jail
+	 *
+	 * @param user The value determines the Player the FreePlayerData is from
+	 * @param data The value FreePlayerData the TurnData that needs to be processed
+	 */
+	private void freePlayerAction(Player user, FreePlayerData data) {
+		if(user.getPosition() instanceof Jail) {
+			if(data.isUseJailbreak() && user.hasJailbreak()) {
+				user.useJailbreak();
+			} else {
+				((Jail) user.getPosition()).payFine(user);
+			}
 		}
 	}
 
@@ -77,18 +96,20 @@ class ActionThread extends Thread {
 	 */
 	private void turnAction(Player user, TurnData data) {
 		synchronized(turnThread) {
-			if(data.isTurnAction()) {
-				if(user.getThrewDice() < 3) {
-					user.move();
+			if(!user.isTurnEnd()) {
+				if(data.isTurnAction()) {
+					if(user.getThrewDice() < 3) {
+						user.move();
+					} else {
+						user.setPosition(jail);
+						user.setInJail(true);
+						user.setTurnEnd(true);
+						turnThread.notify();
+					}
 				} else {
-					user.setPosition(jail);
-					user.setInJail(true);
 					user.setTurnEnd(true);
 					turnThread.notify();
 				}
-			} else {
-				user.setTurnEnd(true);
-				turnThread.notify();
 			}
 		}
 	}
