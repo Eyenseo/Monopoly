@@ -1,22 +1,22 @@
 package core.data;
 
 import objects.exceptions.data.ControlWordNotFoundException;
+import objects.exceptions.data.CreationException;
 import objects.exceptions.data.EndOfBlockException;
 import objects.exceptions.data.StorageReaderException;
-import objects.exceptions.data.map.*;
 import objects.map.FieldCircularList;
 import objects.map.notPurchasable.*;
 import objects.map.purchasable.Facility;
 import objects.map.purchasable.Station;
 import objects.map.purchasable.Street;
 
+import java.io.IOException;
 import java.util.Vector;
 
 /**
- * The MapArrayCreator creates FieldCircularList objects based on the data in the map.txt file located in the storage package.
+ * The MapArrayCreator creates FieldCircularList objects based on the data in the map.txt file located in the storage
+ * package.
  *
- * @author Eyenseo
- * @version 1
  * @see FieldCircularList
  */
 public class MapArrayCreator extends StorageReader {
@@ -25,7 +25,8 @@ public class MapArrayCreator extends StorageReader {
 	private FieldCircularList   go;
 
 	/**
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	public MapArrayCreator() throws StorageReaderException {
 		super("map.txt");
@@ -56,7 +57,8 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return The return value is an Array containing FieldCircularList objects.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	private FieldCircularList[] createMapArray() throws StorageReaderException {
 		Vector<FieldCircularList> fieldVector = new Vector<FieldCircularList>();
@@ -67,13 +69,21 @@ public class MapArrayCreator extends StorageReader {
 		}
 		fieldArray = new FieldCircularList[fieldVector.size()];
 		fieldVector.toArray(fieldArray);
+
+		try {
+			file.close();
+		} catch(IOException e) {
+			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		}
+
 		return fieldArray;
 	}
 
 	/**
 	 * @return The return value is the next FieldCircularList, if the end of the file is reached it returns null.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	private FieldCircularList nextField() throws StorageReaderException {
 		String line = nextControlWord();
@@ -116,7 +126,8 @@ public class MapArrayCreator extends StorageReader {
 	/**
 	 * @return the return value is a Street Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	private Street createStreet() throws StorageReaderException {
 		String name = null;
@@ -127,25 +138,26 @@ public class MapArrayCreator extends StorageReader {
 				color[i] = nextInt();
 			}
 			int price = nextInt();
-			int[] income = new int[6];
+			int[] income = new int[7];
 			for(int i = 0; i < income.length; i++) {
 				income[i] = nextInt();
 			}
 			int upgrade = nextInt();
 			int mortgage = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Street(name, price, income, mortgage, upgrade, color);
 		} catch(Exception e) {
-			throw new StreetCreationException(name, e);
+			throw new CreationException(name, "Street", e);
 		}
 	}
 
 	/**
 	 * @return the return value is a Station Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	private Station createStation() throws StorageReaderException {
 		String name = null;
@@ -158,18 +170,19 @@ public class MapArrayCreator extends StorageReader {
 			}
 			int mortgage = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Station(name, price, income, mortgage);
 		} catch(Exception e) {
-			throw new StationCreationException(name, e);
+			throw new CreationException(name, "Station", e);
 		}
 	}
 
 	/**
 	 * @return the return value is a Facility Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	private Facility createFacility() throws StorageReaderException {
 		String name = null;
@@ -179,18 +192,19 @@ public class MapArrayCreator extends StorageReader {
 			int[] income = {nextInt(), nextInt()};
 			int mortgage = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Facility(name, price, income, mortgage);
 		} catch(Exception e) {
-			throw new FacilityCreationException(name, e);
+			throw new CreationException(name, "Facility", e);
 		}
 	}
 
 	/**
 	 * @return the return value is a Tax Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	private Tax createTax() throws StorageReaderException {
 		String name = null;
@@ -198,54 +212,57 @@ public class MapArrayCreator extends StorageReader {
 			name = nextString();
 			int bill = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Tax(name, bill);
 		} catch(Exception e) {
-			throw new TaxCreationException(name, e);
+			throw new CreationException(name, "Tax", e);
 		}
 	}
 
 	/**
 	 * @return the return value is a Chance Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	private Chance createChance() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Chance(name);
 		} catch(Exception e) {
-			throw new ChanceCreationException(name, e);
+			throw new CreationException(name, "Chance", e);
 		}
 	}
 
 	/**
 	 * @return the return value is a Community Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	private Community createCommunity() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Community(name);
 		} catch(Exception e) {
-			throw new CommunityCreationException(name, e);
+			throw new CreationException(name, "Community", e);
 		}
 	}
 
 	/**
 	 * @return the return value is a Go Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	private Go createGo() throws StorageReaderException {
 		String name = null;
@@ -253,65 +270,68 @@ public class MapArrayCreator extends StorageReader {
 			name = nextString();
 			int turnMoney = nextInt();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Go(name, turnMoney);
 		} catch(Exception e) {
-			throw new GoCreationException(name, e);
+			throw new CreationException(name, "Go", e);
 		}
 	}
 
 	/**
 	 * @return the return value is a Jail Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	private Jail createJail() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Jail(name);
 		} catch(Exception e) {
-			throw new JailCreationException(name, e);
+			throw new CreationException(name, "Jail", e);
 		}
 	}
 
 	/**
 	 * @return the return value is a Parking Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	private Parking createParking() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new Parking(name);
 		} catch(Exception e) {
-			throw new ParkingCreationException(name, e);
+			throw new CreationException(name, "Parking", e);
 		}
 	}
 
 	/**
 	 * @return the return value is a GoToJail Object based on the data in the file.
 	 *
-	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be read out with getMessageStack.
+	 * @throws StorageReaderException The Exception has a cause attribute that holds the previous Exception. It should be
+	 *                                read out with getMessageStack.
 	 */
 	private GoToJail createGoToJail() throws StorageReaderException {
 		String name = null;
 		try {
 			name = nextString();
 			if(!isEndOfBlock()) {
-				throw new EndOfBlockException(path);
+				throw new EndOfBlockException(fileName);
 			}
 			return new GoToJail(name);
 		} catch(Exception e) {
-			throw new GoToJailCreationException(name, e);
+			throw new CreationException(name, "GoToJail", e);
 		}
 	}
 }

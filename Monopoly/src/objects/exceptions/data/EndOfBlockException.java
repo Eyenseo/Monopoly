@@ -3,9 +3,6 @@ package objects.exceptions.data;
 /**
  * The EndOfBlockException is the Exception to be thrown if the end of a data block of the storage should have been
  * reached but weren't.
- *
- * @author Eyenseo
- * @version 1
  */
 public class EndOfBlockException extends StorageReaderException {
 	/**

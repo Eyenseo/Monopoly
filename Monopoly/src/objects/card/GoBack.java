@@ -1,13 +1,15 @@
 package objects.card;
-//JAVADOC
 
 import objects.Player;
+
+import java.io.Serializable;
 
 /**
  * GoBack is the back card.
  */
-public class GoBack extends Card {
-	private int fields;
+public class GoBack extends Card implements Serializable {
+	private static final long serialVersionUID = 7543740810702116460L;
+	private final int fields;
 
 	/**
 	 * @param name The value determines the name of the Card.
@@ -18,11 +20,15 @@ public class GoBack extends Card {
 		this.fields = fields;
 	}
 
-	//JAVADOC
+	/**
+	 * The method will fire a MessageEvent
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
 	@Override
 	public void action(Player player) {
-		menu.showCardText(this);
+		fireMessageEvent(player.getPlayerId());
 		player.move(fields, false);
-		player.getField().action(player);
+		player.getPosition().action(player);
 	}
 }

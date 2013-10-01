@@ -2,14 +2,16 @@ package objects.card;
 
 import objects.Player;
 import objects.map.FieldCircularList;
-//JAVADOC
+
+import java.io.Serializable;
 
 /**
  * GoTo is the go to card
  *
  * @version 1
  */
-public class GoTo extends Card {
+public class GoTo extends Card implements Serializable {
+	private static final long serialVersionUID = 5348138600989361405L;
 	private final String            FIELDNAME;
 	private final boolean           OVERGO;
 	private       FieldCircularList field;
@@ -48,14 +50,18 @@ public class GoTo extends Card {
 		go = field;
 	}
 
-	//JAVADOC
+	/**
+	 * The method will fire a MessageEvent
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
 	@Override
 	public void action(Player player) {
-		menu.showCardText(this);
-		if(OVERGO && field.getFieldNumber() < player.getField().getFieldNumber()) {
+		fireMessageEvent(player.getPlayerId());
+		if(OVERGO && field.getFieldNumber() < player.getPosition().getFieldNumber()) {
 			go.action(player);
 		}
-		player.setField(field);
-		player.getField().action(player);
+		player.setPosition(field);
+		field.action(player);
 	}
 }

@@ -1,19 +1,21 @@
 package objects.card;
-//JAVADOC
 
 import objects.Player;
 import objects.map.notPurchasable.Parking;
+
+import java.io.Serializable;
 
 /**
  * PayFineTakeCard is special card (pay fine or draw a card).
  *
  * @version 1
  */
-public class PayFineTakeCard extends Card {
-	int       dm;
-	String    option;
-	CardStack community;
-	Parking   parking;
+public class PayFineTakeCard extends Card implements Serializable {
+	private static final long serialVersionUID = -6500337756850536820L;
+	private final int       dm;
+	private final String    option;
+	private       CardStack community;
+	private       Parking   parking;
 
 	/**
 	 * @param name The value determines the name of the Card.
@@ -34,13 +36,6 @@ public class PayFineTakeCard extends Card {
 	}
 
 	/**
-	 * @return The return value is the community CardStack.
-	 */
-	public CardStack getCommunity() {
-		return community;
-	}
-
-	/**
 	 * @param parking The value determines parking.
 	 */
 	public void setParking(Parking parking) {
@@ -54,14 +49,15 @@ public class PayFineTakeCard extends Card {
 		this.community = community;
 	}
 
-	//JAVADOC
+	/**
+	 * The method will fire a MessageEvent
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
 	@Override
 	public void action(Player player) {
-		if(menu.showCardText(this)) {
-			community.nextCard().action(player);
-		} else {
-			player.pay(dm);
-			parking.addMoney(dm);
-		}
+		fireMessageEvent(player.getPlayerId());
+		community.nextCard().action(player);
+		//TODO wait for the player to return a choice  - whether to take a community card or to pay a fine.
 	}
 }

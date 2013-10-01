@@ -2,15 +2,17 @@ package objects.card;
 
 import objects.Player;
 import objects.map.FieldCircularList;
-//JAVADOC
+
+import java.io.Serializable;
 
 /**
  * Arrest is the jail card.
  *
  * @version 1
  */
-public class Arrest extends Card {
-	FieldCircularList jail;
+public class Arrest extends Card implements Serializable {
+	private static final long serialVersionUID = -8298343677959644482L;
+	private FieldCircularList jail;
 
 	/**
 	 * @param name The value determines the name of the Card.
@@ -27,11 +29,15 @@ public class Arrest extends Card {
 		this.jail = jail;
 	}
 
-	//JavaDoc
+	/**
+	 * The method will set the player position to jail and set the player to be inJail
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
 	@Override
 	public void action(Player player) {
-		menu.showCardText(this);
+		fireMessageEvent(player.getPlayerId());
+		player.setPosition(jail);
 		player.setInJail(true);
-		player.setField(jail);
 	}
 }

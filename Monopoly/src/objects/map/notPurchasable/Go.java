@@ -2,15 +2,18 @@ package objects.map.notPurchasable;
 
 import objects.Player;
 import objects.exceptions.data.MoreThanOneDataSetException;
+import objects.value.map.FieldData;
+import objects.value.map.GoData;
+
+import java.io.Serializable;
 
 /**
- * The Go Class is the FieldCircularList subclass that is the Start of the game, if there is none or more than one Instance of this class the game will not start.
- *
- * @author Eyenseo
- * @version 1
+ * The Go Class is the FieldCircularList subclass that is the Start of the game, if there is none or more than one
+ * Instance of this class the game will not start.
  */
-public class Go extends NotPurchasable {
-	private static boolean justOneInstance = false;
+public class Go extends NotPurchasable implements Serializable {
+	private static final long    serialVersionUID = 6005179230915968193L;
+	private static       boolean justOneInstance  = false;
 	private final int TURNMONEY;
 
 	/**
@@ -20,16 +23,27 @@ public class Go extends NotPurchasable {
 	 */
 	public Go(String name, int turnMoney) throws MoreThanOneDataSetException {
 		super(name);
-		this.TURNMONEY = turnMoney;
+		TURNMONEY = turnMoney;
 		if(justOneInstance) {
 			throw new MoreThanOneDataSetException(name);
 		}
 		Go.justOneInstance = true;
 	}
 
-	//JAVADOC
+	/**
+	 * The method will add money to the player
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
 	@Override
 	public void action(Player player) {
 		player.addMoney(TURNMONEY);
+	}
+
+	/**
+	 * @return The return value is the FieldData of The field with its current attributes
+	 */
+	@Override public FieldData toFieldData() {
+		return new GoData(FIELDNUMBER, NAME);
 	}
 }

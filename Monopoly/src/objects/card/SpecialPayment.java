@@ -1,18 +1,19 @@
 package objects.card;
-//JAVADOC
 
 import objects.Player;
 
-import java.util.Vector;
+import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * SpecialPayment is a special transaction card (player based transactions).
  *
  * @version 1
  */
-public class SpecialPayment extends Card {
-	private int dm;
-	Vector<Player> playerVector;
+public class SpecialPayment extends Card implements Serializable {
+	private static final long serialVersionUID = 4614526083952983870L;
+	private final int                      dm;
+	private       HashMap<Integer, Player> playerHashMap;
 
 	/**
 	 * @param name The value determines the name of the Card.
@@ -23,17 +24,39 @@ public class SpecialPayment extends Card {
 		this.dm = dm;
 	}
 
-	//JavaDoc
+	/**
+	 * The method will fire a MessageEvent
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
 	@Override
 	public void action(Player player) {
-		menu.showCardText(this);
-		for(Player p : playerVector) {
-			player.pay(dm);
-			p.addMoney(dm);
+		int amount = 0;
+		fireMessageEvent(player.getPlayerId());
+		if(dm < 0) {
+			int positive = dm * -1;
+			for(Player p : playerHashMap.values()) {
+				if(!player.equals(p)) {
+					p.addMoney(positive);
+					amount += positive;
+				}
+			}
+			player.pay(amount);
+		} else {
+			for(Player p : playerHashMap.values()) {
+				if(!player.equals(p)) {
+					p.pay(dm);
+					amount += dm;
+				}
+			}
+			player.addMoney(amount);
 		}
 	}
 
-	public void setPlayerVector(Vector<Player> playerVector) {
-		this.playerVector = playerVector;
+	/**
+	 * @param playerHashMap the value determines the array list where all player are stored
+	 */
+	public void setPlayerHashMap(HashMap<Integer, Player> playerHashMap) {
+		this.playerHashMap = playerHashMap;
 	}
 }

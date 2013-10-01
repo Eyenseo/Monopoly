@@ -2,15 +2,17 @@ package objects.map.notPurchasable;
 
 import objects.Player;
 import objects.exceptions.data.MoreThanOneDataSetException;
+import objects.value.map.FieldData;
+import objects.value.map.GoToJailData;
+
+import java.io.Serializable;
 
 /**
  * The Community Class is the FieldCircularList subclass.
- *
- * @author Eyenseo
- * @version 1
  */
-public class GoToJail extends NotPurchasable {
-	private static boolean justOneInstance = false;
+public class GoToJail extends NotPurchasable implements Serializable {
+	private static final long    serialVersionUID = 2310428836358458471L;
+	private static       boolean justOneInstance  = false;
 	private Jail jail;
 
 	/**
@@ -31,9 +33,20 @@ public class GoToJail extends NotPurchasable {
 		this.jail = jail;
 	}
 
-	@Override
-	//JAVADOC
-	public void action(Player player) {
-		player.setField(jail);
+	/**
+	 * The method will set the players position to the jail and him in jail
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	@Override public void action(Player player) {
+		player.setPosition(jail);
+		player.setInJail(true);
+	}
+
+	/**
+	 * @return The return value is the FieldData of The field with its current attributes
+	 */
+	@Override public FieldData toFieldData() {
+		return new GoToJailData(FIELDNUMBER, NAME);
 	}
 }

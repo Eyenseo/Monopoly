@@ -1,119 +1,149 @@
 package core;
 
-import core.data.MapArrayCreator;
 import objects.Player;
-import objects.card.CardStack;
-import objects.exceptions.core.CardConnectionException;
-import objects.exceptions.core.NoInstanceException;
-import objects.exceptions.data.StorageReaderException;
+import objects.exceptions.MessageStackException;
 import objects.map.FieldCircularList;
-import ui.Menu;
-import ui.cui.ConsoleMenu;
+import objects.value.action.ActionData;
 
-import java.util.Vector;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Monopoly is the main Class. It initialises the game and hold pieces of the mechanic.
- *
- * @author Eyenseo
- * @version 1
  */
 public class Monopoly {
-    private final int STARTMONEY = 50000;
-    private boolean gameOver = false;
-    private FieldCircularList go;
-    private FieldCircularList jail;
-    private Menu menu;
-    private Vector<Player> playerVector = new Vector<Player>();
+	private final int     STARTMONEY = 30000;
+	private final boolean gameOver   = false;
+	private final FieldCircularList                               go;
+	private final FieldCircularList                               jail;
+	private final HashMap<Integer, Player>                        playerHashMap;
+	private final ServerOperator                                  serverOperator;
+	private final Thread                                          turnThread;
+	private final HashMap<Integer, HashMap<String, ActionThread>> actions; //TODO better structure
+	private       Player                                          currentPlayer;
 
-    Monopoly(Menu menu) {
-        try {
-            MapArrayCreator mac = new MapArrayCreator();
-            CardStack event = new CardStack("events.txt", "Event Karte");
-            CardStack community = new CardStack("community.txt", "Gemeinschafts Karte");
-            new Connector().connect(mac.getMap(), event, community, playerVector, menu);
-            this.go = mac.getGo();
-            this.jail = mac.getJail();
-            this.menu = menu;
-        } catch (StorageReaderException e) {
-            //TODO catch the exceptions properly
-            System.err.println(e.getMessageStack());
-        } catch (NoInstanceException e) {
-            System.err.println(e.getMessage());
-        } catch (CardConnectionException e) {
-            System.err.println(e.getMessage());
-        }
-    }
+	/**
+	 * @param loader The value determines the loader that holds the information for the game
+	 */
+	private Monopoly(Loader loader) {
+		go = loader.getGo();
+		jail = loader.getJail();
+		playerHashMap = loader.getPlayerHashMap();
+		serverOperator = new ServerOperator(this, loader);
+		actions = new HashMap<Integer, HashMap<String, ActionThread>>();
 
-    /**
-     * @param player The value determines the Player object to be added to the game.
-     */
-    private void addPlayer(Player player) {
-        playerVector.add(player);
-        player.setField(go);
-    }
+		//The thread will set the next player as active and will then wait for him to finish his turn and sets the
+		//next player active and waits ...
+		//TODO Specify a timeout for a turn
+		turnThread = new Thread(new Runnable() {
+			@Override public void run() {
+				Player previousPlayer = null;
 
-    /**
-     * The method executes the next round of the game.
-     */
-    private void nextRound() {
-        for (Player player : playerVector) {
-            nextTurn(player);
-            if (gameOver) {
-                break;
-            }
-        }
-    }
+				try {
+					synchronized(turnThread) {
+						while(!gameOver) {
+							Iterator<Player> iterator = playerHashMap.values().iterator();
+							while(iterator.hasNext()) {
+								try {
+									currentPlayer = iterator.next();
+									currentPlayer.setTurnEnd(false);
+									turnThread.wait();  //TODO possible replace with "Condition"
+									previousPlayer = currentPlayer;
+								} catch(ConcurrentModificationException e) {
+									iterator = playerHashMap.values().iterator();
+									while(iterator.hasNext()) {
+										if(iterator.next().equals(previousPlayer)) {
+											break;
+										}
+									}
+								}
+							}
+						}
+					}
+				} catch(InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		turnThread.setName("Turn thread");
+	}
 
-    /**
-     * The method executes the next turn of the game for the player.
-     *
-     * @param player The value determines the Player object of the turn.
-     */
-    private void nextTurn(Player player) {
-        nextTurn(player, 0);
-    }
+	public static void main(String[] args) {
+		try {
+			if(args.length > 1) {
+				if(args.length < 6) {
+					Monopoly m = new Monopoly(new Loader());
 
-    /**
-     * The method executes the next turn of the game for the player.
-     *
-     * @param player      The value determines the Player object of the turn.
-     * @param doublesTime The value determines the times doubles where thrown by the player.
-     */
-    private void nextTurn(Player player, int doublesTime) {
-        int turnState = 0; // [0]Start of turn [1]After moving [2]End of Turn [3]Doubles turn [4] gameOver
-        while (turnState != 2 && !gameOver) {
-            turnState = menu.mainMenu(player, playerVector, turnState);
-            if (doublesTime == 3) {
-                player.setField(jail);
-                player.setInJail(true);
-                menu.showInJail();
-                turnState = 2;
-            } else if (turnState == 3) {
-                doublesTime++;
-            }
-            gameOver = turnState == 4;
-        }
-    }
+					for(String name : args) {
+						m.addPlayer(new Player(name, m.STARTMONEY));
+					}
 
-    /**
-     * @return The return value is true if the game is over and false if it's not.
-     */
-    public boolean isGameOver() {
-        return gameOver;
-    }
+					m.startMonopoly();
+				} else {
+					throw new IllegalArgumentException("You can only play with up to 6 player!");
+				}
+			} else {
+				throw new IllegalArgumentException("Please specify at least two player names!");
+			}
+		} catch(MessageStackException e) {
+			System.err.println(e.getMessageStack());
+		}
+	}
 
-    public static void main(String[] args) {
-        Menu menu = new ConsoleMenu();
-        Monopoly m = new Monopoly(menu);
-        //		for(int i = menu.playerAmount(); i > 0; i--) {
-        //			m.addPlayer(new Player(menu.getName(), m.STARTMONEY));
-        //		}
-        m.addPlayer(new Player("Julia", m.STARTMONEY));
-        m.addPlayer(new Player("Markus", m.STARTMONEY));
-        while (!m.isGameOver()) {
-            m.nextRound();
-        }
-        System.out.print("Set stop - check the map in debug.");
-    }
+	/**
+	 * @param player The value determines the player to be added to the game
+	 */
+	private void addPlayer(Player player) {
+		playerHashMap.put(player.getPlayerId(), player);
+		player.setPosition(go);
+
+		ClientOperator clientOperator = new ClientOperator(serverOperator);
+		serverOperator.addDestination(player, clientOperator);
+
+		actions.put(player.getPlayerId(), new HashMap<String, ActionThread>());
+	}
+
+	/**
+	 * The method will initialise all Clients with the PlayerData and then start the turnThread which will set the next
+	 * player as active and will then wait for him to finish his turn
+	 */
+	private void startMonopoly() {
+		serverOperator.initializePlayer();
+		turnThread.start();
+	}
+
+	/**
+	 * @param actionData The value determines the action to be done
+	 */
+	public void doAction(final ActionData actionData) {
+		//TODO check what happens if a player doesn't have the money and decides to give up - is deleting the thread
+		// enough?
+
+		if(actions.containsKey(actionData.getUserId())) {
+			ActionThread job =
+					new ActionThread(playerHashMap, currentPlayer, actionData, serverOperator, jail, turnThread,
+					                 actions);
+
+			actions.get(actionData.getUserId()).put(actionData.getId(), job);
+			job.setName(actionData.getId());
+			job.start();
+		} else {
+			System.out.println(actionData.getUserId());
+		}
+	}
+
+	/**
+	 * @return The return value is the Go Field
+	 */
+	public FieldCircularList getGo() {
+		return go;
+	}
+
+	/**
+	 * @return the return value is the playerHashMap
+	 */
+	public HashMap<Integer, Player> getPlayerHashMap() {
+		return playerHashMap;
+	}
 }

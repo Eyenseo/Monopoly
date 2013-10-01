@@ -2,14 +2,17 @@ package objects.map.notPurchasable;
 
 import objects.Player;
 import objects.exceptions.data.MoreThanOneDataSetException;
+import objects.value.map.FieldData;
+import objects.value.map.JailData;
+
+import java.io.Serializable;
 
 /**
- * The Jail class is the FieldCircularList subclass, if there is none or more than one Instance of this class the game will not start.
- *
- * @author Eyenseo
- * @version 1
+ * The Jail class is the FieldCircularList subclass, if there is none or more than one Instance of this class the game
+ * will not start.
  */
-public class Jail extends NotPurchasable {
+public class Jail extends NotPurchasable implements Serializable {
+	private static final long serialVersionUID = -7791364597281521600L;
 	private Parking parking;
 	private static boolean justOneInstance = false;
 
@@ -42,8 +45,18 @@ public class Jail extends NotPurchasable {
 		player.setInJail(false);
 	}
 
-	@Override
-	//JAVADOC
-	public void action(Player player) {
+	/**
+	 * The method does nothing
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	@Override public void action(Player player) {
+	}
+
+	/**
+	 * @return The return value is the FieldData of The field with its current attributes
+	 */
+	@Override public FieldData toFieldData() {
+		return new JailData(FIELDNUMBER, NAME);
 	}
 }

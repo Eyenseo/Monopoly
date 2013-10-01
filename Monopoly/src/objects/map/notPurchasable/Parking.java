@@ -2,16 +2,19 @@ package objects.map.notPurchasable;
 
 import objects.Player;
 import objects.exceptions.data.MoreThanOneDataSetException;
+import objects.value.map.FieldData;
+import objects.value.map.ParkingData;
+
+import java.io.Serializable;
 
 /**
- * The Parking class is the FieldCircularList subclass that keeps all the fines of the Player Objects, if there is none or more than one Instance of this class the game will not start.
- *
- * @author Eyenseo
- * @version 1
+ * The Parking class is the FieldCircularList subclass that keeps all the fines of the Player Objects, if there is none
+ * or more than one Instance of this class the game will not start.
  */
-public class Parking extends NotPurchasable {
-	private static boolean justOneInstance = false;
-	private        int     money           = 0;
+public class Parking extends NotPurchasable implements Serializable {
+	private static final long    serialVersionUID = 6193402746206108126L;
+	private static       boolean justOneInstance  = false;
+	private              int     money            = 0;
 
 	/**
 	 * @param name The value determines the name of the Field.
@@ -21,14 +24,7 @@ public class Parking extends NotPurchasable {
 		if(justOneInstance) {
 			throw new MoreThanOneDataSetException(name);
 		}
-		Parking.justOneInstance = true;
-	}
-
-	/**
-	 * @return The return value is the amount of money the Parking object holds.
-	 */
-	public int getMoney() {
-		return this.money;
+		justOneInstance = true;
 	}
 
 	/**
@@ -38,10 +34,20 @@ public class Parking extends NotPurchasable {
 		this.money += money;
 	}
 
-	@Override
-	//JAVADOC
-	public void action(Player player) {
+	/**
+	 * The method will transfer the collected money to the player
+	 *
+	 * @param player The value determines the Player who caused the method call
+	 */
+	@Override public void action(Player player) {
 		player.addMoney(money);
 		money = 0;
+	}
+
+	/**
+	 * @return The return value is the FieldData of The field with its current attributes
+	 */
+	@Override public FieldData toFieldData() {
+		return new ParkingData(FIELDNUMBER, NAME);
 	}
 }

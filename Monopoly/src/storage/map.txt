@@ -2,58 +2,61 @@
 ##		##	Comment
 ##		#!	Object is finished
 ##		#Street
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##			color red
 ##			color green
 ##			color blue
 ##          price
+##			income              (first income should be under 10k)
+##			income              (normally double of the first income)
 ##			income
 ##			income
 ##			income
 ##			income
 ##			income
-##			income
-##			upgrade (house/hotel)
+##			upgrade             (house/hotel)
 ##			mortgage
 ##		#Station
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##			price
-##			income
+##			income              (first income should be under 10k)
 ##			income
 ##			income
 ##			income
 ##			mortgage
 ##		#Facility
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##			price
-##			income
+##			income              (first income should be under 10k)
 ##			income
 ##			mortgage
 ##		#Tax
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##			amount
 ##		#Chance
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##		#Community
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##		#Go
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##			moneyByTurn
 ##		#Jail
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##		#Parking
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##		#GoToJail
-##			name
+##			name                (The name shouldn't be longer than 14)
 ##
 ##  Instruction:
 ##      #Go	has to be the first data block!
 ##      No parameter is optional!
 ##
+
 #Go
 Los
 4000
 #!
+
 #Street
 Badstraße
 128
@@ -61,6 +64,7 @@ Badstraße
 153
 1200
 40
+80
 200
 600
 1800
@@ -69,9 +73,11 @@ Badstraße
 1000
 600
 #!
+
 #Community
 Gemeinschaftsfeld
 #!
+
 #Street
 Turmstraße
 128
@@ -79,6 +85,7 @@ Turmstraße
 153
 1200
 80
+160
 400
 1200
 3600
@@ -87,10 +94,12 @@ Turmstraße
 1000
 600
 #!
+
 #Tax
 Einkommenssteuer
 4000
 #!
+
 #Station
 Südbahnhof
 4000
@@ -100,6 +109,7 @@ Südbahnhof
 4000
 2000
 #!
+
 #Street
 Chausseestraße
 128
@@ -107,6 +117,7 @@ Chausseestraße
 255
 2000
 120
+240
 600
 1800
 5400
@@ -115,9 +126,11 @@ Chausseestraße
 1000
 1000
 #!
+
 #Chance
 Ereignisfeld
 #!
+
 #Street
 Elisenstraße
 128
@@ -125,6 +138,7 @@ Elisenstraße
 255
 2000
 120
+240
 600
 1800
 5400
@@ -133,6 +147,7 @@ Elisenstraße
 1000
 1000
 #!
+
 #Street
 Poststraße
 128
@@ -140,6 +155,7 @@ Poststraße
 255
 2400
 160
+320
 800
 2000
 6000
@@ -148,9 +164,11 @@ Poststraße
 1000
 1200
 #!
+
 #Jail
 Gefängnis
 #!
+
 #Street
 Seestraße
 204
@@ -158,6 +176,7 @@ Seestraße
 204
 2800
 200
+400
 1000
 3000
 9000
@@ -166,6 +185,7 @@ Seestraße
 2000
 1400
 #!
+
 #Facility
 Elektrizitäts-Werk
 3000
@@ -173,6 +193,7 @@ Elektrizitäts-Werk
 200
 1500
 #!
+
 #Street
 Hafenstraße
 204
@@ -180,6 +201,7 @@ Hafenstraße
 204
 2800
 200
+400
 1000
 3000
 9000
@@ -188,6 +210,7 @@ Hafenstraße
 2000
 1400
 #!
+
 #Street
 Neue Straße
 204
@@ -195,6 +218,7 @@ Neue Straße
 204
 3200
 240
+480
 1200
 3600
 10000
@@ -203,6 +227,7 @@ Neue Straße
 2000
 1600
 #!
+
 #Station
 Westbahnhof
 4000
@@ -212,6 +237,7 @@ Westbahnhof
 4000
 2000
 #!
+
 #Street
 Münchner Straße
 255
@@ -219,6 +245,7 @@ Münchner Straße
 0
 3600
 280
+560
 1400
 4000
 11000
@@ -227,9 +254,11 @@ Münchner Straße
 2000
 1800
 #!
+
 #Community
 Gemeinschaftsfeld
 #!
+
 #Street
 Wiener Straße
 255
@@ -237,6 +266,7 @@ Wiener Straße
 0
 3600
 280
+560
 1400
 4000
 11000
@@ -245,6 +275,7 @@ Wiener Straße
 2000
 1800
 #!
+
 #Street
 Berliner Straße
 255
@@ -252,6 +283,7 @@ Berliner Straße
 0
 4000
 320
+640
 1600
 4400
 12000
@@ -260,9 +292,11 @@ Berliner Straße
 2000
 2000
 #!
+
 #Parking
 Frei Parken
 #!
+
 #Street
 Theaterstraße
 255
@@ -270,6 +304,7 @@ Theaterstraße
 0
 4400
 360
+720
 1800
 5000
 140000
@@ -278,9 +313,11 @@ Theaterstraße
 3000
 2200
 #!
+
 #Chance
 Ereignisfeld
 #!
+
 #Street
 Museumstraße
 255
@@ -288,6 +325,7 @@ Museumstraße
 0
 4400
 360
+720
 1800
 5000
 14000
@@ -296,6 +334,7 @@ Museumstraße
 3000
 2200
 #!
+
 #Street
 Opernplatz
 255
@@ -303,6 +342,7 @@ Opernplatz
 0
 4800
 400
+800
 2000
 6000
 150000
@@ -311,6 +351,7 @@ Opernplatz
 3000
 2400
 #!
+
 #Station
 Nordbahnhof
 4000
@@ -320,6 +361,7 @@ Nordbahnhof
 4000
 2000
 #!
+
 #Street
 Lessingstraße
 255
@@ -327,6 +369,7 @@ Lessingstraße
 0
 5200
 480
+960
 2200
 6600
 16000
@@ -335,6 +378,7 @@ Lessingstraße
 3000
 2600
 #!
+
 #Street
 Schillerstraße
 255
@@ -342,6 +386,7 @@ Schillerstraße
 0
 5200
 480
+960
 2200
 6600
 16000
@@ -350,6 +395,7 @@ Schillerstraße
 3000
 2600
 #!
+
 #Facility
 Wasser-Werk
 3000
@@ -357,6 +403,7 @@ Wasser-Werk
 200
 1500
 #!
+
 #Street
 Goethestraße
 255
@@ -364,6 +411,7 @@ Goethestraße
 0
 5600
 580
+1160
 2400
 7200
 17000
@@ -372,9 +420,11 @@ Goethestraße
 3000
 2800
 #!
+
 #GoToJail
 Geh in's Gefängnis
 #!
+
 #Street
 Rathausplatz
 51
@@ -382,6 +432,7 @@ Rathausplatz
 51
 6000
 520
+1040
 2600
 7800
 18000
@@ -390,6 +441,7 @@ Rathausplatz
 4000
 3000
 #!
+
 #Street
 Hauptstraße
 51
@@ -397,6 +449,7 @@ Hauptstraße
 51
 6000
 520
+1040
 2600
 7800
 18000
@@ -405,9 +458,11 @@ Hauptstraße
 4000
 3000
 #!
+
 #Community
 Gemeinschaftsfeld
 #!
+
 #Street
 Bahnhofstraße
 51
@@ -415,6 +470,7 @@ Bahnhofstraße
 51
 6400
 560
+1120
 3000
 9000
 20000
@@ -423,6 +479,7 @@ Bahnhofstraße
 4000
 3200
 #!
+
 #Station
 Haptbahnhof
 4000
@@ -432,9 +489,11 @@ Haptbahnhof
 4000
 2000
 #!
+
 #Chance
 Ereignisfeld
 #!
+
 #Street
 Parkstraße
 32
@@ -442,6 +501,7 @@ Parkstraße
 204
 7000
 700
+1400
 3500
 10000
 22000
@@ -450,10 +510,12 @@ Parkstraße
 4000
 3500
 #!
+
 #Tax
 Zusatzsteuer
 2000
 #!
+
 #Street
 Schlossallee
 32
@@ -461,6 +523,7 @@ Schlossallee
 204
 8000
 1000
+2000
 4000
 12000
 28000
